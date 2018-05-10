@@ -1,0 +1,887 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: EditSectionActivity</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.edit</a> ]
+</div>
+
+<h1>Coverage Summary for Class: EditSectionActivity (org.wikipedia.edit)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">EditSectionActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 39)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 257)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">EditSectionActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">EditSectionActivity$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">EditSectionActivity$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">EditSectionActivity$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 27)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">EditSectionActivity$5</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 53)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 310)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.edit;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.app.ProgressDialog;
+<i>4</i>&nbsp;import android.content.Intent;
+<i>5</i>&nbsp;import android.graphics.Typeface;
+<i>6</i>&nbsp;import android.net.Uri;
+<i>7</i>&nbsp;import android.os.Bundle;
+<i>8</i>&nbsp;import android.os.Handler;
+<i>9</i>&nbsp;import android.support.annotation.NonNull;
+<i>10</i>&nbsp;import android.support.annotation.Nullable;
+<i>11</i>&nbsp;import android.support.v4.content.ContextCompat;
+<i>12</i>&nbsp;import android.support.v7.app.ActionBar;
+<i>13</i>&nbsp;import android.support.v7.app.AlertDialog;
+<i>14</i>&nbsp;import android.text.Editable;
+<i>15</i>&nbsp;import android.text.TextUtils;
+<i>16</i>&nbsp;import android.text.TextWatcher;
+<i>17</i>&nbsp;import android.view.Menu;
+<i>18</i>&nbsp;import android.view.MenuItem;
+<i>19</i>&nbsp;import android.view.View;
+<i>20</i>&nbsp;import android.view.ViewGroup;
+<i>21</i>&nbsp;import android.view.WindowManager;
+<i>22</i>&nbsp;import android.widget.EditText;
+<i>23</i>&nbsp;import android.widget.ImageView;
+<i>24</i>&nbsp;import android.widget.LinearLayout;
+<i>25</i>&nbsp;import android.widget.ScrollView;
+<i>26</i>&nbsp;import android.widget.TextView;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;import org.wikipedia.Constants;
+<i>29</i>&nbsp;import org.wikipedia.R;
+<i>30</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>31</i>&nbsp;import org.wikipedia.activity.BaseActivity;
+<i>32</i>&nbsp;import org.wikipedia.analytics.EditFunnel;
+<i>33</i>&nbsp;import org.wikipedia.analytics.LoginFunnel;
+<i>34</i>&nbsp;import org.wikipedia.auth.AccountUtil;
+<i>35</i>&nbsp;import org.wikipedia.captcha.CaptchaHandler;
+<i>36</i>&nbsp;import org.wikipedia.captcha.CaptchaResult;
+<i>37</i>&nbsp;import org.wikipedia.csrf.CsrfTokenClient;
+<i>38</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwException;
+<i>39</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwQueryResponse;
+<i>40</i>&nbsp;import org.wikipedia.edit.preview.EditPreviewFragment;
+<i>41</i>&nbsp;import org.wikipedia.edit.richtext.SyntaxHighlighter;
+<i>42</i>&nbsp;import org.wikipedia.edit.summaries.EditSummaryFragment;
+<i>43</i>&nbsp;import org.wikipedia.edit.wikitext.WikitextClient;
+<i>44</i>&nbsp;import org.wikipedia.login.LoginActivity;
+<i>45</i>&nbsp;import org.wikipedia.login.LoginClient;
+<i>46</i>&nbsp;import org.wikipedia.page.LinkMovementMethodExt;
+<i>47</i>&nbsp;import org.wikipedia.page.PageProperties;
+<i>48</i>&nbsp;import org.wikipedia.page.PageTitle;
+<i>49</i>&nbsp;import org.wikipedia.util.FeedbackUtil;
+<i>50</i>&nbsp;import org.wikipedia.util.ResourceUtil;
+<i>51</i>&nbsp;import org.wikipedia.util.StringUtil;
+<i>52</i>&nbsp;import org.wikipedia.util.log.L;
+<i>53</i>&nbsp;import org.wikipedia.views.ViewAnimations;
+<i>54</i>&nbsp;import org.wikipedia.views.WikiErrorView;
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;import java.util.concurrent.TimeUnit;
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;import retrofit2.Call;
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;import static org.wikipedia.util.DeviceUtil.hideSoftKeyboard;
+<i>61</i>&nbsp;import static org.wikipedia.util.L10nUtil.setConditionalTextDirection;
+<i>62</i>&nbsp;import static org.wikipedia.util.UriUtil.handleExternalLink;
+<i>63</i>&nbsp;
+<b class="nc"><i>64</i>&nbsp;public class EditSectionActivity extends BaseActivity {</b>
+<i>65</i>&nbsp;    public static final String ACTION_EDIT_SECTION = &quot;org.wikipedia.edit_section&quot;;
+<i>66</i>&nbsp;    public static final String EXTRA_TITLE = &quot;org.wikipedia.edit_section.title&quot;;
+<i>67</i>&nbsp;    public static final String EXTRA_SECTION_ID = &quot;org.wikipedia.edit_section.sectionid&quot;;
+<i>68</i>&nbsp;    public static final String EXTRA_SECTION_HEADING = &quot;org.wikipedia.edit_section.sectionheading&quot;;
+<i>69</i>&nbsp;    public static final String EXTRA_PAGE_PROPS = &quot;org.wikipedia.edit_section.pageprops&quot;;
+<i>70</i>&nbsp;    public static final String EXTRA_HIGHLIGHT_TEXT = &quot;org.wikipedia.edit_section.highlight&quot;;
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    private CsrfTokenClient csrfClient;
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;    private PageTitle title;
+<i>75</i>&nbsp;    private int sectionID;
+<i>76</i>&nbsp;    private String sectionHeading;
+<i>77</i>&nbsp;    private PageProperties pageProps;
+<i>78</i>&nbsp;    private String textToHighlight;
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;    private String sectionWikitext;
+<i>81</i>&nbsp;    private SyntaxHighlighter syntaxHighlighter;
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;    private EditText sectionText;
+<b class="nc"><i>84</i>&nbsp;    private boolean sectionTextModified = false;</b>
+<b class="nc"><i>85</i>&nbsp;    private boolean sectionTextFirstLoad = true;</b>
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;    // Timestamp received from server to track the time of the last revision, then passed
+<i>88</i>&nbsp;    // back to the server to detect possible edit conflicts.
+<i>89</i>&nbsp;    private String baseTimeStamp;
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;    private View sectionProgress;
+<i>92</i>&nbsp;    private ScrollView sectionContainer;
+<i>93</i>&nbsp;    private WikiErrorView errorView;
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;    private View abusefilterContainer;
+<i>96</i>&nbsp;    private ImageView abuseFilterImage;
+<i>97</i>&nbsp;    private TextView abusefilterTitle;
+<i>98</i>&nbsp;    private TextView abusefilterText;
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    private EditAbuseFilterResult abusefilterEditResult;
+<i>101</i>&nbsp;
+<i>102</i>&nbsp;    private CaptchaHandler captchaHandler;
+<i>103</i>&nbsp;
+<i>104</i>&nbsp;    private EditPreviewFragment editPreviewFragment;
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;    private EditSummaryFragment editSummaryFragment;
+<i>107</i>&nbsp;
+<i>108</i>&nbsp;    private EditFunnel funnel;
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;    private ProgressDialog progressDialog;
+<i>111</i>&nbsp;
+<b class="nc"><i>112</i>&nbsp;    private Runnable successRunnable = new Runnable() {</b>
+<i>113</i>&nbsp;        @Override public void run() {
+<b class="nc"><i>114</i>&nbsp;            progressDialog.dismiss();</b>
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;            //Build intent that includes the section we were editing, so we can scroll to it later
+<b class="nc"><i>117</i>&nbsp;            Intent data = new Intent();</b>
+<b class="nc"><i>118</i>&nbsp;            data.putExtra(EXTRA_SECTION_ID, sectionID);</b>
+<b class="nc"><i>119</i>&nbsp;            setResult(EditHandler.RESULT_REFRESH_PAGE, data);</b>
+<b class="nc"><i>120</i>&nbsp;            hideSoftKeyboard(EditSectionActivity.this);</b>
+<b class="nc"><i>121</i>&nbsp;            finish();</b>
+<i>122</i>&nbsp;        }
+<i>123</i>&nbsp;    };
+<i>124</i>&nbsp;
+<i>125</i>&nbsp;    public PageTitle getPageTitle() {
+<b class="nc"><i>126</i>&nbsp;        return title;</b>
+<i>127</i>&nbsp;    }
+<i>128</i>&nbsp;
+<i>129</i>&nbsp;    @Override
+<i>130</i>&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>131</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>132</i>&nbsp;        setContentView(R.layout.activity_edit_section);</b>
+<b class="nc"><i>133</i>&nbsp;        setStatusBarColor(ResourceUtil.getThemedAttributeId(this, R.attr.page_status_bar_color));</b>
+<i>134</i>&nbsp;
+<b class="nc"><i>135</i>&nbsp;        if (!getIntent().getAction().equals(ACTION_EDIT_SECTION)) {</b>
+<b class="nc"><i>136</i>&nbsp;            throw new RuntimeException(&quot;Much wrong action. Such exception. Wow&quot;);</b>
+<i>137</i>&nbsp;        }
+<i>138</i>&nbsp;
+<b class="nc"><i>139</i>&nbsp;        title = getIntent().getParcelableExtra(EXTRA_TITLE);</b>
+<b class="nc"><i>140</i>&nbsp;        sectionID = getIntent().getIntExtra(EXTRA_SECTION_ID, 0);</b>
+<b class="nc"><i>141</i>&nbsp;        sectionHeading = getIntent().getStringExtra(EXTRA_SECTION_HEADING);</b>
+<b class="nc"><i>142</i>&nbsp;        pageProps = getIntent().getParcelableExtra(EXTRA_PAGE_PROPS);</b>
+<b class="nc"><i>143</i>&nbsp;        textToHighlight = getIntent().getStringExtra(EXTRA_HIGHLIGHT_TEXT);</b>
+<i>144</i>&nbsp;
+<b class="nc"><i>145</i>&nbsp;        progressDialog = new ProgressDialog(this);</b>
+<b class="nc"><i>146</i>&nbsp;        progressDialog.setIndeterminate(true);</b>
+<b class="nc"><i>147</i>&nbsp;        progressDialog.setCancelable(false);</b>
+<b class="nc"><i>148</i>&nbsp;        progressDialog.setMessage(getString(R.string.dialog_saving_in_progress));</b>
+<i>149</i>&nbsp;
+<b class="nc"><i>150</i>&nbsp;        final ActionBar supportActionBar = getSupportActionBar();</b>
+<b class="nc"><i>151</i>&nbsp;        if (supportActionBar != null) {</b>
+<b class="nc"><i>152</i>&nbsp;            supportActionBar.setTitle(&quot;&quot;);</b>
+<i>153</i>&nbsp;        }
+<i>154</i>&nbsp;
+<b class="nc"><i>155</i>&nbsp;        sectionText = findViewById(R.id.edit_section_text);</b>
+<i>156</i>&nbsp;
+<b class="nc"><i>157</i>&nbsp;        syntaxHighlighter = new SyntaxHighlighter(this, sectionText);</b>
+<i>158</i>&nbsp;
+<b class="nc"><i>159</i>&nbsp;        sectionProgress = findViewById(R.id.edit_section_load_progress);</b>
+<b class="nc"><i>160</i>&nbsp;        sectionContainer = findViewById(R.id.edit_section_container);</b>
+<b class="nc"><i>161</i>&nbsp;        sectionContainer.setSmoothScrollingEnabled(false);</b>
+<b class="nc"><i>162</i>&nbsp;        errorView = findViewById(R.id.view_edit_section_error);</b>
+<i>163</i>&nbsp;
+<b class="nc"><i>164</i>&nbsp;        abusefilterContainer = findViewById(R.id.edit_section_abusefilter_container);</b>
+<b class="nc"><i>165</i>&nbsp;        abuseFilterImage = findViewById(R.id.edit_section_abusefilter_image);</b>
+<b class="nc"><i>166</i>&nbsp;        abusefilterTitle = findViewById(R.id.edit_section_abusefilter_title);</b>
+<b class="nc"><i>167</i>&nbsp;        abusefilterText = findViewById(R.id.edit_section_abusefilter_text);</b>
+<i>168</i>&nbsp;
+<b class="nc"><i>169</i>&nbsp;        captchaHandler = new CaptchaHandler(this, title.getWikiSite(), progressDialog, sectionContainer, &quot;&quot;, null);</b>
+<i>170</i>&nbsp;
+<b class="nc"><i>171</i>&nbsp;        editPreviewFragment = (EditPreviewFragment) getSupportFragmentManager().findFragmentById(R.id.edit_section_preview_fragment);</b>
+<b class="nc"><i>172</i>&nbsp;        editSummaryFragment = (EditSummaryFragment) getSupportFragmentManager().findFragmentById(R.id.edit_section_summary_fragment);</b>
+<i>173</i>&nbsp;
+<b class="nc"><i>174</i>&nbsp;        updateEditLicenseText();</b>
+<b class="nc"><i>175</i>&nbsp;        editSummaryFragment.setTitle(title);</b>
+<i>176</i>&nbsp;
+<b class="nc"><i>177</i>&nbsp;        funnel = WikipediaApp.getInstance().getFunnelManager().getEditFunnel(title);</b>
+<i>178</i>&nbsp;
+<i>179</i>&nbsp;        // Only send the editing start log event if the activity is created for the first time
+<b class="nc"><i>180</i>&nbsp;        if (savedInstanceState == null) {</b>
+<b class="nc"><i>181</i>&nbsp;            funnel.logStart();</b>
+<i>182</i>&nbsp;        }
+<i>183</i>&nbsp;
+<b class="nc"><i>184</i>&nbsp;        if (savedInstanceState != null &amp;&amp; savedInstanceState.containsKey(&quot;sectionWikitext&quot;)) {</b>
+<b class="nc"><i>185</i>&nbsp;            sectionWikitext = savedInstanceState.getString(&quot;sectionWikitext&quot;);</b>
+<i>186</i>&nbsp;        }
+<i>187</i>&nbsp;
+<b class="nc"><i>188</i>&nbsp;        captchaHandler.restoreState(savedInstanceState);</b>
+<i>189</i>&nbsp;
+<b class="nc"><i>190</i>&nbsp;        if (savedInstanceState != null &amp;&amp; savedInstanceState.containsKey(&quot;abusefilter&quot;)) {</b>
+<b class="nc"><i>191</i>&nbsp;            abusefilterEditResult = savedInstanceState.getParcelable(&quot;abusefilter&quot;);</b>
+<b class="nc"><i>192</i>&nbsp;            handleAbuseFilter();</b>
+<i>193</i>&nbsp;        }
+<i>194</i>&nbsp;
+<b class="nc"><i>195</i>&nbsp;        errorView.setRetryClickListener((v) -&gt; {</b>
+<b class="nc"><i>196</i>&nbsp;            errorView.setVisibility(View.GONE);</b>
+<b class="nc"><i>197</i>&nbsp;            fetchSectionText();</b>
+<i>198</i>&nbsp;        });
+<i>199</i>&nbsp;
+<b class="nc"><i>200</i>&nbsp;        errorView.setBackClickListener((v) -&gt; onBackPressed());</b>
+<i>201</i>&nbsp;
+<b class="nc"><i>202</i>&nbsp;        setConditionalTextDirection(sectionText, title.getWikiSite().languageCode());</b>
+<i>203</i>&nbsp;
+<b class="nc"><i>204</i>&nbsp;        fetchSectionText();</b>
+<i>205</i>&nbsp;
+<b class="nc"><i>206</i>&nbsp;        if (savedInstanceState != null &amp;&amp; savedInstanceState.containsKey(&quot;sectionTextModified&quot;)) {</b>
+<b class="nc"><i>207</i>&nbsp;            sectionTextModified = savedInstanceState.getBoolean(&quot;sectionTextModified&quot;);</b>
+<i>208</i>&nbsp;        }
+<i>209</i>&nbsp;
+<b class="nc"><i>210</i>&nbsp;        sectionText.addTextChangedListener(new TextWatcher() {</b>
+<i>211</i>&nbsp;            @Override
+<i>212</i>&nbsp;            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+<i>213</i>&nbsp;            }
+<i>214</i>&nbsp;
+<i>215</i>&nbsp;            @Override
+<i>216</i>&nbsp;            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+<i>217</i>&nbsp;            }
+<i>218</i>&nbsp;
+<i>219</i>&nbsp;            @Override
+<i>220</i>&nbsp;            public void afterTextChanged(Editable editable) {
+<b class="nc"><i>221</i>&nbsp;                if (sectionTextFirstLoad) {</b>
+<b class="nc"><i>222</i>&nbsp;                    sectionTextFirstLoad = false;</b>
+<i>223</i>&nbsp;                    return;
+<i>224</i>&nbsp;                }
+<b class="nc"><i>225</i>&nbsp;                if (!sectionTextModified) {</b>
+<b class="nc"><i>226</i>&nbsp;                    sectionTextModified = true;</b>
+<i>227</i>&nbsp;                    // update the actionbar menu, which will enable the Next button.
+<b class="nc"><i>228</i>&nbsp;                    supportInvalidateOptionsMenu();</b>
+<i>229</i>&nbsp;                }
+<i>230</i>&nbsp;            }
+<i>231</i>&nbsp;        });
+<i>232</i>&nbsp;
+<i>233</i>&nbsp;        // set focus to the EditText, but keep the keyboard hidden until the user changes the cursor location:
+<b class="nc"><i>234</i>&nbsp;        sectionText.requestFocus();</b>
+<b class="nc"><i>235</i>&nbsp;        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);</b>
+<i>236</i>&nbsp;    }
+<i>237</i>&nbsp;
+<i>238</i>&nbsp;    @Override
+<i>239</i>&nbsp;    public void onDestroy() {
+<b class="nc"><i>240</i>&nbsp;        cancelCalls();</b>
+<b class="nc"><i>241</i>&nbsp;        if (progressDialog.isShowing()) {</b>
+<b class="nc"><i>242</i>&nbsp;            progressDialog.dismiss();</b>
+<i>243</i>&nbsp;        }
+<b class="nc"><i>244</i>&nbsp;        syntaxHighlighter.cleanup();</b>
+<b class="nc"><i>245</i>&nbsp;        super.onDestroy();</b>
+<i>246</i>&nbsp;    }
+<i>247</i>&nbsp;
+<i>248</i>&nbsp;    private void updateEditLicenseText() {
+<b class="nc"><i>249</i>&nbsp;        TextView editLicenseText = findViewById(R.id.edit_section_license_text);</b>
+<b class="nc"><i>250</i>&nbsp;        editLicenseText.setText(StringUtil.fromHtml(String.format(getString(AccountUtil.isLoggedIn()</b>
+<i>251</i>&nbsp;                        ? R.string.edit_save_action_license_logged_in
+<i>252</i>&nbsp;                        : R.string.edit_save_action_license_anon),
+<b class="nc"><i>253</i>&nbsp;                getString(R.string.terms_of_use_url),</b>
+<b class="nc"><i>254</i>&nbsp;                getString(R.string.cc_by_sa_3_url))));</b>
+<i>255</i>&nbsp;
+<b class="nc"><i>256</i>&nbsp;        editLicenseText.setMovementMethod(new LinkMovementMethodExt((@NonNull String url, @Nullable String notUsed) -&gt; {</b>
+<b class="nc"><i>257</i>&nbsp;            if (url.equals(&quot;https://#login&quot;)) {</b>
+<b class="nc"><i>258</i>&nbsp;                funnel.logLoginAttempt();</b>
+<b class="nc"><i>259</i>&nbsp;                Intent loginIntent = LoginActivity.newIntent(EditSectionActivity.this,</b>
+<b class="nc"><i>260</i>&nbsp;                        LoginFunnel.SOURCE_EDIT, funnel.getSessionToken());</b>
+<b class="nc"><i>261</i>&nbsp;                startActivityForResult(loginIntent, Constants.ACTIVITY_REQUEST_LOGIN);</b>
+<b class="nc"><i>262</i>&nbsp;            } else {</b>
+<b class="nc"><i>263</i>&nbsp;                handleExternalLink(EditSectionActivity.this, Uri.parse(url));</b>
+<i>264</i>&nbsp;            }
+<i>265</i>&nbsp;        }));
+<i>266</i>&nbsp;    }
+<i>267</i>&nbsp;
+<i>268</i>&nbsp;    @Override
+<i>269</i>&nbsp;    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+<b class="nc"><i>270</i>&nbsp;        if (requestCode == Constants.ACTIVITY_REQUEST_LOGIN) {</b>
+<b class="nc"><i>271</i>&nbsp;            if (resultCode == LoginActivity.RESULT_LOGIN_SUCCESS) {</b>
+<b class="nc"><i>272</i>&nbsp;                updateEditLicenseText();</b>
+<b class="nc"><i>273</i>&nbsp;                funnel.logLoginSuccess();</b>
+<b class="nc"><i>274</i>&nbsp;                FeedbackUtil.showMessage(this, R.string.login_success_toast);</b>
+<i>275</i>&nbsp;            } else {
+<b class="nc"><i>276</i>&nbsp;                funnel.logLoginFailure();</b>
+<i>277</i>&nbsp;            }
+<i>278</i>&nbsp;        }
+<i>279</i>&nbsp;    }
+<i>280</i>&nbsp;
+<i>281</i>&nbsp;    private void cancelCalls() {
+<b class="nc"><i>282</i>&nbsp;        if (csrfClient != null) {</b>
+<b class="nc"><i>283</i>&nbsp;            csrfClient.cancel();</b>
+<b class="nc"><i>284</i>&nbsp;            csrfClient = null;</b>
+<i>285</i>&nbsp;        }
+<i>286</i>&nbsp;    }
+<i>287</i>&nbsp;
+<i>288</i>&nbsp;    private void getEditTokenThenSave(boolean forceLogin) {
+<b class="nc"><i>289</i>&nbsp;        cancelCalls();</b>
+<b class="nc"><i>290</i>&nbsp;        captchaHandler.hideCaptcha();</b>
+<b class="nc"><i>291</i>&nbsp;        editSummaryFragment.saveSummary();</b>
+<i>292</i>&nbsp;
+<b class="nc"><i>293</i>&nbsp;        csrfClient = new CsrfTokenClient(title.getWikiSite(), title.getWikiSite());</b>
+<b class="nc"><i>294</i>&nbsp;        csrfClient.request(forceLogin, new CsrfTokenClient.Callback() {</b>
+<i>295</i>&nbsp;            @Override
+<i>296</i>&nbsp;            public void success(@NonNull String token) {
+<b class="nc"><i>297</i>&nbsp;                doSave(token);</b>
+<i>298</i>&nbsp;            }
+<i>299</i>&nbsp;
+<i>300</i>&nbsp;            @Override
+<i>301</i>&nbsp;            public void failure(@NonNull Throwable caught) {
+<b class="nc"><i>302</i>&nbsp;                showError(caught);</b>
+<i>303</i>&nbsp;            }
+<i>304</i>&nbsp;
+<i>305</i>&nbsp;            @Override
+<i>306</i>&nbsp;            public void twoFactorPrompt() {
+<b class="nc"><i>307</i>&nbsp;                showError(new LoginClient.LoginFailedException(getResources()</b>
+<b class="nc"><i>308</i>&nbsp;                        .getString(R.string.login_2fa_other_workflow_error_msg)));</b>
+<i>309</i>&nbsp;            }
+<i>310</i>&nbsp;        });
+<i>311</i>&nbsp;    }
+<i>312</i>&nbsp;
+<i>313</i>&nbsp;    private void doSave(@NonNull String token) {
+<b class="nc"><i>314</i>&nbsp;        String summaryText = TextUtils.isEmpty(sectionHeading) ? &quot;&quot; : (&quot;/* &quot; + sectionHeading + &quot; */ &quot;);</b>
+<b class="nc"><i>315</i>&nbsp;        summaryText += editPreviewFragment.getSummary();</b>
+<i>316</i>&nbsp;        // Summaries are plaintext, so remove any HTML that&#39;s made its way into the summary
+<b class="nc"><i>317</i>&nbsp;        summaryText = StringUtil.fromHtml(summaryText).toString();</b>
+<i>318</i>&nbsp;
+<b class="nc"><i>319</i>&nbsp;        if (!isFinishing()) {</b>
+<b class="nc"><i>320</i>&nbsp;            progressDialog.show();</b>
+<i>321</i>&nbsp;        }
+<i>322</i>&nbsp;
+<b class="nc"><i>323</i>&nbsp;        new EditClient().request(title.getWikiSite(), title, sectionID,</b>
+<b class="nc"><i>324</i>&nbsp;                sectionText.getText().toString(), token, summaryText, baseTimeStamp, AccountUtil.isLoggedIn(),</b>
+<b class="nc"><i>325</i>&nbsp;                captchaHandler.isActive() ? captchaHandler.captchaId() : &quot;null&quot;,</b>
+<b class="nc"><i>326</i>&nbsp;                captchaHandler.isActive() ? captchaHandler.captchaWord() : &quot;null&quot;,</b>
+<b class="nc"><i>327</i>&nbsp;                new EditClient.Callback() {</b>
+<i>328</i>&nbsp;                    @Override
+<i>329</i>&nbsp;                    public void success(@NonNull Call&lt;Edit&gt; call, @NonNull EditResult result) {
+<b class="nc"><i>330</i>&nbsp;                        if (isFinishing() || !progressDialog.isShowing()) {</b>
+<i>331</i>&nbsp;                            // no longer attached to activity!
+<i>332</i>&nbsp;                            return;
+<i>333</i>&nbsp;                        }
+<b class="nc"><i>334</i>&nbsp;                        if (result instanceof EditSuccessResult) {</b>
+<b class="nc"><i>335</i>&nbsp;                            funnel.logSaved(((EditSuccessResult) result).getRevID());</b>
+<i>336</i>&nbsp;                            // TODO: remove the artificial delay and use the new revision
+<i>337</i>&nbsp;                            // ID returned to request the updated version of the page once
+<i>338</i>&nbsp;                            // revision support for mobile-sections is added to RESTBase
+<i>339</i>&nbsp;                            // See https://github.com/wikimedia/restbase/pull/729
+<b class="nc"><i>340</i>&nbsp;                            new Handler().postDelayed(successRunnable, TimeUnit.SECONDS.toMillis(2));</b>
+<b class="nc"><i>341</i>&nbsp;                        } else if (result instanceof CaptchaResult) {</b>
+<b class="nc"><i>342</i>&nbsp;                            if (captchaHandler.isActive()) {</b>
+<i>343</i>&nbsp;                                // Captcha entry failed!
+<b class="nc"><i>344</i>&nbsp;                                funnel.logCaptchaFailure();</b>
+<i>345</i>&nbsp;                            }
+<b class="nc"><i>346</i>&nbsp;                            captchaHandler.handleCaptcha(null, (CaptchaResult) result);</b>
+<b class="nc"><i>347</i>&nbsp;                            funnel.logCaptchaShown();</b>
+<b class="nc"><i>348</i>&nbsp;                        } else if (result instanceof EditAbuseFilterResult) {</b>
+<b class="nc"><i>349</i>&nbsp;                            abusefilterEditResult = (EditAbuseFilterResult) result;</b>
+<b class="nc"><i>350</i>&nbsp;                            handleAbuseFilter();</b>
+<b class="nc"><i>351</i>&nbsp;                            if (abusefilterEditResult.getType() == EditAbuseFilterResult.TYPE_ERROR) {</b>
+<b class="nc"><i>352</i>&nbsp;                                editPreviewFragment.hide();</b>
+<i>353</i>&nbsp;                            }
+<b class="nc"><i>354</i>&nbsp;                        } else if (result instanceof EditSpamBlacklistResult) {</b>
+<b class="nc"><i>355</i>&nbsp;                            FeedbackUtil.showMessage(EditSectionActivity.this,</b>
+<i>356</i>&nbsp;                                    R.string.editing_error_spamblacklist);
+<b class="nc"><i>357</i>&nbsp;                            progressDialog.dismiss();</b>
+<b class="nc"><i>358</i>&nbsp;                            editPreviewFragment.hide();</b>
+<i>359</i>&nbsp;                        } else {
+<b class="nc"><i>360</i>&nbsp;                            funnel.logError(result.getResult());</b>
+<i>361</i>&nbsp;                            // Expand to do everything.
+<b class="nc"><i>362</i>&nbsp;                            failure(call, new Throwable());</b>
+<i>363</i>&nbsp;                        }
+<i>364</i>&nbsp;                    }
+<i>365</i>&nbsp;
+<i>366</i>&nbsp;                    @Override
+<i>367</i>&nbsp;                    public void failure(@NonNull Call&lt;Edit&gt; call, @NonNull Throwable caught) {
+<b class="nc"><i>368</i>&nbsp;                        if (isFinishing() || !progressDialog.isShowing()) {</b>
+<i>369</i>&nbsp;                            // no longer attached to activity!
+<i>370</i>&nbsp;                            return;
+<i>371</i>&nbsp;                        }
+<b class="nc"><i>372</i>&nbsp;                        if (caught instanceof MwException) {</b>
+<b class="nc"><i>373</i>&nbsp;                            handleEditingException((MwException) caught);</b>
+<b class="nc"><i>374</i>&nbsp;                            L.e(caught);</b>
+<i>375</i>&nbsp;                        } else {
+<b class="nc"><i>376</i>&nbsp;                            showRetryDialog(caught);</b>
+<b class="nc"><i>377</i>&nbsp;                            L.e(caught);</b>
+<i>378</i>&nbsp;                        }
+<i>379</i>&nbsp;                    }
+<i>380</i>&nbsp;                });
+<i>381</i>&nbsp;    }
+<i>382</i>&nbsp;
+<i>383</i>&nbsp;    private void showRetryDialog(@NonNull Throwable t) {
+<b class="nc"><i>384</i>&nbsp;        final AlertDialog retryDialog = new AlertDialog.Builder(EditSectionActivity.this)</b>
+<b class="nc"><i>385</i>&nbsp;                .setTitle(R.string.dialog_message_edit_failed)</b>
+<b class="nc"><i>386</i>&nbsp;                .setMessage(t.getLocalizedMessage())</b>
+<b class="nc"><i>387</i>&nbsp;                .setPositiveButton(R.string.dialog_message_edit_failed_retry, (dialog, which) -&gt; {</b>
+<b class="nc"><i>388</i>&nbsp;                    getEditTokenThenSave(false);</b>
+<b class="nc"><i>389</i>&nbsp;                    dialog.dismiss();</b>
+<b class="nc"><i>390</i>&nbsp;                    progressDialog.dismiss();</b>
+<i>391</i>&nbsp;                })
+<b class="nc"><i>392</i>&nbsp;                .setNegativeButton(R.string.dialog_message_edit_failed_cancel, (dialog, which) -&gt; {</b>
+<b class="nc"><i>393</i>&nbsp;                    dialog.dismiss();</b>
+<b class="nc"><i>394</i>&nbsp;                    progressDialog.dismiss();</b>
+<i>395</i>&nbsp;                }).create();
+<b class="nc"><i>396</i>&nbsp;        retryDialog.show();</b>
+<i>397</i>&nbsp;    }
+<i>398</i>&nbsp;
+<i>399</i>&nbsp;    /**
+<i>400</i>&nbsp;     * Processes API error codes encountered during editing, and handles them as appropriate.
+<i>401</i>&nbsp;     * @param caught The MwException to handle.
+<i>402</i>&nbsp;     */
+<i>403</i>&nbsp;    private void handleEditingException(@NonNull MwException caught) {
+<b class="nc"><i>404</i>&nbsp;        String code = caught.getTitle();</b>
+<b class="nc"><i>405</i>&nbsp;        if (AccountUtil.isLoggedIn() &amp;&amp; (&quot;badtoken&quot;.equals(code) || &quot;assertuserfailed&quot;.equals(code))) {</b>
+<b class="nc"><i>406</i>&nbsp;            getEditTokenThenSave(true);</b>
+<i>407</i>&nbsp;            return;
+<i>408</i>&nbsp;        }
+<i>409</i>&nbsp;
+<b class="nc"><i>410</i>&nbsp;        progressDialog.dismiss();</b>
+<b class="nc"><i>411</i>&nbsp;        if (&quot;blocked&quot;.equals(code) || &quot;wikimedia-globalblocking-ipblocked&quot;.equals(code)) {</b>
+<i>412</i>&nbsp;            // User is blocked, locally or globally
+<i>413</i>&nbsp;            // If they were anon, canedit does not catch this, so we can&#39;t show them the locked pencil
+<i>414</i>&nbsp;            // If they not anon, this means they were blocked in the interim between opening the edit
+<i>415</i>&nbsp;            // window and clicking save. Less common, but might as well handle it
+<b class="nc"><i>416</i>&nbsp;            AlertDialog.Builder builder = new AlertDialog.Builder(EditSectionActivity.this);</b>
+<b class="nc"><i>417</i>&nbsp;            builder.setTitle(R.string.user_blocked_from_editing_title);</b>
+<b class="nc"><i>418</i>&nbsp;            if (AccountUtil.isLoggedIn()) {</b>
+<b class="nc"><i>419</i>&nbsp;                builder.setMessage(R.string.user_logged_in_blocked_from_editing);</b>
+<b class="nc"><i>420</i>&nbsp;                builder.setPositiveButton(android.R.string.ok, (dialog, i) -&gt; dialog.dismiss());</b>
+<i>421</i>&nbsp;            } else {
+<b class="nc"><i>422</i>&nbsp;                builder.setMessage(R.string.user_anon_blocked_from_editing);</b>
+<b class="nc"><i>423</i>&nbsp;                builder.setPositiveButton(R.string.nav_item_login, (dialog, i) -&gt; {</b>
+<b class="nc"><i>424</i>&nbsp;                    dialog.dismiss();</b>
+<b class="nc"><i>425</i>&nbsp;                    Intent loginIntent = LoginActivity.newIntent(EditSectionActivity.this,</b>
+<i>426</i>&nbsp;                            LoginFunnel.SOURCE_BLOCKED);
+<b class="nc"><i>427</i>&nbsp;                    startActivity(loginIntent);</b>
+<i>428</i>&nbsp;                });
+<b class="nc"><i>429</i>&nbsp;                builder.setNegativeButton(android.R.string.cancel, (dialog, i) -&gt; dialog.dismiss());</b>
+<i>430</i>&nbsp;            }
+<b class="nc"><i>431</i>&nbsp;            builder.show();</b>
+<b class="nc"><i>432</i>&nbsp;        } else if (&quot;editconflict&quot;.equals(code)) {</b>
+<b class="nc"><i>433</i>&nbsp;            new AlertDialog.Builder(EditSectionActivity.this)</b>
+<b class="nc"><i>434</i>&nbsp;                    .setTitle(R.string.edit_conflict_title)</b>
+<b class="nc"><i>435</i>&nbsp;                    .setMessage(R.string.edit_conflict_message)</b>
+<b class="nc"><i>436</i>&nbsp;                    .setPositiveButton(android.R.string.ok, null)</b>
+<b class="nc"><i>437</i>&nbsp;                    .show();</b>
+<b class="nc"><i>438</i>&nbsp;            resetToStart();</b>
+<i>439</i>&nbsp;        } else {
+<b class="nc"><i>440</i>&nbsp;            showError(caught);</b>
+<i>441</i>&nbsp;        }
+<i>442</i>&nbsp;    }
+<i>443</i>&nbsp;
+<i>444</i>&nbsp;    private void handleAbuseFilter() {
+<b class="nc"><i>445</i>&nbsp;        if (abusefilterEditResult == null) {</b>
+<i>446</i>&nbsp;            return;
+<i>447</i>&nbsp;        }
+<b class="nc"><i>448</i>&nbsp;        if (abusefilterEditResult.getType() == EditAbuseFilterResult.TYPE_ERROR) {</b>
+<b class="nc"><i>449</i>&nbsp;            funnel.logAbuseFilterError(abusefilterEditResult.getCode());</b>
+<b class="nc"><i>450</i>&nbsp;            abuseFilterImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_abusefilter_disallow));</b>
+<b class="nc"><i>451</i>&nbsp;            abusefilterTitle.setText(getString(R.string.abusefilter_title_disallow));</b>
+<b class="nc"><i>452</i>&nbsp;            abusefilterText.setText(StringUtil.fromHtml(getString(R.string.abusefilter_text_disallow)));</b>
+<i>453</i>&nbsp;        } else {
+<b class="nc"><i>454</i>&nbsp;            funnel.logAbuseFilterWarning(abusefilterEditResult.getCode());</b>
+<b class="nc"><i>455</i>&nbsp;            abuseFilterImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_abusefilter_warn));</b>
+<b class="nc"><i>456</i>&nbsp;            abusefilterTitle.setText(getString(R.string.abusefilter_title_warn));</b>
+<b class="nc"><i>457</i>&nbsp;            abusefilterText.setText(StringUtil.fromHtml(getString(R.string.abusefilter_text_warn)));</b>
+<i>458</i>&nbsp;        }
+<i>459</i>&nbsp;
+<b class="nc"><i>460</i>&nbsp;        hideSoftKeyboard(this);</b>
+<b class="nc"><i>461</i>&nbsp;        ViewAnimations.fadeIn(abusefilterContainer, this::supportInvalidateOptionsMenu);</b>
+<i>462</i>&nbsp;
+<b class="nc"><i>463</i>&nbsp;        if (progressDialog.isShowing()) {</b>
+<b class="nc"><i>464</i>&nbsp;            progressDialog.dismiss();</b>
+<i>465</i>&nbsp;        }
+<i>466</i>&nbsp;    }
+<i>467</i>&nbsp;
+<i>468</i>&nbsp;
+<i>469</i>&nbsp;    private void cancelAbuseFilter() {
+<b class="nc"><i>470</i>&nbsp;        abusefilterEditResult = null;</b>
+<b class="nc"><i>471</i>&nbsp;        ViewAnimations.fadeOut(abusefilterContainer, this::supportInvalidateOptionsMenu);</b>
+<i>472</i>&nbsp;    }
+<i>473</i>&nbsp;
+<i>474</i>&nbsp;    /**
+<i>475</i>&nbsp;     * Executes a click of the actionbar button, and performs the appropriate action
+<i>476</i>&nbsp;     * based on the current state of the button.
+<i>477</i>&nbsp;     */
+<i>478</i>&nbsp;    public void clickNextButton() {
+<b class="nc"><i>479</i>&nbsp;        if (editSummaryFragment.isActive()) {</b>
+<i>480</i>&nbsp;            //we&#39;re showing the custom edit summary window, so close it and
+<i>481</i>&nbsp;            //apply the provided summary.
+<b class="nc"><i>482</i>&nbsp;            editSummaryFragment.hide();</b>
+<b class="nc"><i>483</i>&nbsp;            editPreviewFragment.setCustomSummary(editSummaryFragment.getSummary());</b>
+<b class="nc"><i>484</i>&nbsp;        } else if (editPreviewFragment.isActive()) {</b>
+<i>485</i>&nbsp;            //we&#39;re showing the Preview window, which means that the next step is to save it!
+<b class="nc"><i>486</i>&nbsp;            if (abusefilterEditResult != null) {</b>
+<i>487</i>&nbsp;                //if the user was already shown an AbuseFilter warning, and they&#39;re ignoring it:
+<b class="nc"><i>488</i>&nbsp;                funnel.logAbuseFilterWarningIgnore(abusefilterEditResult.getCode());</b>
+<i>489</i>&nbsp;            }
+<b class="nc"><i>490</i>&nbsp;            getEditTokenThenSave(false);</b>
+<b class="nc"><i>491</i>&nbsp;            funnel.logSaveAttempt();</b>
+<i>492</i>&nbsp;        } else {
+<i>493</i>&nbsp;            //we must be showing the editing window, so show the Preview.
+<b class="nc"><i>494</i>&nbsp;            hideSoftKeyboard(this);</b>
+<b class="nc"><i>495</i>&nbsp;            editPreviewFragment.showPreview(title, sectionText.getText().toString());</b>
+<b class="nc"><i>496</i>&nbsp;            funnel.logPreview();</b>
+<i>497</i>&nbsp;        }
+<i>498</i>&nbsp;    }
+<i>499</i>&nbsp;
+<i>500</i>&nbsp;    @Override
+<i>501</i>&nbsp;    public boolean onOptionsItemSelected(MenuItem item) {
+<b class="nc"><i>502</i>&nbsp;        switch (item.getItemId()) {</b>
+<i>503</i>&nbsp;            case R.id.menu_save_section:
+<b class="nc"><i>504</i>&nbsp;                clickNextButton();</b>
+<b class="nc"><i>505</i>&nbsp;                return true;</b>
+<i>506</i>&nbsp;            default:
+<b class="nc"><i>507</i>&nbsp;                return super.onOptionsItemSelected(item);</b>
+<i>508</i>&nbsp;        }
+<i>509</i>&nbsp;    }
+<i>510</i>&nbsp;
+<i>511</i>&nbsp;    @Override
+<i>512</i>&nbsp;    public boolean onCreateOptionsMenu(Menu menu) {
+<b class="nc"><i>513</i>&nbsp;        getMenuInflater().inflate(R.menu.menu_edit_section, menu);</b>
+<b class="nc"><i>514</i>&nbsp;        MenuItem item = menu.findItem(R.id.menu_save_section);</b>
+<i>515</i>&nbsp;
+<b class="nc"><i>516</i>&nbsp;        if (editSummaryFragment.isActive()) {</b>
+<b class="nc"><i>517</i>&nbsp;            item.setTitle(getString(R.string.edit_next));</b>
+<b class="nc"><i>518</i>&nbsp;        } else if (editPreviewFragment.isActive()) {</b>
+<b class="nc"><i>519</i>&nbsp;            item.setTitle(getString(R.string.edit_done));</b>
+<i>520</i>&nbsp;        } else {
+<b class="nc"><i>521</i>&nbsp;            item.setTitle(getString(R.string.edit_next));</b>
+<i>522</i>&nbsp;        }
+<i>523</i>&nbsp;
+<b class="nc"><i>524</i>&nbsp;        if (abusefilterEditResult != null) {</b>
+<b class="nc"><i>525</i>&nbsp;            if (abusefilterEditResult.getType() == EditAbuseFilterResult.TYPE_ERROR) {</b>
+<b class="nc"><i>526</i>&nbsp;                item.setEnabled(false);</b>
+<i>527</i>&nbsp;            } else {
+<b class="nc"><i>528</i>&nbsp;                item.setEnabled(true);</b>
+<i>529</i>&nbsp;            }
+<i>530</i>&nbsp;        } else {
+<b class="nc"><i>531</i>&nbsp;            item.setEnabled(sectionTextModified);</b>
+<i>532</i>&nbsp;        }
+<i>533</i>&nbsp;
+<b class="nc"><i>534</i>&nbsp;        View v = getLayoutInflater().inflate(R.layout.item_edit_actionbar_button, null);</b>
+<b class="nc"><i>535</i>&nbsp;        item.setActionView(v);</b>
+<b class="nc"><i>536</i>&nbsp;        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,</b>
+<i>537</i>&nbsp;                ViewGroup.LayoutParams.MATCH_PARENT);
+<b class="nc"><i>538</i>&nbsp;        v.setLayoutParams(params);</b>
+<b class="nc"><i>539</i>&nbsp;        TextView txtView = v.findViewById(R.id.edit_actionbar_button_text);</b>
+<b class="nc"><i>540</i>&nbsp;        txtView.setText(item.getTitle());</b>
+<b class="nc"><i>541</i>&nbsp;        txtView.setTypeface(null, item.isEnabled() ? Typeface.BOLD : Typeface.NORMAL);</b>
+<b class="nc"><i>542</i>&nbsp;        v.setTag(item);</b>
+<b class="nc"><i>543</i>&nbsp;        v.setClickable(true);</b>
+<b class="nc"><i>544</i>&nbsp;        v.setEnabled(item.isEnabled());</b>
+<b class="nc"><i>545</i>&nbsp;        v.setOnClickListener((view) -&gt; onOptionsItemSelected((MenuItem) view.getTag()));</b>
+<i>546</i>&nbsp;
+<b class="nc"><i>547</i>&nbsp;        v.setBackgroundColor(ContextCompat.getColor(this, item.isEnabled()</b>
+<b class="nc"><i>548</i>&nbsp;                ? (editPreviewFragment.isActive() ? R.color.accent50</b>
+<b class="nc"><i>549</i>&nbsp;                : ResourceUtil.getThemedAttributeId(this, R.attr.colorAccent)) : R.color.base50));</b>
+<i>550</i>&nbsp;
+<b class="nc"><i>551</i>&nbsp;        return true;</b>
+<i>552</i>&nbsp;    }
+<i>553</i>&nbsp;
+<i>554</i>&nbsp;    public void showError(@Nullable Throwable caught) {
+<b class="nc"><i>555</i>&nbsp;        errorView.setError(caught);</b>
+<b class="nc"><i>556</i>&nbsp;        errorView.setVisibility(View.VISIBLE);</b>
+<i>557</i>&nbsp;    }
+<i>558</i>&nbsp;
+<i>559</i>&nbsp;    @Override
+<i>560</i>&nbsp;    protected void onSaveInstanceState(Bundle outState) {
+<b class="nc"><i>561</i>&nbsp;        super.onSaveInstanceState(outState);</b>
+<b class="nc"><i>562</i>&nbsp;        outState.putString(&quot;sectionWikitext&quot;, sectionWikitext);</b>
+<b class="nc"><i>563</i>&nbsp;        outState.putParcelable(&quot;abusefilter&quot;, abusefilterEditResult);</b>
+<b class="nc"><i>564</i>&nbsp;        outState.putBoolean(&quot;sectionTextModified&quot;, sectionTextModified);</b>
+<b class="nc"><i>565</i>&nbsp;        captchaHandler.saveState(outState);</b>
+<i>566</i>&nbsp;    }
+<i>567</i>&nbsp;
+<i>568</i>&nbsp;    private void resetToStart() {
+<b class="nc"><i>569</i>&nbsp;        if (captchaHandler.isActive()) {</b>
+<b class="nc"><i>570</i>&nbsp;            captchaHandler.cancelCaptcha();</b>
+<i>571</i>&nbsp;        }
+<b class="nc"><i>572</i>&nbsp;        if (editSummaryFragment.isActive()) {</b>
+<b class="nc"><i>573</i>&nbsp;            editSummaryFragment.hide();</b>
+<i>574</i>&nbsp;        }
+<b class="nc"><i>575</i>&nbsp;        if (editPreviewFragment.isActive()) {</b>
+<b class="nc"><i>576</i>&nbsp;            editPreviewFragment.hide();</b>
+<i>577</i>&nbsp;        }
+<i>578</i>&nbsp;    }
+<i>579</i>&nbsp;
+<i>580</i>&nbsp;    private void fetchSectionText() {
+<b class="nc"><i>581</i>&nbsp;        if (sectionWikitext == null) {</b>
+<b class="nc"><i>582</i>&nbsp;            new WikitextClient().request(title.getWikiSite(), title, sectionID, new WikitextClient.Callback() {</b>
+<i>583</i>&nbsp;                @Override
+<i>584</i>&nbsp;                public void success(@NonNull Call&lt;MwQueryResponse&gt; call, @NonNull String normalizedTitle,
+<i>585</i>&nbsp;                                    @NonNull String wikitext, @Nullable String timeStamp) {
+<b class="nc"><i>586</i>&nbsp;                    title = new PageTitle(normalizedTitle, title.getWikiSite());</b>
+<b class="nc"><i>587</i>&nbsp;                    sectionWikitext = wikitext;</b>
+<b class="nc"><i>588</i>&nbsp;                    baseTimeStamp = timeStamp;</b>
+<b class="nc"><i>589</i>&nbsp;                    displaySectionText();</b>
+<i>590</i>&nbsp;                }
+<i>591</i>&nbsp;
+<i>592</i>&nbsp;                @Override
+<i>593</i>&nbsp;                public void failure(@NonNull Call&lt;MwQueryResponse&gt; call, @NonNull Throwable caught) {
+<b class="nc"><i>594</i>&nbsp;                    sectionProgress.setVisibility(View.GONE);</b>
+<b class="nc"><i>595</i>&nbsp;                    showError(caught);</b>
+<b class="nc"><i>596</i>&nbsp;                    L.e(caught);</b>
+<i>597</i>&nbsp;                }
+<i>598</i>&nbsp;            });
+<i>599</i>&nbsp;        } else {
+<b class="nc"><i>600</i>&nbsp;            displaySectionText();</b>
+<i>601</i>&nbsp;        }
+<i>602</i>&nbsp;    }
+<i>603</i>&nbsp;
+<i>604</i>&nbsp;    private void displaySectionText() {
+<b class="nc"><i>605</i>&nbsp;        sectionText.setText(sectionWikitext);</b>
+<b class="nc"><i>606</i>&nbsp;        ViewAnimations.crossFade(sectionProgress, sectionContainer);</b>
+<b class="nc"><i>607</i>&nbsp;        supportInvalidateOptionsMenu();</b>
+<b class="nc"><i>608</i>&nbsp;        scrollToHighlight(textToHighlight);</b>
+<i>609</i>&nbsp;
+<b class="nc"><i>610</i>&nbsp;        if (pageProps != null &amp;&amp; pageProps.getEditProtectionStatus() != null) {</b>
+<i>611</i>&nbsp;            String message;
+<b class="nc"><i>612</i>&nbsp;            switch (pageProps.getEditProtectionStatus()) {</b>
+<i>613</i>&nbsp;                case &quot;sysop&quot;:
+<b class="nc"><i>614</i>&nbsp;                    message = getString(R.string.page_protected_sysop);</b>
+<b class="nc"><i>615</i>&nbsp;                    break;</b>
+<i>616</i>&nbsp;                case &quot;autoconfirmed&quot;:
+<b class="nc"><i>617</i>&nbsp;                    message = getString(R.string.page_protected_autoconfirmed);</b>
+<b class="nc"><i>618</i>&nbsp;                    break;</b>
+<i>619</i>&nbsp;                default:
+<b class="nc"><i>620</i>&nbsp;                    message = getString(R.string.page_protected_other, pageProps.getEditProtectionStatus());</b>
+<i>621</i>&nbsp;                    break;
+<i>622</i>&nbsp;            }
+<b class="nc"><i>623</i>&nbsp;            FeedbackUtil.showMessage(this, message);</b>
+<i>624</i>&nbsp;        }
+<i>625</i>&nbsp;    }
+<i>626</i>&nbsp;
+<i>627</i>&nbsp;    private void scrollToHighlight(@Nullable final String highlightText) {
+<b class="nc"><i>628</i>&nbsp;        if (highlightText == null || !TextUtils.isGraphic(highlightText)) {</b>
+<i>629</i>&nbsp;            return;
+<i>630</i>&nbsp;        }
+<b class="nc"><i>631</i>&nbsp;        sectionText.post(() -&gt; {</b>
+<b class="nc"><i>632</i>&nbsp;            sectionContainer.fullScroll(View.FOCUS_DOWN);</b>
+<b class="nc"><i>633</i>&nbsp;            final int scrollDelayMs = 500;</b>
+<b class="nc"><i>634</i>&nbsp;            sectionText.postDelayed(() -&gt; setHighlight(highlightText), scrollDelayMs);</b>
+<i>635</i>&nbsp;        });
+<i>636</i>&nbsp;    }
+<i>637</i>&nbsp;
+<i>638</i>&nbsp;    private void setHighlight(@NonNull String highlightText) {
+<b class="nc"><i>639</i>&nbsp;        String[] words = highlightText.split(&quot;\\s+&quot;);</b>
+<b class="nc"><i>640</i>&nbsp;        int pos = 0;</b>
+<b class="nc"><i>641</i>&nbsp;        for (String word : words) {</b>
+<b class="nc"><i>642</i>&nbsp;            pos = sectionWikitext.indexOf(word, pos);</b>
+<b class="nc"><i>643</i>&nbsp;            if (pos == -1) {</b>
+<b class="nc"><i>644</i>&nbsp;                break;</b>
+<i>645</i>&nbsp;            }
+<i>646</i>&nbsp;        }
+<b class="nc"><i>647</i>&nbsp;        if (pos == -1) {</b>
+<b class="nc"><i>648</i>&nbsp;            pos = sectionWikitext.indexOf(words[words.length - 1]);</b>
+<i>649</i>&nbsp;        }
+<b class="nc"><i>650</i>&nbsp;        if (pos &gt; 0) {</b>
+<i>651</i>&nbsp;            // TODO: Programmatic selection doesn&#39;t seem to work with RTL content...
+<b class="nc"><i>652</i>&nbsp;            sectionText.setSelection(pos, pos + words[words.length - 1].length());</b>
+<b class="nc"><i>653</i>&nbsp;            sectionText.performLongClick();</b>
+<i>654</i>&nbsp;        }
+<i>655</i>&nbsp;    }
+<i>656</i>&nbsp;
+<i>657</i>&nbsp;    /**
+<i>658</i>&nbsp;     * Shows the custom edit summary input fragment, where the user may enter a summary
+<i>659</i>&nbsp;     * that&#39;s different from the standard summary tags.
+<i>660</i>&nbsp;     */
+<i>661</i>&nbsp;    public void showCustomSummary() {
+<b class="nc"><i>662</i>&nbsp;        editSummaryFragment.show();</b>
+<i>663</i>&nbsp;    }
+<i>664</i>&nbsp;
+<i>665</i>&nbsp;    @Override
+<i>666</i>&nbsp;    public void onBackPressed() {
+<b class="nc"><i>667</i>&nbsp;        if (captchaHandler.isActive()) {</b>
+<b class="nc"><i>668</i>&nbsp;            captchaHandler.cancelCaptcha();</b>
+<i>669</i>&nbsp;        }
+<b class="nc"><i>670</i>&nbsp;        if (abusefilterEditResult != null) {</b>
+<b class="nc"><i>671</i>&nbsp;            if (abusefilterEditResult.getType() == EditAbuseFilterResult.TYPE_WARNING) {</b>
+<b class="nc"><i>672</i>&nbsp;                funnel.logAbuseFilterWarningBack(abusefilterEditResult.getCode());</b>
+<i>673</i>&nbsp;            }
+<b class="nc"><i>674</i>&nbsp;            cancelAbuseFilter();</b>
+<i>675</i>&nbsp;            return;
+<i>676</i>&nbsp;        }
+<b class="nc"><i>677</i>&nbsp;        if (editSummaryFragment.handleBackPressed()) {</b>
+<i>678</i>&nbsp;            return;
+<i>679</i>&nbsp;        }
+<b class="nc"><i>680</i>&nbsp;        if (editPreviewFragment.handleBackPressed()) {</b>
+<i>681</i>&nbsp;            return;
+<i>682</i>&nbsp;        }
+<b class="nc"><i>683</i>&nbsp;        if (errorView.getVisibility() == View.VISIBLE) {</b>
+<b class="nc"><i>684</i>&nbsp;            errorView.setVisibility(View.GONE);</b>
+<i>685</i>&nbsp;        }
+<i>686</i>&nbsp;
+<b class="nc"><i>687</i>&nbsp;        hideSoftKeyboard(this);</b>
+<i>688</i>&nbsp;
+<b class="nc"><i>689</i>&nbsp;        if (sectionTextModified) {</b>
+<b class="nc"><i>690</i>&nbsp;            AlertDialog.Builder alert = new AlertDialog.Builder(this);</b>
+<b class="nc"><i>691</i>&nbsp;            alert.setMessage(getString(R.string.edit_abandon_confirm));</b>
+<b class="nc"><i>692</i>&nbsp;            alert.setPositiveButton(getString(R.string.edit_abandon_confirm_yes), (dialog, id) -&gt; {</b>
+<b class="nc"><i>693</i>&nbsp;                dialog.dismiss();</b>
+<b class="nc"><i>694</i>&nbsp;                finish();</b>
+<i>695</i>&nbsp;            });
+<b class="nc"><i>696</i>&nbsp;            alert.setNegativeButton(getString(R.string.edit_abandon_confirm_no), (dialog, id) -&gt; dialog.dismiss());</b>
+<b class="nc"><i>697</i>&nbsp;            alert.create().show();</b>
+<b class="nc"><i>698</i>&nbsp;        } else {</b>
+<b class="nc"><i>699</i>&nbsp;            finish();</b>
+<i>700</i>&nbsp;        }
+<i>701</i>&nbsp;    }
+<i>702</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

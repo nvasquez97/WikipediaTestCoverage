@@ -1,0 +1,121 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: OnThisDayFullListClient</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.onthisday</a> ]
+</div>
+
+<h1>Coverage Summary for Class: OnThisDayFullListClient (org.wikipedia.feed.onthisday)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">OnThisDayFullListClient</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.feed.onthisday;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.annotation.Nullable;
+<i>5</i>&nbsp;import android.support.annotation.VisibleForTesting;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>8</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>9</i>&nbsp;import org.wikipedia.dataclient.retrofit.RetrofitFactory;
+<i>10</i>&nbsp;import org.wikipedia.settings.Prefs;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import java.util.Locale;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import retrofit2.Call;
+<i>15</i>&nbsp;import retrofit2.Retrofit;
+<i>16</i>&nbsp;import retrofit2.http.GET;
+<i>17</i>&nbsp;import retrofit2.http.Path;
+<i>18</i>&nbsp;
+<b class="nc"><i>19</i>&nbsp;public class OnThisDayFullListClient {</b>
+<i>20</i>&nbsp;    @Nullable private Call&lt;OnThisDay&gt; call;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    public Call&lt;OnThisDay&gt; request(int month, int date) {
+<b class="nc"><i>23</i>&nbsp;        WikiSite wiki = WikipediaApp.getInstance().getWikiSite();</b>
+<b class="nc"><i>24</i>&nbsp;        String endpoint = String.format(Locale.ROOT, Prefs.getRestbaseUriFormat(), wiki.scheme(),</b>
+<b class="nc"><i>25</i>&nbsp;                wiki.authority());</b>
+<b class="nc"><i>26</i>&nbsp;        Retrofit retrofit = RetrofitFactory.newInstance(endpoint, wiki);</b>
+<b class="nc"><i>27</i>&nbsp;        OnThisDayFullListClient.Service service = retrofit.create(Service.class);</b>
+<b class="nc"><i>28</i>&nbsp;        return service.getAllOtdEvents(month, date);</b>
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    @VisibleForTesting
+<i>32</i>&nbsp;    interface Service {
+<i>33</i>&nbsp;        @NonNull
+<i>34</i>&nbsp;        @GET(&quot;feed/onthisday/events/{mm}/{dd}&quot;)
+<i>35</i>&nbsp;        Call&lt;OnThisDay&gt; getAllOtdEvents(@Path(&quot;mm&quot;) int month,
+<i>36</i>&nbsp;                                        @Path(&quot;dd&quot;) int day);
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

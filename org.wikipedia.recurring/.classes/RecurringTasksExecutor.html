@@ -1,0 +1,147 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: RecurringTasksExecutor</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.recurring</a> ]
+</div>
+
+<h1>Coverage Summary for Class: RecurringTasksExecutor (org.wikipedia.recurring)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RecurringTasksExecutor</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">RecurringTasksExecutor$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 14)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.recurring;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>4</i>&nbsp;import org.wikipedia.alphaupdater.AlphaUpdateChecker;
+<i>5</i>&nbsp;import org.wikipedia.concurrency.SaneAsyncTask;
+<i>6</i>&nbsp;import org.wikipedia.page.shareafact.SharedImageCleanupTask;
+<i>7</i>&nbsp;import org.wikipedia.settings.RemoteConfigRefreshTask;
+<i>8</i>&nbsp;import org.wikipedia.util.ReleaseUtil;
+<i>9</i>&nbsp;
+<b class="nc"><i>10</i>&nbsp;public class RecurringTasksExecutor {</b>
+<i>11</i>&nbsp;    private final WikipediaApp app;
+<i>12</i>&nbsp;
+<b class="nc"><i>13</i>&nbsp;    public RecurringTasksExecutor(WikipediaApp app) {</b>
+<b class="nc"><i>14</i>&nbsp;        this.app = app;</b>
+<i>15</i>&nbsp;    }
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    public void run() {
+<b class="nc"><i>18</i>&nbsp;        SaneAsyncTask&lt;Void&gt; task = new SaneAsyncTask&lt;Void&gt;() {</b>
+<i>19</i>&nbsp;            @Override
+<i>20</i>&nbsp;            public Void performTask() throws Throwable {
+<b class="nc"><i>21</i>&nbsp;                RecurringTask[] allTasks = new RecurringTask[] {</b>
+<i>22</i>&nbsp;                        // Has list of all rotating tasks that need to be run
+<i>23</i>&nbsp;                        new RemoteConfigRefreshTask(),
+<b class="nc"><i>24</i>&nbsp;                        new SharedImageCleanupTask(app),</b>
+<b class="nc"><i>25</i>&nbsp;                        new DailyEventTask(app)</b>
+<i>26</i>&nbsp;                };
+<b class="nc"><i>27</i>&nbsp;                for (RecurringTask task: allTasks) {</b>
+<b class="nc"><i>28</i>&nbsp;                    task.runIfNecessary();</b>
+<i>29</i>&nbsp;                }
+<b class="nc"><i>30</i>&nbsp;                if (ReleaseUtil.isAlphaRelease()) {</b>
+<b class="nc"><i>31</i>&nbsp;                    new AlphaUpdateChecker(app).runIfNecessary();</b>
+<i>32</i>&nbsp;                }
+<b class="nc"><i>33</i>&nbsp;                return null;</b>
+<i>34</i>&nbsp;            }
+<i>35</i>&nbsp;        };
+<b class="nc"><i>36</i>&nbsp;        task.execute();</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

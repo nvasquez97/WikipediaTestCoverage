@@ -1,0 +1,588 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: BottomContentView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.page.bottomcontent</a> ]
+</div>
+
+<h1>Coverage Summary for Class: BottomContentView (org.wikipedia.page.bottomcontent)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BottomContentView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 27)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 108)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">BottomContentView$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">BottomContentView$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">BottomContentView$LongPressHandler</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">BottomContentView$ReadMoreAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 16)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 43)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 143)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.page.bottomcontent;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.graphics.Paint;
+<i>5</i>&nbsp;import android.net.Uri;
+<i>6</i>&nbsp;import android.support.annotation.NonNull;
+<i>7</i>&nbsp;import android.text.TextUtils;
+<i>8</i>&nbsp;import android.text.method.LinkMovementMethod;
+<i>9</i>&nbsp;import android.util.AttributeSet;
+<i>10</i>&nbsp;import android.view.LayoutInflater;
+<i>11</i>&nbsp;import android.view.View;
+<i>12</i>&nbsp;import android.view.ViewGroup;
+<i>13</i>&nbsp;import android.webkit.WebView;
+<i>14</i>&nbsp;import android.widget.AdapterView;
+<i>15</i>&nbsp;import android.widget.BaseAdapter;
+<i>16</i>&nbsp;import android.widget.ListView;
+<i>17</i>&nbsp;import android.widget.TextView;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;import org.apache.commons.lang3.StringUtils;
+<i>20</i>&nbsp;import org.json.JSONException;
+<i>21</i>&nbsp;import org.json.JSONObject;
+<i>22</i>&nbsp;import org.wikipedia.Constants;
+<i>23</i>&nbsp;import org.wikipedia.LongPressHandler.ListViewContextMenuListener;
+<i>24</i>&nbsp;import org.wikipedia.R;
+<i>25</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>26</i>&nbsp;import org.wikipedia.analytics.SuggestedPagesFunnel;
+<i>27</i>&nbsp;import org.wikipedia.bridge.CommunicationBridge;
+<i>28</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwQueryResponse;
+<i>29</i>&nbsp;import org.wikipedia.history.HistoryEntry;
+<i>30</i>&nbsp;import org.wikipedia.page.Namespace;
+<i>31</i>&nbsp;import org.wikipedia.page.Page;
+<i>32</i>&nbsp;import org.wikipedia.page.PageContainerLongPressHandler;
+<i>33</i>&nbsp;import org.wikipedia.page.PageFragment;
+<i>34</i>&nbsp;import org.wikipedia.page.PageTitle;
+<i>35</i>&nbsp;import org.wikipedia.search.FullTextSearchClient;
+<i>36</i>&nbsp;import org.wikipedia.search.SearchResult;
+<i>37</i>&nbsp;import org.wikipedia.search.SearchResults;
+<i>38</i>&nbsp;import org.wikipedia.util.DimenUtil;
+<i>39</i>&nbsp;import org.wikipedia.util.GeoUtil;
+<i>40</i>&nbsp;import org.wikipedia.util.L10nUtil;
+<i>41</i>&nbsp;import org.wikipedia.util.StringUtil;
+<i>42</i>&nbsp;import org.wikipedia.util.log.L;
+<i>43</i>&nbsp;import org.wikipedia.views.ConfigurableTextView;
+<i>44</i>&nbsp;import org.wikipedia.views.GoneIfEmptyTextView;
+<i>45</i>&nbsp;import org.wikipedia.views.LinearLayoutOverWebView;
+<i>46</i>&nbsp;import org.wikipedia.views.ObservableWebView;
+<i>47</i>&nbsp;import org.wikipedia.views.ViewUtil;
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;import java.util.List;
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;import butterknife.BindView;
+<i>52</i>&nbsp;import butterknife.ButterKnife;
+<i>53</i>&nbsp;import butterknife.OnClick;
+<i>54</i>&nbsp;import retrofit2.Call;
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;import static org.wikipedia.util.DateUtil.getShortDateString;
+<i>57</i>&nbsp;import static org.wikipedia.util.L10nUtil.formatDateRelative;
+<i>58</i>&nbsp;import static org.wikipedia.util.L10nUtil.getStringForArticleLanguage;
+<i>59</i>&nbsp;import static org.wikipedia.util.L10nUtil.setConditionalLayoutDirection;
+<i>60</i>&nbsp;import static org.wikipedia.util.UriUtil.visitInExternalBrowser;
+<i>61</i>&nbsp;
+<b class="nc"><i>62</i>&nbsp;public class BottomContentView extends LinearLayoutOverWebView</b>
+<i>63</i>&nbsp;        implements ObservableWebView.OnScrollChangeListener,
+<i>64</i>&nbsp;        ObservableWebView.OnContentHeightChangedListener {
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    private PageFragment parentFragment;
+<i>67</i>&nbsp;    private WebView webView;
+<b class="nc"><i>68</i>&nbsp;    private boolean firstTimeShown = false;</b>
+<i>69</i>&nbsp;    private int prevLayoutHeight;
+<i>70</i>&nbsp;    private Page page;
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    @BindView(R.id.page_languages_container) View pageLanguagesContainer;
+<i>73</i>&nbsp;    @BindView(R.id.page_languages_divider) View pageLanguagesDivider;
+<i>74</i>&nbsp;    @BindView(R.id.page_languages_count_text) TextView pageLanguagesCount;
+<i>75</i>&nbsp;    @BindView(R.id.page_edit_history_container) View pageEditHistoryContainer;
+<i>76</i>&nbsp;    @BindView(R.id.page_edit_history_divider) View pageEditHistoryDivider;
+<i>77</i>&nbsp;    @BindView(R.id.page_last_updated_text) TextView pageLastUpdatedText;
+<i>78</i>&nbsp;    @BindView(R.id.page_talk_container) View pageTalkContainer;
+<i>79</i>&nbsp;    @BindView(R.id.page_talk_divider) View pageTalkDivider;
+<i>80</i>&nbsp;    @BindView(R.id.page_view_map_container) View pageMapContainer;
+<i>81</i>&nbsp;    @BindView(R.id.page_license_text) TextView pageLicenseText;
+<i>82</i>&nbsp;    @BindView(R.id.page_external_link) TextView pageExternalLink;
+<i>83</i>&nbsp;    @BindView(R.id.read_more_container) View readMoreContainer;
+<i>84</i>&nbsp;    @BindView(R.id.read_more_list) ListView readMoreList;
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;    private SuggestedPagesFunnel funnel;
+<b class="nc"><i>87</i>&nbsp;    private ReadMoreAdapter readMoreAdapter = new ReadMoreAdapter();</b>
+<i>88</i>&nbsp;    private SearchResults readMoreItems;
+<i>89</i>&nbsp;    private CommunicationBridge bridge;
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;    public BottomContentView(Context context) {
+<b class="nc"><i>92</i>&nbsp;        super(context);</b>
+<b class="nc"><i>93</i>&nbsp;        init();</b>
+<i>94</i>&nbsp;    }
+<i>95</i>&nbsp;
+<i>96</i>&nbsp;    public BottomContentView(Context context, AttributeSet attrs) {
+<b class="nc"><i>97</i>&nbsp;        super(context, attrs);</b>
+<b class="nc"><i>98</i>&nbsp;        init();</b>
+<i>99</i>&nbsp;    }
+<i>100</i>&nbsp;
+<i>101</i>&nbsp;    public BottomContentView(Context context, AttributeSet attrs, int defStyleAttr) {
+<b class="nc"><i>102</i>&nbsp;        super(context, attrs, defStyleAttr);</b>
+<b class="nc"><i>103</i>&nbsp;        init();</b>
+<i>104</i>&nbsp;    }
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;    private void init() {
+<b class="nc"><i>107</i>&nbsp;        inflate(getContext(), R.layout.fragment_page_bottom_content, this);</b>
+<b class="nc"><i>108</i>&nbsp;        ButterKnife.bind(this);</b>
+<i>109</i>&nbsp;    }
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;    public void setup(PageFragment parentFragment, CommunicationBridge bridge, ObservableWebView webview) {
+<b class="nc"><i>112</i>&nbsp;        this.parentFragment = parentFragment;</b>
+<b class="nc"><i>113</i>&nbsp;        this.webView = webview;</b>
+<b class="nc"><i>114</i>&nbsp;        this.bridge = bridge;</b>
+<b class="nc"><i>115</i>&nbsp;        setWebView(webview);</b>
+<i>116</i>&nbsp;
+<b class="nc"><i>117</i>&nbsp;        webview.addOnScrollChangeListener(this);</b>
+<b class="nc"><i>118</i>&nbsp;        webview.addOnContentHeightChangedListener(this);</b>
+<i>119</i>&nbsp;
+<b class="nc"><i>120</i>&nbsp;        pageExternalLink.setPaintFlags(pageExternalLink.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);</b>
+<i>121</i>&nbsp;
+<b class="nc"><i>122</i>&nbsp;        if (parentFragment.callback() != null) {</b>
+<b class="nc"><i>123</i>&nbsp;            ListViewContextMenuListener contextMenuListener</b>
+<i>124</i>&nbsp;                    = new LongPressHandler(parentFragment);
+<i>125</i>&nbsp;
+<b class="nc"><i>126</i>&nbsp;            new org.wikipedia.LongPressHandler(readMoreList, HistoryEntry.SOURCE_INTERNAL_LINK,</b>
+<i>127</i>&nbsp;                    contextMenuListener);
+<i>128</i>&nbsp;        }
+<i>129</i>&nbsp;
+<b class="nc"><i>130</i>&nbsp;        addOnLayoutChangeListener((View v, int left, int top, int right, int bottom,</b>
+<i>131</i>&nbsp;                                       int oldLeft, int oldTop, int oldRight, int oldBottom) -&gt; {
+<b class="nc"><i>132</i>&nbsp;            if (prevLayoutHeight == getHeight()) {</b>
+<i>133</i>&nbsp;                return;
+<i>134</i>&nbsp;            }
+<b class="nc"><i>135</i>&nbsp;            prevLayoutHeight = getHeight();</b>
+<b class="nc"><i>136</i>&nbsp;            padWebView();</b>
+<i>137</i>&nbsp;        });
+<i>138</i>&nbsp;
+<b class="nc"><i>139</i>&nbsp;        readMoreList.setAdapter(readMoreAdapter);</b>
+<b class="nc"><i>140</i>&nbsp;        readMoreList.setOnItemClickListener((AdapterView&lt;?&gt; parent, View view, int position, long id) -&gt; {</b>
+<b class="nc"><i>141</i>&nbsp;            PageTitle title = readMoreAdapter.getItem(position).getPageTitle();</b>
+<b class="nc"><i>142</i>&nbsp;            HistoryEntry historyEntry = new HistoryEntry(title, HistoryEntry.SOURCE_INTERNAL_LINK);</b>
+<b class="nc"><i>143</i>&nbsp;            parentFragment.loadPage(title, historyEntry);</b>
+<b class="nc"><i>144</i>&nbsp;            funnel.logSuggestionClicked(page.getTitle(), readMoreItems.getResults(), position);</b>
+<i>145</i>&nbsp;        });
+<i>146</i>&nbsp;
+<i>147</i>&nbsp;        // hide ourselves by default
+<b class="nc"><i>148</i>&nbsp;        hide();</b>
+<i>149</i>&nbsp;    }
+<i>150</i>&nbsp;
+<i>151</i>&nbsp;    public void setPage(@NonNull Page page) {
+<b class="nc"><i>152</i>&nbsp;        this.page = page;</b>
+<b class="nc"><i>153</i>&nbsp;        funnel = new SuggestedPagesFunnel(WikipediaApp.getInstance());</b>
+<b class="nc"><i>154</i>&nbsp;        firstTimeShown = false;</b>
+<i>155</i>&nbsp;
+<b class="nc"><i>156</i>&nbsp;        setConditionalLayoutDirection(readMoreList, page.getTitle().getWikiSite().languageCode());</b>
+<i>157</i>&nbsp;
+<b class="nc"><i>158</i>&nbsp;        setupAttribution();</b>
+<b class="nc"><i>159</i>&nbsp;        setupPageButtons();</b>
+<i>160</i>&nbsp;
+<b class="nc"><i>161</i>&nbsp;        if (page.couldHaveReadMoreSection()) {</b>
+<b class="nc"><i>162</i>&nbsp;            preRequestReadMoreItems();</b>
+<i>163</i>&nbsp;        } else {
+<b class="nc"><i>164</i>&nbsp;            hideReadMore();</b>
+<i>165</i>&nbsp;        }
+<b class="nc"><i>166</i>&nbsp;        setVisibility(View.INVISIBLE);</b>
+<i>167</i>&nbsp;    }
+<i>168</i>&nbsp;
+<i>169</i>&nbsp;    @OnClick(R.id.page_external_link) void onExternalLinkClick(View v) {
+<b class="nc"><i>170</i>&nbsp;        visitInExternalBrowser(parentFragment.getContext(), Uri.parse(page.getTitle().getMobileUri()));</b>
+<i>171</i>&nbsp;    }
+<i>172</i>&nbsp;
+<i>173</i>&nbsp;    @OnClick(R.id.page_languages_container) void onLanguagesClick(View v) {
+<b class="nc"><i>174</i>&nbsp;        parentFragment.startLangLinksActivity();</b>
+<i>175</i>&nbsp;    }
+<i>176</i>&nbsp;
+<i>177</i>&nbsp;    @OnClick(R.id.page_edit_history_container) void onEditHistoryClick(View v) {
+<b class="nc"><i>178</i>&nbsp;        visitInExternalBrowser(parentFragment.getContext(), Uri.parse(page.getTitle().getUriForAction(&quot;history&quot;)));</b>
+<i>179</i>&nbsp;    }
+<i>180</i>&nbsp;
+<i>181</i>&nbsp;    @OnClick(R.id.page_talk_container) void onTalkClick(View v) {
+<b class="nc"><i>182</i>&nbsp;        PageTitle title = page.getTitle();</b>
+<b class="nc"><i>183</i>&nbsp;        PageTitle talkPageTitle = new PageTitle(&quot;Talk&quot;, title.getPrefixedText(), title.getWikiSite());</b>
+<b class="nc"><i>184</i>&nbsp;        visitInExternalBrowser(parentFragment.getContext(), Uri.parse(talkPageTitle.getMobileUri()));</b>
+<i>185</i>&nbsp;    }
+<i>186</i>&nbsp;
+<i>187</i>&nbsp;    @OnClick(R.id.page_view_map_container) void onViewMapClick(View v) {
+<b class="nc"><i>188</i>&nbsp;        GeoUtil.sendGeoIntent(parentFragment.getActivity(), page.getPageProperties().getGeo(), page.getDisplayTitle());</b>
+<i>189</i>&nbsp;    }
+<i>190</i>&nbsp;
+<i>191</i>&nbsp;    @Override
+<i>192</i>&nbsp;    public void onScrollChanged(int oldScrollY, int scrollY, boolean isHumanScroll) {
+<b class="nc"><i>193</i>&nbsp;        if (getVisibility() == View.GONE) {</b>
+<i>194</i>&nbsp;            return;
+<i>195</i>&nbsp;        }
+<b class="nc"><i>196</i>&nbsp;        int contentHeight = (int)(webView.getContentHeight() * DimenUtil.getDensityScalar());</b>
+<b class="nc"><i>197</i>&nbsp;        int bottomOffset = contentHeight - scrollY - webView.getHeight();</b>
+<b class="nc"><i>198</i>&nbsp;        int bottomHeight = getHeight();</b>
+<b class="nc"><i>199</i>&nbsp;        if (bottomOffset &gt; bottomHeight) {</b>
+<b class="nc"><i>200</i>&nbsp;            setTranslationY(bottomHeight);</b>
+<b class="nc"><i>201</i>&nbsp;            if (getVisibility() != View.INVISIBLE) {</b>
+<b class="nc"><i>202</i>&nbsp;                setVisibility(View.INVISIBLE);</b>
+<i>203</i>&nbsp;            }
+<i>204</i>&nbsp;        } else {
+<b class="nc"><i>205</i>&nbsp;            setTranslationY(bottomOffset);</b>
+<b class="nc"><i>206</i>&nbsp;            if (getVisibility() != View.VISIBLE) {</b>
+<b class="nc"><i>207</i>&nbsp;                setVisibility(View.VISIBLE);</b>
+<i>208</i>&nbsp;            }
+<b class="nc"><i>209</i>&nbsp;            if (!firstTimeShown &amp;&amp; readMoreItems != null) {</b>
+<b class="nc"><i>210</i>&nbsp;                firstTimeShown = true;</b>
+<b class="nc"><i>211</i>&nbsp;                funnel.logSuggestionsShown(page.getTitle(), readMoreItems.getResults());</b>
+<i>212</i>&nbsp;            }
+<i>213</i>&nbsp;        }
+<i>214</i>&nbsp;    }
+<i>215</i>&nbsp;
+<i>216</i>&nbsp;    @Override
+<i>217</i>&nbsp;    public void onContentHeightChanged(int contentHeight) {
+<b class="nc"><i>218</i>&nbsp;        perturb();</b>
+<i>219</i>&nbsp;    }
+<i>220</i>&nbsp;
+<i>221</i>&nbsp;    /**
+<i>222</i>&nbsp;     * Hide the bottom content entirely.
+<i>223</i>&nbsp;     * It can only be shown again by calling beginLayout()
+<i>224</i>&nbsp;     */
+<i>225</i>&nbsp;    public void hide() {
+<b class="nc"><i>226</i>&nbsp;        setVisibility(View.GONE);</b>
+<i>227</i>&nbsp;    }
+<i>228</i>&nbsp;
+<i>229</i>&nbsp;    private void perturb() {
+<b class="nc"><i>230</i>&nbsp;        webView.post(() -&gt; {</b>
+<b class="nc"><i>231</i>&nbsp;            if (!parentFragment.isAdded()) {</b>
+<i>232</i>&nbsp;                return;
+<i>233</i>&nbsp;            }
+<i>234</i>&nbsp;            // trigger a manual scroll event to update our position relative to the WebView.
+<b class="nc"><i>235</i>&nbsp;            onScrollChanged(webView.getScrollY(), webView.getScrollY(), false);</b>
+<i>236</i>&nbsp;        });
+<i>237</i>&nbsp;    }
+<i>238</i>&nbsp;
+<i>239</i>&nbsp;    private void padWebView() {
+<i>240</i>&nbsp;        // pad the bottom of the webview, to make room for ourselves
+<b class="nc"><i>241</i>&nbsp;        JSONObject payload = new JSONObject();</b>
+<i>242</i>&nbsp;        try {
+<b class="nc"><i>243</i>&nbsp;            payload.put(&quot;paddingBottom&quot;, (int)(getHeight() / DimenUtil.getDensityScalar()));</b>
+<b class="nc"><i>244</i>&nbsp;        } catch (JSONException e) {</b>
+<b class="nc"><i>245</i>&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc"><i>246</i>&nbsp;        }</b>
+<b class="nc"><i>247</i>&nbsp;        bridge.sendMessage(&quot;setPaddingBottom&quot;, payload);</b>
+<i>248</i>&nbsp;        // ^ sending the padding event will guarantee a ContentHeightChanged event to be triggered,
+<i>249</i>&nbsp;        // which will update our margin based on the scroll offset, so we don&#39;t need to do it here.
+<i>250</i>&nbsp;        // And while we wait, let&#39;s make ourselves invisible, until we&#39;re made explicitly visible
+<i>251</i>&nbsp;        // by the scroll handler.
+<b class="nc"><i>252</i>&nbsp;        setVisibility(View.INVISIBLE);</b>
+<i>253</i>&nbsp;    }
+<i>254</i>&nbsp;
+<i>255</i>&nbsp;    private void setupPageButtons() {
+<i>256</i>&nbsp;        // Don&#39;t display edit history for main page or file pages, because it&#39;s always wrong
+<b class="nc"><i>257</i>&nbsp;        pageEditHistoryContainer.setVisibility((page.isMainPage() || page.isFilePage()) ? GONE : VISIBLE);</b>
+<b class="nc"><i>258</i>&nbsp;        pageLastUpdatedText.setText(parentFragment.getString(R.string.last_updated_text,</b>
+<b class="nc"><i>259</i>&nbsp;                formatDateRelative(page.getPageProperties().getLastModified())));</b>
+<b class="nc"><i>260</i>&nbsp;        pageLastUpdatedText.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>261</i>&nbsp;        pageTalkContainer.setVisibility(page.getTitle().namespace() == Namespace.TALK ? GONE : VISIBLE);</b>
+<i>262</i>&nbsp;
+<i>263</i>&nbsp;        /**
+<i>264</i>&nbsp;         * TODO: It only updates the count when the article is in Chinese.
+<i>265</i>&nbsp;         * If an article is also available in Chinese, the count will be less one.
+<i>266</i>&nbsp;         * @see LangLinksActivity.java updateLanguageEntriesSupported()
+<i>267</i>&nbsp;         */
+<b class="nc"><i>268</i>&nbsp;        int getLanguageCount = L10nUtil.getUpdatedLanguageCountIfNeeded(page.getTitle().getWikiSite().languageCode(),</b>
+<b class="nc"><i>269</i>&nbsp;                page.getPageProperties().getLanguageCount());</b>
+<i>270</i>&nbsp;
+<b class="nc"><i>271</i>&nbsp;        pageLanguagesContainer.setVisibility(getLanguageCount == 0 ? GONE : VISIBLE);</b>
+<b class="nc"><i>272</i>&nbsp;        pageLanguagesCount.setText(parentFragment.getString(R.string.language_count_link_text, getLanguageCount));</b>
+<i>273</i>&nbsp;
+<b class="nc"><i>274</i>&nbsp;        pageMapContainer.setVisibility(page.getPageProperties().getGeo() == null ? GONE : VISIBLE);</b>
+<i>275</i>&nbsp;
+<b class="nc"><i>276</i>&nbsp;        pageLanguagesDivider.setVisibility(pageLanguagesContainer.getVisibility());</b>
+<b class="nc"><i>277</i>&nbsp;        pageTalkDivider.setVisibility(pageMapContainer.getVisibility());</b>
+<i>278</i>&nbsp;    }
+<i>279</i>&nbsp;
+<i>280</i>&nbsp;    private void setupAttribution() {
+<b class="nc"><i>281</i>&nbsp;        pageLicenseText.setText(StringUtil.fromHtml(String</b>
+<b class="nc"><i>282</i>&nbsp;                .format(parentFragment.getContext().getString(R.string.content_license_html),</b>
+<b class="nc"><i>283</i>&nbsp;                        parentFragment.getContext().getString(R.string.cc_by_sa_3_url))));</b>
+<b class="nc"><i>284</i>&nbsp;        pageLicenseText.setMovementMethod(new LinkMovementMethod());</b>
+<i>285</i>&nbsp;    }
+<i>286</i>&nbsp;
+<i>287</i>&nbsp;    private String compilationInfoString(Page page) {
+<b class="nc"><i>288</i>&nbsp;        return String.format(parentFragment.getString(R.string.page_offline_notice_compilation_download_date),</b>
+<b class="nc"><i>289</i>&nbsp;                page.getCompilationName(), getShortDateString(page.getCompilationDate()));</b>
+<i>290</i>&nbsp;    }
+<i>291</i>&nbsp;
+<i>292</i>&nbsp;    private void preRequestReadMoreItems() {
+<b class="nc"><i>293</i>&nbsp;        if (page.isMainPage()) {</b>
+<b class="nc"><i>294</i>&nbsp;            new MainPageReadMoreTopicTask() {</b>
+<i>295</i>&nbsp;                @Override
+<i>296</i>&nbsp;                public void onFinish(HistoryEntry entry) {
+<b class="nc"><i>297</i>&nbsp;                    requestReadMoreItems(entry);</b>
+<i>298</i>&nbsp;                }
+<i>299</i>&nbsp;
+<i>300</i>&nbsp;                @Override
+<i>301</i>&nbsp;                public void onCatch(Throwable caught) {
+<i>302</i>&nbsp;                    // Read More titles are expendable.
+<b class="nc"><i>303</i>&nbsp;                    L.w(&quot;Error while getting Read More topic for main page.&quot;, caught);</b>
+<i>304</i>&nbsp;                }
+<b class="nc"><i>305</i>&nbsp;            }.execute();</b>
+<i>306</i>&nbsp;        } else {
+<b class="nc"><i>307</i>&nbsp;            requestReadMoreItems(new HistoryEntry(page.getTitle(), HistoryEntry.SOURCE_INTERNAL_LINK));</b>
+<i>308</i>&nbsp;        }
+<i>309</i>&nbsp;    }
+<i>310</i>&nbsp;
+<i>311</i>&nbsp;    private void requestReadMoreItems(final HistoryEntry entry) {
+<b class="nc"><i>312</i>&nbsp;        if (entry == null || TextUtils.isEmpty(entry.getTitle().getPrefixedText())) {</b>
+<b class="nc"><i>313</i>&nbsp;            hideReadMore();</b>
+<i>314</i>&nbsp;            return;
+<i>315</i>&nbsp;        }
+<b class="nc"><i>316</i>&nbsp;        final long timeMillis = System.currentTimeMillis();</b>
+<b class="nc"><i>317</i>&nbsp;        new FullTextSearchClient().requestMoreLike(entry.getTitle().getWikiSite(),</b>
+<b class="nc"><i>318</i>&nbsp;                entry.getTitle().getPrefixedText(), null, null,</b>
+<b class="nc"><i>319</i>&nbsp;                Constants.MAX_SUGGESTION_RESULTS * 2, new FullTextSearchClient.Callback() {</b>
+<i>320</i>&nbsp;                    @Override
+<i>321</i>&nbsp;                    public void success(@NonNull Call&lt;MwQueryResponse&gt; call,
+<i>322</i>&nbsp;                                        @NonNull SearchResults results) {
+<b class="nc"><i>323</i>&nbsp;                        funnel.setLatency(System.currentTimeMillis() - timeMillis);</b>
+<b class="nc"><i>324</i>&nbsp;                        readMoreItems = SearchResults.filter(results, entry.getTitle().getPrefixedText(), true);</b>
+<b class="nc"><i>325</i>&nbsp;                        if (!readMoreItems.getResults().isEmpty()) {</b>
+<b class="nc"><i>326</i>&nbsp;                            readMoreAdapter.setResults(results.getResults());</b>
+<b class="nc"><i>327</i>&nbsp;                            showReadMore();</b>
+<i>328</i>&nbsp;                        } else {
+<i>329</i>&nbsp;                            // If there&#39;s no results, just hide the section
+<b class="nc"><i>330</i>&nbsp;                            hideReadMore();</b>
+<i>331</i>&nbsp;                        }
+<i>332</i>&nbsp;                    }
+<i>333</i>&nbsp;
+<i>334</i>&nbsp;                    @Override
+<i>335</i>&nbsp;                    public void failure(@NonNull Call&lt;MwQueryResponse&gt; call, @NonNull Throwable caught) {
+<i>336</i>&nbsp;                        // Read More titles are expendable.
+<b class="nc"><i>337</i>&nbsp;                        L.w(&quot;Error while fetching Read More titles.&quot;, caught);</b>
+<i>338</i>&nbsp;                    }
+<i>339</i>&nbsp;                }
+<i>340</i>&nbsp;        );
+<i>341</i>&nbsp;    }
+<i>342</i>&nbsp;
+<i>343</i>&nbsp;    private void hideReadMore() {
+<b class="nc"><i>344</i>&nbsp;        readMoreContainer.setVisibility(View.GONE);</b>
+<i>345</i>&nbsp;    }
+<i>346</i>&nbsp;
+<i>347</i>&nbsp;    private void showReadMore() {
+<b class="nc"><i>348</i>&nbsp;        if (parentFragment.isAdded()) {</b>
+<b class="nc"><i>349</i>&nbsp;            ((ConfigurableTextView) readMoreContainer.findViewById(R.id.read_more_header))</b>
+<b class="nc"><i>350</i>&nbsp;                    .setText(getStringForArticleLanguage(parentFragment.getTitle(), R.string.read_more_section),</b>
+<b class="nc"><i>351</i>&nbsp;                                                         page.getTitle().getWikiSite().languageCode());</b>
+<i>352</i>&nbsp;        }
+<b class="nc"><i>353</i>&nbsp;        readMoreContainer.setVisibility(View.VISIBLE);</b>
+<i>354</i>&nbsp;    }
+<i>355</i>&nbsp;
+<i>356</i>&nbsp;    private class LongPressHandler extends PageContainerLongPressHandler
+<i>357</i>&nbsp;            implements ListViewContextMenuListener {
+<i>358</i>&nbsp;        private int lastPosition;
+<b class="nc"><i>359</i>&nbsp;        LongPressHandler(@NonNull PageFragment fragment) {</b>
+<b class="nc"><i>360</i>&nbsp;            super(fragment);</b>
+<i>361</i>&nbsp;        }
+<i>362</i>&nbsp;
+<i>363</i>&nbsp;        @Override
+<i>364</i>&nbsp;        public PageTitle getTitleForListPosition(int position) {
+<b class="nc"><i>365</i>&nbsp;            lastPosition = position;</b>
+<b class="nc"><i>366</i>&nbsp;            return ((SearchResult) readMoreList.getAdapter().getItem(position)).getPageTitle();</b>
+<i>367</i>&nbsp;        }
+<i>368</i>&nbsp;
+<i>369</i>&nbsp;        @Override
+<i>370</i>&nbsp;        public void onOpenLink(PageTitle title, HistoryEntry entry) {
+<b class="nc"><i>371</i>&nbsp;            super.onOpenLink(title, entry);</b>
+<b class="nc"><i>372</i>&nbsp;            funnel.logSuggestionClicked(page.getTitle(), readMoreItems.getResults(), lastPosition);</b>
+<i>373</i>&nbsp;        }
+<i>374</i>&nbsp;
+<i>375</i>&nbsp;        @Override
+<i>376</i>&nbsp;        public void onOpenInNewTab(PageTitle title, HistoryEntry entry) {
+<b class="nc"><i>377</i>&nbsp;            super.onOpenInNewTab(title, entry);</b>
+<b class="nc"><i>378</i>&nbsp;            funnel.logSuggestionClicked(page.getTitle(), readMoreItems.getResults(), lastPosition);</b>
+<i>379</i>&nbsp;        }
+<i>380</i>&nbsp;    }
+<i>381</i>&nbsp;
+<b class="nc"><i>382</i>&nbsp;    private final class ReadMoreAdapter extends BaseAdapter {</b>
+<i>383</i>&nbsp;        private List&lt;SearchResult&gt; results;
+<i>384</i>&nbsp;
+<i>385</i>&nbsp;        public void setResults(List&lt;SearchResult&gt; results) {
+<b class="nc"><i>386</i>&nbsp;            this.results = results;</b>
+<b class="nc"><i>387</i>&nbsp;            notifyDataSetChanged();</b>
+<i>388</i>&nbsp;        }
+<i>389</i>&nbsp;
+<i>390</i>&nbsp;        @Override
+<i>391</i>&nbsp;        public int getCount() {
+<b class="nc"><i>392</i>&nbsp;            return results == null ? 0 : Math.min(results.size(), Constants.MAX_SUGGESTION_RESULTS);</b>
+<i>393</i>&nbsp;        }
+<i>394</i>&nbsp;
+<i>395</i>&nbsp;        @Override
+<i>396</i>&nbsp;        public SearchResult getItem(int position) {
+<b class="nc"><i>397</i>&nbsp;            return results.get(position);</b>
+<i>398</i>&nbsp;        }
+<i>399</i>&nbsp;
+<i>400</i>&nbsp;        @Override
+<i>401</i>&nbsp;        public long getItemId(int position) {
+<b class="nc"><i>402</i>&nbsp;            return position;</b>
+<i>403</i>&nbsp;        }
+<i>404</i>&nbsp;
+<i>405</i>&nbsp;        @Override
+<i>406</i>&nbsp;        public View getView(int position, View convertView, ViewGroup parent) {
+<b class="nc"><i>407</i>&nbsp;            if (convertView == null) {</b>
+<b class="nc"><i>408</i>&nbsp;                convertView = LayoutInflater.from(parent.getContext())</b>
+<b class="nc"><i>409</i>&nbsp;                        .inflate(R.layout.item_page_list_entry, parent, false);</b>
+<i>410</i>&nbsp;            }
+<b class="nc"><i>411</i>&nbsp;            TextView pageTitleText = convertView.findViewById(R.id.page_list_item_title);</b>
+<b class="nc"><i>412</i>&nbsp;            SearchResult result = getItem(position);</b>
+<b class="nc"><i>413</i>&nbsp;            pageTitleText.setText(result.getPageTitle().getDisplayText());</b>
+<i>414</i>&nbsp;
+<b class="nc"><i>415</i>&nbsp;            GoneIfEmptyTextView descriptionText = convertView.findViewById(R.id.page_list_item_description);</b>
+<b class="nc"><i>416</i>&nbsp;            descriptionText.setText(StringUtils.capitalize(result.getPageTitle().getDescription()));</b>
+<i>417</i>&nbsp;
+<b class="nc"><i>418</i>&nbsp;            ViewUtil.loadImageUrlInto(convertView.findViewById(R.id.page_list_item_image), result.getPageTitle().getThumbUrl());</b>
+<b class="nc"><i>419</i>&nbsp;            return convertView;</b>
+<i>420</i>&nbsp;        }
+<i>421</i>&nbsp;    }
+<i>422</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,164 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PrefsOnboardingStateMachine</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.onboarding</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PrefsOnboardingStateMachine (org.wikipedia.onboarding)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PrefsOnboardingStateMachine</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 20)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.onboarding;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import org.wikipedia.settings.Prefs;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.util.concurrent.TimeUnit;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;public final class PrefsOnboardingStateMachine implements OnboardingStateMachine {
+<b class="nc"><i>8</i>&nbsp;    private static final PrefsOnboardingStateMachine INSTANCE = new PrefsOnboardingStateMachine();</b>
+<i>9</i>&nbsp;    private static final long MIN_MINUTES_PER_TUTORIAL = 1;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    private long millisSinceLastTutorial;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    public static PrefsOnboardingStateMachine getInstance() {
+<b class="nc"><i>14</i>&nbsp;        return INSTANCE;</b>
+<i>15</i>&nbsp;    }
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    @Override
+<i>18</i>&nbsp;    public boolean isTocTutorialEnabled() {
+<i>19</i>&nbsp;        // don&#39;t care about time since last tutorial here, since the ToC tooltip
+<i>20</i>&nbsp;        // is always the first one shown.
+<b class="nc"><i>21</i>&nbsp;        return Prefs.isTocTutorialEnabled();</b>
+<i>22</i>&nbsp;    }
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    @Override
+<i>25</i>&nbsp;    public void setTocTutorial() {
+<b class="nc"><i>26</i>&nbsp;        Prefs.setTocTutorialEnabled(false);</b>
+<b class="nc"><i>27</i>&nbsp;        updateTimeSinceLastTutorial();</b>
+<i>28</i>&nbsp;    }
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    @Override
+<i>31</i>&nbsp;    public boolean isSelectTextTutorialEnabled() {
+<b class="nc"><i>32</i>&nbsp;        return minutesSinceLastTutorial() &gt;= MIN_MINUTES_PER_TUTORIAL</b>
+<b class="nc"><i>33</i>&nbsp;               &amp;&amp; !Prefs.isTocTutorialEnabled() &amp;&amp; Prefs.isSelectTextTutorialEnabled();</b>
+<i>34</i>&nbsp;    }
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    @Override
+<i>37</i>&nbsp;    public void setSelectTextTutorial() {
+<b class="nc"><i>38</i>&nbsp;        Prefs.setSelectTextTutorialEnabled(false);</b>
+<b class="nc"><i>39</i>&nbsp;        updateTimeSinceLastTutorial();</b>
+<i>40</i>&nbsp;    }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    @Override
+<i>43</i>&nbsp;    public boolean isShareTutorialEnabled() {
+<i>44</i>&nbsp;        // don&#39;t care about time since last tutorial here, since the share tooltip is
+<i>45</i>&nbsp;        // tied to the highlight action.
+<b class="nc"><i>46</i>&nbsp;        return !Prefs.isTocTutorialEnabled()</b>
+<b class="nc"><i>47</i>&nbsp;                &amp;&amp; !isSelectTextTutorialEnabled()</b>
+<b class="nc"><i>48</i>&nbsp;                &amp;&amp; Prefs.isShareTutorialEnabled();</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    @Override
+<i>52</i>&nbsp;    public void setShareTutorial() {
+<b class="nc"><i>53</i>&nbsp;        Prefs.setShareTutorialEnabled(false);</b>
+<b class="nc"><i>54</i>&nbsp;        updateTimeSinceLastTutorial();</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    @Override
+<i>58</i>&nbsp;    public boolean isReadingListTutorialEnabled() {
+<b class="nc"><i>59</i>&nbsp;        return Prefs.isReadingListTutorialEnabled();</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    @Override
+<i>63</i>&nbsp;    public void setReadingListTutorial() {
+<b class="nc"><i>64</i>&nbsp;        Prefs.setReadingListTutorialEnabled(false);</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    @Override
+<i>68</i>&nbsp;    public void setDescriptionEditTutorial() {
+<b class="nc"><i>69</i>&nbsp;        Prefs.setDescriptionEditTutorialEnabled(false);</b>
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    private void updateTimeSinceLastTutorial() {
+<b class="nc"><i>73</i>&nbsp;        millisSinceLastTutorial = System.currentTimeMillis();</b>
+<i>74</i>&nbsp;    }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    private long minutesSinceLastTutorial() {
+<b class="nc"><i>77</i>&nbsp;        return TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - millisSinceLastTutorial);</b>
+<i>78</i>&nbsp;    }
+<i>79</i>&nbsp;
+<b class="nc"><i>80</i>&nbsp;    private PrefsOnboardingStateMachine() { }</b>
+<i>81</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

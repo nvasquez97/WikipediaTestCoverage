@@ -1,0 +1,215 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: AboutActivity</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.settings</a> ]
+</div>
+
+<h1>Coverage Summary for Class: AboutActivity (org.wikipedia.settings)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AboutActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 26)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AboutActivity$AboutLogoClickListener</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 36)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.settings;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.app.Activity;
+<i>4</i>&nbsp;import android.content.Intent;
+<i>5</i>&nbsp;import android.net.Uri;
+<i>6</i>&nbsp;import android.os.Bundle;
+<i>7</i>&nbsp;import android.support.annotation.NonNull;
+<i>8</i>&nbsp;import android.text.method.LinkMovementMethod;
+<i>9</i>&nbsp;import android.view.View;
+<i>10</i>&nbsp;import android.view.ViewGroup;
+<i>11</i>&nbsp;import android.widget.TextView;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import org.wikipedia.BuildConfig;
+<i>14</i>&nbsp;import org.wikipedia.R;
+<i>15</i>&nbsp;import org.wikipedia.activity.BaseActivity;
+<i>16</i>&nbsp;import org.wikipedia.richtext.RichTextUtil;
+<i>17</i>&nbsp;import org.wikipedia.util.FeedbackUtil;
+<i>18</i>&nbsp;import org.wikipedia.util.StringUtil;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;import butterknife.BindView;
+<i>21</i>&nbsp;import butterknife.ButterKnife;
+<i>22</i>&nbsp;import butterknife.OnClick;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;import static org.wikipedia.util.DeviceUtil.mailAppExists;
+<i>25</i>&nbsp;
+<b class="nc"><i>26</i>&nbsp;public class AboutActivity extends BaseActivity {</b>
+<i>27</i>&nbsp;    @BindView(R.id.about_translators) TextView translatorsTextView;
+<i>28</i>&nbsp;    @BindView(R.id.activity_about_libraries) TextView librariesTextView;
+<i>29</i>&nbsp;    @BindView(R.id.about_app_license) TextView appLicenseTextView;
+<i>30</i>&nbsp;    @BindView(R.id.send_feedback_text) TextView feedbackTextView;
+<i>31</i>&nbsp;    @BindView(R.id.about_wmf) TextView wmfTextView;
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    @Override
+<i>34</i>&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>35</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>36</i>&nbsp;        setContentView(R.layout.activity_about);</b>
+<b class="nc"><i>37</i>&nbsp;        ButterKnife.bind(this);</b>
+<i>38</i>&nbsp;
+<b class="nc"><i>39</i>&nbsp;        translatorsTextView.setText(StringUtil.fromHtml(getString(R.string.about_translators_translatewiki)));</b>
+<b class="nc"><i>40</i>&nbsp;        RichTextUtil.removeUnderlinesFromLinks(translatorsTextView);</b>
+<b class="nc"><i>41</i>&nbsp;        wmfTextView.setText(StringUtil.fromHtml(getString(R.string.about_wmf)));</b>
+<b class="nc"><i>42</i>&nbsp;        RichTextUtil.removeUnderlinesFromLinks(wmfTextView);</b>
+<b class="nc"><i>43</i>&nbsp;        appLicenseTextView.setText(StringUtil.fromHtml(getString(R.string.about_app_license)));</b>
+<b class="nc"><i>44</i>&nbsp;        RichTextUtil.removeUnderlinesFromLinks(appLicenseTextView);</b>
+<b class="nc"><i>45</i>&nbsp;        ((TextView) findViewById(R.id.about_version_text)).setText(BuildConfig.VERSION_NAME);</b>
+<b class="nc"><i>46</i>&nbsp;        RichTextUtil.removeUnderlinesFromLinks(librariesTextView);</b>
+<i>47</i>&nbsp;
+<b class="nc"><i>48</i>&nbsp;        findViewById(R.id.about_logo_image).setOnClickListener(new AboutLogoClickListener());</b>
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;        //if there&#39;s no Email app, hide the Feedback link.
+<b class="nc"><i>51</i>&nbsp;        if (!mailAppExists(this)) {</b>
+<b class="nc"><i>52</i>&nbsp;            feedbackTextView.setVisibility(View.GONE);</b>
+<i>53</i>&nbsp;        }
+<i>54</i>&nbsp;
+<b class="nc"><i>55</i>&nbsp;        makeEverythingClickable(findViewById(R.id.about_container));</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    @OnClick(R.id.send_feedback_text) void onSendFeedbackClick(View v) {
+<b class="nc"><i>59</i>&nbsp;        Intent intent = new Intent()</b>
+<b class="nc"><i>60</i>&nbsp;                .setAction(Intent.ACTION_SENDTO)</b>
+<b class="nc"><i>61</i>&nbsp;                .setData(Uri.parse(&quot;mailto:mobile-android-wikipedia@wikimedia.org?subject=Android App &quot;</b>
+<i>62</i>&nbsp;                        + BuildConfig.VERSION_NAME + &quot; Feedback&quot;));
+<b class="nc"><i>63</i>&nbsp;        startActivity(intent);</b>
+<i>64</i>&nbsp;    }
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    private void makeEverythingClickable(ViewGroup vg) {
+<b class="nc"><i>67</i>&nbsp;        for (int i = 0; i &lt; vg.getChildCount(); i++) {</b>
+<b class="nc"><i>68</i>&nbsp;            if (vg.getChildAt(i) instanceof ViewGroup) {</b>
+<b class="nc"><i>69</i>&nbsp;                makeEverythingClickable((ViewGroup)vg.getChildAt(i));</b>
+<b class="nc"><i>70</i>&nbsp;            } else if (vg.getChildAt(i) instanceof TextView) {</b>
+<b class="nc"><i>71</i>&nbsp;                TextView tv = (TextView) vg.getChildAt(i);</b>
+<b class="nc"><i>72</i>&nbsp;                tv.setMovementMethod(LinkMovementMethod.getInstance());</b>
+<i>73</i>&nbsp;            }
+<i>74</i>&nbsp;        }
+<i>75</i>&nbsp;    }
+<i>76</i>&nbsp;
+<b class="nc"><i>77</i>&nbsp;    private static class AboutLogoClickListener implements View.OnClickListener {</b>
+<i>78</i>&nbsp;        private static final int SECRET_CLICK_LIMIT = 7;
+<i>79</i>&nbsp;        private int mSecretClickCount;
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;        @Override
+<i>82</i>&nbsp;        public void onClick(View v) {
+<b class="nc"><i>83</i>&nbsp;            ++mSecretClickCount;</b>
+<b class="nc"><i>84</i>&nbsp;            if (isSecretClickLimitMet()) {</b>
+<b class="nc"><i>85</i>&nbsp;                if (Prefs.isShowDeveloperSettingsEnabled()) {</b>
+<b class="nc"><i>86</i>&nbsp;                    showSettingAlreadyEnabledMessage((Activity) v.getContext());</b>
+<i>87</i>&nbsp;                } else {
+<b class="nc"><i>88</i>&nbsp;                    Prefs.setShowDeveloperSettingsEnabled(true);</b>
+<b class="nc"><i>89</i>&nbsp;                    showSettingEnabledMessage((Activity) v.getContext());</b>
+<i>90</i>&nbsp;                }
+<i>91</i>&nbsp;            }
+<i>92</i>&nbsp;        }
+<i>93</i>&nbsp;
+<i>94</i>&nbsp;        private boolean isSecretClickLimitMet() {
+<b class="nc"><i>95</i>&nbsp;            return mSecretClickCount == SECRET_CLICK_LIMIT;</b>
+<i>96</i>&nbsp;        }
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;        private void showSettingEnabledMessage(@NonNull Activity activity) {
+<b class="nc"><i>99</i>&nbsp;            FeedbackUtil.showMessage(activity, R.string.show_developer_settings_enabled);</b>
+<i>100</i>&nbsp;        }
+<i>101</i>&nbsp;
+<i>102</i>&nbsp;        private void showSettingAlreadyEnabledMessage(@NonNull Activity activity) {
+<b class="nc"><i>103</i>&nbsp;            FeedbackUtil.showMessage(activity, R.string.show_developer_settings_already_enabled);</b>
+<i>104</i>&nbsp;        }
+<i>105</i>&nbsp;    }
+<i>106</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

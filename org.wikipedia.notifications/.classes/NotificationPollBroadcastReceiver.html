@@ -1,0 +1,236 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: NotificationPollBroadcastReceiver</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.notifications</a> ]
+</div>
+
+<h1>Coverage Summary for Class: NotificationPollBroadcastReceiver (org.wikipedia.notifications)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NotificationPollBroadcastReceiver</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 19)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NotificationPollBroadcastReceiver$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NotificationPollBroadcastReceiver$1$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 34)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.notifications;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.app.AlarmManager;
+<i>4</i>&nbsp;import android.app.PendingIntent;
+<i>5</i>&nbsp;import android.content.BroadcastReceiver;
+<i>6</i>&nbsp;import android.content.Context;
+<i>7</i>&nbsp;import android.content.Intent;
+<i>8</i>&nbsp;import android.os.SystemClock;
+<i>9</i>&nbsp;import android.support.annotation.NonNull;
+<i>10</i>&nbsp;import android.text.TextUtils;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import org.wikipedia.R;
+<i>13</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>14</i>&nbsp;import org.wikipedia.auth.AccountUtil;
+<i>15</i>&nbsp;import org.wikipedia.settings.Prefs;
+<i>16</i>&nbsp;import org.wikipedia.util.log.L;
+<i>17</i>&nbsp;import org.wikipedia.wikidata.EntityClient;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;import java.util.Date;
+<i>20</i>&nbsp;import java.util.List;
+<i>21</i>&nbsp;import java.util.concurrent.TimeUnit;
+<i>22</i>&nbsp;
+<b class="nc"><i>23</i>&nbsp;public class NotificationPollBroadcastReceiver extends BroadcastReceiver {</b>
+<i>24</i>&nbsp;    public static final String ACTION_POLL = &quot;action_notification_poll&quot;;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    @Override
+<i>27</i>&nbsp;    public void onReceive(Context context, Intent intent) {
+<b class="nc"><i>28</i>&nbsp;        if (TextUtils.equals(intent.getAction(), ACTION_POLL)) {</b>
+<i>29</i>&nbsp;
+<b class="nc"><i>30</i>&nbsp;            if (AccountUtil.isLoggedIn()</b>
+<b class="nc"><i>31</i>&nbsp;                    &amp;&amp; lastDescriptionEditedWithin(context.getResources()</b>
+<b class="nc"><i>32</i>&nbsp;                    .getInteger(R.integer.notification_poll_timeout_days))) {</b>
+<b class="nc"><i>33</i>&nbsp;                pollNotifications(context);</b>
+<i>34</i>&nbsp;            } else {
+<b class="nc"><i>35</i>&nbsp;                stopPollTask(context);</b>
+<i>36</i>&nbsp;            }
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;        }
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    public void startPollTask(@NonNull Context context) {
+<b class="nc"><i>42</i>&nbsp;        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);</b>
+<b class="nc"><i>43</i>&nbsp;        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,</b>
+<b class="nc"><i>44</i>&nbsp;                SystemClock.elapsedRealtime(),</b>
+<b class="nc"><i>45</i>&nbsp;                TimeUnit.MINUTES.toMillis(context.getResources().getInteger(R.integer.notification_poll_interval_minutes)),</b>
+<b class="nc"><i>46</i>&nbsp;                getAlarmPendingIntent(context));</b>
+<i>47</i>&nbsp;    }
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    public void stopPollTask(@NonNull Context context) {
+<b class="nc"><i>50</i>&nbsp;        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);</b>
+<b class="nc"><i>51</i>&nbsp;        alarmManager.cancel(getAlarmPendingIntent(context));</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    @NonNull private PendingIntent getAlarmPendingIntent(@NonNull Context context) {
+<b class="nc"><i>55</i>&nbsp;        Intent intent = new Intent(context, NotificationPollBroadcastReceiver.class);</b>
+<b class="nc"><i>56</i>&nbsp;        intent.setAction(ACTION_POLL);</b>
+<b class="nc"><i>57</i>&nbsp;        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);</b>
+<i>58</i>&nbsp;    }
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    private void pollNotifications(@NonNull final Context context) {
+<b class="nc"><i>61</i>&nbsp;        NotificationClient.instance().getNotifications(new NotificationClient.Callback() {</b>
+<i>62</i>&nbsp;            @Override
+<i>63</i>&nbsp;            public void success(@NonNull List&lt;Notification&gt; notifications) {
+<b class="nc"><i>64</i>&nbsp;                if (notifications.isEmpty()) {</b>
+<i>65</i>&nbsp;                    return;
+<i>66</i>&nbsp;                }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;                // Mark these notifications as read, so that they won&#39;t appear again.
+<b class="nc"><i>69</i>&nbsp;                NotificationClient.instance().markRead(notifications);</b>
+<i>70</i>&nbsp;
+<b class="nc"><i>71</i>&nbsp;                for (final Notification n : notifications) {</b>
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;                    // If the notification came from Wikidata, we need to resolve the Q-number
+<i>74</i>&nbsp;                    // title into the corresponding human-readable label.
+<b class="nc"><i>75</i>&nbsp;                    if (n.isFromWikidata() &amp;&amp; n.title().isMainNamespace()) {</b>
+<b class="nc"><i>76</i>&nbsp;                        EntityClient.instance().getLabelForLang(n.title().full(),</b>
+<b class="nc"><i>77</i>&nbsp;                                WikipediaApp.getInstance().getWikiSite().languageCode(),</b>
+<b class="nc"><i>78</i>&nbsp;                                new EntityClient.LabelCallback() {</b>
+<i>79</i>&nbsp;                                    @Override
+<i>80</i>&nbsp;                                    public void success(@NonNull String label) {
+<b class="nc"><i>81</i>&nbsp;                                        n.title().setFull(label);</b>
+<b class="nc"><i>82</i>&nbsp;                                        NotificationPresenter.showNotification(context, n);</b>
+<i>83</i>&nbsp;                                    }
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;                                    @Override
+<i>86</i>&nbsp;                                    public void failure(@NonNull Throwable t) {
+<b class="nc"><i>87</i>&nbsp;                                        L.e(t);</b>
+<i>88</i>&nbsp;                                        // Show the notification anyway, but with unresolved ID.
+<b class="nc"><i>89</i>&nbsp;                                        NotificationPresenter.showNotification(context, n);</b>
+<i>90</i>&nbsp;                                    }
+<i>91</i>&nbsp;                                });
+<i>92</i>&nbsp;                    } else {
+<b class="nc"><i>93</i>&nbsp;                        NotificationPresenter.showNotification(context, n);</b>
+<i>94</i>&nbsp;                    }
+<b class="nc"><i>95</i>&nbsp;                }</b>
+<i>96</i>&nbsp;            }
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;            @Override
+<i>99</i>&nbsp;            public void failure(Throwable t) {
+<b class="nc"><i>100</i>&nbsp;                L.e(t);</b>
+<i>101</i>&nbsp;            }
+<i>102</i>&nbsp;        }, EntityClient.WIKIDATA_WIKI);
+<i>103</i>&nbsp;    }
+<i>104</i>&nbsp;
+<i>105</i>&nbsp;    private boolean lastDescriptionEditedWithin(int days) {
+<b class="nc"><i>106</i>&nbsp;        return new Date().getTime() - Prefs.getLastDescriptionEditTime() &lt; TimeUnit.DAYS.toMillis(days);</b>
+<i>107</i>&nbsp;    }
+<i>108</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

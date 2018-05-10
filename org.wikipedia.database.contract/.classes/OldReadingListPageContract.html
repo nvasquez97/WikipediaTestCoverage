@@ -1,0 +1,146 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: OldReadingListPageContract</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.database.contract</a> ]
+</div>
+
+<h1>Coverage Summary for Class: OldReadingListPageContract (org.wikipedia.database.contract)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+  <tr>
+    <td class="name">OldReadingListPageContract$Col$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.database.contract;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.v4.util.ArraySet;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import org.wikipedia.database.column.CsvColumn;
+<i>7</i>&nbsp;import org.wikipedia.database.column.IdColumn;
+<i>8</i>&nbsp;import org.wikipedia.database.column.IntColumn;
+<i>9</i>&nbsp;import org.wikipedia.database.column.LongColumn;
+<i>10</i>&nbsp;import org.wikipedia.database.column.NamespaceColumn;
+<i>11</i>&nbsp;import org.wikipedia.database.column.StrColumn;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import java.util.Collection;
+<i>14</i>&nbsp;import java.util.Set;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;@SuppressWarnings(&quot;checkstyle:interfaceistype&quot;)
+<i>17</i>&nbsp;public interface OldReadingListPageContract {
+<i>18</i>&nbsp;    String TABLE_PAGE = &quot;readinglistpage&quot;;
+<i>19</i>&nbsp;    String TABLE_HTTP = &quot;readinglistpagehttp&quot;;
+<i>20</i>&nbsp;    String TABLE_DISK = &quot;readinglistpagedisk&quot;;
+<i>21</i>&nbsp;    String PATH = &quot;readinglist&quot;;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    int STATUS_ONLINE = 0;
+<i>24</i>&nbsp;    int STATUS_SAVED = 1;
+<i>25</i>&nbsp;    int STATUS_OUTDATED = 2;
+<i>26</i>&nbsp;    int STATUS_UNSAVED = 3;
+<i>27</i>&nbsp;    int STATUS_DELETED = 4;
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    interface Col {
+<i>30</i>&nbsp;        IdColumn ID = new IdColumn(TABLE_PAGE);
+<i>31</i>&nbsp;        StrColumn KEY = new StrColumn(TABLE_PAGE, &quot;key&quot;, &quot;text not null unique&quot;);
+<i>32</i>&nbsp;        CsvColumn&lt;Set&lt;String&gt;&gt; LIST_KEYS = new CsvColumn&lt;Set&lt;String&gt;&gt;(TABLE_PAGE, &quot;listKeys&quot;,
+<b class="nc"><i>33</i>&nbsp;                &quot;text not null&quot;) {</b>
+<i>34</i>&nbsp;            @NonNull @Override protected Set&lt;String&gt; val(@NonNull Collection&lt;String&gt; strs) {
+<b class="nc"><i>35</i>&nbsp;                return new ArraySet&lt;&gt;(strs);</b>
+<i>36</i>&nbsp;            }
+<i>37</i>&nbsp;            @NonNull @Override protected Collection&lt;String&gt; put(@NonNull Set&lt;String&gt; row) {
+<b class="nc"><i>38</i>&nbsp;                return row;</b>
+<i>39</i>&nbsp;            }
+<i>40</i>&nbsp;        };
+<i>41</i>&nbsp;        StrColumn SITE = new StrColumn(TABLE_PAGE, &quot;site&quot;, &quot;text not null&quot;);
+<i>42</i>&nbsp;        StrColumn LANG = new StrColumn(TABLE_PAGE, &quot;lang&quot;, &quot;text&quot;);
+<i>43</i>&nbsp;        NamespaceColumn NAMESPACE = new NamespaceColumn(TABLE_PAGE, &quot;namespace&quot;);
+<i>44</i>&nbsp;        StrColumn TITLE = new StrColumn(TABLE_PAGE, &quot;title&quot;, &quot;text not null&quot;);
+<i>45</i>&nbsp;        IntColumn DISK_PAGE_REV = new IntColumn(TABLE_PAGE, &quot;diskPageRev&quot;, &quot;integer&quot;);
+<i>46</i>&nbsp;        LongColumn MTIME = new LongColumn(TABLE_PAGE, &quot;mtime&quot;, &quot;integer not null&quot;);
+<i>47</i>&nbsp;        LongColumn ATIME = new LongColumn(TABLE_PAGE, &quot;atime&quot;, &quot;integer not null&quot;);
+<i>48</i>&nbsp;        StrColumn THUMBNAIL_URL = new StrColumn(TABLE_PAGE, &quot;thumbnailUrl&quot;, &quot;text&quot;);
+<i>49</i>&nbsp;        StrColumn DESCRIPTION = new StrColumn(TABLE_PAGE, &quot;description&quot;, &quot;text&quot;);
+<i>50</i>&nbsp;        LongColumn PHYSICAL_SIZE = new LongColumn(TABLE_PAGE, &quot;physicalSize&quot;, &quot;integer&quot;);
+<i>51</i>&nbsp;        LongColumn LOGICAL_SIZE = new LongColumn(TABLE_PAGE, &quot;logicalSize&quot;, &quot;integer&quot;);
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;        StrColumn DISK_KEY = new StrColumn(TABLE_DISK, &quot;diskKey&quot;, &quot;text not null unique&quot;);
+<i>54</i>&nbsp;        LongColumn DISK_STATUS = new LongColumn(TABLE_DISK, &quot;diskStatus&quot;, &quot;integer&quot;);
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

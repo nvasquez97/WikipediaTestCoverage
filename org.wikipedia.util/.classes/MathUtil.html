@@ -1,0 +1,145 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: MathUtil</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.util</a> ]
+</div>
+
+<h1>Coverage Summary for Class: MathUtil (org.wikipedia.util)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MathUtil</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">MathUtil$Averaged</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.util;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;public final class MathUtil {
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;    private static final int PERCENTAGE_BASE = 100;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;    public static float constrain(float f, float min, float max) {
+<b class="nc"><i>8</i>&nbsp;        return Math.min(Math.max(min, f), max);</b>
+<i>9</i>&nbsp;    }
+<i>10</i>&nbsp;
+<b class="nc"><i>11</i>&nbsp;    public static class Averaged&lt;T extends Number&gt; {</b>
+<i>12</i>&nbsp;        private double sampleSum;
+<i>13</i>&nbsp;        private int sampleSize;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;        public void addSample(T sample) {
+<b class="nc"><i>16</i>&nbsp;            sampleSum += sample.doubleValue();</b>
+<b class="nc"><i>17</i>&nbsp;            ++sampleSize;</b>
+<i>18</i>&nbsp;        }
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;        public double getAverage() {
+<b class="nc"><i>21</i>&nbsp;            return sampleSize == 0 ? 0 : sampleSum / sampleSize;</b>
+<i>22</i>&nbsp;        }
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;        public void reset() {
+<b class="nc"><i>25</i>&nbsp;            sampleSum = 0;</b>
+<b class="nc"><i>26</i>&nbsp;            sampleSize = 0;</b>
+<i>27</i>&nbsp;        }
+<i>28</i>&nbsp;    }
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    public static float percentage(float numerator, float denominator) {
+<b class="nc"><i>31</i>&nbsp;        return numerator / denominator * PERCENTAGE_BASE;</b>
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;
+<b class="nc"><i>34</i>&nbsp;    private MathUtil() {</b>
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

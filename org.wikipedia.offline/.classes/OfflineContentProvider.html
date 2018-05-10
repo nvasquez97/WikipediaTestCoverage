@@ -1,0 +1,109 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: OfflineContentProvider</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.offline</a> ]
+</div>
+
+<h1>Coverage Summary for Class: OfflineContentProvider (org.wikipedia.offline)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">OfflineContentProvider</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.offline;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.net.Uri;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import com.dmitrybrant.zimdroid.ZimContentProvider;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import org.wikipedia.BuildConfig;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import java.io.ByteArrayOutputStream;
+<i>11</i>&nbsp;import java.io.IOException;
+<i>12</i>&nbsp;
+<b class="nc"><i>13</i>&nbsp;public class OfflineContentProvider extends ZimContentProvider {</b>
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    @NonNull public static String getBaseUrl() {
+<b class="nc"><i>16</i>&nbsp;        return &quot;content://&quot; + BuildConfig.APPLICATION_ID + &quot;.offline/&quot;;</b>
+<i>17</i>&nbsp;    }
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    @Override protected Uri getContentUri() {
+<b class="nc"><i>20</i>&nbsp;        return Uri.parse(getBaseUrl());</b>
+<i>21</i>&nbsp;    }
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    @Override protected ByteArrayOutputStream getDataForUrl(String url) throws IOException {
+<b class="nc"><i>24</i>&nbsp;        return OfflineManager.instance().getDataForUrl(url);</b>
+<i>25</i>&nbsp;    }
+<i>26</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

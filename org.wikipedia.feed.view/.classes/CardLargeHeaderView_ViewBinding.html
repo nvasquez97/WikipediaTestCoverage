@@ -1,0 +1,127 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CardLargeHeaderView_ViewBinding</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.view</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CardLargeHeaderView_ViewBinding (org.wikipedia.feed.view)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CardLargeHeaderView_ViewBinding</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 14)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;// Generated code from Butter Knife. Do not modify!
+<i>2</i>&nbsp;package org.wikipedia.feed.view;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import android.support.annotation.CallSuper;
+<i>5</i>&nbsp;import android.support.annotation.UiThread;
+<i>6</i>&nbsp;import android.view.View;
+<i>7</i>&nbsp;import android.widget.TextView;
+<i>8</i>&nbsp;import butterknife.Unbinder;
+<i>9</i>&nbsp;import java.lang.IllegalStateException;
+<i>10</i>&nbsp;import java.lang.Override;
+<i>11</i>&nbsp;import org.wikipedia.R;
+<i>12</i>&nbsp;import org.wikipedia.views.FaceAndColorDetectImageView;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;public class CardLargeHeaderView_ViewBinding implements Unbinder {
+<i>15</i>&nbsp;  private CardLargeHeaderView target;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;  @UiThread
+<i>18</i>&nbsp;  public CardLargeHeaderView_ViewBinding(CardLargeHeaderView target) {
+<b class="nc"><i>19</i>&nbsp;    this(target, target);</b>
+<i>20</i>&nbsp;  }
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;  @UiThread
+<b class="nc"><i>23</i>&nbsp;  public CardLargeHeaderView_ViewBinding(CardLargeHeaderView target, View source) {</b>
+<b class="nc"><i>24</i>&nbsp;    this.target = target;</b>
+<i>25</i>&nbsp;
+<b class="nc"><i>26</i>&nbsp;    target.backgroundView = source.findViewById(R.id.view_card_header_large_background);</b>
+<b class="nc"><i>27</i>&nbsp;    target.imageView = (FaceAndColorDetectImageView) source.findViewById(R.id.view_card_header_large_image);</b>
+<b class="nc"><i>28</i>&nbsp;    target.titleView = (TextView) source.findViewById(R.id.view_card_header_large_title);</b>
+<b class="nc"><i>29</i>&nbsp;    target.subtitleView = (TextView) source.findViewById(R.id.view_card_header_large_subtitle);</b>
+<i>30</i>&nbsp;  }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;  @Override
+<i>33</i>&nbsp;  @CallSuper
+<i>34</i>&nbsp;  public void unbind() {
+<b class="nc"><i>35</i>&nbsp;    CardLargeHeaderView target = this.target;</b>
+<b class="nc"><i>36</i>&nbsp;    if (target == null) throw new IllegalStateException(&quot;Bindings already cleared.&quot;);</b>
+<b class="nc"><i>37</i>&nbsp;    this.target = null;</b>
+<i>38</i>&nbsp;
+<b class="nc"><i>39</i>&nbsp;    target.backgroundView = null;</b>
+<b class="nc"><i>40</i>&nbsp;    target.imageView = null;</b>
+<b class="nc"><i>41</i>&nbsp;    target.titleView = null;</b>
+<b class="nc"><i>42</i>&nbsp;    target.subtitleView = null;</b>
+<i>43</i>&nbsp;  }
+<i>44</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

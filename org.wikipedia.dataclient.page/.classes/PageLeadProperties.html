@@ -1,0 +1,116 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PageLeadProperties</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.dataclient.page</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PageLeadProperties (org.wikipedia.dataclient.page)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">PageLeadProperties</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.dataclient.page;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.location.Location;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;import android.support.annotation.Nullable;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.wikipedia.page.Namespace;
+<i>8</i>&nbsp;import org.wikipedia.page.Section;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import java.util.List;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;/**
+<i>13</i>&nbsp; * The main properties of a page
+<i>14</i>&nbsp; */
+<i>15</i>&nbsp;public interface PageLeadProperties {
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    int getId();
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    @NonNull Namespace getNamespace();
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    long getRevision();
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    @Nullable
+<i>24</i>&nbsp;    String getLastModified();
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    int getLanguageCount();
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    @Nullable
+<i>29</i>&nbsp;    String getDisplayTitle();
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    @Nullable
+<i>32</i>&nbsp;    String getTitlePronunciationUrl();
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    @Nullable
+<i>35</i>&nbsp;    Location getGeo();
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    @Nullable
+<i>38</i>&nbsp;    String getRedirected();
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    @Nullable
+<i>41</i>&nbsp;    String getNormalizedTitle();
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    @Nullable
+<i>44</i>&nbsp;    String getWikiBaseItem();
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    /**
+<i>47</i>&nbsp;     * @return Nullable URL with no scheme. For example, foo.bar.com/ instead of
+<i>48</i>&nbsp;     *         http://foo.bar.com/.
+<i>49</i>&nbsp;     */
+<i>50</i>&nbsp;    @Nullable
+<i>51</i>&nbsp;    String getLeadImageUrl(int leadImageWidth);
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    @Nullable
+<i>54</i>&nbsp;    String getThumbUrl();
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    @Nullable
+<i>57</i>&nbsp;    String getLeadImageFileName();
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    @Nullable
+<i>60</i>&nbsp;    String getFirstAllowedEditorRole();
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    boolean isEditable();
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    boolean isMainPage();
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    boolean isDisambiguation();
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    @NonNull List&lt;Section&gt; getSections();
+<i>69</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

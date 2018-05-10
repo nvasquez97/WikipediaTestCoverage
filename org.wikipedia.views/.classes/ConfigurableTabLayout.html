@@ -1,0 +1,175 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ConfigurableTabLayout</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.views</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ConfigurableTabLayout (org.wikipedia.views)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ConfigurableTabLayout</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ConfigurableTabLayout$DisabledTag</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 16)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.views;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.support.annotation.ColorRes;
+<i>5</i>&nbsp;import android.support.annotation.NonNull;
+<i>6</i>&nbsp;import android.support.design.widget.TabLayout;
+<i>7</i>&nbsp;import android.util.AttributeSet;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import org.wikipedia.R;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import static android.support.v4.content.ContextCompat.getColor;
+<i>12</i>&nbsp;import static android.support.v4.graphics.drawable.DrawableCompat.setTint;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;public class ConfigurableTabLayout extends TabLayout {
+<i>15</i>&nbsp;    @ColorRes private static final int TAB_ENABLED_COLOR = android.R.color.white;
+<i>16</i>&nbsp;    @ColorRes private static final int TAB_DISABLED_COLOR = R.color.base30;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    public ConfigurableTabLayout(Context context) {
+<b class="nc"><i>19</i>&nbsp;        this(context, null);</b>
+<i>20</i>&nbsp;    }
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    public ConfigurableTabLayout(Context context, AttributeSet attrs) {
+<b class="nc"><i>23</i>&nbsp;        this(context, attrs, 0);</b>
+<i>24</i>&nbsp;    }
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    public ConfigurableTabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+<b class="nc"><i>27</i>&nbsp;        super(context, attrs, defStyleAttr);</b>
+<i>28</i>&nbsp;    }
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    public void enableTab(int index) {
+<b class="nc"><i>31</i>&nbsp;        Tab tab = getTabAt(index);</b>
+<b class="nc"><i>32</i>&nbsp;        if (tab != null) {</b>
+<b class="nc"><i>33</i>&nbsp;            setEnabled(tab, true);</b>
+<i>34</i>&nbsp;        }
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    public void disableTab(int index) {
+<b class="nc"><i>38</i>&nbsp;        Tab tab = getTabAt(index);</b>
+<b class="nc"><i>39</i>&nbsp;        if (tab != null) {</b>
+<b class="nc"><i>40</i>&nbsp;            setEnabled(tab, false);</b>
+<i>41</i>&nbsp;        }
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    public void enableAllTabs() {
+<b class="nc"><i>45</i>&nbsp;        for (int i = 0; i &lt; getTabCount(); i++) {</b>
+<b class="nc"><i>46</i>&nbsp;            enableTab(i);</b>
+<i>47</i>&nbsp;        }
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    public boolean isEnabled(@NonNull Tab tab) {
+<b class="nc"><i>51</i>&nbsp;        return !isDisabled(tab);</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    public boolean isDisabled(@NonNull Tab tab) {
+<b class="nc"><i>55</i>&nbsp;        return tab.getTag() != null &amp;&amp; tab.getTag() instanceof DisabledTag;</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    private void setEnabled(@NonNull Tab tab, boolean enabled) {
+<b class="nc"><i>59</i>&nbsp;        tab.setTag(enabled ? null : new DisabledTag());</b>
+<i>60</i>&nbsp;        // noinspection ConstantConditions
+<b class="nc"><i>61</i>&nbsp;        setTint(tab.getIcon(), getColor(getContext(), enabled ? TAB_ENABLED_COLOR : TAB_DISABLED_COLOR));</b>
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;
+<b class="nc"><i>64</i>&nbsp;    private class DisabledTag {</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

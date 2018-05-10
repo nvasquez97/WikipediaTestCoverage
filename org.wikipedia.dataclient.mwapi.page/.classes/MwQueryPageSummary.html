@@ -1,0 +1,136 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: MwQueryPageSummary</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.dataclient.mwapi.page</a> ]
+</div>
+
+<h1>Coverage Summary for Class: MwQueryPageSummary (org.wikipedia.dataclient.mwapi.page)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MwQueryPageSummary</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 17)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.dataclient.mwapi.page;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.annotation.Nullable;
+<i>5</i>&nbsp;import android.text.TextUtils;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwQueryResponse;
+<i>8</i>&nbsp;import org.wikipedia.dataclient.page.PageSummary;
+<i>9</i>&nbsp;import org.wikipedia.page.Namespace;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;/**
+<i>12</i>&nbsp; * Useful for link previews coming from MW API.
+<i>13</i>&nbsp; */
+<b class="nc"><i>14</i>&nbsp;public class MwQueryPageSummary extends MwQueryResponse implements PageSummary {</b>
+<i>15</i>&nbsp;    @Override @Nullable public String getTitle() {
+<b class="nc"><i>16</i>&nbsp;        if (query() == null || query().firstPage() == null) {</b>
+<b class="nc"><i>17</i>&nbsp;            return null;</b>
+<i>18</i>&nbsp;        }
+<b class="nc"><i>19</i>&nbsp;        return query().firstPage().title();</b>
+<i>20</i>&nbsp;    }
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    @Override @Nullable public String getDisplayTitle() {
+<b class="nc"><i>23</i>&nbsp;        if (query() == null || query().firstPage() == null) {</b>
+<b class="nc"><i>24</i>&nbsp;            return null;</b>
+<i>25</i>&nbsp;        }
+<b class="nc"><i>26</i>&nbsp;        return (query().firstPage().pageProps() != null &amp;&amp; !TextUtils.isEmpty(query().firstPage().pageProps().getDisplayTitle()))</b>
+<b class="nc"><i>27</i>&nbsp;                ? query().firstPage().pageProps().getDisplayTitle() : query().firstPage().title();</b>
+<i>28</i>&nbsp;    }
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    @Override @Nullable
+<i>31</i>&nbsp;    public String getExtract() {
+<b class="nc"><i>32</i>&nbsp;        if (query() == null || query().firstPage() == null) {</b>
+<b class="nc"><i>33</i>&nbsp;            return null;</b>
+<i>34</i>&nbsp;        }
+<b class="nc"><i>35</i>&nbsp;        return query().firstPage().extract();</b>
+<i>36</i>&nbsp;    }
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    @Override @Nullable
+<i>39</i>&nbsp;    public String getThumbnailUrl() {
+<b class="nc"><i>40</i>&nbsp;        if (query() == null || query().firstPage() == null) {</b>
+<b class="nc"><i>41</i>&nbsp;            return null;</b>
+<i>42</i>&nbsp;        }
+<b class="nc"><i>43</i>&nbsp;        return query().firstPage().thumbUrl();</b>
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    @Override @NonNull
+<i>47</i>&nbsp;    public Namespace getNamespace() {
+<b class="nc"><i>48</i>&nbsp;        if (query() == null || query().firstPage() == null) {</b>
+<b class="nc"><i>49</i>&nbsp;            return Namespace.MAIN;</b>
+<i>50</i>&nbsp;        }
+<b class="nc"><i>51</i>&nbsp;        return query().firstPage().namespace();</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

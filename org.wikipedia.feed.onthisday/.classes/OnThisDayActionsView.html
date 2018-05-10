@@ -1,0 +1,160 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: OnThisDayActionsView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.onthisday</a> ]
+</div>
+
+<h1>Coverage Summary for Class: OnThisDayActionsView (org.wikipedia.feed.onthisday)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">OnThisDayActionsView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 17)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.feed.onthisday;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.annotation.TargetApi;
+<i>4</i>&nbsp;import android.content.Context;
+<i>5</i>&nbsp;import android.os.Build;
+<i>6</i>&nbsp;import android.support.annotation.NonNull;
+<i>7</i>&nbsp;import android.support.annotation.Nullable;
+<i>8</i>&nbsp;import android.util.AttributeSet;
+<i>9</i>&nbsp;import android.view.View;
+<i>10</i>&nbsp;import android.widget.LinearLayout;
+<i>11</i>&nbsp;import android.widget.TextView;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import org.wikipedia.R;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import butterknife.BindView;
+<i>16</i>&nbsp;import butterknife.ButterKnife;
+<i>17</i>&nbsp;import butterknife.OnClick;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;public class OnThisDayActionsView extends LinearLayout{
+<i>20</i>&nbsp;    public interface Callback {
+<i>21</i>&nbsp;        void onAddPageToList();
+<i>22</i>&nbsp;        void onSharePage();
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    @BindView(R.id.on_this_day_item_title) TextView titleView;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    @Nullable
+<i>28</i>&nbsp;    private Callback callback;
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    public OnThisDayActionsView(Context context) {
+<b class="nc"><i>31</i>&nbsp;        super(context);</b>
+<b class="nc"><i>32</i>&nbsp;        init();</b>
+<i>33</i>&nbsp;    }
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    public OnThisDayActionsView(Context context, AttributeSet attrs) {
+<b class="nc"><i>36</i>&nbsp;        super(context, attrs);</b>
+<b class="nc"><i>37</i>&nbsp;        init();</b>
+<i>38</i>&nbsp;    }
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    public OnThisDayActionsView(Context context, AttributeSet attrs, int defStyleAttr) {
+<b class="nc"><i>41</i>&nbsp;        super(context, attrs, defStyleAttr);</b>
+<b class="nc"><i>42</i>&nbsp;        init();</b>
+<i>43</i>&nbsp;    }
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+<i>46</i>&nbsp;    public OnThisDayActionsView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+<b class="nc"><i>47</i>&nbsp;        super(context, attrs, defStyleAttr, defStyleRes);</b>
+<b class="nc"><i>48</i>&nbsp;        init();</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    public void setState(@NonNull String pageTitle) {
+<b class="nc"><i>52</i>&nbsp;        titleView.setText(pageTitle);</b>
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    public void setCallback(@Nullable Callback callback) {
+<b class="nc"><i>56</i>&nbsp;        this.callback = callback;</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    @OnClick(R.id.on_this_day_item_share) void onShareClick(View view) {
+<b class="nc"><i>60</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>61</i>&nbsp;            callback.onSharePage();</b>
+<i>62</i>&nbsp;        }
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    @OnClick(R.id.on_this_day_item_add_to_list) void onAddPageToListClick(View view) {
+<b class="nc"><i>66</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>67</i>&nbsp;            callback.onAddPageToList();</b>
+<i>68</i>&nbsp;        }
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    private void init() {
+<b class="nc"><i>72</i>&nbsp;        inflate(getContext(), R.layout.view_on_this_day_page_actions, this);</b>
+<b class="nc"><i>73</i>&nbsp;        ButterKnife.bind(this);</b>
+<b class="nc"><i>74</i>&nbsp;        setOrientation(VERTICAL);</b>
+<i>75</i>&nbsp;    }
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

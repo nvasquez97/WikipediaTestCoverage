@@ -1,0 +1,170 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CompilationDownloadControlView_ViewBinding</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.offline</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CompilationDownloadControlView_ViewBinding (org.wikipedia.offline)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CompilationDownloadControlView_ViewBinding</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 19)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CompilationDownloadControlView_ViewBinding$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 21)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;// Generated code from Butter Knife. Do not modify!
+<i>2</i>&nbsp;package org.wikipedia.offline;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import android.support.annotation.CallSuper;
+<i>5</i>&nbsp;import android.support.annotation.UiThread;
+<i>6</i>&nbsp;import android.view.View;
+<i>7</i>&nbsp;import android.widget.ImageView;
+<i>8</i>&nbsp;import android.widget.ProgressBar;
+<i>9</i>&nbsp;import android.widget.TextView;
+<i>10</i>&nbsp;import butterknife.Unbinder;
+<i>11</i>&nbsp;import butterknife.internal.DebouncingOnClickListener;
+<i>12</i>&nbsp;import java.lang.IllegalStateException;
+<i>13</i>&nbsp;import java.lang.Override;
+<i>14</i>&nbsp;import org.wikipedia.R;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;public class CompilationDownloadControlView_ViewBinding implements Unbinder {
+<i>17</i>&nbsp;  private CompilationDownloadControlView target;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;  private View view2131296357;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;  @UiThread
+<i>22</i>&nbsp;  public CompilationDownloadControlView_ViewBinding(CompilationDownloadControlView target) {
+<b class="nc"><i>23</i>&nbsp;    this(target, target);</b>
+<i>24</i>&nbsp;  }
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;  @UiThread
+<i>27</i>&nbsp;  public CompilationDownloadControlView_ViewBinding(final CompilationDownloadControlView target,
+<b class="nc"><i>28</i>&nbsp;      View source) {</b>
+<b class="nc"><i>29</i>&nbsp;    this.target = target;</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    View view;
+<b class="nc"><i>32</i>&nbsp;    target.progressText = (TextView) source.findViewById(R.id.compilation_download_widget_progress_text);</b>
+<b class="nc"><i>33</i>&nbsp;    target.timeRemainingText = (TextView) source.findViewById(R.id.compilation_download_widget_progress_time_remaining);</b>
+<b class="nc"><i>34</i>&nbsp;    target.progressBar = (ProgressBar) source.findViewById(R.id.compilation_download_progress);</b>
+<b class="nc"><i>35</i>&nbsp;    view = source.findViewById(R.id.compilation_download_widget_button_cancel);</b>
+<b class="nc"><i>36</i>&nbsp;    target.cancelButton = (ImageView) view;</b>
+<b class="nc"><i>37</i>&nbsp;    view2131296357 = view;</b>
+<b class="nc"><i>38</i>&nbsp;    view.setOnClickListener(new DebouncingOnClickListener() {</b>
+<i>39</i>&nbsp;      @Override
+<i>40</i>&nbsp;      public void doClick(View p0) {
+<b class="nc"><i>41</i>&nbsp;        target.onCancelClicked();</b>
+<i>42</i>&nbsp;      }
+<i>43</i>&nbsp;    });
+<i>44</i>&nbsp;  }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;  @Override
+<i>47</i>&nbsp;  @CallSuper
+<i>48</i>&nbsp;  public void unbind() {
+<b class="nc"><i>49</i>&nbsp;    CompilationDownloadControlView target = this.target;</b>
+<b class="nc"><i>50</i>&nbsp;    if (target == null) throw new IllegalStateException(&quot;Bindings already cleared.&quot;);</b>
+<b class="nc"><i>51</i>&nbsp;    this.target = null;</b>
+<i>52</i>&nbsp;
+<b class="nc"><i>53</i>&nbsp;    target.progressText = null;</b>
+<b class="nc"><i>54</i>&nbsp;    target.timeRemainingText = null;</b>
+<b class="nc"><i>55</i>&nbsp;    target.progressBar = null;</b>
+<b class="nc"><i>56</i>&nbsp;    target.cancelButton = null;</b>
+<i>57</i>&nbsp;
+<b class="nc"><i>58</i>&nbsp;    view2131296357.setOnClickListener(null);</b>
+<b class="nc"><i>59</i>&nbsp;    view2131296357 = null;</b>
+<i>60</i>&nbsp;  }
+<i>61</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

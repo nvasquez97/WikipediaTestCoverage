@@ -1,0 +1,574 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LinkPreviewDialog</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.page.linkpreview</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LinkPreviewDialog (org.wikipedia.page.linkpreview)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LinkPreviewDialog</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 117)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">LinkPreviewDialog$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LinkPreviewDialog$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LinkPreviewDialog$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 17)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LinkPreviewDialog$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LinkPreviewDialog$OverlayViewCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 36)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 159)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.page.linkpreview;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.DialogInterface;
+<i>4</i>&nbsp;import android.content.Intent;
+<i>5</i>&nbsp;import android.location.Location;
+<i>6</i>&nbsp;import android.os.Build;
+<i>7</i>&nbsp;import android.os.Bundle;
+<i>8</i>&nbsp;import android.support.annotation.NonNull;
+<i>9</i>&nbsp;import android.support.annotation.Nullable;
+<i>10</i>&nbsp;import android.support.v7.widget.PopupMenu;
+<i>11</i>&nbsp;import android.view.LayoutInflater;
+<i>12</i>&nbsp;import android.view.MenuItem;
+<i>13</i>&nbsp;import android.view.View;
+<i>14</i>&nbsp;import android.view.ViewGroup;
+<i>15</i>&nbsp;import android.widget.LinearLayout;
+<i>16</i>&nbsp;import android.widget.ProgressBar;
+<i>17</i>&nbsp;import android.widget.TextView;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;import com.facebook.drawee.view.SimpleDraweeView;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;import org.wikipedia.Constants;
+<i>22</i>&nbsp;import org.wikipedia.R;
+<i>23</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>24</i>&nbsp;import org.wikipedia.activity.FragmentUtil;
+<i>25</i>&nbsp;import org.wikipedia.analytics.GalleryFunnel;
+<i>26</i>&nbsp;import org.wikipedia.analytics.LinkPreviewFunnel;
+<i>27</i>&nbsp;import org.wikipedia.concurrency.CallbackTask;
+<i>28</i>&nbsp;import org.wikipedia.dataclient.ServiceError;
+<i>29</i>&nbsp;import org.wikipedia.dataclient.page.PageClientFactory;
+<i>30</i>&nbsp;import org.wikipedia.dataclient.page.PageSummary;
+<i>31</i>&nbsp;import org.wikipedia.gallery.GalleryActivity;
+<i>32</i>&nbsp;import org.wikipedia.gallery.GalleryCollection;
+<i>33</i>&nbsp;import org.wikipedia.gallery.GalleryCollectionClient;
+<i>34</i>&nbsp;import org.wikipedia.gallery.GalleryItem;
+<i>35</i>&nbsp;import org.wikipedia.gallery.GalleryThumbnailScrollView;
+<i>36</i>&nbsp;import org.wikipedia.gallery.ImageInfo;
+<i>37</i>&nbsp;import org.wikipedia.history.HistoryEntry;
+<i>38</i>&nbsp;import org.wikipedia.page.ExtendedBottomSheetDialogFragment;
+<i>39</i>&nbsp;import org.wikipedia.page.PageTitle;
+<i>40</i>&nbsp;import org.wikipedia.util.GeoUtil;
+<i>41</i>&nbsp;import org.wikipedia.util.StringUtil;
+<i>42</i>&nbsp;import org.wikipedia.util.log.L;
+<i>43</i>&nbsp;import org.wikipedia.views.ViewUtil;
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;import java.util.ArrayList;
+<i>46</i>&nbsp;import java.util.List;
+<i>47</i>&nbsp;import java.util.Map;
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;import retrofit2.Call;
+<i>50</i>&nbsp;import retrofit2.Response;
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;import static org.wikipedia.settings.Prefs.isImageDownloadEnabled;
+<i>53</i>&nbsp;import static org.wikipedia.util.L10nUtil.getStringForArticleLanguage;
+<i>54</i>&nbsp;import static org.wikipedia.util.L10nUtil.setConditionalLayoutDirection;
+<i>55</i>&nbsp;
+<b class="nc"><i>56</i>&nbsp;public class LinkPreviewDialog extends ExtendedBottomSheetDialogFragment</b>
+<i>57</i>&nbsp;        implements LinkPreviewErrorView.Callback, DialogInterface.OnDismissListener {
+<i>58</i>&nbsp;    public interface Callback {
+<i>59</i>&nbsp;        void onLinkPreviewLoadPage(@NonNull PageTitle title, @NonNull HistoryEntry entry, boolean inNewTab);
+<i>60</i>&nbsp;        void onLinkPreviewCopyLink(@NonNull PageTitle title);
+<i>61</i>&nbsp;        void onLinkPreviewAddToList(@NonNull PageTitle title);
+<i>62</i>&nbsp;        void onLinkPreviewShareLink(@NonNull PageTitle title);
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<b class="nc"><i>65</i>&nbsp;    private boolean navigateSuccess = false;</b>
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    private LinearLayout dialogContainer;
+<i>68</i>&nbsp;    private View contentContainer;
+<i>69</i>&nbsp;    private LinkPreviewErrorView errorContainer;
+<i>70</i>&nbsp;    private ProgressBar progressBar;
+<i>71</i>&nbsp;    private TextView extractText;
+<i>72</i>&nbsp;    private SimpleDraweeView thumbnailView;
+<i>73</i>&nbsp;    private GalleryThumbnailScrollView thumbnailGallery;
+<i>74</i>&nbsp;    private LinkPreviewOverlayView overlayView;
+<i>75</i>&nbsp;    private TextView titleText;
+<i>76</i>&nbsp;    private View toolbarView;
+<i>77</i>&nbsp;    private View overflowButton;
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    private PageTitle pageTitle;
+<i>80</i>&nbsp;    private int entrySource;
+<i>81</i>&nbsp;    @Nullable private Location location;
+<b class="nc"><i>82</i>&nbsp;    @NonNull private GalleryCollectionClient client = new GalleryCollectionClient();</b>
+<i>83</i>&nbsp;    private LinkPreviewFunnel funnel;
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    public static LinkPreviewDialog newInstance(PageTitle title, int entrySource, @Nullable Location location) {
+<b class="nc"><i>86</i>&nbsp;        LinkPreviewDialog dialog = new LinkPreviewDialog();</b>
+<b class="nc"><i>87</i>&nbsp;        Bundle args = new Bundle();</b>
+<b class="nc"><i>88</i>&nbsp;        args.putParcelable(&quot;title&quot;, title);</b>
+<b class="nc"><i>89</i>&nbsp;        args.putInt(&quot;entrySource&quot;, entrySource);</b>
+<b class="nc"><i>90</i>&nbsp;        if (location != null) {</b>
+<b class="nc"><i>91</i>&nbsp;            args.putParcelable(&quot;location&quot;, location);</b>
+<i>92</i>&nbsp;        }
+<b class="nc"><i>93</i>&nbsp;        dialog.setArguments(args);</b>
+<b class="nc"><i>94</i>&nbsp;        return dialog;</b>
+<i>95</i>&nbsp;    }
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;    @Override
+<i>98</i>&nbsp;    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+<b class="nc"><i>99</i>&nbsp;        WikipediaApp app = WikipediaApp.getInstance();</b>
+<b class="nc"><i>100</i>&nbsp;        pageTitle = getArguments().getParcelable(&quot;title&quot;);</b>
+<b class="nc"><i>101</i>&nbsp;        entrySource = getArguments().getInt(&quot;entrySource&quot;);</b>
+<b class="nc"><i>102</i>&nbsp;        location = getArguments().getParcelable(&quot;location&quot;);</b>
+<i>103</i>&nbsp;
+<b class="nc"><i>104</i>&nbsp;        View rootView = inflater.inflate(R.layout.dialog_link_preview, container);</b>
+<b class="nc"><i>105</i>&nbsp;        dialogContainer = rootView.findViewById(R.id.dialog_link_preview_container);</b>
+<b class="nc"><i>106</i>&nbsp;        contentContainer = rootView.findViewById(R.id.dialog_link_preview_content_container);</b>
+<b class="nc"><i>107</i>&nbsp;        errorContainer = rootView.findViewById(R.id.dialog_link_preview_error_container);</b>
+<b class="nc"><i>108</i>&nbsp;        progressBar = rootView.findViewById(R.id.link_preview_progress);</b>
+<b class="nc"><i>109</i>&nbsp;        toolbarView = rootView.findViewById(R.id.link_preview_toolbar);</b>
+<b class="nc"><i>110</i>&nbsp;        toolbarView.setOnClickListener(goToPageListener);</b>
+<i>111</i>&nbsp;
+<b class="nc"><i>112</i>&nbsp;        titleText = rootView.findViewById(R.id.link_preview_title);</b>
+<b class="nc"><i>113</i>&nbsp;        setConditionalLayoutDirection(rootView, pageTitle.getWikiSite().languageCode());</b>
+<b class="nc"><i>114</i>&nbsp;        if (Build.VERSION.SDK_INT &lt; Build.VERSION_CODES.LOLLIPOP) {</b>
+<i>115</i>&nbsp;            // for &lt;5.0, give the title a bit more bottom padding, since these versions
+<i>116</i>&nbsp;            // incorrectly cut off the bottom of the text when line spacing is &lt;1.
+<b class="nc"><i>117</i>&nbsp;            final int bottomPadding = 8;</b>
+<b class="nc"><i>118</i>&nbsp;            ViewUtil.setBottomPaddingDp(titleText, bottomPadding);</b>
+<i>119</i>&nbsp;        }
+<i>120</i>&nbsp;
+<b class="nc"><i>121</i>&nbsp;        extractText = rootView.findViewById(R.id.link_preview_extract);</b>
+<b class="nc"><i>122</i>&nbsp;        thumbnailView = rootView.findViewById(R.id.link_preview_thumbnail);</b>
+<b class="nc"><i>123</i>&nbsp;        thumbnailGallery = rootView.findViewById(R.id.link_preview_thumbnail_gallery);</b>
+<i>124</i>&nbsp;
+<b class="nc"><i>125</i>&nbsp;        if (isImageDownloadEnabled()) {</b>
+<b class="nc"><i>126</i>&nbsp;            CallbackTask.execute(() -&gt; client.request(pageTitle.getWikiSite(), pageTitle, true),</b>
+<b class="nc"><i>127</i>&nbsp;                new CallbackTask.Callback&lt;Map&lt;String, ImageInfo&gt;&gt;() {</b>
+<i>128</i>&nbsp;                @Override public void success(@Nullable Map&lt;String, ImageInfo&gt; result) {
+<b class="nc"><i>129</i>&nbsp;                    setThumbGallery(result);</b>
+<b class="nc"><i>130</i>&nbsp;                    thumbnailGallery.setGalleryViewListener(galleryViewListener);</b>
+<i>131</i>&nbsp;                }
+<i>132</i>&nbsp;
+<i>133</i>&nbsp;                @Override
+<i>134</i>&nbsp;                public void failure(Throwable caught) {
+<b class="nc"><i>135</i>&nbsp;                    L.w(&quot;Failed to fetch gallery collection.&quot;, caught);</b>
+<i>136</i>&nbsp;                }
+<i>137</i>&nbsp;            });
+<i>138</i>&nbsp;        }
+<i>139</i>&nbsp;
+<b class="nc"><i>140</i>&nbsp;        overflowButton = rootView.findViewById(R.id.link_preview_overflow_button);</b>
+<b class="nc"><i>141</i>&nbsp;        overflowButton.setOnClickListener((View v) -&gt; {</b>
+<b class="nc"><i>142</i>&nbsp;            PopupMenu popupMenu = new PopupMenu(getActivity(), overflowButton);</b>
+<b class="nc"><i>143</i>&nbsp;            popupMenu.inflate(R.menu.menu_link_preview);</b>
+<b class="nc"><i>144</i>&nbsp;            popupMenu.setOnMenuItemClickListener(menuListener);</b>
+<b class="nc"><i>145</i>&nbsp;            popupMenu.show();</b>
+<i>146</i>&nbsp;        });
+<i>147</i>&nbsp;
+<i>148</i>&nbsp;        // show the progress bar while we load content...
+<b class="nc"><i>149</i>&nbsp;        progressBar.setVisibility(View.VISIBLE);</b>
+<i>150</i>&nbsp;
+<i>151</i>&nbsp;        // and kick off the task to load all the things...
+<b class="nc"><i>152</i>&nbsp;        loadContent();</b>
+<i>153</i>&nbsp;
+<b class="nc"><i>154</i>&nbsp;        funnel = new LinkPreviewFunnel(app, entrySource);</b>
+<b class="nc"><i>155</i>&nbsp;        funnel.logLinkClick();</b>
+<i>156</i>&nbsp;
+<b class="nc"><i>157</i>&nbsp;        return rootView;</b>
+<i>158</i>&nbsp;    }
+<i>159</i>&nbsp;
+<i>160</i>&nbsp;    public void goToLinkedPage() {
+<b class="nc"><i>161</i>&nbsp;        navigateSuccess = true;</b>
+<b class="nc"><i>162</i>&nbsp;        funnel.logNavigate();</b>
+<b class="nc"><i>163</i>&nbsp;        if (getDialog() != null) {</b>
+<b class="nc"><i>164</i>&nbsp;            getDialog().dismiss();</b>
+<i>165</i>&nbsp;        }
+<b class="nc"><i>166</i>&nbsp;        HistoryEntry newEntry = new HistoryEntry(pageTitle, entrySource);</b>
+<b class="nc"><i>167</i>&nbsp;        loadPage(pageTitle, newEntry, false);</b>
+<i>168</i>&nbsp;    }
+<i>169</i>&nbsp;
+<i>170</i>&nbsp;    @Override public void onResume() {
+<b class="nc"><i>171</i>&nbsp;        super.onResume();</b>
+<b class="nc"><i>172</i>&nbsp;        ViewGroup containerView = getDialog().findViewById(R.id.container);</b>
+<b class="nc"><i>173</i>&nbsp;        if (overlayView == null &amp;&amp; containerView != null) {</b>
+<b class="nc"><i>174</i>&nbsp;            overlayView = new LinkPreviewOverlayView(getContext());</b>
+<b class="nc"><i>175</i>&nbsp;            overlayView.setCallback(new OverlayViewCallback());</b>
+<b class="nc"><i>176</i>&nbsp;            overlayView.setPrimaryButtonText(getStringForArticleLanguage(pageTitle, R.string.button_continue_to_article));</b>
+<b class="nc"><i>177</i>&nbsp;            overlayView.showSecondaryButton(location != null);</b>
+<b class="nc"><i>178</i>&nbsp;            containerView.addView(overlayView);</b>
+<i>179</i>&nbsp;        }
+<i>180</i>&nbsp;    }
+<i>181</i>&nbsp;
+<i>182</i>&nbsp;    @Override
+<i>183</i>&nbsp;    public void onDestroyView() {
+<b class="nc"><i>184</i>&nbsp;        thumbnailGallery.setGalleryViewListener(null);</b>
+<b class="nc"><i>185</i>&nbsp;        toolbarView.setOnClickListener(null);</b>
+<b class="nc"><i>186</i>&nbsp;        overflowButton.setOnClickListener(null);</b>
+<b class="nc"><i>187</i>&nbsp;        if (overlayView != null) {</b>
+<b class="nc"><i>188</i>&nbsp;            overlayView.setCallback(null);</b>
+<b class="nc"><i>189</i>&nbsp;            overlayView = null;</b>
+<i>190</i>&nbsp;        }
+<b class="nc"><i>191</i>&nbsp;        super.onDestroyView();</b>
+<i>192</i>&nbsp;    }
+<i>193</i>&nbsp;
+<i>194</i>&nbsp;    @Override
+<i>195</i>&nbsp;    public void onDismiss(DialogInterface dialogInterface) {
+<b class="nc"><i>196</i>&nbsp;        super.onDismiss(dialogInterface);</b>
+<b class="nc"><i>197</i>&nbsp;        if (!navigateSuccess) {</b>
+<b class="nc"><i>198</i>&nbsp;            funnel.logCancel();</b>
+<i>199</i>&nbsp;        }
+<i>200</i>&nbsp;    }
+<i>201</i>&nbsp;
+<i>202</i>&nbsp;    @Override
+<i>203</i>&nbsp;    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
+<b class="nc"><i>204</i>&nbsp;        if (requestCode == Constants.ACTIVITY_REQUEST_GALLERY</b>
+<i>205</i>&nbsp;                &amp;&amp; resultCode == GalleryActivity.ACTIVITY_RESULT_PAGE_SELECTED) {
+<b class="nc"><i>206</i>&nbsp;            startActivity(data);</b>
+<i>207</i>&nbsp;        } else {
+<b class="nc"><i>208</i>&nbsp;            super.onActivityResult(requestCode, resultCode, data);</b>
+<i>209</i>&nbsp;        }
+<i>210</i>&nbsp;    }
+<i>211</i>&nbsp;
+<i>212</i>&nbsp;    @Override
+<i>213</i>&nbsp;    public void onAddToList() {
+<b class="nc"><i>214</i>&nbsp;        if (callback() != null) {</b>
+<b class="nc"><i>215</i>&nbsp;            callback().onLinkPreviewAddToList(pageTitle);</b>
+<i>216</i>&nbsp;        }
+<i>217</i>&nbsp;    }
+<i>218</i>&nbsp;
+<i>219</i>&nbsp;    @Override
+<i>220</i>&nbsp;    public void onDismiss() {
+<b class="nc"><i>221</i>&nbsp;        dismiss();</b>
+<i>222</i>&nbsp;    }
+<i>223</i>&nbsp;
+<i>224</i>&nbsp;    private void loadContent() {
+<b class="nc"><i>225</i>&nbsp;        PageClientFactory</b>
+<b class="nc"><i>226</i>&nbsp;                .create(pageTitle.getWikiSite(), pageTitle.namespace())</b>
+<b class="nc"><i>227</i>&nbsp;                .summary(pageTitle.getPrefixedText())</b>
+<b class="nc"><i>228</i>&nbsp;                .enqueue(linkPreviewCallback);</b>
+<i>229</i>&nbsp;    }
+<i>230</i>&nbsp;
+<i>231</i>&nbsp;    private void showPreview(@NonNull LinkPreviewContents contents) {
+<b class="nc"><i>232</i>&nbsp;        progressBar.setVisibility(View.GONE);</b>
+<b class="nc"><i>233</i>&nbsp;        setPreviewContents(contents);</b>
+<i>234</i>&nbsp;    }
+<i>235</i>&nbsp;
+<i>236</i>&nbsp;    private void setThumbGallery(Map&lt;String, ImageInfo&gt; result) {
+<b class="nc"><i>237</i>&nbsp;        List&lt;GalleryItem&gt; list = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>238</i>&nbsp;        for (Map.Entry&lt;String, ImageInfo&gt; entry : result.entrySet()) {</b>
+<b class="nc"><i>239</i>&nbsp;            if (GalleryCollection.shouldIncludeImage(entry.getValue())) {</b>
+<b class="nc"><i>240</i>&nbsp;                list.add(new GalleryItem(entry.getKey(), entry.getValue()));</b>
+<i>241</i>&nbsp;            }
+<b class="nc"><i>242</i>&nbsp;        }</b>
+<b class="nc"><i>243</i>&nbsp;        if (!list.isEmpty()) {</b>
+<b class="nc"><i>244</i>&nbsp;            thumbnailGallery.setGalleryCollection(new GalleryCollection(list));</b>
+<i>245</i>&nbsp;        }
+<i>246</i>&nbsp;    }
+<i>247</i>&nbsp;
+<i>248</i>&nbsp;    private void showError(@Nullable Throwable caught) {
+<b class="nc"><i>249</i>&nbsp;        dialogContainer.setLayoutTransition(null);</b>
+<b class="nc"><i>250</i>&nbsp;        dialogContainer.setMinimumHeight(0);</b>
+<b class="nc"><i>251</i>&nbsp;        progressBar.setVisibility(View.GONE);</b>
+<b class="nc"><i>252</i>&nbsp;        contentContainer.setVisibility(View.GONE);</b>
+<b class="nc"><i>253</i>&nbsp;        overlayView.showSecondaryButton(false);</b>
+<b class="nc"><i>254</i>&nbsp;        errorContainer.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>255</i>&nbsp;        errorContainer.setError(caught);</b>
+<b class="nc"><i>256</i>&nbsp;        errorContainer.setCallback(this);</b>
+<b class="nc"><i>257</i>&nbsp;        LinkPreviewErrorType errorType = LinkPreviewErrorType.get(caught);</b>
+<b class="nc"><i>258</i>&nbsp;        overlayView.setPrimaryButtonText(getResources().getString(errorType.buttonText()));</b>
+<b class="nc"><i>259</i>&nbsp;        overlayView.setCallback(errorType.buttonAction(errorContainer));</b>
+<b class="nc"><i>260</i>&nbsp;        if (errorType != LinkPreviewErrorType.OFFLINE) {</b>
+<b class="nc"><i>261</i>&nbsp;            toolbarView.setOnClickListener(null);</b>
+<b class="nc"><i>262</i>&nbsp;            overflowButton.setVisibility(View.GONE);</b>
+<i>263</i>&nbsp;        }
+<i>264</i>&nbsp;    }
+<i>265</i>&nbsp;
+<i>266</i>&nbsp;    private void setPreviewContents(@NonNull LinkPreviewContents contents) {
+<b class="nc"><i>267</i>&nbsp;        if (contents.getExtract().length() &gt; 0) {</b>
+<b class="nc"><i>268</i>&nbsp;            extractText.setText(contents.getExtract());</b>
+<i>269</i>&nbsp;        }
+<b class="nc"><i>270</i>&nbsp;        ViewUtil.loadImageUrlInto(thumbnailView, contents.getTitle().getThumbUrl());</b>
+<i>271</i>&nbsp;    }
+<i>272</i>&nbsp;
+<b class="nc"><i>273</i>&nbsp;    private retrofit2.Callback&lt;PageSummary&gt; linkPreviewCallback</b>
+<b class="nc"><i>274</i>&nbsp;            = new retrofit2.Callback&lt;PageSummary&gt;() {</b>
+<i>275</i>&nbsp;        @Override public void onResponse(@NonNull Call&lt;PageSummary&gt; call, @NonNull Response&lt;PageSummary&gt; rsp) {
+<b class="nc"><i>276</i>&nbsp;            if (!isAdded()) {</b>
+<i>277</i>&nbsp;                return;
+<i>278</i>&nbsp;            }
+<i>279</i>&nbsp;
+<b class="nc"><i>280</i>&nbsp;            PageSummary summary = rsp.body();</b>
+<b class="nc"><i>281</i>&nbsp;            if (summary != null &amp;&amp; !summary.hasError()) {</b>
+<i>282</i>&nbsp;
+<i>283</i>&nbsp;                // TODO: Remove this logic once Parsoid starts supporting language variants.
+<b class="nc"><i>284</i>&nbsp;                if (pageTitle.getWikiSite().languageCode().equals(pageTitle.getWikiSite().subdomain())) {</b>
+<b class="nc"><i>285</i>&nbsp;                    titleText.setText(StringUtil.fromHtml(summary.getDisplayTitle()));</b>
+<i>286</i>&nbsp;                } else {
+<b class="nc"><i>287</i>&nbsp;                    titleText.setText(StringUtil.fromHtml(pageTitle.getDisplayText()));</b>
+<i>288</i>&nbsp;                }
+<i>289</i>&nbsp;
+<b class="nc"><i>290</i>&nbsp;                showPreview(new LinkPreviewContents(summary, pageTitle.getWikiSite()));</b>
+<i>291</i>&nbsp;            } else {
+<b class="nc"><i>292</i>&nbsp;                titleText.setText(StringUtil.fromHtml(pageTitle.getDisplayText()));</b>
+<b class="nc"><i>293</i>&nbsp;                showError(null);</b>
+<b class="nc"><i>294</i>&nbsp;                logError(summary != null &amp;&amp; summary.hasError() ? summary.getError() : null,</b>
+<i>295</i>&nbsp;                        &quot;Page summary network request failed&quot;);
+<i>296</i>&nbsp;            }
+<i>297</i>&nbsp;        }
+<i>298</i>&nbsp;
+<i>299</i>&nbsp;        @Override public void onFailure(@NonNull Call&lt;PageSummary&gt; call, @NonNull Throwable caught) {
+<b class="nc"><i>300</i>&nbsp;            L.e(caught);</b>
+<b class="nc"><i>301</i>&nbsp;            if (!isAdded()) {</b>
+<i>302</i>&nbsp;                return;
+<i>303</i>&nbsp;            }
+<b class="nc"><i>304</i>&nbsp;            titleText.setText(StringUtil.fromHtml(pageTitle.getDisplayText()));</b>
+<b class="nc"><i>305</i>&nbsp;            showError(caught);</b>
+<i>306</i>&nbsp;        }
+<i>307</i>&nbsp;    };
+<i>308</i>&nbsp;
+<b class="nc"><i>309</i>&nbsp;    private PopupMenu.OnMenuItemClickListener menuListener = new PopupMenu.OnMenuItemClickListener() {</b>
+<i>310</i>&nbsp;        @Override
+<i>311</i>&nbsp;        public boolean onMenuItemClick(MenuItem item) {
+<b class="nc"><i>312</i>&nbsp;            Callback callback = callback();</b>
+<b class="nc"><i>313</i>&nbsp;            switch (item.getItemId()) {</b>
+<i>314</i>&nbsp;                case R.id.menu_link_preview_open_in_new_tab:
+<b class="nc"><i>315</i>&nbsp;                    loadPage(pageTitle, new HistoryEntry(pageTitle, entrySource), true);</b>
+<b class="nc"><i>316</i>&nbsp;                    dismiss();</b>
+<b class="nc"><i>317</i>&nbsp;                    return true;</b>
+<i>318</i>&nbsp;                case R.id.menu_link_preview_add_to_list:
+<b class="nc"><i>319</i>&nbsp;                    if (callback != null) {</b>
+<b class="nc"><i>320</i>&nbsp;                        callback.onLinkPreviewAddToList(pageTitle);</b>
+<i>321</i>&nbsp;                    }
+<b class="nc"><i>322</i>&nbsp;                    return true;</b>
+<i>323</i>&nbsp;                case R.id.menu_link_preview_share_page:
+<b class="nc"><i>324</i>&nbsp;                    if (callback != null) {</b>
+<b class="nc"><i>325</i>&nbsp;                        callback.onLinkPreviewShareLink(pageTitle);</b>
+<i>326</i>&nbsp;                    }
+<b class="nc"><i>327</i>&nbsp;                    return true;</b>
+<i>328</i>&nbsp;                case R.id.menu_link_preview_copy_link:
+<b class="nc"><i>329</i>&nbsp;                    if (callback != null) {</b>
+<b class="nc"><i>330</i>&nbsp;                        callback.onLinkPreviewCopyLink(pageTitle);</b>
+<i>331</i>&nbsp;                    }
+<b class="nc"><i>332</i>&nbsp;                    dismiss();</b>
+<b class="nc"><i>333</i>&nbsp;                    return true;</b>
+<i>334</i>&nbsp;                default:
+<i>335</i>&nbsp;                    break;
+<i>336</i>&nbsp;            }
+<b class="nc"><i>337</i>&nbsp;            return false;</b>
+<i>338</i>&nbsp;        }
+<i>339</i>&nbsp;    };
+<i>340</i>&nbsp;
+<b class="nc"><i>341</i>&nbsp;    private GalleryThumbnailScrollView.GalleryViewListener galleryViewListener</b>
+<b class="nc"><i>342</i>&nbsp;            = new GalleryThumbnailScrollView.GalleryViewListener() {</b>
+<i>343</i>&nbsp;        @Override
+<i>344</i>&nbsp;        public void onGalleryItemClicked(String imageName) {
+<b class="nc"><i>345</i>&nbsp;            startActivityForResult(GalleryActivity.newIntent(getContext(), pageTitle, imageName,</b>
+<b class="nc"><i>346</i>&nbsp;                    pageTitle.getWikiSite(), GalleryFunnel.SOURCE_LINK_PREVIEW),</b>
+<i>347</i>&nbsp;                    Constants.ACTIVITY_REQUEST_GALLERY);
+<i>348</i>&nbsp;        }
+<i>349</i>&nbsp;    };
+<i>350</i>&nbsp;
+<b class="nc"><i>351</i>&nbsp;    private View.OnClickListener goToPageListener = (View v) -&gt; goToLinkedPage();</b>
+<i>352</i>&nbsp;
+<i>353</i>&nbsp;    private void goToExternalMapsApp() {
+<b class="nc"><i>354</i>&nbsp;        if (location != null) {</b>
+<b class="nc"><i>355</i>&nbsp;            dismiss();</b>
+<b class="nc"><i>356</i>&nbsp;            GeoUtil.sendGeoIntent(getActivity(), location, pageTitle.getDisplayText());</b>
+<i>357</i>&nbsp;        }
+<i>358</i>&nbsp;    }
+<i>359</i>&nbsp;
+<i>360</i>&nbsp;    private void loadPage(PageTitle title, HistoryEntry entry, boolean inNewTab) {
+<b class="nc"><i>361</i>&nbsp;        Callback callback = callback();</b>
+<b class="nc"><i>362</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>363</i>&nbsp;            callback.onLinkPreviewLoadPage(title, entry, inNewTab);</b>
+<i>364</i>&nbsp;        }
+<i>365</i>&nbsp;    }
+<i>366</i>&nbsp;
+<i>367</i>&nbsp;    private void logError(@Nullable ServiceError error, @NonNull String message) {
+<b class="nc"><i>368</i>&nbsp;        if (error != null) {</b>
+<b class="nc"><i>369</i>&nbsp;            message += &quot;: &quot; + error.toString();</b>
+<i>370</i>&nbsp;        }
+<b class="nc"><i>371</i>&nbsp;        L.e(message);</b>
+<i>372</i>&nbsp;    }
+<i>373</i>&nbsp;
+<b class="nc"><i>374</i>&nbsp;    private class OverlayViewCallback implements LinkPreviewOverlayView.Callback {</b>
+<i>375</i>&nbsp;        @Override
+<i>376</i>&nbsp;        public void onPrimaryClick() {
+<b class="nc"><i>377</i>&nbsp;            goToLinkedPage();</b>
+<i>378</i>&nbsp;        }
+<i>379</i>&nbsp;
+<i>380</i>&nbsp;        @Override
+<i>381</i>&nbsp;        public void onSecondaryClick() {
+<b class="nc"><i>382</i>&nbsp;            goToExternalMapsApp();</b>
+<i>383</i>&nbsp;        }
+<i>384</i>&nbsp;    }
+<i>385</i>&nbsp;
+<i>386</i>&nbsp;    @Nullable private Callback callback() {
+<b class="nc"><i>387</i>&nbsp;        return FragmentUtil.getCallback(this, Callback.class);</b>
+<i>388</i>&nbsp;    }
+<i>389</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

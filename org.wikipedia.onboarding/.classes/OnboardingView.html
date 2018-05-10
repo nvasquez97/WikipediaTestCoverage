@@ -1,0 +1,158 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: OnboardingView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.onboarding</a> ]
+</div>
+
+<h1>Coverage Summary for Class: OnboardingView (org.wikipedia.onboarding)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">OnboardingView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.onboarding;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;import android.support.annotation.Nullable;
+<i>6</i>&nbsp;import android.support.annotation.StringRes;
+<i>7</i>&nbsp;import android.widget.LinearLayout;
+<i>8</i>&nbsp;import android.widget.TextView;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import org.wikipedia.R;
+<i>11</i>&nbsp;import org.wikipedia.page.LinkMovementMethodExt;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import butterknife.BindView;
+<i>14</i>&nbsp;import butterknife.ButterKnife;
+<i>15</i>&nbsp;import butterknife.OnClick;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;public class OnboardingView extends LinearLayout {
+<i>18</i>&nbsp;    public interface Callback {
+<i>19</i>&nbsp;        void onPositiveAction();
+<i>20</i>&nbsp;        void onNegativeAction();
+<i>21</i>&nbsp;    }
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    @BindView(R.id.view_onboarding_title) TextView titleView;
+<i>24</i>&nbsp;    @BindView(R.id.view_onboarding_text) TextView textView;
+<i>25</i>&nbsp;    @BindView(R.id.view_onboarding_action_positive) TextView actionViewPositive;
+<i>26</i>&nbsp;    @BindView(R.id.view_onboarding_action_negative) TextView actionViewNegative;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    @Nullable private Callback callback;
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    public OnboardingView(@NonNull Context context) {
+<b class="nc"><i>31</i>&nbsp;        super(context);</b>
+<b class="nc"><i>32</i>&nbsp;        setOrientation(VERTICAL);</b>
+<b class="nc"><i>33</i>&nbsp;        inflate(context, R.layout.view_onboarding, this);</b>
+<b class="nc"><i>34</i>&nbsp;        ButterKnife.bind(this);</b>
+<b class="nc"><i>35</i>&nbsp;        textView.setMovementMethod(LinkMovementMethodExt.getInstance());</b>
+<i>36</i>&nbsp;    }
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    public void setCallback(@Nullable Callback callback) {
+<b class="nc"><i>39</i>&nbsp;        this.callback = callback;</b>
+<i>40</i>&nbsp;    }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    public void setTitle(@StringRes int id) {
+<b class="nc"><i>43</i>&nbsp;        titleView.setText(id);</b>
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    public void setText(@StringRes int id) {
+<b class="nc"><i>47</i>&nbsp;        textView.setText(id);</b>
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    public void setText(@NonNull CharSequence text) {
+<b class="nc"><i>51</i>&nbsp;        textView.setText(text);</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    public void setPositiveAction(@StringRes int id) {
+<b class="nc"><i>55</i>&nbsp;        actionViewPositive.setText(id);</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    public void setNegativeAction(@StringRes int id) {
+<b class="nc"><i>59</i>&nbsp;        actionViewNegative.setText(id);</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    @OnClick(R.id.view_onboarding_action_positive)
+<i>63</i>&nbsp;    void onPositiveActionClick() {
+<b class="nc"><i>64</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>65</i>&nbsp;            callback.onPositiveAction();</b>
+<i>66</i>&nbsp;        }
+<i>67</i>&nbsp;    }
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;    @OnClick(R.id.view_onboarding_action_negative)
+<i>70</i>&nbsp;    void onNegativeActionClick() {
+<b class="nc"><i>71</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>72</i>&nbsp;            callback.onNegativeAction();</b>
+<i>73</i>&nbsp;        }
+<i>74</i>&nbsp;    }
+<i>75</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

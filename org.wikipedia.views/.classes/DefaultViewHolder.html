@@ -1,0 +1,100 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DefaultViewHolder</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.views</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DefaultViewHolder (org.wikipedia.views)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DefaultViewHolder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.views;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.v7.widget.RecyclerView;
+<i>5</i>&nbsp;import android.view.View;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;/** The minimum boilerplate required by the view holder pattern for use with custom views. */
+<i>8</i>&nbsp;public class DefaultViewHolder&lt;T extends View&gt; extends RecyclerView.ViewHolder {
+<i>9</i>&nbsp;    public DefaultViewHolder(@NonNull T view) {
+<b class="nc"><i>10</i>&nbsp;        super(view);</b>
+<i>11</i>&nbsp;    }
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    @NonNull public T getView() {
+<i>14</i>&nbsp;        //noinspection unchecked
+<b class="nc"><i>15</i>&nbsp;        return (T) itemView;</b>
+<i>16</i>&nbsp;    }
+<i>17</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

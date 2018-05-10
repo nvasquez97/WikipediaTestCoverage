@@ -1,0 +1,223 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SettingsFragment</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.settings</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SettingsFragment (org.wikipedia.settings)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SettingsFragment</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 30)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SettingsFragment$EventBusMethods</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 34)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.settings;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.os.Bundle;
+<i>4</i>&nbsp;import android.support.v7.preference.SwitchPreferenceCompat;
+<i>5</i>&nbsp;import android.view.Menu;
+<i>6</i>&nbsp;import android.view.MenuInflater;
+<i>7</i>&nbsp;import android.view.MenuItem;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import com.squareup.otto.Subscribe;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import org.wikipedia.R;
+<i>12</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>13</i>&nbsp;import org.wikipedia.events.ReadingListsEnabledStatusEvent;
+<i>14</i>&nbsp;import org.wikipedia.events.ReadingListsMergeLocalDialogEvent;
+<i>15</i>&nbsp;import org.wikipedia.events.ReadingListsNoLongerSyncedEvent;
+<i>16</i>&nbsp;
+<b class="nc"><i>17</i>&nbsp;public class SettingsFragment extends PreferenceLoaderFragment {</b>
+<i>18</i>&nbsp;    public static SettingsFragment newInstance() {
+<b class="nc"><i>19</i>&nbsp;        return new SettingsFragment();</b>
+<i>20</i>&nbsp;    }
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    private SettingsPreferenceLoader preferenceLoader;
+<i>23</i>&nbsp;    private EventBusMethods busMethods;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    @Override public void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>26</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>27</i>&nbsp;        busMethods = new EventBusMethods();</b>
+<b class="nc"><i>28</i>&nbsp;        WikipediaApp.getInstance().getBus().register(busMethods);</b>
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;        // TODO: Kick off a sync of reading lists, which will call back to us whether lists
+<i>31</i>&nbsp;        // are enabled or not. (Not sure if this is necessary yet.)
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    @Override public void onDestroy() {
+<b class="nc"><i>35</i>&nbsp;        super.onDestroy();</b>
+<b class="nc"><i>36</i>&nbsp;        WikipediaApp.getInstance().getBus().unregister(busMethods);</b>
+<b class="nc"><i>37</i>&nbsp;        busMethods = null;</b>
+<i>38</i>&nbsp;    }
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    @Override public void onActivityCreated(Bundle savedInstanceState) {
+<b class="nc"><i>41</i>&nbsp;        super.onActivityCreated(savedInstanceState);</b>
+<b class="nc"><i>42</i>&nbsp;        setHasOptionsMenu(true);</b>
+<i>43</i>&nbsp;    }
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    @Override
+<i>46</i>&nbsp;    public void loadPreferences() {
+<b class="nc"><i>47</i>&nbsp;        preferenceLoader = new SettingsPreferenceLoader(this);</b>
+<b class="nc"><i>48</i>&nbsp;        preferenceLoader.loadPreferences();</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    @Override
+<i>52</i>&nbsp;    public void onResume() {
+<b class="nc"><i>53</i>&nbsp;        super.onResume();</b>
+<b class="nc"><i>54</i>&nbsp;        preferenceLoader.updateSyncReadingListsPrefSummary();</b>
+<b class="nc"><i>55</i>&nbsp;        getActivity().invalidateOptionsMenu();</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    @Override
+<i>59</i>&nbsp;    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+<b class="nc"><i>60</i>&nbsp;        super.onCreateOptionsMenu(menu, inflater);</b>
+<b class="nc"><i>61</i>&nbsp;        inflater.inflate(R.menu.menu_settings, menu);</b>
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    @Override
+<i>65</i>&nbsp;    public void onPrepareOptionsMenu(Menu menu) {
+<b class="nc"><i>66</i>&nbsp;        super.onPrepareOptionsMenu(menu);</b>
+<b class="nc"><i>67</i>&nbsp;        prepareDeveloperSettingsMenuItem(menu);</b>
+<i>68</i>&nbsp;    }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;    @Override
+<i>71</i>&nbsp;    public boolean onOptionsItemSelected(MenuItem item) {
+<b class="nc"><i>72</i>&nbsp;        switch (item.getItemId()) {</b>
+<i>73</i>&nbsp;            case R.id.developer_settings:
+<b class="nc"><i>74</i>&nbsp;                launchDeveloperSettingsActivity();</b>
+<b class="nc"><i>75</i>&nbsp;                return true;</b>
+<i>76</i>&nbsp;            default:
+<b class="nc"><i>77</i>&nbsp;                return super.onOptionsItemSelected(item);</b>
+<i>78</i>&nbsp;        }
+<i>79</i>&nbsp;    }
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    public void updateOfflineLibraryPref(boolean checked) {
+<b class="nc"><i>82</i>&nbsp;        ((SwitchPreferenceCompat) preferenceLoader.findPreference(R.string.preference_key_enable_offline_library))</b>
+<b class="nc"><i>83</i>&nbsp;                .setChecked(checked);</b>
+<i>84</i>&nbsp;    }
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;    private void launchDeveloperSettingsActivity() {
+<b class="nc"><i>87</i>&nbsp;        startActivity(DeveloperSettingsActivity.newIntent(getActivity()));</b>
+<i>88</i>&nbsp;    }
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;    private void prepareDeveloperSettingsMenuItem(Menu menu) {
+<b class="nc"><i>91</i>&nbsp;        menu.findItem(R.id.developer_settings).setVisible(Prefs.isShowDeveloperSettingsEnabled());</b>
+<i>92</i>&nbsp;    }
+<i>93</i>&nbsp;
+<i>94</i>&nbsp;    private void setReadingListSyncPref(boolean checked) {
+<b class="nc"><i>95</i>&nbsp;        if (preferenceLoader != null) {</b>
+<b class="nc"><i>96</i>&nbsp;            ((SwitchPreferenceCompat) preferenceLoader.findPreference(R.string.preference_key_sync_reading_lists))</b>
+<b class="nc"><i>97</i>&nbsp;                    .setChecked(checked);</b>
+<i>98</i>&nbsp;        }
+<i>99</i>&nbsp;    }
+<i>100</i>&nbsp;
+<b class="nc"><i>101</i>&nbsp;    private class EventBusMethods {</b>
+<i>102</i>&nbsp;        @Subscribe public void on(ReadingListsMergeLocalDialogEvent event) {
+<b class="nc"><i>103</i>&nbsp;            setReadingListSyncPref(true);</b>
+<i>104</i>&nbsp;        }
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;        @Subscribe public void on(ReadingListsEnabledStatusEvent event) {
+<b class="nc"><i>107</i>&nbsp;            setReadingListSyncPref(true);</b>
+<i>108</i>&nbsp;        }
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;        @Subscribe public void on(ReadingListsNoLongerSyncedEvent event) {
+<b class="nc"><i>111</i>&nbsp;            setReadingListSyncPref(false);</b>
+<i>112</i>&nbsp;        }
+<i>113</i>&nbsp;    }
+<i>114</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

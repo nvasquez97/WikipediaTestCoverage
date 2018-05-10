@@ -1,0 +1,144 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: NewsItem</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.news</a> ]
+</div>
+
+<h1>Coverage Summary for Class: NewsItem (org.wikipedia.feed.news)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NewsItem</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.feed.news;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.net.Uri;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;import android.support.annotation.Nullable;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.wikipedia.Constants;
+<i>8</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>9</i>&nbsp;import org.wikipedia.dataclient.restbase.page.RbPageSummary;
+<i>10</i>&nbsp;import org.wikipedia.json.annotations.Required;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import java.util.ArrayList;
+<i>13</i>&nbsp;import java.util.Collections;
+<i>14</i>&nbsp;import java.util.List;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;import static org.wikipedia.util.ImageUrlUtil.getUrlForSize;
+<i>17</i>&nbsp;
+<b class="nc"><i>18</i>&nbsp;public final class NewsItem {</b>
+<i>19</i>&nbsp;    @SuppressWarnings(&quot;unused,NullableProblems&quot;) @Required @NonNull private String story;
+<i>20</i>&nbsp;    @SuppressWarnings(&quot;unused,NullableProblems&quot;) @NonNull private List&lt;RbPageSummary&gt; links
+<b class="nc"><i>21</i>&nbsp;            = Collections.emptyList();</b>
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    @NonNull String story() {
+<b class="nc"><i>24</i>&nbsp;        return story;</b>
+<i>25</i>&nbsp;    }
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    @NonNull public List&lt;RbPageSummary&gt; links() {
+<b class="nc"><i>28</i>&nbsp;        return links;</b>
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    @NonNull List&lt;NewsLinkCard&gt; linkCards(WikiSite wiki) {
+<b class="nc"><i>32</i>&nbsp;        List&lt;NewsLinkCard&gt; linkCards = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>33</i>&nbsp;        for (RbPageSummary link : links) {</b>
+<b class="nc"><i>34</i>&nbsp;            linkCards.add(new NewsLinkCard(link, wiki));</b>
+<b class="nc"><i>35</i>&nbsp;        }</b>
+<b class="nc"><i>36</i>&nbsp;        return linkCards;</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    @Nullable public Uri thumb() {
+<b class="nc"><i>40</i>&nbsp;        Uri uri = getFirstImageUri(links);</b>
+<b class="nc"><i>41</i>&nbsp;        return uri != null ? getUrlForSize(uri, Constants.PREFERRED_THUMB_SIZE) : null;</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    @Nullable Uri featureImage() {
+<b class="nc"><i>45</i>&nbsp;        return getFirstImageUri(links);</b>
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    /**
+<i>49</i>&nbsp;     * Iterate through the CardPageItems associated with the news story&#39;s links and return the first
+<i>50</i>&nbsp;     * thumb URI found.
+<i>51</i>&nbsp;     */
+<i>52</i>&nbsp;    @Nullable private Uri getFirstImageUri(List&lt;RbPageSummary&gt; links) {
+<b class="nc"><i>53</i>&nbsp;        for (RbPageSummary link : links) {</b>
+<b class="nc"><i>54</i>&nbsp;            String thumbnail = link.getThumbnailUrl();</b>
+<b class="nc"><i>55</i>&nbsp;            if (thumbnail != null) {</b>
+<b class="nc"><i>56</i>&nbsp;                return Uri.parse(thumbnail);</b>
+<i>57</i>&nbsp;            }
+<b class="nc"><i>58</i>&nbsp;        }</b>
+<b class="nc"><i>59</i>&nbsp;        return null;</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

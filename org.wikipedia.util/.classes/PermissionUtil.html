@@ -1,0 +1,132 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PermissionUtil</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.util</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PermissionUtil (org.wikipedia.util)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PermissionUtil</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.util;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.Manifest;
+<i>4</i>&nbsp;import android.annotation.TargetApi;
+<i>5</i>&nbsp;import android.content.Context;
+<i>6</i>&nbsp;import android.content.pm.PackageManager;
+<i>7</i>&nbsp;import android.os.Build;
+<i>8</i>&nbsp;import android.support.annotation.NonNull;
+<i>9</i>&nbsp;import android.support.v4.app.ActivityCompat;
+<i>10</i>&nbsp;import android.support.v4.app.Fragment;
+<i>11</i>&nbsp;import android.support.v4.content.ContextCompat;
+<i>12</i>&nbsp;import android.support.v7.app.AppCompatActivity;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import org.wikipedia.settings.Prefs;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;/**
+<i>17</i>&nbsp; * Common methods for dealing with runtime permissions.
+<i>18</i>&nbsp; */
+<i>19</i>&nbsp;public final class PermissionUtil {
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    public static boolean isPermitted(@NonNull int[] grantResults) {
+<i>22</i>&nbsp;        // If request is cancelled, the result arrays are empty.
+<b class="nc"><i>23</i>&nbsp;        return grantResults.length &gt; 0</b>
+<i>24</i>&nbsp;                &amp;&amp; grantResults[0] == PackageManager.PERMISSION_GRANTED;
+<i>25</i>&nbsp;    }
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    @TargetApi(Build.VERSION_CODES.M)
+<i>28</i>&nbsp;    public static boolean shouldShowWritePermissionRationale(@NonNull AppCompatActivity activity) {
+<b class="nc"><i>29</i>&nbsp;        return !Prefs.askedForPermissionOnce(Manifest.permission.WRITE_EXTERNAL_STORAGE)</b>
+<b class="nc"><i>30</i>&nbsp;                || activity.shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE);</b>
+<i>31</i>&nbsp;    }
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    public static boolean hasWriteExternalStoragePermission(@NonNull Context context) {
+<b class="nc"><i>34</i>&nbsp;        return ContextCompat.checkSelfPermission(context,</b>
+<i>35</i>&nbsp;                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+<i>36</i>&nbsp;    }
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    public static void requestWriteStorageRuntimePermissions(Fragment fragment, int requestCode) {
+<b class="nc"><i>39</i>&nbsp;        fragment.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);</b>
+<i>40</i>&nbsp;        // once permission is granted/denied it will continue with onRequestPermissionsResult
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    public static void requestWriteStorageRuntimePermissions(AppCompatActivity activity, int requestCode) {
+<b class="nc"><i>44</i>&nbsp;        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);</b>
+<i>45</i>&nbsp;        // once permission is granted/denied it will continue with onRequestPermissionsResult
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<b class="nc"><i>48</i>&nbsp;    private PermissionUtil() { }</b>
+<i>49</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

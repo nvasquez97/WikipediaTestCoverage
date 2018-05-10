@@ -1,0 +1,72 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: AvPlayerImplementation</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.media</a> ]
+</div>
+
+<h1>Coverage Summary for Class: AvPlayerImplementation (org.wikipedia.media)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">AvPlayerImplementation</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.media;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;interface AvPlayerImplementation {
+<i>6</i>&nbsp;    // May be called when initialized.
+<i>7</i>&nbsp;    void deinit();
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;    // May only be called when deinitialized.
+<i>10</i>&nbsp;    void init();
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;    // May be called when initialized.
+<i>13</i>&nbsp;    void load(@NonNull String path,
+<i>14</i>&nbsp;              @NonNull AvPlayer.Callback callback,
+<i>15</i>&nbsp;              @NonNull AvPlayer.ErrorCallback errorCallback);
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    // May be called when playing or paused.
+<i>18</i>&nbsp;    void stop();
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    // May be called when loaded and not playing.
+<i>21</i>&nbsp;    void play(@NonNull AvPlayer.Callback callback, @NonNull AvPlayer.ErrorCallback errorCallback);
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    // May be called when playing.
+<i>24</i>&nbsp;    void pause();
+<i>25</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

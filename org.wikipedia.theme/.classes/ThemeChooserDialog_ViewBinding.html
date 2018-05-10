@@ -1,0 +1,181 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ThemeChooserDialog_ViewBinding</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.theme</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ThemeChooserDialog_ViewBinding (org.wikipedia.theme)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ThemeChooserDialog_ViewBinding</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 34)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ThemeChooserDialog_ViewBinding$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 36)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;// Generated code from Butter Knife. Do not modify!
+<i>2</i>&nbsp;package org.wikipedia.theme;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import android.support.annotation.CallSuper;
+<i>5</i>&nbsp;import android.support.annotation.UiThread;
+<i>6</i>&nbsp;import android.support.v7.widget.SwitchCompat;
+<i>7</i>&nbsp;import android.view.View;
+<i>8</i>&nbsp;import android.widget.CompoundButton;
+<i>9</i>&nbsp;import android.widget.ProgressBar;
+<i>10</i>&nbsp;import android.widget.TextView;
+<i>11</i>&nbsp;import butterknife.Unbinder;
+<i>12</i>&nbsp;import java.lang.IllegalStateException;
+<i>13</i>&nbsp;import java.lang.Override;
+<i>14</i>&nbsp;import org.wikipedia.R;
+<i>15</i>&nbsp;import org.wikipedia.views.DiscreteSeekBar;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;public class ThemeChooserDialog_ViewBinding implements Unbinder {
+<i>18</i>&nbsp;  private ThemeChooserDialog target;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;  private View view2131296920;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;  @UiThread
+<b class="nc"><i>23</i>&nbsp;  public ThemeChooserDialog_ViewBinding(final ThemeChooserDialog target, View source) {</b>
+<b class="nc"><i>24</i>&nbsp;    this.target = target;</b>
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    View view;
+<b class="nc"><i>27</i>&nbsp;    target.buttonDecreaseTextSize = (TextView) source.findViewById(R.id.buttonDecreaseTextSize);</b>
+<b class="nc"><i>28</i>&nbsp;    target.buttonIncreaseTextSize = (TextView) source.findViewById(R.id.buttonIncreaseTextSize);</b>
+<b class="nc"><i>29</i>&nbsp;    target.textSizePercent = (TextView) source.findViewById(R.id.text_size_percent);</b>
+<b class="nc"><i>30</i>&nbsp;    target.textSizeSeekBar = (DiscreteSeekBar) source.findViewById(R.id.text_size_seek_bar);</b>
+<b class="nc"><i>31</i>&nbsp;    target.buttonThemeLight = (TextView) source.findViewById(R.id.button_theme_light);</b>
+<b class="nc"><i>32</i>&nbsp;    target.buttonThemeDark = (TextView) source.findViewById(R.id.button_theme_dark);</b>
+<b class="nc"><i>33</i>&nbsp;    target.buttonThemeBlack = (TextView) source.findViewById(R.id.button_theme_black);</b>
+<b class="nc"><i>34</i>&nbsp;    target.buttonThemeLightHighlight = source.findViewById(R.id.button_theme_light_highlight);</b>
+<b class="nc"><i>35</i>&nbsp;    target.buttonThemeDarkHighlight = source.findViewById(R.id.button_theme_dark_highlight);</b>
+<b class="nc"><i>36</i>&nbsp;    target.buttonThemeBlackHighlight = source.findViewById(R.id.button_theme_black_highlight);</b>
+<b class="nc"><i>37</i>&nbsp;    view = source.findViewById(R.id.theme_chooser_dark_mode_dim_images_switch);</b>
+<b class="nc"><i>38</i>&nbsp;    target.dimImagesSwitch = (SwitchCompat) view;</b>
+<b class="nc"><i>39</i>&nbsp;    view2131296920 = view;</b>
+<b class="nc"><i>40</i>&nbsp;    ((CompoundButton) view).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {</b>
+<i>41</i>&nbsp;      @Override
+<i>42</i>&nbsp;      public void onCheckedChanged(CompoundButton p0, boolean p1) {
+<b class="nc"><i>43</i>&nbsp;        target.onToggleDimImages(p1);</b>
+<i>44</i>&nbsp;      }
+<i>45</i>&nbsp;    });
+<b class="nc"><i>46</i>&nbsp;    target.fontChangeProgressBar = (ProgressBar) source.findViewById(R.id.font_change_progress_bar);</b>
+<i>47</i>&nbsp;  }
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;  @Override
+<i>50</i>&nbsp;  @CallSuper
+<i>51</i>&nbsp;  public void unbind() {
+<b class="nc"><i>52</i>&nbsp;    ThemeChooserDialog target = this.target;</b>
+<b class="nc"><i>53</i>&nbsp;    if (target == null) throw new IllegalStateException(&quot;Bindings already cleared.&quot;);</b>
+<b class="nc"><i>54</i>&nbsp;    this.target = null;</b>
+<i>55</i>&nbsp;
+<b class="nc"><i>56</i>&nbsp;    target.buttonDecreaseTextSize = null;</b>
+<b class="nc"><i>57</i>&nbsp;    target.buttonIncreaseTextSize = null;</b>
+<b class="nc"><i>58</i>&nbsp;    target.textSizePercent = null;</b>
+<b class="nc"><i>59</i>&nbsp;    target.textSizeSeekBar = null;</b>
+<b class="nc"><i>60</i>&nbsp;    target.buttonThemeLight = null;</b>
+<b class="nc"><i>61</i>&nbsp;    target.buttonThemeDark = null;</b>
+<b class="nc"><i>62</i>&nbsp;    target.buttonThemeBlack = null;</b>
+<b class="nc"><i>63</i>&nbsp;    target.buttonThemeLightHighlight = null;</b>
+<b class="nc"><i>64</i>&nbsp;    target.buttonThemeDarkHighlight = null;</b>
+<b class="nc"><i>65</i>&nbsp;    target.buttonThemeBlackHighlight = null;</b>
+<b class="nc"><i>66</i>&nbsp;    target.dimImagesSwitch = null;</b>
+<b class="nc"><i>67</i>&nbsp;    target.fontChangeProgressBar = null;</b>
+<i>68</i>&nbsp;
+<b class="nc"><i>69</i>&nbsp;    ((CompoundButton) view2131296920).setOnCheckedChangeListener(null);</b>
+<b class="nc"><i>70</i>&nbsp;    view2131296920 = null;</b>
+<i>71</i>&nbsp;  }
+<i>72</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

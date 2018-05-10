@@ -1,0 +1,415 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: AggregatedFeedContentClient</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.aggregated</a> ]
+</div>
+
+<h1>Coverage Summary for Class: AggregatedFeedContentClient (org.wikipedia.feed.aggregated)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AggregatedFeedContentClient</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AggregatedFeedContentClient$BaseClient</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 26)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AggregatedFeedContentClient$FeaturedArticle</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AggregatedFeedContentClient$FeaturedImage</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AggregatedFeedContentClient$InTheNews</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AggregatedFeedContentClient$OnThisDayFeed</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AggregatedFeedContentClient$TrendingArticles</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 19)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 56)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.feed.aggregated;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;import android.support.annotation.Nullable;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>8</i>&nbsp;import org.wikipedia.dataclient.retrofit.RetrofitFactory;
+<i>9</i>&nbsp;import org.wikipedia.feed.FeedCoordinator;
+<i>10</i>&nbsp;import org.wikipedia.feed.dataclient.FeedClient;
+<i>11</i>&nbsp;import org.wikipedia.feed.featured.FeaturedArticleCard;
+<i>12</i>&nbsp;import org.wikipedia.feed.image.FeaturedImageCard;
+<i>13</i>&nbsp;import org.wikipedia.feed.model.Card;
+<i>14</i>&nbsp;import org.wikipedia.feed.model.UtcDate;
+<i>15</i>&nbsp;import org.wikipedia.feed.mostread.MostReadListCard;
+<i>16</i>&nbsp;import org.wikipedia.feed.news.NewsListCard;
+<i>17</i>&nbsp;import org.wikipedia.feed.onthisday.OnThisDayCard;
+<i>18</i>&nbsp;import org.wikipedia.settings.Prefs;
+<i>19</i>&nbsp;import org.wikipedia.util.DateUtil;
+<i>20</i>&nbsp;import org.wikipedia.util.log.L;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;import java.util.ArrayList;
+<i>23</i>&nbsp;import java.util.List;
+<i>24</i>&nbsp;import java.util.Locale;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;import retrofit2.Call;
+<i>27</i>&nbsp;import retrofit2.Response;
+<i>28</i>&nbsp;import retrofit2.Retrofit;
+<i>29</i>&nbsp;import retrofit2.http.GET;
+<i>30</i>&nbsp;import retrofit2.http.Headers;
+<i>31</i>&nbsp;import retrofit2.http.Path;
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;import static org.wikipedia.Constants.ACCEPT_HEADER_PREFIX;
+<i>34</i>&nbsp;
+<b class="nc"><i>35</i>&nbsp;public class AggregatedFeedContentClient {</b>
+<i>36</i>&nbsp;    @Nullable private Call&lt;AggregatedFeedContent&gt; call;
+<i>37</i>&nbsp;    @Nullable private WikiSite wiki;
+<i>38</i>&nbsp;    @Nullable private AggregatedFeedContent aggregatedResponse;
+<b class="nc"><i>39</i>&nbsp;    private int aggregatedResponseAge = -1;</b>
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    public static class OnThisDayFeed extends BaseClient {
+<i>42</i>&nbsp;        public OnThisDayFeed(@NonNull AggregatedFeedContentClient aggregatedClient) {
+<b class="nc"><i>43</i>&nbsp;            super(aggregatedClient);</b>
+<i>44</i>&nbsp;        }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;        @Override
+<i>47</i>&nbsp;        void getCardFromResponse(@NonNull AggregatedFeedContent content, @NonNull WikiSite wiki,
+<i>48</i>&nbsp;                                 int age, @NonNull List&lt;Card&gt; outCards) {
+<b class="nc"><i>49</i>&nbsp;            if (content.onthisday() != null &amp;&amp; !content.onthisday().isEmpty()) {</b>
+<b class="nc"><i>50</i>&nbsp;                outCards.add(new OnThisDayCard(content.onthisday(), wiki, age));</b>
+<i>51</i>&nbsp;            }
+<i>52</i>&nbsp;        }
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;    public static class InTheNews extends BaseClient {
+<i>55</i>&nbsp;        public InTheNews(@NonNull AggregatedFeedContentClient aggregatedClient) {
+<b class="nc"><i>56</i>&nbsp;            super(aggregatedClient);</b>
+<i>57</i>&nbsp;        }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;        @Override
+<i>60</i>&nbsp;        void getCardFromResponse(@NonNull AggregatedFeedContent content, @NonNull WikiSite wiki,
+<i>61</i>&nbsp;                                 int age, @NonNull List&lt;Card&gt; outCards) {
+<i>62</i>&nbsp;            // todo: remove age check when news endpoint provides dated content, T139481.
+<b class="nc"><i>63</i>&nbsp;            if (age == 0 &amp;&amp; content.news() != null) {</b>
+<b class="nc"><i>64</i>&nbsp;                outCards.add(new NewsListCard(content.news(), age, wiki));</b>
+<i>65</i>&nbsp;            }
+<i>66</i>&nbsp;        }
+<i>67</i>&nbsp;    }
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;    public static class FeaturedArticle extends BaseClient {
+<i>70</i>&nbsp;        public FeaturedArticle(@NonNull AggregatedFeedContentClient aggregatedClient) {
+<b class="nc"><i>71</i>&nbsp;            super(aggregatedClient);</b>
+<i>72</i>&nbsp;        }
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;        @Override
+<i>75</i>&nbsp;        void getCardFromResponse(@NonNull AggregatedFeedContent content, @NonNull WikiSite wiki,
+<i>76</i>&nbsp;                                 int age, @NonNull List&lt;Card&gt; outCards) {
+<b class="nc"><i>77</i>&nbsp;            if (content.tfa() != null) {</b>
+<b class="nc"><i>78</i>&nbsp;                outCards.add(new FeaturedArticleCard(content.tfa(), age, wiki));</b>
+<i>79</i>&nbsp;            }
+<i>80</i>&nbsp;        }
+<i>81</i>&nbsp;    }
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;    public static class TrendingArticles extends BaseClient {
+<i>84</i>&nbsp;        public TrendingArticles(@NonNull AggregatedFeedContentClient aggregatedClient) {
+<b class="nc"><i>85</i>&nbsp;            super(aggregatedClient);</b>
+<i>86</i>&nbsp;        }
+<i>87</i>&nbsp;
+<i>88</i>&nbsp;        @Override
+<i>89</i>&nbsp;        void getCardFromResponse(@NonNull AggregatedFeedContent content, @NonNull WikiSite wiki,
+<i>90</i>&nbsp;                                 int age, @NonNull List&lt;Card&gt; outCards) {
+<b class="nc"><i>91</i>&nbsp;            if (content.mostRead() != null) {</b>
+<b class="nc"><i>92</i>&nbsp;                outCards.add(new MostReadListCard(content.mostRead(), wiki));</b>
+<i>93</i>&nbsp;            }
+<i>94</i>&nbsp;        }
+<i>95</i>&nbsp;    }
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;    public static class FeaturedImage extends BaseClient {
+<i>98</i>&nbsp;        public FeaturedImage(@NonNull AggregatedFeedContentClient aggregatedClient) {
+<b class="nc"><i>99</i>&nbsp;            super(aggregatedClient);</b>
+<i>100</i>&nbsp;        }
+<i>101</i>&nbsp;
+<i>102</i>&nbsp;        @Override
+<i>103</i>&nbsp;        void getCardFromResponse(@NonNull AggregatedFeedContent content, @NonNull WikiSite wiki,
+<i>104</i>&nbsp;                                 int age, @NonNull List&lt;Card&gt; outCards) {
+<b class="nc"><i>105</i>&nbsp;            if (content.potd() != null) {</b>
+<b class="nc"><i>106</i>&nbsp;                outCards.add(new FeaturedImageCard(content.potd(), age, wiki));</b>
+<i>107</i>&nbsp;            }
+<i>108</i>&nbsp;        }
+<i>109</i>&nbsp;    }
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;    void setAggregatedResponse(@Nullable AggregatedFeedContent content, int age, @Nullable WikiSite wiki) {
+<b class="nc"><i>112</i>&nbsp;        aggregatedResponse = content;</b>
+<b class="nc"><i>113</i>&nbsp;        this.aggregatedResponseAge = age;</b>
+<b class="nc"><i>114</i>&nbsp;        this.wiki = wiki;</b>
+<i>115</i>&nbsp;    }
+<i>116</i>&nbsp;
+<i>117</i>&nbsp;    void requestAggregated(@NonNull WikiSite wiki, int age, @NonNull retrofit2.Callback&lt;AggregatedFeedContent&gt; cb) {
+<b class="nc"><i>118</i>&nbsp;        cancel();</b>
+<b class="nc"><i>119</i>&nbsp;        UtcDate date = DateUtil.getUtcRequestDateFor(age);</b>
+<b class="nc"><i>120</i>&nbsp;        String endpoint = String.format(Locale.ROOT, Prefs.getRestbaseUriFormat(), wiki.scheme(), wiki.authority());</b>
+<b class="nc"><i>121</i>&nbsp;        Retrofit retrofit = RetrofitFactory.newInstance(endpoint, wiki);</b>
+<b class="nc"><i>122</i>&nbsp;        AggregatedFeedContentClient.Service service = retrofit.create(Service.class);</b>
+<b class="nc"><i>123</i>&nbsp;        call = service.get(date.year(), date.month(), date.date());</b>
+<b class="nc"><i>124</i>&nbsp;        call.enqueue(cb);</b>
+<i>125</i>&nbsp;    }
+<i>126</i>&nbsp;
+<i>127</i>&nbsp;    public void cancel() {
+<b class="nc"><i>128</i>&nbsp;        if (call == null) {</b>
+<i>129</i>&nbsp;            return;
+<i>130</i>&nbsp;        }
+<b class="nc"><i>131</i>&nbsp;        call.cancel();</b>
+<b class="nc"><i>132</i>&nbsp;        call = null;</b>
+<i>133</i>&nbsp;    }
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;    private interface Service {
+<i>136</i>&nbsp;
+<i>137</i>&nbsp;        /**
+<i>138</i>&nbsp;         * Gets aggregated content for the feed for the date provided.
+<i>139</i>&nbsp;         *
+<i>140</i>&nbsp;         * @param year four-digit year
+<i>141</i>&nbsp;         * @param month two-digit month
+<i>142</i>&nbsp;         * @param day two-digit day
+<i>143</i>&nbsp;         */
+<i>144</i>&nbsp;        @NonNull
+<i>145</i>&nbsp;        @Headers(ACCEPT_HEADER_PREFIX + &quot;aggregated-feed/0.5.0\&quot;&quot;)
+<i>146</i>&nbsp;        @GET(&quot;feed/featured/{year}/{month}/{day}&quot;)
+<i>147</i>&nbsp;        Call&lt;AggregatedFeedContent&gt; get(@Path(&quot;year&quot;) String year,
+<i>148</i>&nbsp;                                        @Path(&quot;month&quot;) String month,
+<i>149</i>&nbsp;                                        @Path(&quot;day&quot;) String day);
+<i>150</i>&nbsp;    }
+<i>151</i>&nbsp;
+<i>152</i>&nbsp;    private abstract static class BaseClient implements FeedClient, retrofit2.Callback&lt;AggregatedFeedContent&gt; {
+<i>153</i>&nbsp;        @NonNull private AggregatedFeedContentClient aggregatedClient;
+<i>154</i>&nbsp;        @Nullable private Callback cb;
+<i>155</i>&nbsp;        private WikiSite wiki;
+<i>156</i>&nbsp;        private int age;
+<i>157</i>&nbsp;
+<b class="nc"><i>158</i>&nbsp;        BaseClient(@NonNull AggregatedFeedContentClient aggregatedClient) {</b>
+<b class="nc"><i>159</i>&nbsp;            this.aggregatedClient = aggregatedClient;</b>
+<i>160</i>&nbsp;        }
+<i>161</i>&nbsp;
+<i>162</i>&nbsp;        abstract void getCardFromResponse(@NonNull AggregatedFeedContent response,
+<i>163</i>&nbsp;                                          @NonNull WikiSite wiki, int age, @NonNull List&lt;Card&gt; outCards);
+<i>164</i>&nbsp;
+<i>165</i>&nbsp;        @Override
+<i>166</i>&nbsp;        public void request(@NonNull Context context, @NonNull WikiSite wiki, int age, @NonNull Callback cb) {
+<b class="nc"><i>167</i>&nbsp;            this.cb = cb;</b>
+<b class="nc"><i>168</i>&nbsp;            this.age = age;</b>
+<b class="nc"><i>169</i>&nbsp;            this.wiki = wiki;</b>
+<b class="nc"><i>170</i>&nbsp;            if (aggregatedClient.aggregatedResponseAge == age</b>
+<b class="nc"><i>171</i>&nbsp;                    &amp;&amp; aggregatedClient.aggregatedResponse != null</b>
+<b class="nc"><i>172</i>&nbsp;                    &amp;&amp; wiki.equals(aggregatedClient.wiki)) {</b>
+<b class="nc"><i>173</i>&nbsp;                List&lt;Card&gt; cards = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>174</i>&nbsp;                getCardFromResponse(aggregatedClient.aggregatedResponse, wiki, age, cards);</b>
+<b class="nc"><i>175</i>&nbsp;                FeedCoordinator.postCardsToCallback(cb, cards);</b>
+<b class="nc"><i>176</i>&nbsp;            } else {</b>
+<b class="nc"><i>177</i>&nbsp;                aggregatedClient.requestAggregated(wiki, age, this);</b>
+<i>178</i>&nbsp;            }
+<i>179</i>&nbsp;        }
+<i>180</i>&nbsp;
+<i>181</i>&nbsp;        @Override
+<i>182</i>&nbsp;        public void cancel() {
+<i>183</i>&nbsp;        }
+<i>184</i>&nbsp;
+<i>185</i>&nbsp;        @Override public void onResponse(@NonNull Call&lt;AggregatedFeedContent&gt; call,
+<i>186</i>&nbsp;                                         @NonNull Response&lt;AggregatedFeedContent&gt; response) {
+<b class="nc"><i>187</i>&nbsp;            AggregatedFeedContent content = response.body();</b>
+<b class="nc"><i>188</i>&nbsp;            if (content == null) {</b>
+<b class="nc"><i>189</i>&nbsp;                if (cb != null) {</b>
+<b class="nc"><i>190</i>&nbsp;                    cb.error(new RuntimeException(&quot;Aggregated response was not in the correct format.&quot;));</b>
+<i>191</i>&nbsp;                }
+<i>192</i>&nbsp;                return;
+<i>193</i>&nbsp;            }
+<b class="nc"><i>194</i>&nbsp;            aggregatedClient.setAggregatedResponse(content, age, wiki);</b>
+<b class="nc"><i>195</i>&nbsp;            List&lt;Card&gt; cards = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>196</i>&nbsp;            if (aggregatedClient.aggregatedResponse != null) {</b>
+<b class="nc"><i>197</i>&nbsp;                getCardFromResponse(aggregatedClient.aggregatedResponse, wiki, age, cards);</b>
+<i>198</i>&nbsp;            }
+<b class="nc"><i>199</i>&nbsp;            if (cb != null) {</b>
+<b class="nc"><i>200</i>&nbsp;                FeedCoordinator.postCardsToCallback(cb, cards);</b>
+<i>201</i>&nbsp;            }
+<i>202</i>&nbsp;        }
+<i>203</i>&nbsp;
+<i>204</i>&nbsp;        @Override public void onFailure(@NonNull Call&lt;AggregatedFeedContent&gt; call, @NonNull Throwable caught) {
+<b class="nc"><i>205</i>&nbsp;            L.v(caught);</b>
+<b class="nc"><i>206</i>&nbsp;            if (cb != null) {</b>
+<b class="nc"><i>207</i>&nbsp;                cb.error(caught);</b>
+<i>208</i>&nbsp;            }
+<i>209</i>&nbsp;        }
+<i>210</i>&nbsp;    }
+<i>211</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

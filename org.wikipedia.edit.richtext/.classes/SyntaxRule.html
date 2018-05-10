@@ -1,0 +1,130 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SyntaxRule</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.edit.richtext</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SyntaxRule (org.wikipedia.edit.richtext)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SyntaxRule</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.edit.richtext;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import org.wikipedia.model.BaseModel;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;/**
+<i>6</i>&nbsp; * Represents a single syntax highlighting rule.
+<i>7</i>&nbsp; *
+<i>8</i>&nbsp; * example:   [[ lorem ipsum ]]
+<i>9</i>&nbsp; *             |       |      |
+<i>10</i>&nbsp; *        startSymbol  |      |
+<i>11</i>&nbsp; *                     |  endSymbol
+<i>12</i>&nbsp; *                     |
+<i>13</i>&nbsp; *                 spanStyle
+<i>14</i>&nbsp; */
+<i>15</i>&nbsp;public class SyntaxRule extends BaseModel {
+<i>16</i>&nbsp;    private final String startSymbol;
+<i>17</i>&nbsp;    private final String endSymbol;
+<i>18</i>&nbsp;    private final SyntaxRuleStyle spanStyle;
+<i>19</i>&nbsp;    private final boolean sameStartEnd;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    public String getStartSymbol() {
+<b class="nc"><i>22</i>&nbsp;        return startSymbol;</b>
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    public String getEndSymbol() {
+<b class="nc"><i>26</i>&nbsp;        return endSymbol;</b>
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    public SyntaxRuleStyle getSpanStyle() {
+<b class="nc"><i>30</i>&nbsp;        return spanStyle;</b>
+<i>31</i>&nbsp;    }
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    /**
+<i>34</i>&nbsp;     * Whether the start symbol is the same as the end symbol
+<i>35</i>&nbsp;     * (for faster processing)
+<i>36</i>&nbsp;     */
+<i>37</i>&nbsp;    public boolean isStartEndSame() {
+<b class="nc"><i>38</i>&nbsp;        return sameStartEnd;</b>
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<b class="nc"><i>41</i>&nbsp;    public SyntaxRule(String startSymbol, String endSymbol, SyntaxRuleStyle spanStyle) {</b>
+<b class="nc"><i>42</i>&nbsp;        this.startSymbol = startSymbol;</b>
+<b class="nc"><i>43</i>&nbsp;        this.endSymbol = endSymbol;</b>
+<b class="nc"><i>44</i>&nbsp;        this.spanStyle = spanStyle;</b>
+<b class="nc"><i>45</i>&nbsp;        sameStartEnd = startSymbol.equals(endSymbol);</b>
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

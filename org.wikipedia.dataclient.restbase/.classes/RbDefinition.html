@@ -1,0 +1,184 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: RbDefinition</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.dataclient.restbase</a> ]
+</div>
+
+<h1>Coverage Summary for Class: RbDefinition (org.wikipedia.dataclient.restbase)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RbDefinition</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">RbDefinition$Definition</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">RbDefinition$Usage</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.dataclient.restbase;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.annotation.Nullable;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import org.wikipedia.json.annotations.Required;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.util.Map;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;public class RbDefinition {
+<i>11</i>&nbsp;    @Required @NonNull private Map&lt;String, Usage[]&gt; usagesByLang;
+<i>12</i>&nbsp;
+<b class="nc"><i>13</i>&nbsp;    public RbDefinition(@NonNull Map&lt;String, RbDefinition.Usage[]&gt; usages) {</b>
+<b class="nc"><i>14</i>&nbsp;        usagesByLang = usages;</b>
+<i>15</i>&nbsp;    }
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    @Nullable public Usage[] getUsagesForLang(String langCode) {
+<b class="nc"><i>18</i>&nbsp;        return usagesByLang.get(langCode);</b>
+<i>19</i>&nbsp;    }
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    public static class Usage {
+<i>22</i>&nbsp;        @Required @NonNull private String partOfSpeech;
+<i>23</i>&nbsp;        @Required @NonNull private Definition[] definitions;
+<i>24</i>&nbsp;
+<b class="nc"><i>25</i>&nbsp;        public Usage(@NonNull String partOfSpeech, @NonNull Definition[] definitions) {</b>
+<b class="nc"><i>26</i>&nbsp;            this.partOfSpeech = partOfSpeech;</b>
+<b class="nc"><i>27</i>&nbsp;            this.definitions = definitions;</b>
+<i>28</i>&nbsp;        }
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;        @NonNull public String getPartOfSpeech() {
+<b class="nc"><i>31</i>&nbsp;            return partOfSpeech;</b>
+<i>32</i>&nbsp;        }
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;        @NonNull public Definition[] getDefinitions() {
+<b class="nc"><i>35</i>&nbsp;            return definitions;</b>
+<i>36</i>&nbsp;        }
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    public static class Definition {
+<i>40</i>&nbsp;        @Required @NonNull private String definition;
+<i>41</i>&nbsp;        @Nullable private String[] examples;
+<i>42</i>&nbsp;
+<b class="nc"><i>43</i>&nbsp;        public Definition(@NonNull String definition, @Nullable String[] examples) {</b>
+<b class="nc"><i>44</i>&nbsp;            this.definition = definition;</b>
+<b class="nc"><i>45</i>&nbsp;            this.examples = examples;</b>
+<i>46</i>&nbsp;        }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;        @NonNull public String getDefinition() {
+<b class="nc"><i>49</i>&nbsp;            return definition;</b>
+<i>50</i>&nbsp;        }
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;        @Nullable public String[] getExamples() {
+<b class="nc"><i>53</i>&nbsp;            return examples;</b>
+<i>54</i>&nbsp;        }
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

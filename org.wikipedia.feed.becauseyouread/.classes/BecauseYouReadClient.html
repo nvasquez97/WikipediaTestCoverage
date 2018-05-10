@@ -1,0 +1,217 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: BecauseYouReadClient</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.becauseyouread</a> ]
+</div>
+
+<h1>Coverage Summary for Class: BecauseYouReadClient (org.wikipedia.feed.becauseyouread)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BecauseYouReadClient</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 16)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">BecauseYouReadClient$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">BecauseYouReadClient$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 29)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.feed.becauseyouread;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;import android.support.annotation.Nullable;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>8</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwQueryResponse;
+<i>9</i>&nbsp;import org.wikipedia.feed.FeedCoordinator;
+<i>10</i>&nbsp;import org.wikipedia.feed.dataclient.FeedClient;
+<i>11</i>&nbsp;import org.wikipedia.history.HistoryEntry;
+<i>12</i>&nbsp;import org.wikipedia.page.bottomcontent.MainPageReadMoreTopicTask;
+<i>13</i>&nbsp;import org.wikipedia.search.FullTextSearchClient;
+<i>14</i>&nbsp;import org.wikipedia.search.SearchResult;
+<i>15</i>&nbsp;import org.wikipedia.search.SearchResults;
+<i>16</i>&nbsp;import org.wikipedia.util.log.L;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;import java.util.ArrayList;
+<i>19</i>&nbsp;import java.util.Collections;
+<i>20</i>&nbsp;import java.util.List;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;import retrofit2.Call;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;import static org.wikipedia.Constants.SUGGESTION_REQUEST_ITEMS;
+<i>25</i>&nbsp;
+<b class="nc"><i>26</i>&nbsp;public class BecauseYouReadClient extends FullTextSearchClient implements FeedClient {</b>
+<i>27</i>&nbsp;    @Nullable private MainPageReadMoreTopicTask readMoreTopicTask;
+<i>28</i>&nbsp;    @Nullable private Call&lt;MwQueryResponse&gt; fullTextSearchCall;
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    @Override public void request(@NonNull Context context, @NonNull final WikiSite wiki, int age,
+<i>31</i>&nbsp;                                  @NonNull final FeedClient.Callback cb) {
+<b class="nc"><i>32</i>&nbsp;        cancel();</b>
+<b class="nc"><i>33</i>&nbsp;        readMoreTopicTask = new MainPageReadMoreTopicTask(age) {</b>
+<i>34</i>&nbsp;            @Override public void onFinish(@Nullable HistoryEntry entry) {
+<b class="nc"><i>35</i>&nbsp;                if (entry == null) {</b>
+<b class="nc"><i>36</i>&nbsp;                    cb.success(Collections.emptyList());</b>
+<i>37</i>&nbsp;                    return;
+<i>38</i>&nbsp;                }
+<b class="nc"><i>39</i>&nbsp;                getCardForHistoryEntry(entry, cb);</b>
+<i>40</i>&nbsp;            }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;            @Override public void onCatch(Throwable caught) {
+<b class="nc"><i>43</i>&nbsp;                L.e(&quot;Error fetching &#39;because you read&#39; suggestions&quot;, caught);</b>
+<b class="nc"><i>44</i>&nbsp;                cb.error(caught);</b>
+<i>45</i>&nbsp;            }
+<i>46</i>&nbsp;        };
+<b class="nc"><i>47</i>&nbsp;        readMoreTopicTask.execute();</b>
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    @Override public void cancel() {
+<b class="nc"><i>51</i>&nbsp;        if (readMoreTopicTask != null) {</b>
+<b class="nc"><i>52</i>&nbsp;            readMoreTopicTask.cancel();</b>
+<b class="nc"><i>53</i>&nbsp;            readMoreTopicTask = null;</b>
+<i>54</i>&nbsp;        }
+<b class="nc"><i>55</i>&nbsp;        if (fullTextSearchCall != null) {</b>
+<b class="nc"><i>56</i>&nbsp;            fullTextSearchCall.cancel();</b>
+<b class="nc"><i>57</i>&nbsp;            fullTextSearchCall = null;</b>
+<i>58</i>&nbsp;        }
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    private void getCardForHistoryEntry(@NonNull final HistoryEntry entry,
+<i>62</i>&nbsp;                                        final FeedClient.Callback cb) {
+<b class="nc"><i>63</i>&nbsp;        requestMoreLike(entry.getTitle().getWikiSite(), entry.getTitle().getDisplayText(),</b>
+<b class="nc"><i>64</i>&nbsp;                null, null, SUGGESTION_REQUEST_ITEMS, new FullTextSearchClient.Callback() {</b>
+<i>65</i>&nbsp;            @Override public void success(@NonNull Call&lt;MwQueryResponse&gt; call,
+<i>66</i>&nbsp;                                          @NonNull SearchResults results) {
+<b class="nc"><i>67</i>&nbsp;                SearchResults filteredResults = SearchResults</b>
+<b class="nc"><i>68</i>&nbsp;                        .filter(results, entry.getTitle().getText(), false);</b>
+<b class="nc"><i>69</i>&nbsp;                FeedCoordinator.postCardsToCallback(cb, filteredResults.getResults().isEmpty()</b>
+<b class="nc"><i>70</i>&nbsp;                        ? Collections.emptyList()</b>
+<b class="nc"><i>71</i>&nbsp;                        : Collections.singletonList(toBecauseYouReadCard(results, entry)));</b>
+<i>72</i>&nbsp;            }
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;            @Override public void failure(@NonNull Call&lt;MwQueryResponse&gt; call,
+<i>75</i>&nbsp;                                          @NonNull Throwable caught) {
+<b class="nc"><i>76</i>&nbsp;                cb.error(caught);</b>
+<i>77</i>&nbsp;            }
+<i>78</i>&nbsp;        });
+<i>79</i>&nbsp;    }
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    @NonNull private BecauseYouReadCard toBecauseYouReadCard(@NonNull SearchResults results,
+<i>82</i>&nbsp;                                                             @NonNull HistoryEntry entry) {
+<b class="nc"><i>83</i>&nbsp;        List&lt;BecauseYouReadItemCard&gt; itemCards = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>84</i>&nbsp;        for (SearchResult result : results.getResults()) {</b>
+<b class="nc"><i>85</i>&nbsp;            itemCards.add(new BecauseYouReadItemCard(result.getPageTitle()));</b>
+<b class="nc"><i>86</i>&nbsp;        }</b>
+<b class="nc"><i>87</i>&nbsp;        return new BecauseYouReadCard(entry, itemCards);</b>
+<i>88</i>&nbsp;    }
+<i>89</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

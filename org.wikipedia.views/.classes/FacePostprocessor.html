@@ -1,0 +1,209 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: FacePostprocessor</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.views</a> ]
+</div>
+
+<h1>Coverage Summary for Class: FacePostprocessor (org.wikipedia.views)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FacePostprocessor</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 59)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.views;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.graphics.Bitmap;
+<i>4</i>&nbsp;import android.graphics.Canvas;
+<i>5</i>&nbsp;import android.graphics.Color;
+<i>6</i>&nbsp;import android.graphics.Paint;
+<i>7</i>&nbsp;import android.graphics.PointF;
+<i>8</i>&nbsp;import android.graphics.Rect;
+<i>9</i>&nbsp;import android.media.FaceDetector;
+<i>10</i>&nbsp;import android.support.annotation.ColorInt;
+<i>11</i>&nbsp;import android.support.annotation.NonNull;
+<i>12</i>&nbsp;import android.support.annotation.Nullable;
+<i>13</i>&nbsp;import android.support.v4.content.ContextCompat;
+<i>14</i>&nbsp;import android.support.v7.graphics.Palette;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;import com.facebook.imagepipeline.request.BasePostprocessor;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;import org.wikipedia.R;
+<i>19</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>20</i>&nbsp;import org.wikipedia.settings.Prefs;
+<i>21</i>&nbsp;import org.wikipedia.util.MathUtil;
+<i>22</i>&nbsp;import org.wikipedia.util.log.L;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;import java.lang.ref.WeakReference;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;public class FacePostprocessor extends BasePostprocessor {
+<i>27</i>&nbsp;    private static final int BITMAP_COPY_WIDTH = 200;
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    @NonNull
+<i>30</i>&nbsp;    private WeakReference&lt;FaceAndColorDetectImageView.OnImageLoadListener&gt; listener;
+<i>31</i>&nbsp;
+<b class="nc"><i>32</i>&nbsp;    public FacePostprocessor(@NonNull FaceAndColorDetectImageView.OnImageLoadListener listener) {</b>
+<b class="nc"><i>33</i>&nbsp;        this.listener = new WeakReference&lt;&gt;(listener);</b>
+<i>34</i>&nbsp;    }
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    @Override public String getName() {
+<b class="nc"><i>37</i>&nbsp;        return &quot;FacePostprocessor&quot;;</b>
+<i>38</i>&nbsp;    }
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    @Override public void process(Bitmap destBitmap, Bitmap sourceBitmap) {
+<b class="nc"><i>41</i>&nbsp;        if (listener.get() == null) {</b>
+<i>42</i>&nbsp;            return;
+<i>43</i>&nbsp;        }
+<b class="nc"><i>44</i>&nbsp;        if (isBitmapEligibleForImageProcessing(sourceBitmap)) {</b>
+<b class="nc"><i>45</i>&nbsp;            copyWithWhiteBackground(destBitmap, sourceBitmap);</b>
+<b class="nc"><i>46</i>&nbsp;            Bitmap testBmp = new565ScaledBitmap(sourceBitmap);</b>
+<b class="nc"><i>47</i>&nbsp;            Palette colorPalette = Palette.from(testBmp).generate();</b>
+<b class="nc"><i>48</i>&nbsp;            PointF facePos = null;</b>
+<i>49</i>&nbsp;            try {
+<b class="nc"><i>50</i>&nbsp;                facePos = detectFace(testBmp);</b>
+<b class="nc"><i>51</i>&nbsp;            } catch (OutOfMemoryError e) {</b>
+<b class="nc"><i>52</i>&nbsp;                L.logRemoteErrorIfProd(e);</b>
+<b class="nc"><i>53</i>&nbsp;            }</b>
+<b class="nc"><i>54</i>&nbsp;            int defaultColor = ContextCompat.getColor(WikipediaApp.getInstance(), R.color.base30);</b>
+<b class="nc"><i>55</i>&nbsp;            listener.get().onImageLoaded(destBitmap.getHeight(), facePos,</b>
+<b class="nc"><i>56</i>&nbsp;                    extractMainColor(colorPalette, defaultColor));</b>
+<b class="nc"><i>57</i>&nbsp;        } else {</b>
+<b class="nc"><i>58</i>&nbsp;            listener.get().onImageFailed();</b>
+<i>59</i>&nbsp;        }
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    @Nullable private static PointF detectFace(@NonNull Bitmap testBitmap) {
+<b class="nc"><i>63</i>&nbsp;        final int maxFaces = 1;</b>
+<b class="nc"><i>64</i>&nbsp;        long millis = System.currentTimeMillis();</b>
+<i>65</i>&nbsp;        // initialize the face detector, and look for only one face...
+<b class="nc"><i>66</i>&nbsp;        FaceDetector fd = new FaceDetector(testBitmap.getWidth(), testBitmap.getHeight(), maxFaces);</b>
+<b class="nc"><i>67</i>&nbsp;        FaceDetector.Face[] faces = new FaceDetector.Face[maxFaces];</b>
+<b class="nc"><i>68</i>&nbsp;        int numFound = fd.findFaces(testBitmap, faces);</b>
+<b class="nc"><i>69</i>&nbsp;        PointF facePos = null;</b>
+<b class="nc"><i>70</i>&nbsp;        if (numFound &gt; 0) {</b>
+<b class="nc"><i>71</i>&nbsp;            facePos = new PointF();</b>
+<b class="nc"><i>72</i>&nbsp;            faces[0].getMidPoint(facePos);</b>
+<i>73</i>&nbsp;            // center on the nose, not on the eyes
+<b class="nc"><i>74</i>&nbsp;            facePos.y += faces[0].eyesDistance() / 2;</b>
+<i>75</i>&nbsp;            // normalize the position to [0, 1]
+<b class="nc"><i>76</i>&nbsp;            facePos.set(MathUtil.constrain(facePos.x / testBitmap.getWidth(), 0, 1),</b>
+<b class="nc"><i>77</i>&nbsp;                    MathUtil.constrain(facePos.y / testBitmap.getHeight(), 0, 1));</b>
+<b class="nc"><i>78</i>&nbsp;            L.d(&quot;Found face at &quot; + facePos.x + &quot;, &quot; + facePos.y);</b>
+<i>79</i>&nbsp;        }
+<b class="nc"><i>80</i>&nbsp;        L.d(&quot;Face detection took &quot; + (System.currentTimeMillis() - millis) + &quot;ms&quot;);</b>
+<b class="nc"><i>81</i>&nbsp;        return facePos;</b>
+<i>82</i>&nbsp;    }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;    @NonNull private static Bitmap new565ScaledBitmap(@NonNull Bitmap src) {
+<b class="nc"><i>85</i>&nbsp;        Bitmap copy =  Bitmap.createBitmap(BITMAP_COPY_WIDTH,</b>
+<b class="nc"><i>86</i>&nbsp;                (src.getHeight() * BITMAP_COPY_WIDTH) / src.getWidth(), Bitmap.Config.RGB_565);</b>
+<b class="nc"><i>87</i>&nbsp;        Canvas canvas = new Canvas(copy);</b>
+<b class="nc"><i>88</i>&nbsp;        Rect srcRect = new Rect(0, 0, src.getWidth(), src.getHeight());</b>
+<b class="nc"><i>89</i>&nbsp;        Rect destRect = new Rect(0, 0, BITMAP_COPY_WIDTH, copy.getHeight());</b>
+<b class="nc"><i>90</i>&nbsp;        Paint paint = new Paint();</b>
+<b class="nc"><i>91</i>&nbsp;        paint.setColor(Color.BLACK);</b>
+<b class="nc"><i>92</i>&nbsp;        canvas.drawBitmap(src, srcRect, destRect, paint);</b>
+<b class="nc"><i>93</i>&nbsp;        return copy;</b>
+<i>94</i>&nbsp;    }
+<i>95</i>&nbsp;
+<i>96</i>&nbsp;    @ColorInt private static int extractMainColor(@NonNull Palette colorPalette,
+<i>97</i>&nbsp;                                        @ColorInt int defaultColor) {
+<b class="nc"><i>98</i>&nbsp;        int mainColor = defaultColor;</b>
+<b class="nc"><i>99</i>&nbsp;        if (colorPalette.getDarkMutedSwatch() != null) {</b>
+<b class="nc"><i>100</i>&nbsp;            mainColor = colorPalette.getDarkMutedSwatch().getRgb();</b>
+<b class="nc"><i>101</i>&nbsp;        } else if (colorPalette.getDarkVibrantSwatch() != null) {</b>
+<b class="nc"><i>102</i>&nbsp;            mainColor = colorPalette.getDarkVibrantSwatch().getRgb();</b>
+<i>103</i>&nbsp;        }
+<b class="nc"><i>104</i>&nbsp;        return mainColor;</b>
+<i>105</i>&nbsp;    }
+<i>106</i>&nbsp;
+<i>107</i>&nbsp;    private static boolean isBitmapEligibleForImageProcessing(@NonNull Bitmap bitmap) {
+<b class="nc"><i>108</i>&nbsp;        final int minSize = 64;</b>
+<b class="nc"><i>109</i>&nbsp;        return bitmap.getWidth() &gt;= minSize &amp;&amp; bitmap.getHeight() &gt;= minSize;</b>
+<i>110</i>&nbsp;    }
+<i>111</i>&nbsp;
+<i>112</i>&nbsp;    private static void copyWithWhiteBackground(@NonNull Bitmap destBitmap,
+<i>113</i>&nbsp;                                                @NonNull Bitmap sourceBitmap) {
+<b class="nc"><i>114</i>&nbsp;        Canvas canvas = new Canvas(destBitmap);</b>
+<b class="nc"><i>115</i>&nbsp;        Paint backgroundPaint = new Paint();</b>
+<b class="nc"><i>116</i>&nbsp;        backgroundPaint.setColor(Color.WHITE);</b>
+<b class="nc"><i>117</i>&nbsp;        canvas.drawRect(0f, 0f, destBitmap.getWidth(), destBitmap.getHeight(), backgroundPaint);</b>
+<b class="nc"><i>118</i>&nbsp;        canvas.drawBitmap(sourceBitmap, 0f, 0f, backgroundPaint);</b>
+<b class="nc"><i>119</i>&nbsp;        if (WikipediaApp.getInstance().getCurrentTheme().isDark() &amp;&amp; Prefs.shouldDimDarkModeImages()) {</b>
+<i>120</i>&nbsp;            // &quot;dim&quot; images by drawing a translucent black rectangle over them.
+<b class="nc"><i>121</i>&nbsp;            final int blackAlpha = 100;</b>
+<b class="nc"><i>122</i>&nbsp;            backgroundPaint.setColor(Color.argb(blackAlpha, 0, 0, 0));</b>
+<b class="nc"><i>123</i>&nbsp;            canvas.drawRect(0f, 0f, destBitmap.getWidth(), destBitmap.getHeight(), backgroundPaint);</b>
+<i>124</i>&nbsp;        }
+<i>125</i>&nbsp;    }
+<i>126</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

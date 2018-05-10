@@ -1,0 +1,126 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: AppTextView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.views</a> ]
+</div>
+
+<h1>Coverage Summary for Class: AppTextView (org.wikipedia.views)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AppTextView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.views;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.os.Build;
+<i>5</i>&nbsp;import android.util.AttributeSet;
+<i>6</i>&nbsp;import android.view.MotionEvent;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;// TODO: Document where it is desirable to use this class vs. a vanilla TextView
+<i>9</i>&nbsp;public class AppTextView extends ConfigurableTextView {
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    public AppTextView(Context context) {
+<b class="nc"><i>12</i>&nbsp;        super(context);</b>
+<i>13</i>&nbsp;    }
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    public AppTextView(Context context, AttributeSet attrs) {
+<b class="nc"><i>16</i>&nbsp;        super(context, attrs);</b>
+<i>17</i>&nbsp;    }
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    public AppTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+<b class="nc"><i>20</i>&nbsp;        super(context, attrs, defStyleAttr);</b>
+<i>21</i>&nbsp;    }
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    @Override
+<i>24</i>&nbsp;    public boolean dispatchTouchEvent(MotionEvent event) {
+<i>25</i>&nbsp;        // Workaround for https://code.google.com/p/android/issues/detail?id=191430
+<i>26</i>&nbsp;        // which only occurs on API 23
+<b class="nc"><i>27</i>&nbsp;        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {</b>
+<b class="nc"><i>28</i>&nbsp;            if (event.getActionMasked() == MotionEvent.ACTION_DOWN</b>
+<b class="nc"><i>29</i>&nbsp;                    &amp;&amp; getSelectionStart() != getSelectionEnd()) {</b>
+<b class="nc"><i>30</i>&nbsp;                CharSequence text = getText();</b>
+<b class="nc"><i>31</i>&nbsp;                setText(null);</b>
+<b class="nc"><i>32</i>&nbsp;                setText(text);</b>
+<i>33</i>&nbsp;            }
+<i>34</i>&nbsp;        }
+<i>35</i>&nbsp;        try {
+<i>36</i>&nbsp;            // Workaround for some obscure AOSP crashes when highlighting text.
+<b class="nc"><i>37</i>&nbsp;            return super.dispatchTouchEvent(event);</b>
+<b class="nc"><i>38</i>&nbsp;        } catch (Exception e) {</b>
+<i>39</i>&nbsp;            // ignore
+<i>40</i>&nbsp;        }
+<b class="nc"><i>41</i>&nbsp;        return true;</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

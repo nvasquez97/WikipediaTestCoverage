@@ -1,0 +1,121 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GeoUnmarshaller</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.page</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GeoUnmarshaller (org.wikipedia.page)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GeoUnmarshaller</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.page;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.location.Location;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;import android.support.annotation.Nullable;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.json.JSONException;
+<i>8</i>&nbsp;import org.json.JSONObject;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;public final class GeoUnmarshaller {
+<i>11</i>&nbsp;    static final String LATITUDE = &quot;latitude&quot;;
+<i>12</i>&nbsp;    static final String LONGITUDE = &quot;longitude&quot;;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    @Nullable
+<i>15</i>&nbsp;    public static Location unmarshal(@Nullable String json) {
+<b class="nc"><i>16</i>&nbsp;        if (json == null) {</b>
+<b class="nc"><i>17</i>&nbsp;            return null;</b>
+<i>18</i>&nbsp;        }
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;        JSONObject jsonObj;
+<i>21</i>&nbsp;        try {
+<b class="nc"><i>22</i>&nbsp;            jsonObj = new JSONObject(json);</b>
+<b class="nc"><i>23</i>&nbsp;        } catch (JSONException e) {</b>
+<b class="nc"><i>24</i>&nbsp;            return null;</b>
+<b class="nc"><i>25</i>&nbsp;        }</b>
+<b class="nc"><i>26</i>&nbsp;        return unmarshal(jsonObj);</b>
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    @Nullable
+<i>30</i>&nbsp;    public static Location unmarshal(@NonNull JSONObject jsonObj) {
+<b class="nc"><i>31</i>&nbsp;        Location ret = new Location((String) null);</b>
+<b class="nc"><i>32</i>&nbsp;        ret.setLatitude(jsonObj.optDouble(LATITUDE));</b>
+<b class="nc"><i>33</i>&nbsp;        ret.setLongitude(jsonObj.optDouble(LONGITUDE));</b>
+<b class="nc"><i>34</i>&nbsp;        return ret;</b>
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<b class="nc"><i>37</i>&nbsp;    private GeoUnmarshaller() { }</b>
+<i>38</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

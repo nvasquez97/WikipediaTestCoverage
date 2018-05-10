@@ -1,0 +1,526 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ZoomableDraweeView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.facebook.samples.zoomable</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ZoomableDraweeView (com.facebook.samples.zoomable)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ZoomableDraweeView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 37)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 122)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ZoomableDraweeView$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ZoomableDraweeView$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 42)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 127)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;/*
+<i>2</i>&nbsp; * This file provided by Facebook is for non-commercial testing and evaluation
+<i>3</i>&nbsp; * purposes only.  Facebook reserves all rights not expressly granted.
+<i>4</i>&nbsp; *
+<i>5</i>&nbsp; * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+<i>6</i>&nbsp; * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+<i>7</i>&nbsp; * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+<i>8</i>&nbsp; * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+<i>9</i>&nbsp; * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+<i>10</i>&nbsp; * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+<i>11</i>&nbsp; */
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;package com.facebook.samples.zoomable;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import android.content.Context;
+<i>16</i>&nbsp;import android.content.res.Resources;
+<i>17</i>&nbsp;import android.graphics.Canvas;
+<i>18</i>&nbsp;import android.graphics.Matrix;
+<i>19</i>&nbsp;import android.graphics.RectF;
+<i>20</i>&nbsp;import android.graphics.drawable.Animatable;
+<i>21</i>&nbsp;import android.support.annotation.Nullable;
+<i>22</i>&nbsp;import android.support.v4.view.ScrollingView;
+<i>23</i>&nbsp;import android.util.AttributeSet;
+<i>24</i>&nbsp;import android.view.GestureDetector;
+<i>25</i>&nbsp;import android.view.MotionEvent;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;import com.facebook.common.internal.Preconditions;
+<i>28</i>&nbsp;import com.facebook.common.logging.FLog;
+<i>29</i>&nbsp;import com.facebook.drawee.controller.AbstractDraweeController;
+<i>30</i>&nbsp;import com.facebook.drawee.controller.BaseControllerListener;
+<i>31</i>&nbsp;import com.facebook.drawee.controller.ControllerListener;
+<i>32</i>&nbsp;import com.facebook.drawee.drawable.ScalingUtils;
+<i>33</i>&nbsp;import com.facebook.drawee.generic.GenericDraweeHierarchy;
+<i>34</i>&nbsp;import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+<i>35</i>&nbsp;import com.facebook.drawee.generic.GenericDraweeHierarchyInflater;
+<i>36</i>&nbsp;import com.facebook.drawee.interfaces.DraweeController;
+<i>37</i>&nbsp;import com.facebook.drawee.view.DraweeView;
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;/**
+<i>40</i>&nbsp; * DraweeView that has zoomable capabilities.
+<i>41</i>&nbsp; * &lt;p&gt;
+<i>42</i>&nbsp; * Once the image loads, pinch-to-zoom and translation gestures are enabled.
+<i>43</i>&nbsp; */
+<b class="nc"><i>44</i>&nbsp;public class ZoomableDraweeView extends DraweeView&lt;GenericDraweeHierarchy&gt;</b>
+<i>45</i>&nbsp;    implements ScrollingView {
+<i>46</i>&nbsp;
+<b class="nc"><i>47</i>&nbsp;  private static final Class&lt;?&gt; TAG = ZoomableDraweeView.class;</b>
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;  private static final float HUGE_IMAGE_SCALE_FACTOR_THRESHOLD = 1.1f;
+<i>50</i>&nbsp;
+<b class="nc"><i>51</i>&nbsp;  private final RectF mImageBounds = new RectF();</b>
+<b class="nc"><i>52</i>&nbsp;  private final RectF mViewBounds = new RectF();</b>
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;  private DraweeController mHugeImageController;
+<i>55</i>&nbsp;  private ZoomableController mZoomableController;
+<i>56</i>&nbsp;  private GestureDetector mTapGestureDetector;
+<b class="nc"><i>57</i>&nbsp;  private boolean mAllowTouchInterceptionWhileZoomed = true;</b>
+<i>58</i>&nbsp;
+<b class="nc"><i>59</i>&nbsp;  private final ControllerListener mControllerListener = new BaseControllerListener&lt;Object&gt;() {</b>
+<i>60</i>&nbsp;    @Override
+<i>61</i>&nbsp;    public void onFinalImageSet(
+<i>62</i>&nbsp;        String id,
+<i>63</i>&nbsp;        @Nullable Object imageInfo,
+<i>64</i>&nbsp;        @Nullable Animatable animatable) {
+<b class="nc"><i>65</i>&nbsp;      ZoomableDraweeView.this.onFinalImageSet();</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    @Override
+<i>69</i>&nbsp;    public void onRelease(String id) {
+<b class="nc"><i>70</i>&nbsp;      ZoomableDraweeView.this.onRelease();</b>
+<i>71</i>&nbsp;    }
+<i>72</i>&nbsp;  };
+<i>73</i>&nbsp;
+<b class="nc"><i>74</i>&nbsp;  private final ZoomableController.Listener mZoomableListener = new ZoomableController.Listener() {</b>
+<i>75</i>&nbsp;    @Override
+<i>76</i>&nbsp;    public void onTransformChanged(Matrix transform) {
+<b class="nc"><i>77</i>&nbsp;      ZoomableDraweeView.this.onTransformChanged(transform);</b>
+<i>78</i>&nbsp;    }
+<i>79</i>&nbsp;  };
+<i>80</i>&nbsp;
+<b class="nc"><i>81</i>&nbsp;  private final GestureListenerWrapper mTapListenerWrapper = new GestureListenerWrapper();</b>
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;  public ZoomableDraweeView(Context context, GenericDraweeHierarchy hierarchy) {
+<b class="nc"><i>84</i>&nbsp;    super(context);</b>
+<b class="nc"><i>85</i>&nbsp;    setHierarchy(hierarchy);</b>
+<b class="nc"><i>86</i>&nbsp;    init();</b>
+<i>87</i>&nbsp;  }
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;  public ZoomableDraweeView(Context context) {
+<b class="nc"><i>90</i>&nbsp;    super(context);</b>
+<b class="nc"><i>91</i>&nbsp;    inflateHierarchy(context, null);</b>
+<b class="nc"><i>92</i>&nbsp;    init();</b>
+<i>93</i>&nbsp;  }
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;  public ZoomableDraweeView(Context context, AttributeSet attrs) {
+<b class="nc"><i>96</i>&nbsp;    super(context, attrs);</b>
+<b class="nc"><i>97</i>&nbsp;    inflateHierarchy(context, attrs);</b>
+<b class="nc"><i>98</i>&nbsp;    init();</b>
+<i>99</i>&nbsp;  }
+<i>100</i>&nbsp;
+<i>101</i>&nbsp;  public ZoomableDraweeView(Context context, AttributeSet attrs, int defStyle) {
+<b class="nc"><i>102</i>&nbsp;    super(context, attrs, defStyle);</b>
+<b class="nc"><i>103</i>&nbsp;    inflateHierarchy(context, attrs);</b>
+<b class="nc"><i>104</i>&nbsp;    init();</b>
+<i>105</i>&nbsp;  }
+<i>106</i>&nbsp;
+<i>107</i>&nbsp;  protected void inflateHierarchy(Context context, @Nullable AttributeSet attrs) {
+<b class="nc"><i>108</i>&nbsp;    Resources resources = context.getResources();</b>
+<b class="nc"><i>109</i>&nbsp;    GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(resources)</b>
+<b class="nc"><i>110</i>&nbsp;        .setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER);</b>
+<b class="nc"><i>111</i>&nbsp;    GenericDraweeHierarchyInflater.updateBuilder(builder, context, attrs);</b>
+<b class="nc"><i>112</i>&nbsp;    setAspectRatio(builder.getDesiredAspectRatio());</b>
+<b class="nc"><i>113</i>&nbsp;    setHierarchy(builder.build());</b>
+<i>114</i>&nbsp;  }
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;  private void init() {
+<b class="nc"><i>117</i>&nbsp;    mZoomableController = createZoomableController();</b>
+<b class="nc"><i>118</i>&nbsp;    mZoomableController.setListener(mZoomableListener);</b>
+<b class="nc"><i>119</i>&nbsp;    mTapGestureDetector = new GestureDetector(getContext(), mTapListenerWrapper);</b>
+<i>120</i>&nbsp;  }
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;  /**
+<i>123</i>&nbsp;   * Gets the original image bounds, in view-absolute coordinates.
+<i>124</i>&nbsp;   *
+<i>125</i>&nbsp;   * &lt;p&gt; The original image bounds are those reported by the hierarchy. The hierarchy itself may
+<i>126</i>&nbsp;   * apply scaling on its own (e.g. due to scale type) so the reported bounds are not necessarily
+<i>127</i>&nbsp;   * the same as the actual bitmap dimensions. In other words, the original image bounds correspond
+<i>128</i>&nbsp;   * to the image bounds within this view when no zoomable transformation is applied, but including
+<i>129</i>&nbsp;   * the potential scaling of the hierarchy.
+<i>130</i>&nbsp;   * Having the actual bitmap dimensions abstracted away from this view greatly simplifies
+<i>131</i>&nbsp;   * implementation because the actual bitmap may change (e.g. when a high-res image arrives and
+<i>132</i>&nbsp;   * replaces the previously set low-res image). With proper hierarchy scaling (e.g. FIT_CENTER),
+<i>133</i>&nbsp;   * this underlying change will not affect this view nor the zoomable transformation in any way.
+<i>134</i>&nbsp;   */
+<i>135</i>&nbsp;  protected void getImageBounds(RectF outBounds) {
+<b class="nc"><i>136</i>&nbsp;    getHierarchy().getActualImageBounds(outBounds);</b>
+<i>137</i>&nbsp;  }
+<i>138</i>&nbsp;
+<i>139</i>&nbsp;  /**
+<i>140</i>&nbsp;   * Gets the bounds used to limit the translation, in view-absolute coordinates.
+<i>141</i>&nbsp;   *
+<i>142</i>&nbsp;   * &lt;p&gt; These bounds are passed to the zoomable controller in order to limit the translation. The
+<i>143</i>&nbsp;   * image is attempted to be centered within the limit bounds if the transformed image is smaller.
+<i>144</i>&nbsp;   * There will be no empty spaces within the limit bounds if the transformed image is bigger.
+<i>145</i>&nbsp;   * This applies to each dimension (horizontal and vertical) independently.
+<i>146</i>&nbsp;   * &lt;p&gt; Unless overridden by a subclass, these bounds are same as the view bounds.
+<i>147</i>&nbsp;   */
+<i>148</i>&nbsp;  protected void getLimitBounds(RectF outBounds) {
+<b class="nc"><i>149</i>&nbsp;    outBounds.set(0, 0, getWidth(), getHeight());</b>
+<i>150</i>&nbsp;  }
+<i>151</i>&nbsp;
+<i>152</i>&nbsp;  /**
+<i>153</i>&nbsp;   * Sets a custom zoomable controller, instead of using the default one.
+<i>154</i>&nbsp;   */
+<i>155</i>&nbsp;  public void setZoomableController(ZoomableController zoomableController) {
+<b class="nc"><i>156</i>&nbsp;    Preconditions.checkNotNull(zoomableController);</b>
+<b class="nc"><i>157</i>&nbsp;    mZoomableController.setListener(null);</b>
+<b class="nc"><i>158</i>&nbsp;    mZoomableController = zoomableController;</b>
+<b class="nc"><i>159</i>&nbsp;    mZoomableController.setListener(mZoomableListener);</b>
+<i>160</i>&nbsp;  }
+<i>161</i>&nbsp;
+<i>162</i>&nbsp;  /**
+<i>163</i>&nbsp;   * Gets the zoomable controller.
+<i>164</i>&nbsp;   *
+<i>165</i>&nbsp;   * &lt;p&gt; Zoomable controller can be used to zoom to point, or to map point from view to image
+<i>166</i>&nbsp;   * coordinates for instance.
+<i>167</i>&nbsp;   */
+<i>168</i>&nbsp;  public ZoomableController getZoomableController() {
+<b class="nc"><i>169</i>&nbsp;    return mZoomableController;</b>
+<i>170</i>&nbsp;  }
+<i>171</i>&nbsp;
+<i>172</i>&nbsp;  /**
+<i>173</i>&nbsp;   * Check whether the parent view can intercept touch events while zoomed.
+<i>174</i>&nbsp;   * This can be used, for example, to swipe between images in a view pager while zoomed.
+<i>175</i>&nbsp;   *
+<i>176</i>&nbsp;   * @return true if touch events can be intercepted
+<i>177</i>&nbsp;   */
+<i>178</i>&nbsp;  public boolean allowsTouchInterceptionWhileZoomed() {
+<b class="nc"><i>179</i>&nbsp;    return mAllowTouchInterceptionWhileZoomed;</b>
+<i>180</i>&nbsp;  }
+<i>181</i>&nbsp;
+<i>182</i>&nbsp;  /**
+<i>183</i>&nbsp;   * If this is set to true, parent views can intercept touch events while the view is zoomed.
+<i>184</i>&nbsp;   * For example, this can be used to swipe between images in a view pager while zoomed.
+<i>185</i>&nbsp;   *
+<i>186</i>&nbsp;   * @param allowTouchInterceptionWhileZoomed true if the parent needs to intercept touches
+<i>187</i>&nbsp;   */
+<i>188</i>&nbsp;  public void setAllowTouchInterceptionWhileZoomed(
+<i>189</i>&nbsp;      boolean allowTouchInterceptionWhileZoomed) {
+<b class="nc"><i>190</i>&nbsp;    mAllowTouchInterceptionWhileZoomed = allowTouchInterceptionWhileZoomed;</b>
+<i>191</i>&nbsp;  }
+<i>192</i>&nbsp;
+<i>193</i>&nbsp;  /**
+<i>194</i>&nbsp;   * Sets the tap listener.
+<i>195</i>&nbsp;   */
+<i>196</i>&nbsp;  public void setTapListener(GestureDetector.SimpleOnGestureListener tapListener) {
+<b class="nc"><i>197</i>&nbsp;    mTapListenerWrapper.setListener(tapListener);</b>
+<i>198</i>&nbsp;  }
+<i>199</i>&nbsp;
+<i>200</i>&nbsp;  /**
+<i>201</i>&nbsp;   * Sets whether long-press tap detection is enabled.
+<i>202</i>&nbsp;   * Unfortunately, long-press conflicts with onDoubleTapEvent.
+<i>203</i>&nbsp;   */
+<i>204</i>&nbsp;  public void setIsLongpressEnabled(boolean enabled) {
+<b class="nc"><i>205</i>&nbsp;    mTapGestureDetector.setIsLongpressEnabled(enabled);</b>
+<i>206</i>&nbsp;  }
+<i>207</i>&nbsp;
+<i>208</i>&nbsp;  /**
+<i>209</i>&nbsp;   * Sets the image controller.
+<i>210</i>&nbsp;   */
+<i>211</i>&nbsp;  @Override
+<i>212</i>&nbsp;  public void setController(@Nullable DraweeController controller) {
+<b class="nc"><i>213</i>&nbsp;    setControllers(controller, null);</b>
+<i>214</i>&nbsp;  }
+<i>215</i>&nbsp;
+<i>216</i>&nbsp;  /**
+<i>217</i>&nbsp;   * Sets the controllers for the normal and huge image.
+<i>218</i>&nbsp;   *
+<i>219</i>&nbsp;   * &lt;p&gt; The huge image controller is used after the image gets scaled above a certain threshold.
+<i>220</i>&nbsp;   *
+<i>221</i>&nbsp;   * &lt;p&gt; IMPORTANT: in order to avoid a flicker when switching to the huge image, the huge image
+<i>222</i>&nbsp;   * controller should have the normal-image-uri set as its low-res-uri.
+<i>223</i>&nbsp;   *
+<i>224</i>&nbsp;   * @param controller controller to be initially used
+<i>225</i>&nbsp;   * @param hugeImageController controller to be used after the client starts zooming-in
+<i>226</i>&nbsp;   */
+<i>227</i>&nbsp;  public void setControllers(
+<i>228</i>&nbsp;      @Nullable DraweeController controller,
+<i>229</i>&nbsp;      @Nullable DraweeController hugeImageController) {
+<b class="nc"><i>230</i>&nbsp;    setControllersInternal(null, null);</b>
+<b class="nc"><i>231</i>&nbsp;    mZoomableController.setEnabled(false);</b>
+<b class="nc"><i>232</i>&nbsp;    setControllersInternal(controller, hugeImageController);</b>
+<i>233</i>&nbsp;  }
+<i>234</i>&nbsp;
+<i>235</i>&nbsp;  private void setControllersInternal(
+<i>236</i>&nbsp;      @Nullable DraweeController controller,
+<i>237</i>&nbsp;      @Nullable DraweeController hugeImageController) {
+<b class="nc"><i>238</i>&nbsp;    removeControllerListener(getController());</b>
+<b class="nc"><i>239</i>&nbsp;    addControllerListener(controller);</b>
+<b class="nc"><i>240</i>&nbsp;    mHugeImageController = hugeImageController;</b>
+<b class="nc"><i>241</i>&nbsp;    super.setController(controller);</b>
+<i>242</i>&nbsp;  }
+<i>243</i>&nbsp;
+<i>244</i>&nbsp;  private void maybeSetHugeImageController() {
+<b class="nc"><i>245</i>&nbsp;    if (mHugeImageController != null &amp;&amp;</b>
+<b class="nc"><i>246</i>&nbsp;        mZoomableController.getScaleFactor() &gt; HUGE_IMAGE_SCALE_FACTOR_THRESHOLD) {</b>
+<b class="nc"><i>247</i>&nbsp;      setControllersInternal(mHugeImageController, null);</b>
+<i>248</i>&nbsp;    }
+<i>249</i>&nbsp;  }
+<i>250</i>&nbsp;
+<i>251</i>&nbsp;  private void removeControllerListener(DraweeController controller) {
+<b class="nc"><i>252</i>&nbsp;    if (controller instanceof AbstractDraweeController) {</b>
+<b class="nc"><i>253</i>&nbsp;      ((AbstractDraweeController) controller)</b>
+<b class="nc"><i>254</i>&nbsp;          .removeControllerListener(mControllerListener);</b>
+<i>255</i>&nbsp;    }
+<i>256</i>&nbsp;  }
+<i>257</i>&nbsp;
+<i>258</i>&nbsp;  private void addControllerListener(DraweeController controller) {
+<b class="nc"><i>259</i>&nbsp;    if (controller instanceof AbstractDraweeController) {</b>
+<b class="nc"><i>260</i>&nbsp;      ((AbstractDraweeController) controller)</b>
+<b class="nc"><i>261</i>&nbsp;          .addControllerListener(mControllerListener);</b>
+<i>262</i>&nbsp;    }
+<i>263</i>&nbsp;  }
+<i>264</i>&nbsp;
+<i>265</i>&nbsp;  @Override
+<i>266</i>&nbsp;  protected void onDraw(Canvas canvas) {
+<b class="nc"><i>267</i>&nbsp;    int saveCount = canvas.save();</b>
+<b class="nc"><i>268</i>&nbsp;    canvas.concat(mZoomableController.getTransform());</b>
+<i>269</i>&nbsp;    try {
+<b class="nc"><i>270</i>&nbsp;      super.onDraw(canvas);</b>
+<b class="nc"><i>271</i>&nbsp;    } catch (Exception e) {</b>
+<b class="nc"><i>272</i>&nbsp;      DraweeController controller = getController();</b>
+<b class="nc"><i>273</i>&nbsp;      if (controller != null &amp;&amp; controller instanceof AbstractDraweeController) {</b>
+<b class="nc"><i>274</i>&nbsp;        Object callerContext = ((AbstractDraweeController) controller).getCallerContext();</b>
+<b class="nc"><i>275</i>&nbsp;        if (callerContext != null) {</b>
+<b class="nc"><i>276</i>&nbsp;          throw new RuntimeException(</b>
+<b class="nc"><i>277</i>&nbsp;              String.format(&quot;Exception in onDraw, callerContext=%s&quot;, callerContext.toString()),</b>
+<i>278</i>&nbsp;              e);
+<i>279</i>&nbsp;        }
+<i>280</i>&nbsp;      }
+<b class="nc"><i>281</i>&nbsp;      throw e;</b>
+<b class="nc"><i>282</i>&nbsp;    }</b>
+<b class="nc"><i>283</i>&nbsp;    canvas.restoreToCount(saveCount);</b>
+<i>284</i>&nbsp;  }
+<i>285</i>&nbsp;
+<i>286</i>&nbsp;  @Override
+<i>287</i>&nbsp;  public boolean onTouchEvent(MotionEvent event) {
+<b class="nc"><i>288</i>&nbsp;    int a = event.getActionMasked();</b>
+<b class="nc"><i>289</i>&nbsp;    FLog.v(getLogTag(), &quot;onTouchEvent: %d, view %x, received&quot;, a, this.hashCode());</b>
+<b class="nc"><i>290</i>&nbsp;    if (mTapGestureDetector.onTouchEvent(event)) {</b>
+<b class="nc"><i>291</i>&nbsp;      FLog.v(</b>
+<b class="nc"><i>292</i>&nbsp;          getLogTag(),</b>
+<i>293</i>&nbsp;          &quot;onTouchEvent: %d, view %x, handled by tap gesture detector&quot;,
+<b class="nc"><i>294</i>&nbsp;          a,</b>
+<b class="nc"><i>295</i>&nbsp;          this.hashCode());</b>
+<b class="nc"><i>296</i>&nbsp;      return true;</b>
+<i>297</i>&nbsp;    }
+<i>298</i>&nbsp;
+<b class="nc"><i>299</i>&nbsp;    if (mZoomableController.onTouchEvent(event)) {</b>
+<b class="nc"><i>300</i>&nbsp;      FLog.v(</b>
+<b class="nc"><i>301</i>&nbsp;          getLogTag(),</b>
+<i>302</i>&nbsp;          &quot;onTouchEvent: %d, view %x, handled by zoomable controller&quot;,
+<b class="nc"><i>303</i>&nbsp;          a,</b>
+<b class="nc"><i>304</i>&nbsp;          this.hashCode());</b>
+<b class="nc"><i>305</i>&nbsp;      if (!mAllowTouchInterceptionWhileZoomed &amp;&amp; !mZoomableController.isIdentity()) {</b>
+<b class="nc"><i>306</i>&nbsp;        getParent().requestDisallowInterceptTouchEvent(true);</b>
+<i>307</i>&nbsp;      }
+<b class="nc"><i>308</i>&nbsp;      return true;</b>
+<i>309</i>&nbsp;    }
+<b class="nc"><i>310</i>&nbsp;    if (super.onTouchEvent(event)) {</b>
+<b class="nc"><i>311</i>&nbsp;      FLog.v(getLogTag(), &quot;onTouchEvent: %d, view %x, handled by the super&quot;, a, this.hashCode());</b>
+<b class="nc"><i>312</i>&nbsp;      return true;</b>
+<i>313</i>&nbsp;    }
+<i>314</i>&nbsp;    // None of our components reported that they handled the touch event. Upon returning false
+<i>315</i>&nbsp;    // from this method, our parent won&#39;t send us any more events for this gesture. Unfortunately,
+<i>316</i>&nbsp;    // some components may have started a delayed action, such as a long-press timer, and since we
+<i>317</i>&nbsp;    // won&#39;t receive an ACTION_UP that would cancel that timer, a false event may be triggered.
+<i>318</i>&nbsp;    // To prevent that we explicitly send one last cancel event when returning false.
+<b class="nc"><i>319</i>&nbsp;    MotionEvent cancelEvent = MotionEvent.obtain(event);</b>
+<b class="nc"><i>320</i>&nbsp;    cancelEvent.setAction(MotionEvent.ACTION_CANCEL);</b>
+<b class="nc"><i>321</i>&nbsp;    mTapGestureDetector.onTouchEvent(cancelEvent);</b>
+<b class="nc"><i>322</i>&nbsp;    mZoomableController.onTouchEvent(cancelEvent);</b>
+<b class="nc"><i>323</i>&nbsp;    cancelEvent.recycle();</b>
+<b class="nc"><i>324</i>&nbsp;    return false;</b>
+<i>325</i>&nbsp;  }
+<i>326</i>&nbsp;
+<i>327</i>&nbsp;  @Override
+<i>328</i>&nbsp;  public int computeHorizontalScrollRange() {
+<b class="nc"><i>329</i>&nbsp;    return mZoomableController.computeHorizontalScrollRange();</b>
+<i>330</i>&nbsp;  }
+<i>331</i>&nbsp;  @Override
+<i>332</i>&nbsp;  public int computeHorizontalScrollOffset() {
+<b class="nc"><i>333</i>&nbsp;    return mZoomableController.computeHorizontalScrollOffset();</b>
+<i>334</i>&nbsp;  }
+<i>335</i>&nbsp;  @Override
+<i>336</i>&nbsp;  public int computeHorizontalScrollExtent() {
+<b class="nc"><i>337</i>&nbsp;    return mZoomableController.computeHorizontalScrollExtent();</b>
+<i>338</i>&nbsp;  }
+<i>339</i>&nbsp;  @Override
+<i>340</i>&nbsp;  public int computeVerticalScrollRange() {
+<b class="nc"><i>341</i>&nbsp;    return mZoomableController.computeVerticalScrollRange();</b>
+<i>342</i>&nbsp;  }
+<i>343</i>&nbsp;  @Override
+<i>344</i>&nbsp;  public int computeVerticalScrollOffset() {
+<b class="nc"><i>345</i>&nbsp;    return mZoomableController.computeVerticalScrollOffset();</b>
+<i>346</i>&nbsp;  }
+<i>347</i>&nbsp;  @Override
+<i>348</i>&nbsp;  public int computeVerticalScrollExtent() {
+<b class="nc"><i>349</i>&nbsp;    return mZoomableController.computeVerticalScrollExtent();</b>
+<i>350</i>&nbsp;  }
+<i>351</i>&nbsp;
+<i>352</i>&nbsp;  @Override
+<i>353</i>&nbsp;  protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+<b class="nc"><i>354</i>&nbsp;    FLog.v(getLogTag(), &quot;onLayout: view %x&quot;, this.hashCode());</b>
+<b class="nc"><i>355</i>&nbsp;    super.onLayout(changed, left, top, right, bottom);</b>
+<b class="nc"><i>356</i>&nbsp;    updateZoomableControllerBounds();</b>
+<i>357</i>&nbsp;  }
+<i>358</i>&nbsp;
+<i>359</i>&nbsp;  private void onFinalImageSet() {
+<b class="nc"><i>360</i>&nbsp;    FLog.v(getLogTag(), &quot;onFinalImageSet: view %x&quot;, this.hashCode());</b>
+<b class="nc"><i>361</i>&nbsp;    if (!mZoomableController.isEnabled()) {</b>
+<b class="nc"><i>362</i>&nbsp;      mZoomableController.setEnabled(true);</b>
+<b class="nc"><i>363</i>&nbsp;      updateZoomableControllerBounds();</b>
+<i>364</i>&nbsp;    }
+<i>365</i>&nbsp;  }
+<i>366</i>&nbsp;
+<i>367</i>&nbsp;  private void onRelease() {
+<b class="nc"><i>368</i>&nbsp;    FLog.v(getLogTag(), &quot;onRelease: view %x&quot;, this.hashCode());</b>
+<b class="nc"><i>369</i>&nbsp;    mZoomableController.setEnabled(false);</b>
+<i>370</i>&nbsp;  }
+<i>371</i>&nbsp;
+<i>372</i>&nbsp;  protected void onTransformChanged(Matrix transform) {
+<b class="nc"><i>373</i>&nbsp;    FLog.v(getLogTag(), &quot;onTransformChanged: view %x, transform: %s&quot;, this.hashCode(), transform);</b>
+<b class="nc"><i>374</i>&nbsp;    maybeSetHugeImageController();</b>
+<b class="nc"><i>375</i>&nbsp;    invalidate();</b>
+<i>376</i>&nbsp;  }
+<i>377</i>&nbsp;
+<i>378</i>&nbsp;  protected void updateZoomableControllerBounds() {
+<b class="nc"><i>379</i>&nbsp;    getImageBounds(mImageBounds);</b>
+<b class="nc"><i>380</i>&nbsp;    getLimitBounds(mViewBounds);</b>
+<b class="nc"><i>381</i>&nbsp;    mZoomableController.setImageBounds(mImageBounds);</b>
+<b class="nc"><i>382</i>&nbsp;    mZoomableController.setViewBounds(mViewBounds);</b>
+<b class="nc"><i>383</i>&nbsp;    FLog.v(</b>
+<b class="nc"><i>384</i>&nbsp;        getLogTag(),</b>
+<i>385</i>&nbsp;        &quot;updateZoomableControllerBounds: view %x, view bounds: %s, image bounds: %s&quot;,
+<b class="nc"><i>386</i>&nbsp;        this.hashCode(),</b>
+<i>387</i>&nbsp;        mViewBounds,
+<i>388</i>&nbsp;        mImageBounds);
+<i>389</i>&nbsp;  }
+<i>390</i>&nbsp;
+<i>391</i>&nbsp;  protected Class&lt;?&gt; getLogTag() {
+<b class="nc"><i>392</i>&nbsp;    return TAG;</b>
+<i>393</i>&nbsp;  }
+<i>394</i>&nbsp;
+<i>395</i>&nbsp;  protected ZoomableController createZoomableController() {
+<b class="nc"><i>396</i>&nbsp;    return AnimatedZoomableController.newInstance();</b>
+<i>397</i>&nbsp;  }
+<i>398</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

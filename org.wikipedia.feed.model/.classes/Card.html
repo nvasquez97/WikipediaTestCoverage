@@ -1,0 +1,124 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Card</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Card (org.wikipedia.feed.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Card</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.feed.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.net.Uri;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;import android.support.annotation.Nullable;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.wikipedia.model.BaseModel;
+<i>8</i>&nbsp;
+<b class="nc"><i>9</i>&nbsp;public abstract class Card extends BaseModel {</b>
+<i>10</i>&nbsp;    @NonNull public String title() {
+<b class="nc"><i>11</i>&nbsp;        return &quot;&quot;;</b>
+<i>12</i>&nbsp;    }
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    @Nullable public String subtitle() {
+<b class="nc"><i>15</i>&nbsp;        return null;</b>
+<i>16</i>&nbsp;    }
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    @Nullable public Uri image() {
+<b class="nc"><i>19</i>&nbsp;        return null;</b>
+<i>20</i>&nbsp;    }
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    @Nullable public String extract() {
+<b class="nc"><i>23</i>&nbsp;        return null;</b>
+<i>24</i>&nbsp;    }
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    @NonNull public abstract CardType type();
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    public void onDismiss() {
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    public void onRestore() {
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    public String getHideKey() {
+<b class="nc"><i>35</i>&nbsp;        return Long.toString(type().code() + dismissHashCode());</b>
+<i>36</i>&nbsp;    }
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    protected int dismissHashCode() {
+<b class="nc"><i>39</i>&nbsp;        return hashCode();</b>
+<i>40</i>&nbsp;    }
+<i>41</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

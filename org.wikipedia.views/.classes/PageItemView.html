@@ -1,0 +1,256 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PageItemView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.views</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PageItemView (org.wikipedia.views)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PageItemView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 21)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 43)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.views;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.support.annotation.DrawableRes;
+<i>5</i>&nbsp;import android.support.annotation.NonNull;
+<i>6</i>&nbsp;import android.support.annotation.Nullable;
+<i>7</i>&nbsp;import android.support.annotation.StringRes;
+<i>8</i>&nbsp;import android.support.v4.content.ContextCompat;
+<i>9</i>&nbsp;import android.view.View;
+<i>10</i>&nbsp;import android.view.ViewGroup;
+<i>11</i>&nbsp;import android.widget.FrameLayout;
+<i>12</i>&nbsp;import android.widget.ImageView;
+<i>13</i>&nbsp;import android.widget.TextView;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import com.facebook.drawee.view.SimpleDraweeView;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;import org.wikipedia.R;
+<i>18</i>&nbsp;import org.wikipedia.util.FeedbackUtil;
+<i>19</i>&nbsp;import org.wikipedia.util.ResourceUtil;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;import butterknife.BindView;
+<i>22</i>&nbsp;import butterknife.ButterKnife;
+<i>23</i>&nbsp;import butterknife.OnClick;
+<i>24</i>&nbsp;import butterknife.OnLongClick;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;import static org.wikipedia.util.ResourceUtil.getThemedColor;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;/*
+<i>29</i>&nbsp; * TODO: Use this for future RecyclerView updates where we show a list of pages
+<i>30</i>&nbsp; * (e.g. History, Search, Disambiguation)
+<i>31</i>&nbsp; */
+<i>32</i>&nbsp;public class PageItemView&lt;T&gt; extends FrameLayout {
+<i>33</i>&nbsp;    public interface Callback&lt;T&gt; {
+<i>34</i>&nbsp;        void onClick(@Nullable T item);
+<i>35</i>&nbsp;        boolean onLongClick(@Nullable T item);
+<i>36</i>&nbsp;        void onThumbClick(@Nullable T item);
+<i>37</i>&nbsp;        void onActionClick(@Nullable T item, @NonNull View view);
+<i>38</i>&nbsp;        void onSecondaryActionClick(@Nullable T item, @NonNull View view);
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    @BindView(R.id.page_list_item_container) ViewGroup containerView;
+<i>42</i>&nbsp;    @BindView(R.id.page_list_item_title) TextView titleView;
+<i>43</i>&nbsp;    @BindView(R.id.page_list_item_description) TextView descriptionView;
+<i>44</i>&nbsp;    @BindView(R.id.page_list_item_image) SimpleDraweeView imageView;
+<i>45</i>&nbsp;    @BindView(R.id.page_list_item_action_primary) ImageView primaryActionView;
+<i>46</i>&nbsp;    @BindView(R.id.page_list_item_action_secondary) ImageView secondaryActionView;
+<i>47</i>&nbsp;    @BindView(R.id.page_list_item_selected_image) View imageSelectedView;
+<i>48</i>&nbsp;    @BindView(R.id.page_list_header_text) GoneIfEmptyTextView headerView;
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    @Nullable private Callback&lt;T&gt; callback;
+<i>51</i>&nbsp;    @Nullable private T item;
+<i>52</i>&nbsp;    private boolean selected;
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    public PageItemView(@NonNull Context context) {
+<b class="nc"><i>55</i>&nbsp;        super(context);</b>
+<b class="nc"><i>56</i>&nbsp;        init();</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    public void setItem(@Nullable T item) {
+<b class="nc"><i>60</i>&nbsp;        this.item = item;</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    public void setCallback(@Nullable Callback&lt;T&gt; callback) {
+<b class="nc"><i>64</i>&nbsp;        this.callback = callback;</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    public void setTitle(@Nullable CharSequence text) {
+<b class="nc"><i>68</i>&nbsp;        titleView.setText(text);</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    public void setDescription(@Nullable CharSequence text) {
+<b class="nc"><i>72</i>&nbsp;        descriptionView.setText(text);</b>
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    public void setImageUrl(@Nullable String url) {
+<b class="nc"><i>76</i>&nbsp;        ViewUtil.loadImageUrlInto(imageView, url);</b>
+<i>77</i>&nbsp;    }
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    public void setActionIcon(@DrawableRes int id) {
+<b class="nc"><i>80</i>&nbsp;        primaryActionView.setImageResource(id);</b>
+<b class="nc"><i>81</i>&nbsp;        primaryActionView.setVisibility(VISIBLE);</b>
+<i>82</i>&nbsp;    }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;    public void setActionHint(@StringRes int id) {
+<b class="nc"><i>85</i>&nbsp;        primaryActionView.setContentDescription(getContext().getString(id));</b>
+<i>86</i>&nbsp;    }
+<i>87</i>&nbsp;
+<i>88</i>&nbsp;    public void setSecondaryActionIcon(@DrawableRes int id, boolean show) {
+<b class="nc"><i>89</i>&nbsp;        if (show) {</b>
+<b class="nc"><i>90</i>&nbsp;            secondaryActionView.setImageResource(id);</b>
+<i>91</i>&nbsp;        }
+<b class="nc"><i>92</i>&nbsp;        secondaryActionView.setVisibility(show ? VISIBLE : GONE);</b>
+<i>93</i>&nbsp;    }
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;    public void setSecondaryActionHint(@StringRes int id) {
+<b class="nc"><i>96</i>&nbsp;        secondaryActionView.setContentDescription(getContext().getString(id));</b>
+<i>97</i>&nbsp;    }
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;    public void setHeaderText(@Nullable CharSequence text) {
+<b class="nc"><i>100</i>&nbsp;        headerView.setText(text);</b>
+<i>101</i>&nbsp;    }
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;    public void setSelected(boolean selected) {
+<b class="nc"><i>104</i>&nbsp;        if (this.selected != selected) {</b>
+<b class="nc"><i>105</i>&nbsp;            this.selected = selected;</b>
+<b class="nc"><i>106</i>&nbsp;            updateSelectedState();</b>
+<i>107</i>&nbsp;        }
+<i>108</i>&nbsp;    }
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;    public void addFooter(@NonNull View view) {
+<b class="nc"><i>111</i>&nbsp;        containerView.addView(view);</b>
+<i>112</i>&nbsp;    }
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;    @OnClick(R.id.page_list_item_container) void onClick() {
+<b class="nc"><i>115</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>116</i>&nbsp;            callback.onClick(item);</b>
+<i>117</i>&nbsp;        }
+<i>118</i>&nbsp;    }
+<i>119</i>&nbsp;
+<i>120</i>&nbsp;    @OnLongClick(R.id.page_list_item_container) boolean onLongClick() {
+<b class="nc"><i>121</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>122</i>&nbsp;            return callback.onLongClick(item);</b>
+<i>123</i>&nbsp;        }
+<b class="nc"><i>124</i>&nbsp;        return false;</b>
+<i>125</i>&nbsp;    }
+<i>126</i>&nbsp;
+<i>127</i>&nbsp;    @OnClick(R.id.page_list_item_image_container) void onThumbClick() {
+<b class="nc"><i>128</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>129</i>&nbsp;            callback.onThumbClick(item);</b>
+<i>130</i>&nbsp;        }
+<i>131</i>&nbsp;    }
+<i>132</i>&nbsp;
+<i>133</i>&nbsp;    @OnClick(R.id.page_list_item_action_primary) void onActionClick(View v) {
+<b class="nc"><i>134</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>135</i>&nbsp;            callback.onActionClick(item, v);</b>
+<i>136</i>&nbsp;        }
+<i>137</i>&nbsp;    }
+<i>138</i>&nbsp;
+<i>139</i>&nbsp;    @OnClick(R.id.page_list_item_action_secondary) void onSecondaryActionClick() {
+<b class="nc"><i>140</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>141</i>&nbsp;            callback.onSecondaryActionClick(item, this);</b>
+<i>142</i>&nbsp;        }
+<i>143</i>&nbsp;    }
+<i>144</i>&nbsp;
+<i>145</i>&nbsp;    private void init() {
+<b class="nc"><i>146</i>&nbsp;        inflate(getContext(), R.layout.item_page_list_entry, this);</b>
+<b class="nc"><i>147</i>&nbsp;        ButterKnife.bind(this);</b>
+<i>148</i>&nbsp;
+<b class="nc"><i>149</i>&nbsp;        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,</b>
+<i>150</i>&nbsp;                ViewGroup.LayoutParams.WRAP_CONTENT));
+<i>151</i>&nbsp;
+<b class="nc"><i>152</i>&nbsp;        FeedbackUtil.setToolbarButtonLongPressToast(primaryActionView);</b>
+<b class="nc"><i>153</i>&nbsp;        FeedbackUtil.setToolbarButtonLongPressToast(secondaryActionView);</b>
+<i>154</i>&nbsp;    }
+<i>155</i>&nbsp;
+<i>156</i>&nbsp;    private void updateSelectedState() {
+<b class="nc"><i>157</i>&nbsp;        imageView.setVisibility(selected ? GONE : VISIBLE);</b>
+<b class="nc"><i>158</i>&nbsp;        imageSelectedView.setVisibility(selected ? VISIBLE : GONE);</b>
+<i>159</i>&nbsp;        // TODO: animate?
+<b class="nc"><i>160</i>&nbsp;        containerView.setBackgroundColor(getThemedColor(getContext(),</b>
+<i>161</i>&nbsp;                selected ? R.attr.multi_select_background_color : R.attr.paper_color));
+<i>162</i>&nbsp;    }
+<i>163</i>&nbsp;
+<i>164</i>&nbsp;
+<i>165</i>&nbsp;    @SuppressWarnings(&quot;checkstyle:magicnumber&quot;)
+<i>166</i>&nbsp;    public void setTextGrayedOut(boolean isNotCached) {
+<b class="nc"><i>167</i>&nbsp;        titleView.setTextColor(isNotCached</b>
+<b class="nc"><i>168</i>&nbsp;                ? ContextCompat.getColor(getContext(), R.color.base30) : ResourceUtil.getThemedColor(getContext(), R.attr.primary_text_color));</b>
+<b class="nc"><i>169</i>&nbsp;        descriptionView.setTextColor(isNotCached</b>
+<b class="nc"><i>170</i>&nbsp;                ? ContextCompat.getColor(getContext(), R.color.base50) : ResourceUtil.getThemedColor(getContext(), R.attr.secondary_text_color));</b>
+<b class="nc"><i>171</i>&nbsp;        imageView.setAlpha(isNotCached ? 0.5f : 1.0f);</b>
+<i>172</i>&nbsp;    }
+<i>173</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

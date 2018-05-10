@@ -1,0 +1,105 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: UriTypeAdapter</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.json</a> ]
+</div>
+
+<h1>Coverage Summary for Class: UriTypeAdapter (org.wikipedia.json)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UriTypeAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33,3%
+  </span>
+  <span class="absValue">
+    (1/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    20%
+  </span>
+  <span class="absValue">
+    (1/ 5)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.json;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.net.Uri;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import com.google.gson.TypeAdapter;
+<i>6</i>&nbsp;import com.google.gson.stream.JsonReader;
+<i>7</i>&nbsp;import com.google.gson.stream.JsonWriter;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import java.io.IOException;
+<i>10</i>&nbsp;
+<b class="fc"><i>11</i>&nbsp;public class UriTypeAdapter extends TypeAdapter&lt;Uri&gt; {</b>
+<i>12</i>&nbsp;    @Override
+<i>13</i>&nbsp;    public void write(JsonWriter out, Uri value) throws IOException {
+<b class="nc"><i>14</i>&nbsp;        out.value(value.toString());</b>
+<b class="nc"><i>15</i>&nbsp;    }</b>
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    @Override
+<i>18</i>&nbsp;    public Uri read(JsonReader in) throws IOException {
+<b class="nc"><i>19</i>&nbsp;        String url = in.nextString();</b>
+<b class="nc"><i>20</i>&nbsp;        return Uri.parse(url);</b>
+<i>21</i>&nbsp;    }
+<i>22</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

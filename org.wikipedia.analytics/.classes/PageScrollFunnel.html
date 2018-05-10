@@ -1,0 +1,144 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PageScrollFunnel</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.analytics</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PageScrollFunnel (org.wikipedia.analytics)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PageScrollFunnel</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 17)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.analytics;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import org.json.JSONObject;
+<i>6</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>7</i>&nbsp;import org.wikipedia.util.DimenUtil;
+<i>8</i>&nbsp;import org.wikipedia.util.ReleaseUtil;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;public class PageScrollFunnel extends TimedFunnel {
+<i>11</i>&nbsp;    private static final String SCHEMA_NAME = &quot;MobileWikiAppPageScroll&quot;;
+<i>12</i>&nbsp;    private static final int REV_ID = 17836977;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    private final int pageId;
+<i>15</i>&nbsp;    private int viewportHeight;
+<i>16</i>&nbsp;    private int pageHeight;
+<i>17</i>&nbsp;    private int scrollFluxDown;
+<i>18</i>&nbsp;    private int scrollFluxUp;
+<i>19</i>&nbsp;    private int maxScrollY;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    public PageScrollFunnel(WikipediaApp app, int pageId) {
+<b class="nc"><i>22</i>&nbsp;        super(app, SCHEMA_NAME, REV_ID, ReleaseUtil.isProdRelease() ? Funnel.SAMPLE_LOG_100 : Funnel.SAMPLE_LOG_ALL);</b>
+<b class="nc"><i>23</i>&nbsp;        this.pageId = pageId;</b>
+<i>24</i>&nbsp;    }
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    @Override protected void preprocessSessionToken(@NonNull JSONObject eventData) { }
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    public void onPageScrolled(int oldScrollY, int scrollY, boolean isHumanScroll) {
+<b class="nc"><i>29</i>&nbsp;        if (isHumanScroll) {</b>
+<b class="nc"><i>30</i>&nbsp;            if (scrollY &gt; oldScrollY) {</b>
+<b class="nc"><i>31</i>&nbsp;                scrollFluxDown += (scrollY - oldScrollY);</b>
+<i>32</i>&nbsp;            } else {
+<b class="nc"><i>33</i>&nbsp;                scrollFluxUp += (oldScrollY - scrollY);</b>
+<i>34</i>&nbsp;            }
+<i>35</i>&nbsp;        }
+<b class="nc"><i>36</i>&nbsp;        maxScrollY = Math.max(maxScrollY, scrollY);</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    public void setPageHeight(int height) {
+<b class="nc"><i>40</i>&nbsp;        this.pageHeight = (int) (height * DimenUtil.getDensityScalar());</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    public void setViewportHeight(int height) {
+<b class="nc"><i>44</i>&nbsp;        this.viewportHeight = height;</b>
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    public void logDone() {
+<b class="nc"><i>48</i>&nbsp;        log(</b>
+<b class="nc"><i>49</i>&nbsp;                &quot;pageID&quot;, pageId,</b>
+<b class="nc"><i>50</i>&nbsp;                &quot;pageHeight&quot;, (int) (pageHeight / DimenUtil.getDensityScalar()),</b>
+<b class="nc"><i>51</i>&nbsp;                &quot;scrollFluxDown&quot;, (int) (scrollFluxDown / DimenUtil.getDensityScalar()),</b>
+<b class="nc"><i>52</i>&nbsp;                &quot;scrollFluxUp&quot;, (int) (scrollFluxUp / DimenUtil.getDensityScalar()),</b>
+<b class="nc"><i>53</i>&nbsp;                &quot;maxPercentViewed&quot;, getMaxPercentViewed()</b>
+<i>54</i>&nbsp;        );
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    private int getMaxPercentViewed() {
+<b class="nc"><i>58</i>&nbsp;        final int maxPercent = 100;</b>
+<b class="nc"><i>59</i>&nbsp;        return Math.min(maxPercent, pageHeight == 0 ? 0 : ((maxScrollY + viewportHeight) * maxPercent / pageHeight));</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

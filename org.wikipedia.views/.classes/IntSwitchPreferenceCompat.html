@@ -1,0 +1,155 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: IntSwitchPreferenceCompat</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.views</a> ]
+</div>
+
+<h1>Coverage Summary for Class: IntSwitchPreferenceCompat (org.wikipedia.views)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">IntSwitchPreferenceCompat</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 21)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.views;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.content.res.TypedArray;
+<i>5</i>&nbsp;import android.support.v7.preference.SwitchPreferenceCompat;
+<i>6</i>&nbsp;import android.util.AttributeSet;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;public abstract class IntSwitchPreferenceCompat extends SwitchPreferenceCompat {
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;    public IntSwitchPreferenceCompat(Context context) {
+<b class="nc"><i>11</i>&nbsp;        super(context);</b>
+<i>12</i>&nbsp;    }
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    public IntSwitchPreferenceCompat(Context context, AttributeSet attrs) {
+<b class="nc"><i>15</i>&nbsp;        super(context, attrs);</b>
+<i>16</i>&nbsp;    }
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    public IntSwitchPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr) {
+<b class="nc"><i>19</i>&nbsp;        super(context, attrs, defStyleAttr);</b>
+<i>20</i>&nbsp;    }
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    public IntSwitchPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+<b class="nc"><i>23</i>&nbsp;        super(context, attrs, defStyleAttr, defStyleRes);</b>
+<i>24</i>&nbsp;    }
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    @Override public void setChecked(boolean checked) {
+<b class="nc"><i>27</i>&nbsp;        boolean changed = mChecked != checked;</b>
+<b class="nc"><i>28</i>&nbsp;        if (changed) {</b>
+<b class="nc"><i>29</i>&nbsp;            mChecked = checked;</b>
+<b class="nc"><i>30</i>&nbsp;            persistInt(booleanToInt(checked));</b>
+<b class="nc"><i>31</i>&nbsp;            notifyDependencyChange(shouldDisableDependents());</b>
+<b class="nc"><i>32</i>&nbsp;            notifyChanged();</b>
+<i>33</i>&nbsp;        }
+<i>34</i>&nbsp;    }
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    public int getValue() {
+<b class="nc"><i>37</i>&nbsp;        return getPersistedValue();</b>
+<i>38</i>&nbsp;    }
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    protected abstract int intValueForCheckedState();
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    protected abstract int intValueForUncheckedState();
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    @Override protected void onClick() {
+<b class="nc"><i>45</i>&nbsp;        int newValue = booleanToInt(!mChecked);</b>
+<b class="nc"><i>46</i>&nbsp;        if (callChangeListener(newValue)) {</b>
+<b class="nc"><i>47</i>&nbsp;            setChecked(intToBoolean(newValue));</b>
+<i>48</i>&nbsp;        }
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    @Override protected Object onGetDefaultValue(TypedArray a, int index) {
+<b class="nc"><i>52</i>&nbsp;        return a.getInt(index, 0);</b>
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    @Override protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
+<b class="nc"><i>56</i>&nbsp;        setChecked(restoreValue</b>
+<b class="nc"><i>57</i>&nbsp;                ? intToBoolean(getPersistedValue())</b>
+<b class="nc"><i>58</i>&nbsp;                : intToBoolean((int) defaultValue));</b>
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    private int booleanToInt(boolean checked) {
+<b class="nc"><i>62</i>&nbsp;        return checked ? intValueForCheckedState() : intValueForUncheckedState();</b>
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    private boolean intToBoolean(int val) {
+<b class="nc"><i>66</i>&nbsp;        return val == intValueForCheckedState();</b>
+<i>67</i>&nbsp;    }
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;    private int getPersistedValue() {
+<b class="nc"><i>70</i>&nbsp;        return getPersistedInt(booleanToInt(mChecked));</b>
+<i>71</i>&nbsp;    }
+<i>72</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

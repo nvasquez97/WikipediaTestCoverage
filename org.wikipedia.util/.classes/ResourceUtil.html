@@ -1,0 +1,207 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ResourceUtil</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.util</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ResourceUtil (org.wikipedia.util)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ResourceUtil</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 52)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.util;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.ContentResolver;
+<i>4</i>&nbsp;import android.content.Context;
+<i>5</i>&nbsp;import android.content.res.Resources;
+<i>6</i>&nbsp;import android.content.res.TypedArray;
+<i>7</i>&nbsp;import android.graphics.Bitmap;
+<i>8</i>&nbsp;import android.graphics.Canvas;
+<i>9</i>&nbsp;import android.graphics.drawable.Drawable;
+<i>10</i>&nbsp;import android.net.Uri;
+<i>11</i>&nbsp;import android.support.annotation.AnyRes;
+<i>12</i>&nbsp;import android.support.annotation.ArrayRes;
+<i>13</i>&nbsp;import android.support.annotation.AttrRes;
+<i>14</i>&nbsp;import android.support.annotation.ColorInt;
+<i>15</i>&nbsp;import android.support.annotation.DrawableRes;
+<i>16</i>&nbsp;import android.support.annotation.IdRes;
+<i>17</i>&nbsp;import android.support.annotation.NonNull;
+<i>18</i>&nbsp;import android.support.annotation.Nullable;
+<i>19</i>&nbsp;import android.support.graphics.drawable.VectorDrawableCompat;
+<i>20</i>&nbsp;import android.util.TypedValue;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;import org.wikipedia.R;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;public final class ResourceUtil {
+<i>25</i>&nbsp;    // See Resources.getIdentifier().
+<i>26</i>&nbsp;    private static final int NO_ID = 0;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    public static int[] getIdArray(Context context, @ArrayRes int id) {
+<b class="nc"><i>29</i>&nbsp;        return getIdArray(context.getResources(), id);</b>
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    public static int[] getIdArray(Resources resources, @ArrayRes int id) {
+<b class="nc"><i>33</i>&nbsp;        TypedArray typedArray = resources.obtainTypedArray(id);</b>
+<b class="nc"><i>34</i>&nbsp;        int[] ids = new int[typedArray.length()];</b>
+<b class="nc"><i>35</i>&nbsp;        for (int i = 0; i &lt; typedArray.length(); ++i) {</b>
+<b class="nc"><i>36</i>&nbsp;            @IdRes int itemId = typedArray.getResourceId(i, NO_ID);</b>
+<b class="nc"><i>37</i>&nbsp;            ids[i] = itemId;</b>
+<b class="nc"><i>38</i>&nbsp;            checkId(itemId);</b>
+<i>39</i>&nbsp;        }
+<b class="nc"><i>40</i>&nbsp;        typedArray.recycle();</b>
+<b class="nc"><i>41</i>&nbsp;        return ids;</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    @DrawableRes @SuppressWarnings(&quot;checkstyle:magicnumber&quot;) public static int getTabListIcon(int numTabs) {
+<b class="nc"><i>45</i>&nbsp;        switch (Math.max(0, numTabs)) {</b>
+<b class="nc"><i>46</i>&nbsp;            case 0: return R.drawable.ic_tab_list_white_24dp;</b>
+<b class="nc"><i>47</i>&nbsp;            case 1: return R.drawable.ic_tab_list_1;</b>
+<b class="nc"><i>48</i>&nbsp;            case 2: return R.drawable.ic_tab_list_2;</b>
+<b class="nc"><i>49</i>&nbsp;            case 3: return R.drawable.ic_tab_list_3;</b>
+<b class="nc"><i>50</i>&nbsp;            case 4: return R.drawable.ic_tab_list_4;</b>
+<b class="nc"><i>51</i>&nbsp;            case 5: return R.drawable.ic_tab_list_5;</b>
+<b class="nc"><i>52</i>&nbsp;            case 6: return R.drawable.ic_tab_list_6;</b>
+<b class="nc"><i>53</i>&nbsp;            case 7: return R.drawable.ic_tab_list_7;</b>
+<b class="nc"><i>54</i>&nbsp;            case 8: return R.drawable.ic_tab_list_8;</b>
+<b class="nc"><i>55</i>&nbsp;            case 9: return R.drawable.ic_tab_list_9;</b>
+<b class="nc"><i>56</i>&nbsp;            default: return R.drawable.ic_tab_list_9_plus;</b>
+<i>57</i>&nbsp;        }
+<i>58</i>&nbsp;    }
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    @NonNull
+<i>61</i>&nbsp;    public static Bitmap bitmapFromVectorDrawable(@NonNull Context context, @DrawableRes int id) {
+<b class="nc"><i>62</i>&nbsp;        Drawable vectorDrawable = VectorDrawableCompat.create(context.getResources(), id, null);</b>
+<b class="nc"><i>63</i>&nbsp;        int width = vectorDrawable.getIntrinsicWidth();</b>
+<b class="nc"><i>64</i>&nbsp;        int height = vectorDrawable.getIntrinsicHeight();</b>
+<b class="nc"><i>65</i>&nbsp;        vectorDrawable.setBounds(0, 0, width, height);</b>
+<b class="nc"><i>66</i>&nbsp;        Bitmap bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);</b>
+<b class="nc"><i>67</i>&nbsp;        Canvas canvas = new Canvas(bm);</b>
+<b class="nc"><i>68</i>&nbsp;        vectorDrawable.draw(canvas);</b>
+<b class="nc"><i>69</i>&nbsp;        return bm;</b>
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    @Nullable public static TypedValue getThemedAttribute(@NonNull Context context, @AttrRes int id) {
+<b class="nc"><i>73</i>&nbsp;        TypedValue typedValue = new TypedValue();</b>
+<b class="nc"><i>74</i>&nbsp;        if (context.getTheme().resolveAttribute(id, typedValue, true)) {</b>
+<b class="nc"><i>75</i>&nbsp;            return typedValue;</b>
+<i>76</i>&nbsp;        }
+<b class="nc"><i>77</i>&nbsp;        return null;</b>
+<i>78</i>&nbsp;    }
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;    /**
+<i>81</i>&nbsp;     * Resolves the resource ID of a theme-dependent attribute (for example, a color value
+<i>82</i>&nbsp;     * that changes based on the selected theme)
+<i>83</i>&nbsp;     * @param context The context whose theme contains the attribute.
+<i>84</i>&nbsp;     * @param id Theme-dependent attribute ID to be resolved.
+<i>85</i>&nbsp;     * @return The actual resource ID of the requested theme-dependent attribute.
+<i>86</i>&nbsp;     */
+<i>87</i>&nbsp;    @AnyRes public static int getThemedAttributeId(@NonNull Context context, @AttrRes int id) {
+<b class="nc"><i>88</i>&nbsp;        TypedValue typedValue = getThemedAttribute(context, id);</b>
+<b class="nc"><i>89</i>&nbsp;        if (typedValue == null) {</b>
+<b class="nc"><i>90</i>&nbsp;            throw new IllegalArgumentException(&quot;Attribute not found; ID=&quot; + id);</b>
+<i>91</i>&nbsp;        }
+<b class="nc"><i>92</i>&nbsp;        return typedValue.resourceId;</b>
+<i>93</i>&nbsp;    }
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;    @ColorInt public static int getThemedColor(@NonNull Context context, @AttrRes int id) {
+<b class="nc"><i>96</i>&nbsp;        TypedValue typedValue = getThemedAttribute(context, id);</b>
+<b class="nc"><i>97</i>&nbsp;        if (typedValue == null) {</b>
+<b class="nc"><i>98</i>&nbsp;            throw new IllegalArgumentException(&quot;Attribute not found; ID=&quot; + id);</b>
+<i>99</i>&nbsp;        }
+<b class="nc"><i>100</i>&nbsp;        return typedValue.data;</b>
+<i>101</i>&nbsp;    }
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;    public static Uri uri(@NonNull Context context, @AnyRes int id) throws Resources.NotFoundException {
+<b class="nc"><i>104</i>&nbsp;        Resources res = context.getResources();</b>
+<b class="nc"><i>105</i>&nbsp;        return new Uri.Builder()</b>
+<b class="nc"><i>106</i>&nbsp;                .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)</b>
+<b class="nc"><i>107</i>&nbsp;                .authority(res.getResourcePackageName(id))</b>
+<b class="nc"><i>108</i>&nbsp;                .appendPath(res.getResourceTypeName(id))</b>
+<b class="nc"><i>109</i>&nbsp;                .appendPath(res.getResourceEntryName(id))</b>
+<b class="nc"><i>110</i>&nbsp;                .build();</b>
+<i>111</i>&nbsp;    }
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;    private static void checkId(@IdRes int id) {
+<b class="nc"><i>114</i>&nbsp;        if (!isIdValid(id)) {</b>
+<b class="nc"><i>115</i>&nbsp;            throw new RuntimeException(&quot;id is invalid&quot;);</b>
+<i>116</i>&nbsp;        }
+<i>117</i>&nbsp;    }
+<i>118</i>&nbsp;
+<i>119</i>&nbsp;    private static boolean isIdValid(@IdRes int id) {
+<b class="nc"><i>120</i>&nbsp;        return id != NO_ID;</b>
+<i>121</i>&nbsp;    }
+<i>122</i>&nbsp;
+<b class="nc"><i>123</i>&nbsp;    private ResourceUtil() { }</b>
+<i>124</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

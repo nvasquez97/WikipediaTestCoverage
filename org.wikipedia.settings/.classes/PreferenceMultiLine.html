@@ -1,0 +1,130 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PreferenceMultiLine</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.settings</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PreferenceMultiLine (org.wikipedia.settings)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PreferenceMultiLine</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.settings;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.ActivityNotFoundException;
+<i>4</i>&nbsp;import android.content.Context;
+<i>5</i>&nbsp;import android.support.annotation.NonNull;
+<i>6</i>&nbsp;import android.support.v7.preference.Preference;
+<i>7</i>&nbsp;import android.support.v7.preference.PreferenceViewHolder;
+<i>8</i>&nbsp;import android.util.AttributeSet;
+<i>9</i>&nbsp;import android.widget.Toast;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import org.wikipedia.R;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;public class PreferenceMultiLine extends Preference {
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    public PreferenceMultiLine(Context ctx, AttributeSet attrs, int defStyle) {
+<b class="nc"><i>16</i>&nbsp;        super(ctx, attrs, defStyle);</b>
+<i>17</i>&nbsp;    }
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    public PreferenceMultiLine(Context ctx, AttributeSet attrs) {
+<b class="nc"><i>20</i>&nbsp;        super(ctx, attrs);</b>
+<i>21</i>&nbsp;    }
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    public PreferenceMultiLine(Context ctx) {
+<b class="nc"><i>24</i>&nbsp;        super(ctx);</b>
+<i>25</i>&nbsp;    }
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    @Override
+<i>28</i>&nbsp;    public void onBindViewHolder(@NonNull PreferenceViewHolder holder) {
+<b class="nc"><i>29</i>&nbsp;        super.onBindViewHolder(holder);</b>
+<i>30</i>&nbsp;        // Intercept the click listener for this preference, and if the preference has an intent,
+<i>31</i>&nbsp;        // launch the intent ourselves, so that we can catch the exception if the intent fails.
+<i>32</i>&nbsp;        // (but only do this if the preference doesn&#39;t already have a click listener)
+<b class="nc"><i>33</i>&nbsp;        if (this.getOnPreferenceClickListener() == null) {</b>
+<b class="nc"><i>34</i>&nbsp;            this.setOnPreferenceClickListener((preference) -&gt; {</b>
+<b class="nc"><i>35</i>&nbsp;                if (preference.getIntent() != null) {</b>
+<i>36</i>&nbsp;                    try {
+<b class="nc"><i>37</i>&nbsp;                        getContext().startActivity(preference.getIntent());</b>
+<b class="nc"><i>38</i>&nbsp;                    } catch (ActivityNotFoundException e) {</b>
+<b class="nc"><i>39</i>&nbsp;                        Toast.makeText(getContext(), getContext().getString(R.string.error_browser_not_found), Toast.LENGTH_LONG).show();</b>
+<b class="nc"><i>40</i>&nbsp;                    }</b>
+<b class="nc"><i>41</i>&nbsp;                    return true;</b>
+<i>42</i>&nbsp;                }
+<b class="nc"><i>43</i>&nbsp;                return false;</b>
+<i>44</i>&nbsp;            });
+<i>45</i>&nbsp;        }
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

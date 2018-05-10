@@ -1,0 +1,129 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: UserOptionDataClientSingleton</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.useroption.dataclient</a> ]
+</div>
+
+<h1>Coverage Summary for Class: UserOptionDataClientSingleton (org.wikipedia.useroption.dataclient)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserOptionDataClientSingleton</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">UserOptionDataClientSingleton$LazyHolder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.useroption.dataclient;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;public final class UserOptionDataClientSingleton {
+<i>6</i>&nbsp;    public static UserOptionDataClient instance() {
+<b class="nc"><i>7</i>&nbsp;        return LazyHolder.INSTANCE;</b>
+<i>8</i>&nbsp;    }
+<i>9</i>&nbsp;
+<b class="nc"><i>10</i>&nbsp;    private UserOptionDataClientSingleton() { }</b>
+<i>11</i>&nbsp;
+<b class="nc"><i>12</i>&nbsp;    private static class LazyHolder {</b>
+<b class="nc"><i>13</i>&nbsp;        private static final UserOptionDataClient INSTANCE = instance();</b>
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;        private static UserOptionDataClient instance() {
+<b class="nc"><i>16</i>&nbsp;            WikiSite wiki = new WikiSite(&quot;meta.wikimedia.org&quot;, &quot;&quot;);</b>
+<b class="nc"><i>17</i>&nbsp;            return new UserOptionDataClient(wiki);</b>
+<i>18</i>&nbsp;        }
+<i>19</i>&nbsp;    }
+<i>20</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

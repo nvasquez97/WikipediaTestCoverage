@@ -1,0 +1,283 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PageCacher</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.page</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PageCacher (org.wikipedia.page)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PageCacher</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 19)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">PageCacher$ImageCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">PageCacher$LeadCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">PageCacher$RemainingCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 41)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.page;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>6</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>7</i>&nbsp;import org.wikipedia.dataclient.okhttp.OkHttpConnectionFactory;
+<i>8</i>&nbsp;import org.wikipedia.dataclient.page.PageClient;
+<i>9</i>&nbsp;import org.wikipedia.dataclient.page.PageClientFactory;
+<i>10</i>&nbsp;import org.wikipedia.dataclient.page.PageLead;
+<i>11</i>&nbsp;import org.wikipedia.dataclient.page.PageRemaining;
+<i>12</i>&nbsp;import org.wikipedia.html.ImageTagParser;
+<i>13</i>&nbsp;import org.wikipedia.html.PixelDensityDescriptorParser;
+<i>14</i>&nbsp;import org.wikipedia.savedpages.PageImageUrlParser;
+<i>15</i>&nbsp;import org.wikipedia.util.log.L;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;import java.io.IOException;
+<i>18</i>&nbsp;import java.util.HashSet;
+<i>19</i>&nbsp;import java.util.Set;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;import okhttp3.OkHttpClient;
+<i>22</i>&nbsp;import okhttp3.Request;
+<i>23</i>&nbsp;import retrofit2.Call;
+<i>24</i>&nbsp;import retrofit2.Callback;
+<i>25</i>&nbsp;import retrofit2.Response;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;import static org.wikipedia.util.DimenUtil.calculateLeadImageWidth;
+<i>28</i>&nbsp;import static org.wikipedia.util.UriUtil.resolveProtocolRelativeUrl;
+<i>29</i>&nbsp;
+<b class="nc"><i>30</i>&nbsp;final class PageCacher {</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    static void loadIntoCache(@NonNull PageTitle title) {
+<b class="nc"><i>33</i>&nbsp;        L.d(&quot;Loading page into cache: &quot; + title.getPrefixedText());</b>
+<b class="nc"><i>34</i>&nbsp;        WikipediaApp app = WikipediaApp.getInstance();</b>
+<b class="nc"><i>35</i>&nbsp;        PageImageUrlParser parser = new PageImageUrlParser(new ImageTagParser(),</b>
+<i>36</i>&nbsp;                new PixelDensityDescriptorParser());
+<b class="nc"><i>37</i>&nbsp;        PageClient client = PageClientFactory.create(title.getWikiSite(), title.namespace());</b>
+<b class="nc"><i>38</i>&nbsp;        app.getSessionFunnel().leadSectionFetchStart();</b>
+<b class="nc"><i>39</i>&nbsp;        leadReq(client, title).enqueue(new LeadCallback(title.getWikiSite(), parser));</b>
+<b class="nc"><i>40</i>&nbsp;        app.getSessionFunnel().restSectionsFetchStart();</b>
+<b class="nc"><i>41</i>&nbsp;        remainingReq(client, title).enqueue(new RemainingCallback(title.getWikiSite(), parser));</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    @NonNull
+<i>45</i>&nbsp;    private static Call&lt;PageLead&gt; leadReq(@NonNull PageClient client, @NonNull PageTitle title) {
+<b class="nc"><i>46</i>&nbsp;        return client.lead(null, null, title.getPrefixedText(),</b>
+<b class="nc"><i>47</i>&nbsp;                calculateLeadImageWidth());</b>
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    @NonNull
+<i>51</i>&nbsp;    private static Call&lt;PageRemaining&gt; remainingReq(@NonNull PageClient client,
+<i>52</i>&nbsp;                                                    @NonNull PageTitle title) {
+<b class="nc"><i>53</i>&nbsp;        return client.sections(null, null, title.getPrefixedText());</b>
+<i>54</i>&nbsp;    }
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    private static void fetchImages(@NonNull final WikiSite wiki,
+<i>57</i>&nbsp;                                    @NonNull final Iterable&lt;String&gt; urls) {
+<b class="nc"><i>58</i>&nbsp;        OkHttpClient client = OkHttpConnectionFactory.getClient();</b>
+<b class="nc"><i>59</i>&nbsp;        for (String url : urls) {</b>
+<b class="nc"><i>60</i>&nbsp;            url = resolveProtocolRelativeUrl(wiki, url);</b>
+<b class="nc"><i>61</i>&nbsp;            Request request = new Request.Builder().url(url).build();</b>
+<b class="nc"><i>62</i>&nbsp;            client.newCall(request).enqueue(new ImageCallback());</b>
+<b class="nc"><i>63</i>&nbsp;        }</b>
+<i>64</i>&nbsp;    }
+<i>65</i>&nbsp;
+<b class="nc"><i>66</i>&nbsp;    private static final class LeadCallback implements Callback&lt;PageLead&gt; {</b>
+<i>67</i>&nbsp;        @NonNull private PageImageUrlParser parser;
+<i>68</i>&nbsp;        @NonNull private WikiSite wiki;
+<i>69</i>&nbsp;
+<b class="nc"><i>70</i>&nbsp;        private LeadCallback(@NonNull WikiSite wiki, @NonNull PageImageUrlParser parser) {</b>
+<b class="nc"><i>71</i>&nbsp;            this.parser = parser;</b>
+<b class="nc"><i>72</i>&nbsp;            this.wiki = wiki;</b>
+<i>73</i>&nbsp;        }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;        @Override
+<i>76</i>&nbsp;        public void onResponse(@NonNull Call&lt;PageLead&gt; call, @NonNull Response&lt;PageLead&gt; response) {
+<b class="nc"><i>77</i>&nbsp;            WikipediaApp.getInstance().getSessionFunnel().leadSectionFetchEnd();</b>
+<b class="nc"><i>78</i>&nbsp;            if (response.body() != null) {</b>
+<i>79</i>&nbsp;                // noinspection ConstantConditions
+<b class="nc"><i>80</i>&nbsp;                Set&lt;String&gt; imageUrls = new HashSet&lt;&gt;(parser.parse(response.body()));</b>
+<b class="nc"><i>81</i>&nbsp;                fetchImages(wiki, imageUrls);</b>
+<i>82</i>&nbsp;            }
+<i>83</i>&nbsp;        }
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;        @Override
+<i>86</i>&nbsp;        public void onFailure(@NonNull Call&lt;PageLead&gt; call, @NonNull Throwable t) {
+<b class="nc"><i>87</i>&nbsp;            L.e(t);</b>
+<i>88</i>&nbsp;        }
+<i>89</i>&nbsp;    }
+<i>90</i>&nbsp;
+<b class="nc"><i>91</i>&nbsp;    private static final class RemainingCallback implements Callback&lt;PageRemaining&gt; {</b>
+<i>92</i>&nbsp;        @NonNull private PageImageUrlParser parser;
+<i>93</i>&nbsp;        @NonNull private WikiSite wiki;
+<i>94</i>&nbsp;
+<b class="nc"><i>95</i>&nbsp;        private RemainingCallback(@NonNull WikiSite wiki, @NonNull PageImageUrlParser parser) {</b>
+<b class="nc"><i>96</i>&nbsp;            this.parser = parser;</b>
+<b class="nc"><i>97</i>&nbsp;            this.wiki = wiki;</b>
+<i>98</i>&nbsp;        }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;        @Override
+<i>101</i>&nbsp;        public void onResponse(@NonNull Call&lt;PageRemaining&gt; call,
+<i>102</i>&nbsp;                               @NonNull Response&lt;PageRemaining&gt; response) {
+<b class="nc"><i>103</i>&nbsp;            WikipediaApp.getInstance().getSessionFunnel().restSectionsFetchEnd();</b>
+<b class="nc"><i>104</i>&nbsp;            if (response.body() != null) {</b>
+<i>105</i>&nbsp;                // noinspection ConstantConditions
+<b class="nc"><i>106</i>&nbsp;                Set&lt;String&gt; imageUrls = new HashSet&lt;&gt;(parser.parse(response.body()));</b>
+<b class="nc"><i>107</i>&nbsp;                fetchImages(wiki, imageUrls);</b>
+<i>108</i>&nbsp;            }
+<i>109</i>&nbsp;        }
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;        @Override
+<i>112</i>&nbsp;        public void onFailure(@NonNull Call&lt;PageRemaining&gt; call, @NonNull Throwable t) {
+<b class="nc"><i>113</i>&nbsp;            L.e(t);</b>
+<i>114</i>&nbsp;        }
+<i>115</i>&nbsp;    }
+<i>116</i>&nbsp;
+<b class="nc"><i>117</i>&nbsp;    private static class ImageCallback implements okhttp3.Callback {</b>
+<i>118</i>&nbsp;        @Override
+<i>119</i>&nbsp;        public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
+<b class="nc"><i>120</i>&nbsp;            L.e(e);</b>
+<i>121</i>&nbsp;        }
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;        @Override
+<i>124</i>&nbsp;        public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response)
+<i>125</i>&nbsp;                throws IOException {
+<i>126</i>&nbsp;            // Note: raw non-Retrofit usage of OkHttp Requests requires that the Response body is
+<i>127</i>&nbsp;            // read for the cache to be written.
+<b class="nc"><i>128</i>&nbsp;            if (response.body() != null) {</b>
+<i>129</i>&nbsp;                // noinspection ConstantConditions
+<b class="nc"><i>130</i>&nbsp;                response.body().close();</b>
+<i>131</i>&nbsp;            }
+<i>132</i>&nbsp;        }
+<i>133</i>&nbsp;    }
+<i>134</i>&nbsp;
+<b class="nc"><i>135</i>&nbsp;    private PageCacher() { }</b>
+<i>136</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,125 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: NewsActivity</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.news</a> ]
+</div>
+
+<h1>Coverage Summary for Class: NewsActivity (org.wikipedia.feed.news)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NewsActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.feed.news;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.content.Intent;
+<i>5</i>&nbsp;import android.graphics.Color;
+<i>6</i>&nbsp;import android.os.Build;
+<i>7</i>&nbsp;import android.os.Bundle;
+<i>8</i>&nbsp;import android.support.annotation.NonNull;
+<i>9</i>&nbsp;import android.support.annotation.Nullable;
+<i>10</i>&nbsp;import android.view.WindowManager;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import org.wikipedia.activity.SingleFragmentActivity;
+<i>13</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>14</i>&nbsp;import org.wikipedia.json.GsonMarshaller;
+<i>15</i>&nbsp;import org.wikipedia.json.GsonUnmarshaller;
+<i>16</i>&nbsp;
+<b class="nc"><i>17</i>&nbsp;public class NewsActivity extends SingleFragmentActivity&lt;NewsFragment&gt; {</b>
+<i>18</i>&nbsp;    protected static final String EXTRA_NEWS_ITEM = &quot;item&quot;;
+<i>19</i>&nbsp;    protected static final String EXTRA_WIKI = &quot;wiki&quot;;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    @Override
+<i>22</i>&nbsp;    public void onCreate(@Nullable Bundle savedInstanceState) {
+<b class="nc"><i>23</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>24</i>&nbsp;        setSharedElementTransitions();</b>
+<b class="nc"><i>25</i>&nbsp;        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) {</b>
+<b class="nc"><i>26</i>&nbsp;            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);</b>
+<b class="nc"><i>27</i>&nbsp;            getWindow().setStatusBarColor(Color.TRANSPARENT);</b>
+<i>28</i>&nbsp;        }
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    public static Intent newIntent(@NonNull Context context, @NonNull NewsItem item, @NonNull WikiSite wiki) {
+<b class="nc"><i>32</i>&nbsp;        return new Intent(context, NewsActivity.class)</b>
+<b class="nc"><i>33</i>&nbsp;                .putExtra(EXTRA_NEWS_ITEM, GsonMarshaller.marshal(item))</b>
+<b class="nc"><i>34</i>&nbsp;                .putExtra(EXTRA_WIKI, GsonMarshaller.marshal(wiki));</b>
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    @Override
+<i>38</i>&nbsp;    public NewsFragment createFragment() {
+<b class="nc"><i>39</i>&nbsp;        return NewsFragment.newInstance(GsonUnmarshaller.unmarshal(NewsItem.class, getIntent().getStringExtra(EXTRA_NEWS_ITEM)),</b>
+<b class="nc"><i>40</i>&nbsp;                GsonUnmarshaller.unmarshal(WikiSite.class, getIntent().getStringExtra(EXTRA_WIKI)));</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

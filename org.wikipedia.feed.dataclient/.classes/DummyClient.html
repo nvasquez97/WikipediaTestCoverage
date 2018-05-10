@@ -1,0 +1,111 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DummyClient</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.dataclient</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DummyClient (org.wikipedia.feed.dataclient)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DummyClient</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.feed.dataclient;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>7</i>&nbsp;import org.wikipedia.feed.FeedCoordinator;
+<i>8</i>&nbsp;import org.wikipedia.feed.model.Card;
+<i>9</i>&nbsp;import org.wikipedia.feed.searchbar.SearchCard;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import java.util.Collections;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;/** A dummy client for providing static cards (main page, random) on tap to the FeedCoordinator. */
+<b class="nc"><i>14</i>&nbsp;public abstract class DummyClient implements FeedClient {</b>
+<i>15</i>&nbsp;    @Override public void request(@NonNull Context context, @NonNull WikiSite wiki, int age,
+<i>16</i>&nbsp;                                  @NonNull FeedClient.Callback cb) {
+<b class="nc"><i>17</i>&nbsp;        Card card = getNewCard(wiki);</b>
+<b class="nc"><i>18</i>&nbsp;        if (card instanceof SearchCard) {</b>
+<b class="nc"><i>19</i>&nbsp;            cb.success(Collections.singletonList(card));</b>
+<i>20</i>&nbsp;        } else {
+<b class="nc"><i>21</i>&nbsp;            FeedCoordinator.postCardsToCallback(cb, Collections.singletonList(card));</b>
+<i>22</i>&nbsp;        }
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    @Override public void cancel() { }
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    public abstract Card getNewCard(WikiSite wiki);
+<i>28</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

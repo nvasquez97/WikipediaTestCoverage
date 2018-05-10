@@ -1,0 +1,104 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: MwMobileViewPageRemaining</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.dataclient.mwapi.page</a> ]
+</div>
+
+<h1>Coverage Summary for Class: MwMobileViewPageRemaining (org.wikipedia.dataclient.mwapi.page)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MwMobileViewPageRemaining</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.dataclient.mwapi.page;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.annotation.Nullable;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import org.wikipedia.dataclient.page.PageRemaining;
+<i>7</i>&nbsp;import org.wikipedia.page.Section;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import java.util.Collections;
+<i>10</i>&nbsp;import java.util.List;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;/**
+<i>13</i>&nbsp; * Gson POJO for loading remaining page content.
+<i>14</i>&nbsp; */
+<b class="nc"><i>15</i>&nbsp;public class MwMobileViewPageRemaining implements PageRemaining {</b>
+<i>16</i>&nbsp;    @SuppressWarnings(&quot;unused&quot;) @Nullable private MwMobileViewPageLead.Mobileview mobileview;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    @NonNull @Override public List&lt;Section&gt; sections() {
+<b class="nc"><i>19</i>&nbsp;        return mobileview == null ? Collections.emptyList() : mobileview.getSections();</b>
+<i>20</i>&nbsp;    }
+<i>21</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

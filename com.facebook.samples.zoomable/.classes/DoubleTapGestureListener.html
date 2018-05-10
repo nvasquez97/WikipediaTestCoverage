@@ -1,0 +1,182 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DoubleTapGestureListener</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.facebook.samples.zoomable</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DoubleTapGestureListener (com.facebook.samples.zoomable)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DoubleTapGestureListener</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 36)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;/*
+<i>2</i>&nbsp; * This file provided by Facebook is for non-commercial testing and evaluation
+<i>3</i>&nbsp; * purposes only.  Facebook reserves all rights not expressly granted.
+<i>4</i>&nbsp; *
+<i>5</i>&nbsp; * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+<i>6</i>&nbsp; * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+<i>7</i>&nbsp; * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+<i>8</i>&nbsp; * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+<i>9</i>&nbsp; * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+<i>10</i>&nbsp; * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+<i>11</i>&nbsp; */
+<i>12</i>&nbsp;package com.facebook.samples.zoomable;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import android.graphics.PointF;
+<i>15</i>&nbsp;import android.view.GestureDetector;
+<i>16</i>&nbsp;import android.view.MotionEvent;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;/**
+<i>19</i>&nbsp; * Tap gesture listener for double tap to zoom / unzoom and double-tap-and-drag to zoom.
+<i>20</i>&nbsp; *
+<i>21</i>&nbsp; * @see ZoomableDraweeView#setTapListener(GestureDetector.SimpleOnGestureListener)
+<i>22</i>&nbsp; */
+<i>23</i>&nbsp;public class DoubleTapGestureListener extends GestureDetector.SimpleOnGestureListener {
+<i>24</i>&nbsp;  private static final int DURATION_MS = 300;
+<i>25</i>&nbsp;  private static final int DOUBLE_TAP_SCROLL_THRESHOLD = 20;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;  private final ZoomableDraweeView mDraweeView;
+<b class="nc"><i>28</i>&nbsp;  private final PointF mDoubleTapViewPoint = new PointF();</b>
+<b class="nc"><i>29</i>&nbsp;  private final PointF mDoubleTapImagePoint = new PointF();</b>
+<b class="nc"><i>30</i>&nbsp;  private float mDoubleTapScale = 1;</b>
+<b class="nc"><i>31</i>&nbsp;  private boolean mDoubleTapScroll = false;</b>
+<i>32</i>&nbsp;
+<b class="nc"><i>33</i>&nbsp;  public DoubleTapGestureListener(ZoomableDraweeView zoomableDraweeView) {</b>
+<b class="nc"><i>34</i>&nbsp;    mDraweeView = zoomableDraweeView;</b>
+<i>35</i>&nbsp;  }
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;  @Override
+<i>38</i>&nbsp;  public boolean onDoubleTapEvent(MotionEvent e) {
+<b class="nc"><i>39</i>&nbsp;    AbstractAnimatedZoomableController zc =</b>
+<b class="nc"><i>40</i>&nbsp;        (AbstractAnimatedZoomableController) mDraweeView.getZoomableController();</b>
+<b class="nc"><i>41</i>&nbsp;    PointF vp = new PointF(e.getX(), e.getY());</b>
+<b class="nc"><i>42</i>&nbsp;    PointF ip = zc.mapViewToImage(vp);</b>
+<b class="nc"><i>43</i>&nbsp;    switch (e.getActionMasked()) {</b>
+<i>44</i>&nbsp;      case MotionEvent.ACTION_DOWN:
+<b class="nc"><i>45</i>&nbsp;        mDoubleTapViewPoint.set(vp);</b>
+<b class="nc"><i>46</i>&nbsp;        mDoubleTapImagePoint.set(ip);</b>
+<b class="nc"><i>47</i>&nbsp;        mDoubleTapScale = zc.getScaleFactor();</b>
+<b class="nc"><i>48</i>&nbsp;        break;</b>
+<i>49</i>&nbsp;      case MotionEvent.ACTION_MOVE:
+<b class="nc"><i>50</i>&nbsp;        mDoubleTapScroll = mDoubleTapScroll || shouldStartDoubleTapScroll(vp);</b>
+<b class="nc"><i>51</i>&nbsp;        if (mDoubleTapScroll) {</b>
+<b class="nc"><i>52</i>&nbsp;          float scale = calcScale(vp);</b>
+<b class="nc"><i>53</i>&nbsp;          zc.zoomToPoint(scale, mDoubleTapImagePoint, mDoubleTapViewPoint);</b>
+<b class="nc"><i>54</i>&nbsp;        }</b>
+<i>55</i>&nbsp;        break;
+<i>56</i>&nbsp;      case MotionEvent.ACTION_UP:
+<b class="nc"><i>57</i>&nbsp;        if (mDoubleTapScroll) {</b>
+<b class="nc"><i>58</i>&nbsp;          float scale = calcScale(vp);</b>
+<b class="nc"><i>59</i>&nbsp;          zc.zoomToPoint(scale, mDoubleTapImagePoint, mDoubleTapViewPoint);</b>
+<b class="nc"><i>60</i>&nbsp;        } else {</b>
+<b class="nc"><i>61</i>&nbsp;          final float maxScale = zc.getMaxScaleFactor();</b>
+<b class="nc"><i>62</i>&nbsp;          final float minScale = zc.getMinScaleFactor();</b>
+<b class="nc"><i>63</i>&nbsp;          if (zc.getScaleFactor() &lt; (maxScale + minScale) / 2) {</b>
+<b class="nc"><i>64</i>&nbsp;            zc.zoomToPoint(</b>
+<i>65</i>&nbsp;                maxScale,
+<i>66</i>&nbsp;                ip,
+<i>67</i>&nbsp;                vp,
+<i>68</i>&nbsp;                DefaultZoomableController.LIMIT_ALL,
+<i>69</i>&nbsp;                DURATION_MS,
+<i>70</i>&nbsp;                null);
+<i>71</i>&nbsp;          } else {
+<b class="nc"><i>72</i>&nbsp;            zc.zoomToPoint(</b>
+<i>73</i>&nbsp;                minScale,
+<i>74</i>&nbsp;                ip,
+<i>75</i>&nbsp;                vp,
+<i>76</i>&nbsp;                DefaultZoomableController.LIMIT_ALL,
+<i>77</i>&nbsp;                DURATION_MS,
+<i>78</i>&nbsp;                null);
+<i>79</i>&nbsp;          }
+<i>80</i>&nbsp;        }
+<b class="nc"><i>81</i>&nbsp;        mDoubleTapScroll = false;</b>
+<i>82</i>&nbsp;        break;
+<i>83</i>&nbsp;    }
+<b class="nc"><i>84</i>&nbsp;    return true;</b>
+<i>85</i>&nbsp;  }
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;  private boolean shouldStartDoubleTapScroll(PointF viewPoint) {
+<b class="nc"><i>88</i>&nbsp;    double dist = Math.hypot(</b>
+<i>89</i>&nbsp;        viewPoint.x - mDoubleTapViewPoint.x,
+<i>90</i>&nbsp;        viewPoint.y - mDoubleTapViewPoint.y);
+<b class="nc"><i>91</i>&nbsp;    return dist &gt; DOUBLE_TAP_SCROLL_THRESHOLD;</b>
+<i>92</i>&nbsp;  }
+<i>93</i>&nbsp;
+<i>94</i>&nbsp;  private float calcScale(PointF currentViewPoint) {
+<b class="nc"><i>95</i>&nbsp;    float dy = (currentViewPoint.y - mDoubleTapViewPoint.y);</b>
+<b class="nc"><i>96</i>&nbsp;    float t = 1 + Math.abs(dy) * 0.001f;</b>
+<b class="nc"><i>97</i>&nbsp;    return (dy &lt; 0) ? mDoubleTapScale / t : mDoubleTapScale * t;</b>
+<i>98</i>&nbsp;  }
+<i>99</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

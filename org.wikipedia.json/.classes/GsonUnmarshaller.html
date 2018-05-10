@@ -1,0 +1,115 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GsonUnmarshaller</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.json</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GsonUnmarshaller (org.wikipedia.json)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GsonUnmarshaller</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.json;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.annotation.Nullable;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import com.google.gson.Gson;
+<i>7</i>&nbsp;import com.google.gson.reflect.TypeToken;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;public final class GsonUnmarshaller {
+<i>10</i>&nbsp;    /** @return Unmarshalled object. */
+<i>11</i>&nbsp;    public static &lt;T&gt; T unmarshal(Class&lt;T&gt; clazz, @Nullable String json) {
+<b class="nc"><i>12</i>&nbsp;        return unmarshal(GsonUtil.getDefaultGson(), clazz, json);</b>
+<i>13</i>&nbsp;    }
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    /** @return Unmarshalled collection of objects. */
+<i>16</i>&nbsp;    public static &lt;T&gt; T unmarshal(TypeToken&lt;T&gt; typeToken, @Nullable String json) {
+<b class="nc"><i>17</i>&nbsp;        return unmarshal(GsonUtil.getDefaultGson(), typeToken, json);</b>
+<i>18</i>&nbsp;    }
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    /** @return Unmarshalled object. */
+<i>21</i>&nbsp;    public static &lt;T&gt; T unmarshal(@NonNull Gson gson, Class&lt;T&gt; clazz, @Nullable String json) {
+<b class="nc"><i>22</i>&nbsp;        return gson.fromJson(json, clazz);</b>
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    /** @return Unmarshalled collection of objects. */
+<i>26</i>&nbsp;    public static &lt;T&gt; T unmarshal(@NonNull Gson gson, TypeToken&lt;T&gt; typeToken, @Nullable String json) {
+<i>27</i>&nbsp;        // From the manual: &quot;Fairly hideous...  Unfortunately, no way to get around this in Java&quot;.
+<b class="nc"><i>28</i>&nbsp;        return gson.fromJson(json, typeToken.getType());</b>
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<b class="nc"><i>31</i>&nbsp;    private GsonUnmarshaller() { }</b>
+<i>32</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

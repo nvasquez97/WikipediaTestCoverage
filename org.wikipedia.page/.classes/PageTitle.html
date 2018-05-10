@@ -1,0 +1,496 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PageTitle</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.page</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PageTitle (org.wikipedia.page)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PageTitle</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 41)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 143)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">PageTitle$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 44)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 146)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.page;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.os.Parcel;
+<i>4</i>&nbsp;import android.os.Parcelable;
+<i>5</i>&nbsp;import android.support.annotation.NonNull;
+<i>6</i>&nbsp;import android.support.annotation.Nullable;
+<i>7</i>&nbsp;import android.text.TextUtils;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import com.google.gson.annotations.SerializedName;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import org.json.JSONException;
+<i>12</i>&nbsp;import org.json.JSONObject;
+<i>13</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>14</i>&nbsp;import org.wikipedia.crash.RemoteLogException;
+<i>15</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>16</i>&nbsp;import org.wikipedia.settings.SiteInfoClient;
+<i>17</i>&nbsp;import org.wikipedia.util.StringUtil;
+<i>18</i>&nbsp;import org.wikipedia.util.log.L;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;import java.io.UnsupportedEncodingException;
+<i>21</i>&nbsp;import java.net.URLEncoder;
+<i>22</i>&nbsp;import java.util.Arrays;
+<i>23</i>&nbsp;import java.util.Locale;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;import static org.wikipedia.util.UriUtil.decodeURL;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;/**
+<i>28</i>&nbsp; * Represents certain vital information about a page, including the title, namespace,
+<i>29</i>&nbsp; * and fragment (section anchor target).  It can also contain a thumbnail URL for the
+<i>30</i>&nbsp; * page, and a short description retrieved from Wikidata.
+<i>31</i>&nbsp; *
+<i>32</i>&nbsp; * WARNING: This class is not immutable! Specifically, the thumbnail URL and the Wikidata
+<i>33</i>&nbsp; * description can be altered after construction. Therefore do NOT rely on all the fields
+<i>34</i>&nbsp; * of a PageTitle to remain constant for the lifetime of the object.
+<i>35</i>&nbsp; */
+<b class="nc"><i>36</i>&nbsp;public class PageTitle implements Parcelable {</b>
+<i>37</i>&nbsp;
+<b class="nc"><i>38</i>&nbsp;    public static final Parcelable.Creator&lt;PageTitle&gt; CREATOR</b>
+<b class="nc"><i>39</i>&nbsp;            = new Parcelable.Creator&lt;PageTitle&gt;() {</b>
+<i>40</i>&nbsp;        @Override
+<i>41</i>&nbsp;        public PageTitle createFromParcel(Parcel in) {
+<b class="nc"><i>42</i>&nbsp;            return new PageTitle(in);</b>
+<i>43</i>&nbsp;        }
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;        @Override
+<i>46</i>&nbsp;        public PageTitle[] newArray(int size) {
+<b class="nc"><i>47</i>&nbsp;            return new PageTitle[size];</b>
+<i>48</i>&nbsp;        }
+<i>49</i>&nbsp;    };
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    /**
+<i>52</i>&nbsp;     * The localised namespace of the page as a string, or null if the page is in mainspace.
+<i>53</i>&nbsp;     *
+<i>54</i>&nbsp;     * This field contains the prefix of the page&#39;s title, as opposed to the namespace ID used by
+<i>55</i>&nbsp;     * MediaWiki. Therefore, mainspace pages always have a null namespace, as they have no prefix,
+<i>56</i>&nbsp;     * and the namespace of a page will depend on the language of the wiki the user is currently
+<i>57</i>&nbsp;     * looking at.
+<i>58</i>&nbsp;     *
+<i>59</i>&nbsp;     * Examples:
+<i>60</i>&nbsp;     * * [[Manchester]] on enwiki will have a namespace of null
+<i>61</i>&nbsp;     * * [[Deutschland]] on dewiki will have a namespace of null
+<i>62</i>&nbsp;     * * [[User:Deskana]] on enwiki will have a namespace of &quot;User&quot;
+<i>63</i>&nbsp;     * * [[Utilisateur:Deskana]] on frwiki will have a namespace of &quot;Utilisateur&quot;, even if you got
+<i>64</i>&nbsp;     *   to the page by going to [[User:Deskana]] and having MediaWiki automatically redirect you.
+<i>65</i>&nbsp;     */
+<i>66</i>&nbsp;    // TODO: remove. This legacy code is the localized namespace name (File, Special, Talk, etc) but
+<i>67</i>&nbsp;    //       isn&#39;t consistent across titles. e.g., articles with colons, such as RTÉ News: Six One,
+<i>68</i>&nbsp;    //       are broken.
+<i>69</i>&nbsp;    @Nullable private final String namespace;
+<i>70</i>&nbsp;    @NonNull private final String text;
+<i>71</i>&nbsp;    @Nullable private final String fragment;
+<i>72</i>&nbsp;    @Nullable private String thumbUrl;
+<i>73</i>&nbsp;    @SerializedName(&quot;site&quot;) @NonNull private final WikiSite wiki;
+<i>74</i>&nbsp;    @Nullable private String description;
+<i>75</i>&nbsp;    @Nullable private final PageProperties properties;
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    /**
+<i>78</i>&nbsp;     * Creates a new PageTitle object.
+<i>79</i>&nbsp;     * Use this if you want to pass in a fragment portion separately from the title.
+<i>80</i>&nbsp;     *
+<i>81</i>&nbsp;     * @param prefixedText title of the page with optional namespace prefix
+<i>82</i>&nbsp;     * @param fragment optional fragment portion
+<i>83</i>&nbsp;     * @param wiki the wiki site the page belongs to
+<i>84</i>&nbsp;     * @return a new PageTitle object matching the given input parameters
+<i>85</i>&nbsp;     */
+<i>86</i>&nbsp;    public static PageTitle withSeparateFragment(@NonNull String prefixedText,
+<i>87</i>&nbsp;                                                 @Nullable String fragment, @NonNull WikiSite wiki) {
+<b class="nc"><i>88</i>&nbsp;        if (TextUtils.isEmpty(fragment)) {</b>
+<b class="nc"><i>89</i>&nbsp;            return new PageTitle(prefixedText, wiki, null, (PageProperties) null);</b>
+<i>90</i>&nbsp;        } else {
+<i>91</i>&nbsp;            // TODO: this class needs some refactoring to allow passing in a fragment
+<i>92</i>&nbsp;            // without having to do string manipulations.
+<b class="nc"><i>93</i>&nbsp;            return new PageTitle(prefixedText + &quot;#&quot; + fragment, wiki, null, (PageProperties) null);</b>
+<i>94</i>&nbsp;        }
+<i>95</i>&nbsp;    }
+<i>96</i>&nbsp;
+<b class="nc"><i>97</i>&nbsp;    public PageTitle(@Nullable final String namespace, @NonNull String text, @Nullable String fragment, @Nullable String thumbUrl, @NonNull WikiSite wiki) {</b>
+<b class="nc"><i>98</i>&nbsp;        this.namespace = namespace;</b>
+<b class="nc"><i>99</i>&nbsp;        this.text = text;</b>
+<b class="nc"><i>100</i>&nbsp;        this.fragment = fragment;</b>
+<b class="nc"><i>101</i>&nbsp;        this.wiki = wiki;</b>
+<b class="nc"><i>102</i>&nbsp;        this.thumbUrl = thumbUrl;</b>
+<b class="nc"><i>103</i>&nbsp;        properties = null;</b>
+<b class="nc"><i>104</i>&nbsp;    }</b>
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;    public PageTitle(@Nullable String text, @NonNull WikiSite wiki, @Nullable String thumbUrl, @Nullable String description, @Nullable PageProperties properties) {
+<b class="nc"><i>107</i>&nbsp;        this(text, wiki, thumbUrl, properties);</b>
+<b class="nc"><i>108</i>&nbsp;        this.description = description;</b>
+<b class="nc"><i>109</i>&nbsp;    }</b>
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;    public PageTitle(@Nullable String text, @NonNull WikiSite wiki, @Nullable String thumbUrl, @Nullable String description) {
+<b class="nc"><i>112</i>&nbsp;        this(text, wiki, thumbUrl);</b>
+<b class="nc"><i>113</i>&nbsp;        this.description = description;</b>
+<b class="nc"><i>114</i>&nbsp;    }</b>
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;    public PageTitle(@Nullable String namespace, @NonNull String text, @NonNull WikiSite wiki) {
+<b class="nc"><i>117</i>&nbsp;        this(namespace, text, null, null, wiki);</b>
+<b class="nc"><i>118</i>&nbsp;    }</b>
+<i>119</i>&nbsp;
+<i>120</i>&nbsp;    public PageTitle(@Nullable String text, @NonNull WikiSite wiki, @Nullable String thumbUrl) {
+<b class="nc"><i>121</i>&nbsp;        this(text, wiki, thumbUrl, (PageProperties) null);</b>
+<b class="nc"><i>122</i>&nbsp;    }</b>
+<i>123</i>&nbsp;
+<i>124</i>&nbsp;    public PageTitle(@Nullable String text, @NonNull WikiSite wiki) {
+<b class="nc"><i>125</i>&nbsp;        this(text, wiki, null);</b>
+<b class="nc"><i>126</i>&nbsp;    }</b>
+<i>127</i>&nbsp;
+<i>128</i>&nbsp;    private PageTitle(@Nullable String text, @NonNull WikiSite wiki, @Nullable String thumbUrl,
+<b class="nc"><i>129</i>&nbsp;                      @Nullable PageProperties properties) {</b>
+<i>130</i>&nbsp;        // FIXME: Does not handle mainspace articles with a colon in the title well at all
+<b class="nc"><i>131</i>&nbsp;        if (TextUtils.isEmpty(text)) {</b>
+<i>132</i>&nbsp;            // If empty, this refers to the main page.
+<b class="nc"><i>133</i>&nbsp;            text = SiteInfoClient.getMainPageForLang(wiki.languageCode());</b>
+<i>134</i>&nbsp;        }
+<i>135</i>&nbsp;
+<b class="nc"><i>136</i>&nbsp;        String[] fragParts = text.split(&quot;#&quot;, -1);</b>
+<b class="nc"><i>137</i>&nbsp;        text = fragParts[0];</b>
+<b class="nc"><i>138</i>&nbsp;        if (fragParts.length &gt; 1) {</b>
+<b class="nc"><i>139</i>&nbsp;            this.fragment = decodeURL(fragParts[1]).replace(&quot; &quot;, &quot;_&quot;);</b>
+<i>140</i>&nbsp;        } else {
+<b class="nc"><i>141</i>&nbsp;            this.fragment = null;</b>
+<i>142</i>&nbsp;        }
+<i>143</i>&nbsp;
+<b class="nc"><i>144</i>&nbsp;        String[] parts = text.split(&quot;:&quot;, -1);</b>
+<b class="nc"><i>145</i>&nbsp;        if (parts.length &gt; 1) {</b>
+<b class="nc"><i>146</i>&nbsp;            String namespaceOrLanguage = parts[0];</b>
+<b class="nc"><i>147</i>&nbsp;            if (Arrays.asList(Locale.getISOLanguages()).contains(namespaceOrLanguage)) {</b>
+<b class="nc"><i>148</i>&nbsp;                this.namespace = null;</b>
+<b class="nc"><i>149</i>&nbsp;                this.wiki = WikiSite.forLanguageCode(namespaceOrLanguage);</b>
+<i>150</i>&nbsp;            } else {
+<b class="nc"><i>151</i>&nbsp;                this.wiki = wiki;</b>
+<b class="nc"><i>152</i>&nbsp;                this.namespace = namespaceOrLanguage;</b>
+<i>153</i>&nbsp;            }
+<b class="nc"><i>154</i>&nbsp;            this.text = TextUtils.join(&quot;:&quot;, Arrays.copyOfRange(parts, 1, parts.length));</b>
+<b class="nc"><i>155</i>&nbsp;        } else {</b>
+<b class="nc"><i>156</i>&nbsp;            this.wiki = wiki;</b>
+<b class="nc"><i>157</i>&nbsp;            this.namespace = null;</b>
+<b class="nc"><i>158</i>&nbsp;            this.text = parts[0];</b>
+<i>159</i>&nbsp;        }
+<i>160</i>&nbsp;
+<b class="nc"><i>161</i>&nbsp;        this.thumbUrl = thumbUrl;</b>
+<b class="nc"><i>162</i>&nbsp;        this.properties = properties;</b>
+<b class="nc"><i>163</i>&nbsp;    }</b>
+<i>164</i>&nbsp;
+<b class="nc"><i>165</i>&nbsp;    public PageTitle(JSONObject json) {</b>
+<b class="nc"><i>166</i>&nbsp;        this.namespace = json.optString(&quot;namespace&quot;, null);</b>
+<b class="nc"><i>167</i>&nbsp;        this.text = json.optString(&quot;text&quot;, null);</b>
+<b class="nc"><i>168</i>&nbsp;        this.fragment = json.optString(&quot;fragment&quot;, null);</b>
+<b class="nc"><i>169</i>&nbsp;        if (json.has(&quot;site&quot;)) {</b>
+<b class="nc"><i>170</i>&nbsp;            wiki = new WikiSite(json.optString(&quot;site&quot;), json.optString(&quot;languageCode&quot;));</b>
+<i>171</i>&nbsp;        } else {
+<b class="nc"><i>172</i>&nbsp;            L.logRemoteErrorIfProd(new RemoteLogException(&quot;wiki is null&quot;).put(&quot;json&quot;, json.toString()));</b>
+<b class="nc"><i>173</i>&nbsp;            wiki = WikipediaApp.getInstance().getWikiSite();</b>
+<i>174</i>&nbsp;        }
+<b class="nc"><i>175</i>&nbsp;        this.properties = json.has(&quot;properties&quot;) ? new PageProperties(json.optJSONObject(&quot;properties&quot;)) : null;</b>
+<b class="nc"><i>176</i>&nbsp;        this.thumbUrl = json.optString(&quot;thumbUrl&quot;, null);</b>
+<b class="nc"><i>177</i>&nbsp;        this.description = json.optString(&quot;description&quot;, null);</b>
+<b class="nc"><i>178</i>&nbsp;    }</b>
+<i>179</i>&nbsp;
+<i>180</i>&nbsp;    @Nullable
+<i>181</i>&nbsp;    public String getNamespace() {
+<b class="nc"><i>182</i>&nbsp;        return namespace;</b>
+<i>183</i>&nbsp;    }
+<i>184</i>&nbsp;
+<i>185</i>&nbsp;    @NonNull public Namespace namespace() {
+<b class="nc"><i>186</i>&nbsp;        if (properties != null) {</b>
+<b class="nc"><i>187</i>&nbsp;            return properties.getNamespace();</b>
+<i>188</i>&nbsp;        }
+<i>189</i>&nbsp;
+<i>190</i>&nbsp;        // Properties has the accurate namespace but it doesn&#39;t exist. Guess based on title.
+<b class="nc"><i>191</i>&nbsp;        return Namespace.fromLegacyString(wiki, namespace);</b>
+<i>192</i>&nbsp;    }
+<i>193</i>&nbsp;
+<i>194</i>&nbsp;    @NonNull public WikiSite getWikiSite() {
+<b class="nc"><i>195</i>&nbsp;        return wiki;</b>
+<i>196</i>&nbsp;    }
+<i>197</i>&nbsp;
+<i>198</i>&nbsp;    @NonNull public String getText() {
+<b class="nc"><i>199</i>&nbsp;        return text.replace(&quot; &quot;, &quot;_&quot;);</b>
+<i>200</i>&nbsp;    }
+<i>201</i>&nbsp;
+<i>202</i>&nbsp;    @Nullable public String getFragment() {
+<b class="nc"><i>203</i>&nbsp;        return fragment;</b>
+<i>204</i>&nbsp;    }
+<i>205</i>&nbsp;
+<i>206</i>&nbsp;    @Nullable public String getThumbUrl() {
+<b class="nc"><i>207</i>&nbsp;        return thumbUrl;</b>
+<i>208</i>&nbsp;    }
+<i>209</i>&nbsp;
+<i>210</i>&nbsp;    public void setThumbUrl(@Nullable String thumbUrl) {
+<b class="nc"><i>211</i>&nbsp;        this.thumbUrl = thumbUrl;</b>
+<b class="nc"><i>212</i>&nbsp;    }</b>
+<i>213</i>&nbsp;
+<i>214</i>&nbsp;    @Nullable public String getDescription() {
+<b class="nc"><i>215</i>&nbsp;        return description;</b>
+<i>216</i>&nbsp;    }
+<i>217</i>&nbsp;
+<i>218</i>&nbsp;    public void setDescription(@Nullable String description) {
+<b class="nc"><i>219</i>&nbsp;        this.description = description;</b>
+<b class="nc"><i>220</i>&nbsp;    }</b>
+<i>221</i>&nbsp;
+<i>222</i>&nbsp;    @NonNull public String getDisplayText() {
+<b class="nc"><i>223</i>&nbsp;        return getPrefixedText().replace(&quot;_&quot;, &quot; &quot;);</b>
+<i>224</i>&nbsp;    }
+<i>225</i>&nbsp;
+<i>226</i>&nbsp;    public boolean hasProperties() {
+<b class="nc"><i>227</i>&nbsp;        return properties != null;</b>
+<i>228</i>&nbsp;    }
+<i>229</i>&nbsp;
+<i>230</i>&nbsp;    @Nullable public PageProperties getProperties() {
+<b class="nc"><i>231</i>&nbsp;        return properties;</b>
+<i>232</i>&nbsp;    }
+<i>233</i>&nbsp;
+<i>234</i>&nbsp;    public boolean isMainPage() {
+<b class="nc"><i>235</i>&nbsp;        if (properties != null) {</b>
+<b class="nc"><i>236</i>&nbsp;            return properties.isMainPage();</b>
+<i>237</i>&nbsp;        }
+<b class="nc"><i>238</i>&nbsp;        String mainPageTitle = SiteInfoClient.getMainPageForLang(getWikiSite().languageCode());</b>
+<b class="nc"><i>239</i>&nbsp;        return mainPageTitle.equals(getDisplayText());</b>
+<i>240</i>&nbsp;    }
+<i>241</i>&nbsp;
+<i>242</i>&nbsp;    public boolean isDisambiguationPage() {
+<b class="nc"><i>243</i>&nbsp;        return properties != null &amp;&amp; properties.isDisambiguationPage();</b>
+<i>244</i>&nbsp;    }
+<i>245</i>&nbsp;
+<i>246</i>&nbsp;    public JSONObject toJSON() {
+<i>247</i>&nbsp;        try {
+<b class="nc"><i>248</i>&nbsp;            JSONObject json = toIdentifierJSON();</b>
+<b class="nc"><i>249</i>&nbsp;            json.put(&quot;languageCode&quot;, wiki.languageCode());</b>
+<b class="nc"><i>250</i>&nbsp;            if (properties != null) {</b>
+<b class="nc"><i>251</i>&nbsp;                json.put(&quot;properties&quot;, properties.toJSON());</b>
+<i>252</i>&nbsp;            }
+<b class="nc"><i>253</i>&nbsp;            json.put(&quot;thumbUrl&quot;, getThumbUrl());</b>
+<b class="nc"><i>254</i>&nbsp;            json.put(&quot;description&quot;, getDescription());</b>
+<b class="nc"><i>255</i>&nbsp;            return json;</b>
+<b class="nc"><i>256</i>&nbsp;        } catch (JSONException e) {</b>
+<b class="nc"><i>257</i>&nbsp;            throw new RuntimeException(e);</b>
+<i>258</i>&nbsp;        }
+<i>259</i>&nbsp;    }
+<i>260</i>&nbsp;
+<i>261</i>&nbsp;    public String getCanonicalUri() {
+<b class="nc"><i>262</i>&nbsp;        return getUriForDomain(getWikiSite().authority());</b>
+<i>263</i>&nbsp;    }
+<i>264</i>&nbsp;
+<i>265</i>&nbsp;    public String getMobileUri() {
+<b class="nc"><i>266</i>&nbsp;        return getUriForDomain(getWikiSite().mobileAuthority());</b>
+<i>267</i>&nbsp;    }
+<i>268</i>&nbsp;
+<i>269</i>&nbsp;    public String getUriForAction(String action) {
+<i>270</i>&nbsp;        try {
+<b class="nc"><i>271</i>&nbsp;            return String.format(</b>
+<i>272</i>&nbsp;                    &quot;%1$s://%2$s/w/index.php?title=%3$s&amp;action=%4$s&quot;,
+<b class="nc"><i>273</i>&nbsp;                    getWikiSite().scheme(),</b>
+<b class="nc"><i>274</i>&nbsp;                    getWikiSite().authority(),</b>
+<b class="nc"><i>275</i>&nbsp;                    URLEncoder.encode(getPrefixedText(), &quot;utf-8&quot;),</b>
+<i>276</i>&nbsp;                    action
+<i>277</i>&nbsp;            );
+<b class="nc"><i>278</i>&nbsp;        } catch (UnsupportedEncodingException e) {</b>
+<b class="nc"><i>279</i>&nbsp;            throw new RuntimeException(e);</b>
+<i>280</i>&nbsp;        }
+<i>281</i>&nbsp;    }
+<i>282</i>&nbsp;
+<i>283</i>&nbsp;    public String getPrefixedText() {
+<i>284</i>&nbsp;
+<i>285</i>&nbsp;        // TODO: find a better way to check if the namespace is a ISO Alpha2 Code (two digits country code)
+<b class="nc"><i>286</i>&nbsp;        return namespace == null ? getText() : StringUtil.addUnderscores(namespace) + &quot;:&quot; + getText();</b>
+<i>287</i>&nbsp;    }
+<i>288</i>&nbsp;
+<i>289</i>&nbsp;    /**
+<i>290</i>&nbsp;     * Check if the Title represents a File:
+<i>291</i>&nbsp;     *
+<i>292</i>&nbsp;     * @return true if it is a File page, false if not
+<i>293</i>&nbsp;     */
+<i>294</i>&nbsp;    public boolean isFilePage() {
+<b class="nc"><i>295</i>&nbsp;        return namespace().file();</b>
+<i>296</i>&nbsp;    }
+<i>297</i>&nbsp;
+<i>298</i>&nbsp;    /**
+<i>299</i>&nbsp;     * Check if the Title represents a special page
+<i>300</i>&nbsp;     *
+<i>301</i>&nbsp;     * @return true if it is a special page, false if not
+<i>302</i>&nbsp;     */
+<i>303</i>&nbsp;    public boolean isSpecial() {
+<b class="nc"><i>304</i>&nbsp;        return namespace().special();</b>
+<i>305</i>&nbsp;    }
+<i>306</i>&nbsp;
+<i>307</i>&nbsp;    /**
+<i>308</i>&nbsp;     * Check if the Title represents a talk page
+<i>309</i>&nbsp;     *
+<i>310</i>&nbsp;     * @return true if it is a talk page, false if not
+<i>311</i>&nbsp;     */
+<i>312</i>&nbsp;    public boolean isTalkPage() {
+<b class="nc"><i>313</i>&nbsp;        return namespace().talk();</b>
+<i>314</i>&nbsp;    }
+<i>315</i>&nbsp;
+<i>316</i>&nbsp;    @Override public void writeToParcel(Parcel parcel, int flags) {
+<b class="nc"><i>317</i>&nbsp;        parcel.writeString(namespace);</b>
+<b class="nc"><i>318</i>&nbsp;        parcel.writeString(text);</b>
+<b class="nc"><i>319</i>&nbsp;        parcel.writeString(fragment);</b>
+<b class="nc"><i>320</i>&nbsp;        parcel.writeParcelable(wiki, flags);</b>
+<b class="nc"><i>321</i>&nbsp;        parcel.writeParcelable(properties, flags);</b>
+<b class="nc"><i>322</i>&nbsp;        parcel.writeString(thumbUrl);</b>
+<b class="nc"><i>323</i>&nbsp;        parcel.writeString(description);</b>
+<b class="nc"><i>324</i>&nbsp;    }</b>
+<i>325</i>&nbsp;
+<i>326</i>&nbsp;    @Override public boolean equals(Object o) {
+<b class="nc"><i>327</i>&nbsp;        if (!(o instanceof PageTitle)) {</b>
+<b class="nc"><i>328</i>&nbsp;            return false;</b>
+<i>329</i>&nbsp;        }
+<i>330</i>&nbsp;
+<b class="nc"><i>331</i>&nbsp;        PageTitle other = (PageTitle)o;</b>
+<i>332</i>&nbsp;        // Not using namespace directly since that can be null
+<b class="nc"><i>333</i>&nbsp;        return StringUtil.normalizedEquals(other.getPrefixedText(), getPrefixedText()) &amp;&amp; other.wiki.equals(wiki);</b>
+<i>334</i>&nbsp;    }
+<i>335</i>&nbsp;
+<i>336</i>&nbsp;    @Override public int hashCode() {
+<b class="nc"><i>337</i>&nbsp;        int result = getPrefixedText().hashCode();</b>
+<b class="nc"><i>338</i>&nbsp;        result = 31 * result + wiki.hashCode();</b>
+<b class="nc"><i>339</i>&nbsp;        return result;</b>
+<i>340</i>&nbsp;    }
+<i>341</i>&nbsp;
+<i>342</i>&nbsp;    @Override public String toString() {
+<b class="nc"><i>343</i>&nbsp;        return getPrefixedText();</b>
+<i>344</i>&nbsp;    }
+<i>345</i>&nbsp;
+<i>346</i>&nbsp;    @Override public int describeContents() {
+<b class="nc"><i>347</i>&nbsp;        return 0;</b>
+<i>348</i>&nbsp;    }
+<i>349</i>&nbsp;
+<i>350</i>&nbsp;    /** Please keep the ID stable. */
+<i>351</i>&nbsp;    private JSONObject toIdentifierJSON() {
+<i>352</i>&nbsp;        try {
+<b class="nc"><i>353</i>&nbsp;            JSONObject json = new JSONObject();</b>
+<b class="nc"><i>354</i>&nbsp;            json.put(&quot;namespace&quot;, getNamespace());</b>
+<b class="nc"><i>355</i>&nbsp;            json.put(&quot;text&quot;, getText());</b>
+<b class="nc"><i>356</i>&nbsp;            json.put(&quot;fragment&quot;, getFragment());</b>
+<b class="nc"><i>357</i>&nbsp;            json.put(&quot;site&quot;, wiki.authority());</b>
+<b class="nc"><i>358</i>&nbsp;            return json;</b>
+<b class="nc"><i>359</i>&nbsp;        } catch (JSONException e) {</b>
+<b class="nc"><i>360</i>&nbsp;            throw new RuntimeException(e);</b>
+<i>361</i>&nbsp;        }
+<i>362</i>&nbsp;    }
+<i>363</i>&nbsp;
+<i>364</i>&nbsp;    private String getUriForDomain(String domain) {
+<i>365</i>&nbsp;        try {
+<b class="nc"><i>366</i>&nbsp;            return String.format(</b>
+<i>367</i>&nbsp;                    &quot;%1$s://%2$s/wiki/%3$s%4$s&quot;,
+<b class="nc"><i>368</i>&nbsp;                    getWikiSite().scheme(),</b>
+<i>369</i>&nbsp;                    domain,
+<b class="nc"><i>370</i>&nbsp;                    URLEncoder.encode(getPrefixedText(), &quot;utf-8&quot;),</b>
+<b class="nc"><i>371</i>&nbsp;                    (this.fragment != null &amp;&amp; this.fragment.length() &gt; 0) ? (&quot;#&quot; + this.fragment) : &quot;&quot;</b>
+<i>372</i>&nbsp;            );
+<b class="nc"><i>373</i>&nbsp;        } catch (UnsupportedEncodingException e) {</b>
+<b class="nc"><i>374</i>&nbsp;            throw new RuntimeException(e);</b>
+<i>375</i>&nbsp;        }
+<i>376</i>&nbsp;    }
+<i>377</i>&nbsp;
+<b class="nc"><i>378</i>&nbsp;    private PageTitle(Parcel in) {</b>
+<b class="nc"><i>379</i>&nbsp;        namespace = in.readString();</b>
+<b class="nc"><i>380</i>&nbsp;        text = in.readString();</b>
+<b class="nc"><i>381</i>&nbsp;        fragment = in.readString();</b>
+<b class="nc"><i>382</i>&nbsp;        wiki = in.readParcelable(WikiSite.class.getClassLoader());</b>
+<b class="nc"><i>383</i>&nbsp;        properties = in.readParcelable(PageProperties.class.getClassLoader());</b>
+<b class="nc"><i>384</i>&nbsp;        thumbUrl = in.readString();</b>
+<b class="nc"><i>385</i>&nbsp;        description = in.readString();</b>
+<b class="nc"><i>386</i>&nbsp;    }</b>
+<i>387</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

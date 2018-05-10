@@ -1,0 +1,209 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DatabaseTable</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.database</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DatabaseTable (org.wikipedia.database)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DatabaseTable</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 34)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.database;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.ContentProviderClient;
+<i>4</i>&nbsp;import android.content.ContentValues;
+<i>5</i>&nbsp;import android.content.Context;
+<i>6</i>&nbsp;import android.database.Cursor;
+<i>7</i>&nbsp;import android.database.sqlite.SQLiteDatabase;
+<i>8</i>&nbsp;import android.net.Uri;
+<i>9</i>&nbsp;import android.support.annotation.NonNull;
+<i>10</i>&nbsp;import android.text.TextUtils;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import org.wikipedia.database.column.Column;
+<i>13</i>&nbsp;import org.wikipedia.util.ArrayUtils;
+<i>14</i>&nbsp;import org.wikipedia.util.log.L;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;public abstract class DatabaseTable&lt;T&gt; {
+<i>17</i>&nbsp;    protected static final int INITIAL_DB_VERSION = 1;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    @NonNull private final String tableName;
+<i>20</i>&nbsp;    @NonNull private final Uri baseContentURI;
+<i>21</i>&nbsp;
+<b class="nc"><i>22</i>&nbsp;    public DatabaseTable(@NonNull String tableName, @NonNull Uri baseContentURI) {</b>
+<b class="nc"><i>23</i>&nbsp;        this.tableName = tableName;</b>
+<b class="nc"><i>24</i>&nbsp;        this.baseContentURI = baseContentURI;</b>
+<i>25</i>&nbsp;    }
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    public abstract T fromCursor(Cursor c);
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    protected abstract ContentValues toContentValues(T obj);
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    @NonNull public String getTableName() {
+<b class="nc"><i>32</i>&nbsp;        return tableName;</b>
+<i>33</i>&nbsp;    }
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    @NonNull public Column&lt;?&gt;[] getColumnsAdded(int version) {
+<b class="nc"><i>36</i>&nbsp;        return new Column&lt;?&gt;[0];</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    public ContentProviderClient acquireClient(@NonNull Context context) {
+<b class="nc"><i>40</i>&nbsp;        return context.getContentResolver().acquireContentProviderClient(getBaseContentURI());</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    /**
+<i>44</i>&nbsp;     * Get the db query string to be passed to the content provider where selecting for a null
+<i>45</i>&nbsp;     * value (including, notably, the main namespace) may be necessary.
+<i>46</i>&nbsp;     * @param obj The object on which the formatting of the string depends.
+<i>47</i>&nbsp;     * @return A SQL WHERE clause formatted for the content provider.
+<i>48</i>&nbsp;     */
+<i>49</i>&nbsp;    protected String getPrimaryKeySelection(@NonNull T obj, @NonNull String[] selectionKeys) {
+<b class="nc"><i>50</i>&nbsp;        String primaryKeySelection = &quot;&quot;;</b>
+<b class="nc"><i>51</i>&nbsp;        String[] args = getUnfilteredPrimaryKeySelectionArgs(obj);</b>
+<b class="nc"><i>52</i>&nbsp;        for (int i = 0; i &lt; args.length; i++) {</b>
+<b class="nc"><i>53</i>&nbsp;            primaryKeySelection += (selectionKeys[i] + (args[i] == null ? &quot; IS NULL&quot; : &quot; = ?&quot;));</b>
+<b class="nc"><i>54</i>&nbsp;            if (i &lt; (args.length - 1)) {</b>
+<b class="nc"><i>55</i>&nbsp;                primaryKeySelection += &quot; AND &quot;;</b>
+<i>56</i>&nbsp;            }
+<i>57</i>&nbsp;        }
+<b class="nc"><i>58</i>&nbsp;        return primaryKeySelection;</b>
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    /**
+<i>62</i>&nbsp;     * Get the selection arguments to be bound to the db query string.
+<i>63</i>&nbsp;     * @param obj The object from which selection args are derived.
+<i>64</i>&nbsp;     * @return The array of selection arguments with null values removed.  (Null arguments are
+<i>65</i>&nbsp;     * replaced with &quot;IS NULL&quot; in getPrimaryKeySelection(T obj, String[] selectionKeys).)
+<i>66</i>&nbsp;     */
+<i>67</i>&nbsp;    public String[] getPrimaryKeySelectionArgs(@NonNull T obj) {
+<b class="nc"><i>68</i>&nbsp;        return ArrayUtils.removeAllOccurences(getUnfilteredPrimaryKeySelectionArgs(obj), null);</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    /**
+<i>72</i>&nbsp;     * Override to provide full list of selection arguments, including those which may have null
+<i>73</i>&nbsp;     * values, for use in constructing the SQL query string.
+<i>74</i>&nbsp;     * @param obj Object from which selection args are to be derived.
+<i>75</i>&nbsp;     * @return Array of selection arguments (including null values).
+<i>76</i>&nbsp;     */
+<i>77</i>&nbsp;    protected abstract String[] getUnfilteredPrimaryKeySelectionArgs(@NonNull T obj);
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    protected abstract int getDBVersionIntroducedAt();
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    protected int getDBVersionDroppedAt() {
+<b class="nc"><i>82</i>&nbsp;        return 0;</b>
+<i>83</i>&nbsp;    }
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    public void upgradeSchema(@NonNull SQLiteDatabase db, int fromVersion, int toVersion) {
+<b class="nc"><i>86</i>&nbsp;        if (fromVersion &lt; getDBVersionIntroducedAt()) {</b>
+<b class="nc"><i>87</i>&nbsp;            createTables(db);</b>
+<b class="nc"><i>88</i>&nbsp;            onUpgradeSchema(db, fromVersion, getDBVersionIntroducedAt());</b>
+<i>89</i>&nbsp;        }
+<i>90</i>&nbsp;
+<b class="nc"><i>91</i>&nbsp;        for (int ver = Math.max(getDBVersionIntroducedAt(), fromVersion) + 1; ver &lt;= toVersion; ++ver) {</b>
+<b class="nc"><i>92</i>&nbsp;            L.i(&quot;ver=&quot; + ver);</b>
+<i>93</i>&nbsp;
+<b class="nc"><i>94</i>&nbsp;            if (ver == getDBVersionDroppedAt()) {</b>
+<b class="nc"><i>95</i>&nbsp;                dropTable(db);</b>
+<b class="nc"><i>96</i>&nbsp;                break;</b>
+<i>97</i>&nbsp;            }
+<i>98</i>&nbsp;
+<b class="nc"><i>99</i>&nbsp;            for (Column&lt;?&gt; column : getColumnsAdded(ver)) {</b>
+<b class="nc"><i>100</i>&nbsp;                String alterTableString = &quot;ALTER TABLE &quot; + tableName + &quot; ADD COLUMN &quot; + column;</b>
+<b class="nc"><i>101</i>&nbsp;                L.i(alterTableString);</b>
+<b class="nc"><i>102</i>&nbsp;                db.execSQL(alterTableString);</b>
+<i>103</i>&nbsp;            }
+<i>104</i>&nbsp;
+<b class="nc"><i>105</i>&nbsp;            onUpgradeSchema(db, ver - 1, ver);</b>
+<i>106</i>&nbsp;        }
+<i>107</i>&nbsp;    }
+<i>108</i>&nbsp;
+<i>109</i>&nbsp;    @NonNull public Uri getBaseContentURI() {
+<b class="nc"><i>110</i>&nbsp;        return baseContentURI;</b>
+<i>111</i>&nbsp;    }
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;    protected void onUpgradeSchema(@NonNull SQLiteDatabase db, int fromVersion, int toVersion) {
+<i>114</i>&nbsp;    }
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;    private void createTables(@NonNull SQLiteDatabase db) {
+<b class="nc"><i>117</i>&nbsp;        L.i(&quot;Creating table=&quot; + getTableName());</b>
+<b class="nc"><i>118</i>&nbsp;        Column&lt;?&gt;[] cols = getColumnsAdded(getDBVersionIntroducedAt());</b>
+<b class="nc"><i>119</i>&nbsp;        db.execSQL(&quot;CREATE TABLE &quot; + getTableName() + &quot; ( &quot; + TextUtils.join(&quot;, &quot;, cols) + &quot; )&quot;);</b>
+<i>120</i>&nbsp;    }
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;    private void dropTable(@NonNull SQLiteDatabase db) {
+<b class="nc"><i>123</i>&nbsp;        db.execSQL(&quot;DROP TABLE IF EXISTS &quot; + getTableName());</b>
+<b class="nc"><i>124</i>&nbsp;        L.i(&quot;Dropped table=&quot; + getTableName());</b>
+<i>125</i>&nbsp;    }
+<i>126</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

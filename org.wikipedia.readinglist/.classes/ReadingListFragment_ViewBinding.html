@@ -1,0 +1,135 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ReadingListFragment_ViewBinding</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.readinglist</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ReadingListFragment_ViewBinding (org.wikipedia.readinglist)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ReadingListFragment_ViewBinding</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 21)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;// Generated code from Butter Knife. Do not modify!
+<i>2</i>&nbsp;package org.wikipedia.readinglist;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import android.support.annotation.CallSuper;
+<i>5</i>&nbsp;import android.support.annotation.UiThread;
+<i>6</i>&nbsp;import android.support.design.widget.AppBarLayout;
+<i>7</i>&nbsp;import android.support.design.widget.CollapsingToolbarLayout;
+<i>8</i>&nbsp;import android.support.v4.widget.SwipeRefreshLayout;
+<i>9</i>&nbsp;import android.support.v7.widget.RecyclerView;
+<i>10</i>&nbsp;import android.support.v7.widget.Toolbar;
+<i>11</i>&nbsp;import android.view.View;
+<i>12</i>&nbsp;import android.widget.TextView;
+<i>13</i>&nbsp;import butterknife.Unbinder;
+<i>14</i>&nbsp;import java.lang.IllegalStateException;
+<i>15</i>&nbsp;import java.lang.Override;
+<i>16</i>&nbsp;import org.wikipedia.R;
+<i>17</i>&nbsp;import org.wikipedia.views.SearchEmptyView;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;public class ReadingListFragment_ViewBinding implements Unbinder {
+<i>20</i>&nbsp;  private ReadingListFragment target;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;  @UiThread
+<b class="nc"><i>23</i>&nbsp;  public ReadingListFragment_ViewBinding(ReadingListFragment target, View source) {</b>
+<b class="nc"><i>24</i>&nbsp;    this.target = target;</b>
+<i>25</i>&nbsp;
+<b class="nc"><i>26</i>&nbsp;    target.toolbar = (Toolbar) source.findViewById(R.id.reading_list_toolbar);</b>
+<b class="nc"><i>27</i>&nbsp;    target.toolBarLayout = (CollapsingToolbarLayout) source.findViewById(R.id.reading_list_toolbar_container);</b>
+<b class="nc"><i>28</i>&nbsp;    target.appBarLayout = (AppBarLayout) source.findViewById(R.id.reading_list_app_bar);</b>
+<b class="nc"><i>29</i>&nbsp;    target.headerImageView = (ReadingListHeaderView) source.findViewById(R.id.reading_list_header);</b>
+<b class="nc"><i>30</i>&nbsp;    target.recyclerView = (RecyclerView) source.findViewById(R.id.reading_list_contents);</b>
+<b class="nc"><i>31</i>&nbsp;    target.emptyView = (TextView) source.findViewById(R.id.reading_list_empty_text);</b>
+<b class="nc"><i>32</i>&nbsp;    target.searchEmptyView = (SearchEmptyView) source.findViewById(R.id.search_empty_view);</b>
+<b class="nc"><i>33</i>&nbsp;    target.swipeRefreshLayout = (SwipeRefreshLayout) source.findViewById(R.id.reading_list_swipe_refresh);</b>
+<i>34</i>&nbsp;  }
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;  @Override
+<i>37</i>&nbsp;  @CallSuper
+<i>38</i>&nbsp;  public void unbind() {
+<b class="nc"><i>39</i>&nbsp;    ReadingListFragment target = this.target;</b>
+<b class="nc"><i>40</i>&nbsp;    if (target == null) throw new IllegalStateException(&quot;Bindings already cleared.&quot;);</b>
+<b class="nc"><i>41</i>&nbsp;    this.target = null;</b>
+<i>42</i>&nbsp;
+<b class="nc"><i>43</i>&nbsp;    target.toolbar = null;</b>
+<b class="nc"><i>44</i>&nbsp;    target.toolBarLayout = null;</b>
+<b class="nc"><i>45</i>&nbsp;    target.appBarLayout = null;</b>
+<b class="nc"><i>46</i>&nbsp;    target.headerImageView = null;</b>
+<b class="nc"><i>47</i>&nbsp;    target.recyclerView = null;</b>
+<b class="nc"><i>48</i>&nbsp;    target.emptyView = null;</b>
+<b class="nc"><i>49</i>&nbsp;    target.searchEmptyView = null;</b>
+<b class="nc"><i>50</i>&nbsp;    target.swipeRefreshLayout = null;</b>
+<i>51</i>&nbsp;  }
+<i>52</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

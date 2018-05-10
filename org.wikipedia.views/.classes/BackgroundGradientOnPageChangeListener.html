@@ -1,0 +1,189 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: BackgroundGradientOnPageChangeListener</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.views</a> ]
+</div>
+
+<h1>Coverage Summary for Class: BackgroundGradientOnPageChangeListener (org.wikipedia.views)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BackgroundGradientOnPageChangeListener</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 17)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">BackgroundGradientOnPageChangeListener$MutatableGradientColors</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 25)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.views;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import android.animation.ArgbEvaluator;
+<i>5</i>&nbsp;import android.graphics.drawable.GradientDrawable;
+<i>6</i>&nbsp;import android.support.annotation.NonNull;
+<i>7</i>&nbsp;import android.support.v4.view.PagerAdapter;
+<i>8</i>&nbsp;import android.support.v4.view.ViewPager;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import java.util.List;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;public class BackgroundGradientOnPageChangeListener implements ViewPager.OnPageChangeListener{
+<i>13</i>&nbsp;    @NonNull private PagerAdapter adapter;
+<i>14</i>&nbsp;    @NonNull private GradientDrawable background;
+<b class="nc"><i>15</i>&nbsp;    @NonNull private ArgbEvaluator argbEvaluator = new ArgbEvaluator();</b>
+<i>16</i>&nbsp;    @NonNull private List&lt;Integer&gt; startColors;
+<i>17</i>&nbsp;    @NonNull private List&lt;Integer&gt; centerColors;
+<i>18</i>&nbsp;    @NonNull private List&lt;Integer&gt; endColors;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    public BackgroundGradientOnPageChangeListener(@NonNull PagerAdapter adapter,
+<i>21</i>&nbsp;                                                  @NonNull GradientDrawable background,
+<b class="nc"><i>22</i>&nbsp;                                                  @NonNull MutatableGradientColors colors) {</b>
+<b class="nc"><i>23</i>&nbsp;        this.adapter = adapter;</b>
+<b class="nc"><i>24</i>&nbsp;        this.background = background;</b>
+<b class="nc"><i>25</i>&nbsp;        this.startColors = colors.getStartColors();</b>
+<b class="nc"><i>26</i>&nbsp;        this.centerColors = colors.getCenterColors();</b>
+<b class="nc"><i>27</i>&nbsp;        this.endColors = colors.getEndColors();</b>
+<i>28</i>&nbsp;    }
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    @Override
+<i>31</i>&nbsp;    public void onPageScrolled(int pos, float posOffset, int posOffsetPx) {
+<b class="nc"><i>32</i>&nbsp;        int last = adapter.getCount() - 1;</b>
+<b class="nc"><i>33</i>&nbsp;        if (pos &lt; last) {</b>
+<b class="nc"><i>34</i>&nbsp;            int start = (Integer) argbEvaluator.evaluate(posOffset, startColors.get(pos), startColors.get(pos + 1));</b>
+<b class="nc"><i>35</i>&nbsp;            int center = (Integer) argbEvaluator.evaluate(posOffset, centerColors.get(pos), centerColors.get(pos + 1));</b>
+<b class="nc"><i>36</i>&nbsp;            int end = (Integer) argbEvaluator.evaluate(posOffset, endColors.get(pos), endColors.get(pos + 1));</b>
+<b class="nc"><i>37</i>&nbsp;            int[] colors = new int[] {start, center, end};</b>
+<b class="nc"><i>38</i>&nbsp;            background.setColors(colors);</b>
+<b class="nc"><i>39</i>&nbsp;        } else {</b>
+<b class="nc"><i>40</i>&nbsp;            int[] colors = new int[] {startColors.get(last), centerColors.get(last), endColors.get(last)};</b>
+<b class="nc"><i>41</i>&nbsp;            background.setColors(colors);</b>
+<i>42</i>&nbsp;        }
+<i>43</i>&nbsp;    }
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    @Override
+<i>46</i>&nbsp;    public void onPageSelected(int i) {
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    @Override
+<i>51</i>&nbsp;    public void onPageScrollStateChanged(int i) {
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;
+<b class="nc"><i>55</i>&nbsp;    public static class MutatableGradientColors {</b>
+<i>56</i>&nbsp;        @NonNull private List&lt;Integer&gt; startColors;
+<i>57</i>&nbsp;        @NonNull private List&lt;Integer&gt; centerColors;
+<i>58</i>&nbsp;        @NonNull private List&lt;Integer&gt; endColors;
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;        public MutatableGradientColors(@NonNull List&lt;Integer&gt; startColors,
+<i>61</i>&nbsp;                                       @NonNull List&lt;Integer&gt; centerColors,
+<b class="nc"><i>62</i>&nbsp;                                       @NonNull List&lt;Integer&gt; endcolors) {</b>
+<b class="nc"><i>63</i>&nbsp;            this.startColors = startColors;</b>
+<b class="nc"><i>64</i>&nbsp;            this.centerColors = centerColors;</b>
+<b class="nc"><i>65</i>&nbsp;            this.endColors = endcolors;</b>
+<i>66</i>&nbsp;        }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;        private List&lt;Integer&gt; getStartColors() {
+<b class="nc"><i>69</i>&nbsp;            return startColors;</b>
+<i>70</i>&nbsp;        }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;        private List&lt;Integer&gt; getCenterColors() {
+<b class="nc"><i>73</i>&nbsp;            return centerColors;</b>
+<i>74</i>&nbsp;        }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;        private List&lt;Integer&gt; getEndColors() {
+<b class="nc"><i>77</i>&nbsp;            return endColors;</b>
+<i>78</i>&nbsp;        }
+<i>79</i>&nbsp;    }
+<i>80</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

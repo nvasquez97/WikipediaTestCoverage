@@ -1,0 +1,212 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ReadingListHeaderView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.readinglist</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ReadingListHeaderView (org.wikipedia.readinglist)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ReadingListHeaderView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 41)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.readinglist;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.annotation.TargetApi;
+<i>4</i>&nbsp;import android.content.Context;
+<i>5</i>&nbsp;import android.os.Build;
+<i>6</i>&nbsp;import android.support.annotation.NonNull;
+<i>7</i>&nbsp;import android.support.annotation.Nullable;
+<i>8</i>&nbsp;import android.text.TextUtils;
+<i>9</i>&nbsp;import android.util.AttributeSet;
+<i>10</i>&nbsp;import android.view.Gravity;
+<i>11</i>&nbsp;import android.view.View;
+<i>12</i>&nbsp;import android.view.ViewGroup;
+<i>13</i>&nbsp;import android.widget.FrameLayout;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import com.facebook.drawee.drawable.ScalingUtils;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;import org.wikipedia.R;
+<i>18</i>&nbsp;import org.wikipedia.readinglist.database.ReadingList;
+<i>19</i>&nbsp;import org.wikipedia.readinglist.database.ReadingListPage;
+<i>20</i>&nbsp;import org.wikipedia.util.GradientUtil;
+<i>21</i>&nbsp;import org.wikipedia.views.FaceAndColorDetectImageView;
+<i>22</i>&nbsp;import org.wikipedia.views.ViewUtil;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;import java.util.ArrayList;
+<i>25</i>&nbsp;import java.util.List;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;import butterknife.BindView;
+<i>28</i>&nbsp;import butterknife.BindViews;
+<i>29</i>&nbsp;import butterknife.ButterKnife;
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;public class ReadingListHeaderView extends FrameLayout {
+<i>32</i>&nbsp;    @BindView(R.id.reading_list_header_image_gradient) View gradientView;
+<i>33</i>&nbsp;    @BindView(R.id.reading_list_header_empty_image) View emptyView;
+<i>34</i>&nbsp;    @BindView(R.id.reading_list_header_image_container) View imageContainerView;
+<i>35</i>&nbsp;    @BindViews({R.id.reading_list_header_image_0,
+<i>36</i>&nbsp;            R.id.reading_list_header_image_1,
+<i>37</i>&nbsp;            R.id.reading_list_header_image_2,
+<i>38</i>&nbsp;            R.id.reading_list_header_image_3,
+<i>39</i>&nbsp;            R.id.reading_list_header_image_4,
+<i>40</i>&nbsp;            R.id.reading_list_header_image_5}) List&lt;FaceAndColorDetectImageView&gt; imageViews;
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    @Nullable private ReadingList readingList;
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    public ReadingListHeaderView(Context context) {
+<b class="nc"><i>45</i>&nbsp;        super(context);</b>
+<b class="nc"><i>46</i>&nbsp;        init();</b>
+<i>47</i>&nbsp;    }
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    public ReadingListHeaderView(Context context, AttributeSet attrs) {
+<b class="nc"><i>50</i>&nbsp;        super(context, attrs);</b>
+<b class="nc"><i>51</i>&nbsp;        init();</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    public ReadingListHeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
+<b class="nc"><i>55</i>&nbsp;        super(context, attrs, defStyleAttr);</b>
+<b class="nc"><i>56</i>&nbsp;        init();</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+<i>60</i>&nbsp;    public ReadingListHeaderView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+<b class="nc"><i>61</i>&nbsp;        super(context, attrs, defStyleAttr, defStyleRes);</b>
+<b class="nc"><i>62</i>&nbsp;        init();</b>
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    public void setReadingList(@NonNull ReadingList readingList) {
+<b class="nc"><i>66</i>&nbsp;        this.readingList = readingList;</b>
+<b class="nc"><i>67</i>&nbsp;        if (readingList.pages().isEmpty()) {</b>
+<b class="nc"><i>68</i>&nbsp;            imageContainerView.setVisibility(GONE);</b>
+<b class="nc"><i>69</i>&nbsp;            emptyView.setVisibility(VISIBLE);</b>
+<i>70</i>&nbsp;        } else {
+<b class="nc"><i>71</i>&nbsp;            imageContainerView.setVisibility(VISIBLE);</b>
+<b class="nc"><i>72</i>&nbsp;            emptyView.setVisibility(GONE);</b>
+<b class="nc"><i>73</i>&nbsp;            updateThumbnails();</b>
+<i>74</i>&nbsp;        }
+<i>75</i>&nbsp;    }
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    private void init() {
+<b class="nc"><i>78</i>&nbsp;        inflate(getContext(), R.layout.view_reading_list_header, this);</b>
+<b class="nc"><i>79</i>&nbsp;        ButterKnife.bind(this);</b>
+<i>80</i>&nbsp;
+<b class="nc"><i>81</i>&nbsp;        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,</b>
+<i>82</i>&nbsp;                ViewGroup.LayoutParams.MATCH_PARENT));
+<i>83</i>&nbsp;
+<b class="nc"><i>84</i>&nbsp;        gradientView.setBackground(GradientUtil.getPowerGradient(R.color.black54, Gravity.TOP));</b>
+<i>85</i>&nbsp;
+<b class="nc"><i>86</i>&nbsp;        if (isInEditMode()) {</b>
+<i>87</i>&nbsp;            return;
+<i>88</i>&nbsp;        }
+<b class="nc"><i>89</i>&nbsp;        clearThumbnails();</b>
+<i>90</i>&nbsp;    }
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;    private void clearThumbnails() {
+<b class="nc"><i>93</i>&nbsp;        for (FaceAndColorDetectImageView imageView : imageViews) {</b>
+<b class="nc"><i>94</i>&nbsp;            ViewUtil.loadImageUrlInto(imageView, null);</b>
+<b class="nc"><i>95</i>&nbsp;            imageView.getHierarchy().setFailureImage(R.drawable.ic_bookmark_gray_24dp,</b>
+<i>96</i>&nbsp;                    ScalingUtils.ScaleType.FIT_CENTER);
+<b class="nc"><i>97</i>&nbsp;        }</b>
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    private void updateThumbnails() {
+<b class="nc"><i>101</i>&nbsp;        if (readingList == null) {</b>
+<i>102</i>&nbsp;            return;
+<i>103</i>&nbsp;        }
+<b class="nc"><i>104</i>&nbsp;        clearThumbnails();</b>
+<b class="nc"><i>105</i>&nbsp;        List&lt;String&gt; thumbUrls = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>106</i>&nbsp;        for (ReadingListPage page : readingList.pages()) {</b>
+<b class="nc"><i>107</i>&nbsp;            if (!TextUtils.isEmpty(page.thumbUrl())) {</b>
+<b class="nc"><i>108</i>&nbsp;                thumbUrls.add(page.thumbUrl());</b>
+<i>109</i>&nbsp;            }
+<b class="nc"><i>110</i>&nbsp;            if (thumbUrls.size() &gt; imageViews.size()) {</b>
+<b class="nc"><i>111</i>&nbsp;                break;</b>
+<i>112</i>&nbsp;            }
+<b class="nc"><i>113</i>&nbsp;        }</b>
+<b class="nc"><i>114</i>&nbsp;        for (int i = thumbUrls.size(); i &lt; imageViews.size() &amp;&amp; i &lt; readingList.pages().size(); i++) {</b>
+<b class="nc"><i>115</i>&nbsp;            thumbUrls.add(&quot;&quot;);</b>
+<i>116</i>&nbsp;        }
+<b class="nc"><i>117</i>&nbsp;        for (int i = 0; i &lt; thumbUrls.size() &amp;&amp; i &lt; imageViews.size(); ++i) {</b>
+<b class="nc"><i>118</i>&nbsp;            loadThumbnail(imageViews.get(i), thumbUrls.get(i));</b>
+<i>119</i>&nbsp;        }
+<i>120</i>&nbsp;    }
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;    private void loadThumbnail(@NonNull FaceAndColorDetectImageView view, @Nullable String url) {
+<b class="nc"><i>123</i>&nbsp;        if (TextUtils.isEmpty(url)) {</b>
+<b class="nc"><i>124</i>&nbsp;            view.getHierarchy().setFailureImage(R.drawable.ic_image_gray_24dp,</b>
+<i>125</i>&nbsp;                    ScalingUtils.ScaleType.FIT_CENTER);
+<i>126</i>&nbsp;        }
+<b class="nc"><i>127</i>&nbsp;        ViewUtil.loadImageUrlInto(view, url);</b>
+<i>128</i>&nbsp;    }
+<i>129</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

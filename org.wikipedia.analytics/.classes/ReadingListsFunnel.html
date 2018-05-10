@@ -1,0 +1,155 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ReadingListsFunnel</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.analytics</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ReadingListsFunnel (org.wikipedia.analytics)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ReadingListsFunnel</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 20)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.analytics;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import org.json.JSONObject;
+<i>6</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>7</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>8</i>&nbsp;import org.wikipedia.readinglist.AddToReadingListDialog;
+<i>9</i>&nbsp;import org.wikipedia.readinglist.database.ReadingList;
+<i>10</i>&nbsp;import org.wikipedia.settings.Prefs;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;public class ReadingListsFunnel extends Funnel {
+<i>13</i>&nbsp;    private static final String SCHEMA_NAME = &quot;MobileWikiAppReadingLists&quot;;
+<i>14</i>&nbsp;    private static final int REV_ID = 17837080;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    public ReadingListsFunnel() {
+<b class="nc"><i>17</i>&nbsp;        super(WikipediaApp.getInstance(), SCHEMA_NAME, REV_ID);</b>
+<i>18</i>&nbsp;    }
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    public ReadingListsFunnel(WikiSite wiki) {
+<b class="nc"><i>21</i>&nbsp;        super(WikipediaApp.getInstance(), SCHEMA_NAME, REV_ID, wiki);</b>
+<i>22</i>&nbsp;    }
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    public void logAddClick(AddToReadingListDialog.InvokeSource source) {
+<b class="nc"><i>25</i>&nbsp;        log(</b>
+<i>26</i>&nbsp;                &quot;action&quot;, &quot;addclick&quot;,
+<b class="nc"><i>27</i>&nbsp;                &quot;addsource&quot;, source.code()</b>
+<i>28</i>&nbsp;        );
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    public void logAddToList(ReadingList list, int listCount,
+<i>32</i>&nbsp;                             AddToReadingListDialog.InvokeSource source) {
+<b class="nc"><i>33</i>&nbsp;        log(</b>
+<b class="nc"><i>34</i>&nbsp;                &quot;action&quot;, list.pages().isEmpty() ? &quot;addtonew&quot; : &quot;addtoexisting&quot;,</b>
+<b class="nc"><i>35</i>&nbsp;                &quot;addsource&quot;, source.code(),</b>
+<b class="nc"><i>36</i>&nbsp;                &quot;itemcount&quot;, list.pages().size(),</b>
+<b class="nc"><i>37</i>&nbsp;                &quot;listcount&quot;, listCount</b>
+<i>38</i>&nbsp;        );
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    public void logModifyList(ReadingList list, int listCount) {
+<b class="nc"><i>42</i>&nbsp;        log(</b>
+<i>43</i>&nbsp;                &quot;action&quot;, &quot;modifylist&quot;,
+<b class="nc"><i>44</i>&nbsp;                &quot;itemcount&quot;, list.pages().size(),</b>
+<b class="nc"><i>45</i>&nbsp;                &quot;listcount&quot;, listCount</b>
+<i>46</i>&nbsp;        );
+<i>47</i>&nbsp;    }
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    public void logDeleteList(ReadingList list, int listCount) {
+<b class="nc"><i>50</i>&nbsp;        log(</b>
+<i>51</i>&nbsp;                &quot;action&quot;, &quot;deletelist&quot;,
+<b class="nc"><i>52</i>&nbsp;                &quot;itemcount&quot;, list.pages().size(),</b>
+<b class="nc"><i>53</i>&nbsp;                &quot;listcount&quot;, listCount</b>
+<i>54</i>&nbsp;        );
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    public void logDeleteItem(ReadingList list, int listCount) {
+<b class="nc"><i>58</i>&nbsp;        log(</b>
+<i>59</i>&nbsp;                &quot;action&quot;, &quot;deleteitem&quot;,
+<b class="nc"><i>60</i>&nbsp;                &quot;itemcount&quot;, list.pages().size(),</b>
+<b class="nc"><i>61</i>&nbsp;                &quot;listcount&quot;, listCount</b>
+<i>62</i>&nbsp;        );
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    @Override
+<i>66</i>&nbsp;    protected JSONObject preprocessData(@NonNull JSONObject eventData) {
+<b class="nc"><i>67</i>&nbsp;        preprocessData(eventData, &quot;synced&quot;, Prefs.isReadingListSyncEnabled());</b>
+<b class="nc"><i>68</i>&nbsp;        return super.preprocessData(eventData);</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    @Override protected void preprocessSessionToken(@NonNull JSONObject eventData) { }
+<i>72</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

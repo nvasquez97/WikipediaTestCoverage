@@ -1,0 +1,197 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SaneAsyncTask</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.concurrency</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SaneAsyncTask (org.wikipedia.concurrency)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SaneAsyncTask</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 25)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SaneAsyncTask$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 28)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.concurrency;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.os.AsyncTask;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import org.wikipedia.util.log.L;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.util.concurrent.BlockingQueue;
+<i>9</i>&nbsp;import java.util.concurrent.Executor;
+<i>10</i>&nbsp;import java.util.concurrent.LinkedBlockingQueue;
+<i>11</i>&nbsp;import java.util.concurrent.ThreadFactory;
+<i>12</i>&nbsp;import java.util.concurrent.ThreadPoolExecutor;
+<i>13</i>&nbsp;import java.util.concurrent.TimeUnit;
+<i>14</i>&nbsp;import java.util.concurrent.atomic.AtomicInteger;
+<i>15</i>&nbsp;
+<b class="nc"><i>16</i>&nbsp;public abstract class SaneAsyncTask&lt;T&gt; extends AsyncTask&lt;Void, Void, T&gt; {</b>
+<i>17</i>&nbsp;    private Throwable thrown;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    // Reimplement the stock AOSP AsyncTask implementation which may differ on OEM devices.
+<b class="nc"><i>20</i>&nbsp;    private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();</b>
+<b class="nc"><i>21</i>&nbsp;    private static final int CORE_POOL_SIZE = CPU_COUNT + 1;</b>
+<b class="nc"><i>22</i>&nbsp;    private static final int MAXIMUM_POOL_SIZE = CPU_COUNT * 2 + 1;</b>
+<i>23</i>&nbsp;    private static final int QUEUE_SIZE = 128;
+<i>24</i>&nbsp;    private static final int KEEP_ALIVE = 1;
+<i>25</i>&nbsp;
+<b class="nc"><i>26</i>&nbsp;    private static final ThreadFactory THREAD_FACTORY = new ThreadFactory() {</b>
+<b class="nc"><i>27</i>&nbsp;        private final AtomicInteger count = new AtomicInteger(1);</b>
+<i>28</i>&nbsp;        @Override public Thread newThread(@NonNull Runnable runnable) {
+<b class="nc"><i>29</i>&nbsp;            return new Thread(runnable, &quot;AsyncTask #&quot; + count.getAndIncrement());</b>
+<i>30</i>&nbsp;        }
+<i>31</i>&nbsp;    };
+<i>32</i>&nbsp;
+<b class="nc"><i>33</i>&nbsp;    private static final BlockingQueue&lt;Runnable&gt; POOL_WORK_QUEUE = new LinkedBlockingQueue&lt;&gt;(QUEUE_SIZE);</b>
+<i>34</i>&nbsp;
+<b class="nc"><i>35</i>&nbsp;    private static final Executor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(CORE_POOL_SIZE,</b>
+<i>36</i>&nbsp;            MAXIMUM_POOL_SIZE, KEEP_ALIVE, TimeUnit.SECONDS, POOL_WORK_QUEUE, THREAD_FACTORY);
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    public abstract T performTask() throws Throwable;
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    public void onBeforeExecute() { }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    public void onFinish(T result) { }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    public void onCatch(Throwable caught) { }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    public void execute() {
+<b class="nc"><i>47</i>&nbsp;        super.executeOnExecutor(THREAD_POOL_EXECUTOR);</b>
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    public void cancel() {
+<b class="nc"><i>51</i>&nbsp;        cancel(true);</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    @Override
+<i>55</i>&nbsp;    protected final T doInBackground(Void... voids) {
+<i>56</i>&nbsp;        try {
+<b class="nc"><i>57</i>&nbsp;            return performTask();</b>
+<b class="nc"><i>58</i>&nbsp;        } catch (Throwable t) {</b>
+<b class="nc"><i>59</i>&nbsp;            thrown = t;</b>
+<b class="nc"><i>60</i>&nbsp;            return null;</b>
+<i>61</i>&nbsp;        }
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    @Override
+<i>65</i>&nbsp;    protected final void onPostExecute(T result) {
+<b class="nc"><i>66</i>&nbsp;        super.onPostExecute(result);</b>
+<b class="nc"><i>67</i>&nbsp;        if (isCancelled()) {</b>
+<i>68</i>&nbsp;            return;
+<i>69</i>&nbsp;        }
+<b class="nc"><i>70</i>&nbsp;        if (thrown != null) {</b>
+<b class="nc"><i>71</i>&nbsp;            L.i(thrown);</b>
+<b class="nc"><i>72</i>&nbsp;            onCatch(thrown);</b>
+<i>73</i>&nbsp;        } else {
+<i>74</i>&nbsp;            try {
+<b class="nc"><i>75</i>&nbsp;                onFinish(result);</b>
+<b class="nc"><i>76</i>&nbsp;            } catch (Exception e) {</b>
+<b class="nc"><i>77</i>&nbsp;                L.i(e);</b>
+<b class="nc"><i>78</i>&nbsp;                onCatch(e);</b>
+<b class="nc"><i>79</i>&nbsp;            }</b>
+<i>80</i>&nbsp;        }
+<i>81</i>&nbsp;    }
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;    @Override
+<i>84</i>&nbsp;    protected final void onPreExecute() {
+<b class="nc"><i>85</i>&nbsp;        super.onPreExecute();</b>
+<b class="nc"><i>86</i>&nbsp;        onBeforeExecute();</b>
+<i>87</i>&nbsp;    }
+<i>88</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

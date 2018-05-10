@@ -1,0 +1,168 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: BatchUtil</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.util</a> ]
+</div>
+
+<h1>Coverage Summary for Class: BatchUtil (org.wikipedia.util)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BatchUtil</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">BatchUtil$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">BatchUtil$Handler</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.util;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import org.wikipedia.page.PageTitle;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.util.List;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import static org.wikipedia.Constants.API_QUERY_MAX_TITLES;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;public final class BatchUtil {
+<i>12</i>&nbsp;    // Useful for API requests in which we want a number of results that exceeds the limit for at
+<i>13</i>&nbsp;    // least one of the modules being used in the query (e.g., 50 for PageImages).
+<i>14</i>&nbsp;    //
+<i>15</i>&nbsp;    // TODO: This function does not yet handle batchcomplete.  For requests using a generator
+<i>16</i>&nbsp;    // together with properties, the API result may signal to continue because there are more
+<i>17</i>&nbsp;    // properties to retrieve for the pages so far, or because there are more pages from the
+<i>18</i>&nbsp;    // generator, or both.
+<i>19</i>&nbsp;    //
+<i>20</i>&nbsp;    // https://www.mediawiki.org/wiki/API:Query#batchcomplete
+<i>21</i>&nbsp;    //
+<i>22</i>&nbsp;    // Implement continuation/batchcomplete handling if we want to batch requests for a query in
+<i>23</i>&nbsp;    // which we are using a generator.
+<i>24</i>&nbsp;    //
+<i>25</i>&nbsp;    // Bug: T162497
+<i>26</i>&nbsp;    public static &lt;T&gt; void makeBatches(@NonNull final List&lt;PageTitle&gt; titles,
+<i>27</i>&nbsp;                                       @NonNull Handler&lt;T&gt; handler,
+<i>28</i>&nbsp;                                       @NonNull final Callback&lt;T&gt; callback) {
+<b class="nc"><i>29</i>&nbsp;        for (int i = 0; i &lt; titles.size(); i += Math.min(API_QUERY_MAX_TITLES, titles.size() - i)) {</b>
+<b class="nc"><i>30</i>&nbsp;            handler.handleBatch(titles.subList(i, i + Math.min(API_QUERY_MAX_TITLES, titles.size() - i)),</b>
+<b class="nc"><i>31</i>&nbsp;                    titles.size(), new Callback&lt;T&gt;() {</b>
+<i>32</i>&nbsp;                @Override
+<i>33</i>&nbsp;                public void success(@NonNull List&lt;T&gt; results) {
+<b class="nc"><i>34</i>&nbsp;                    callback.success(results);</b>
+<i>35</i>&nbsp;                }
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;                @Override
+<i>38</i>&nbsp;                public void failure(@NonNull Throwable caught) {
+<b class="nc"><i>39</i>&nbsp;                    callback.failure(caught);</b>
+<i>40</i>&nbsp;                }
+<i>41</i>&nbsp;            });
+<i>42</i>&nbsp;        }
+<i>43</i>&nbsp;    }
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    public interface Handler&lt;T&gt; {
+<i>46</i>&nbsp;        void handleBatch(@NonNull List&lt;PageTitle&gt; batchTitles, int total, Callback&lt;T&gt; cb);
+<i>47</i>&nbsp;    }
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    public interface Callback&lt;T&gt; {
+<i>50</i>&nbsp;        void success(@NonNull List&lt;T&gt; results);
+<i>51</i>&nbsp;        void failure(@NonNull Throwable caught);
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<b class="nc"><i>54</i>&nbsp;    private BatchUtil() {</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: NoDimBottomSheetDialog</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.page</a> ]
+</div>
+
+<h1>Coverage Summary for Class: NoDimBottomSheetDialog (org.wikipedia.page)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NoDimBottomSheetDialog</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.page;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.os.Bundle;
+<i>5</i>&nbsp;import android.support.annotation.NonNull;
+<i>6</i>&nbsp;import android.support.design.widget.BottomSheetBehavior;
+<i>7</i>&nbsp;import android.support.design.widget.BottomSheetDialog;
+<i>8</i>&nbsp;import android.widget.FrameLayout;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;/**
+<i>13</i>&nbsp; * Descendant of BottomSheetDialog that prevents the background from being dimmed.
+<i>14</i>&nbsp; */
+<i>15</i>&nbsp;public class NoDimBottomSheetDialog extends BottomSheetDialog {
+<i>16</i>&nbsp;    public NoDimBottomSheetDialog(@NonNull Context context) {
+<b class="nc"><i>17</i>&nbsp;        super(context);</b>
+<i>18</i>&nbsp;    }
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    @Override
+<i>21</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>22</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>23</i>&nbsp;        getWindow().setDimAmount(0f);</b>
+<i>24</i>&nbsp;    }
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    @Override
+<i>27</i>&nbsp;    public void onStop() {
+<b class="nc"><i>28</i>&nbsp;        super.onStop();</b>
+<b class="nc"><i>29</i>&nbsp;        WikipediaApp.getInstance().getRefWatcher().watch(this);</b>
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    protected void startExpanded() {
+<i>33</i>&nbsp;        /*
+<i>34</i>&nbsp;        HACK: We&#39;d like some of our bottom sheets to be fully expanded when opened (as
+<i>35</i>&nbsp;        opposed to expanded to the peek height). In order to do this, however, we have to
+<i>36</i>&nbsp;        call setState() only *after* the dialog is created and laid out.
+<i>37</i>&nbsp;        https://code.google.com/p/android/issues/detail?id=202174
+<i>38</i>&nbsp;        TODO: remove when this is improved in the library.
+<i>39</i>&nbsp;        */
+<b class="nc"><i>40</i>&nbsp;        getWindow().getDecorView().post(() -&gt; {</b>
+<b class="nc"><i>41</i>&nbsp;            FrameLayout bottomSheet = getWindow().getDecorView().findViewById(android.support.design.R.id.design_bottom_sheet);</b>
+<b class="nc"><i>42</i>&nbsp;            BottomSheetBehavior&lt;?&gt; behavior = BottomSheetBehavior.from(bottomSheet);</b>
+<b class="nc"><i>43</i>&nbsp;            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);</b>
+<i>44</i>&nbsp;        });
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

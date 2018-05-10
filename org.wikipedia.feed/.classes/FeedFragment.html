@@ -1,0 +1,754 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: FeedFragment</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed</a> ]
+</div>
+
+<h1>Coverage Summary for Class: FeedFragment (org.wikipedia.feed)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FeedFragment</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 27)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 100)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">FeedFragment$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 14)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">FeedFragment$FeedCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 27)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 67)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">FeedFragment$FeedScrollListener</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">FeedFragment$OverflowCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 67)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 208)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.feed;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Intent;
+<i>4</i>&nbsp;import android.net.Uri;
+<i>5</i>&nbsp;import android.os.Bundle;
+<i>6</i>&nbsp;import android.support.annotation.IntRange;
+<i>7</i>&nbsp;import android.support.annotation.NonNull;
+<i>8</i>&nbsp;import android.support.annotation.Nullable;
+<i>9</i>&nbsp;import android.support.design.widget.Snackbar;
+<i>10</i>&nbsp;import android.support.v4.app.ActivityOptionsCompat;
+<i>11</i>&nbsp;import android.support.v4.app.Fragment;
+<i>12</i>&nbsp;import android.support.v4.widget.SwipeRefreshLayout;
+<i>13</i>&nbsp;import android.support.v7.widget.RecyclerView;
+<i>14</i>&nbsp;import android.view.LayoutInflater;
+<i>15</i>&nbsp;import android.view.Menu;
+<i>16</i>&nbsp;import android.view.MenuInflater;
+<i>17</i>&nbsp;import android.view.MenuItem;
+<i>18</i>&nbsp;import android.view.View;
+<i>19</i>&nbsp;import android.view.ViewGroup;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;import org.wikipedia.BackPressedHandler;
+<i>22</i>&nbsp;import org.wikipedia.BuildConfig;
+<i>23</i>&nbsp;import org.wikipedia.Constants;
+<i>24</i>&nbsp;import org.wikipedia.R;
+<i>25</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>26</i>&nbsp;import org.wikipedia.activity.FragmentUtil;
+<i>27</i>&nbsp;import org.wikipedia.analytics.FeedFunnel;
+<i>28</i>&nbsp;import org.wikipedia.feed.configure.ConfigureActivity;
+<i>29</i>&nbsp;import org.wikipedia.feed.image.FeaturedImage;
+<i>30</i>&nbsp;import org.wikipedia.feed.image.FeaturedImageCard;
+<i>31</i>&nbsp;import org.wikipedia.feed.model.Card;
+<i>32</i>&nbsp;import org.wikipedia.feed.mostread.MostReadArticlesActivity;
+<i>33</i>&nbsp;import org.wikipedia.feed.mostread.MostReadListCard;
+<i>34</i>&nbsp;import org.wikipedia.feed.news.NewsItemCard;
+<i>35</i>&nbsp;import org.wikipedia.feed.random.RandomCardView;
+<i>36</i>&nbsp;import org.wikipedia.feed.view.FeedAdapter;
+<i>37</i>&nbsp;import org.wikipedia.feed.view.FeedView;
+<i>38</i>&nbsp;import org.wikipedia.feed.view.HorizontalScrollingListCardItemView;
+<i>39</i>&nbsp;import org.wikipedia.history.HistoryEntry;
+<i>40</i>&nbsp;import org.wikipedia.offline.LocalCompilationsActivity;
+<i>41</i>&nbsp;import org.wikipedia.offline.OfflineTutorialActivity;
+<i>42</i>&nbsp;import org.wikipedia.random.RandomActivity;
+<i>43</i>&nbsp;import org.wikipedia.readinglist.ReadingListSyncBehaviorDialogs;
+<i>44</i>&nbsp;import org.wikipedia.readinglist.database.ReadingListDbHelper;
+<i>45</i>&nbsp;import org.wikipedia.readinglist.sync.ReadingListSyncAdapter;
+<i>46</i>&nbsp;import org.wikipedia.settings.Prefs;
+<i>47</i>&nbsp;import org.wikipedia.settings.SettingsActivity;
+<i>48</i>&nbsp;import org.wikipedia.util.DeviceUtil;
+<i>49</i>&nbsp;import org.wikipedia.util.FeedbackUtil;
+<i>50</i>&nbsp;import org.wikipedia.util.ResourceUtil;
+<i>51</i>&nbsp;import org.wikipedia.util.ThrowableUtil;
+<i>52</i>&nbsp;import org.wikipedia.util.UriUtil;
+<i>53</i>&nbsp;import org.wikipedia.views.ExploreOverflowView;
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;import butterknife.BindView;
+<i>56</i>&nbsp;import butterknife.ButterKnife;
+<i>57</i>&nbsp;import butterknife.OnClick;
+<i>58</i>&nbsp;import butterknife.Unbinder;
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;import static android.app.Activity.RESULT_OK;
+<i>61</i>&nbsp;import static org.wikipedia.Constants.ACTIVITY_REQUEST_FEED_CONFIGURE;
+<i>62</i>&nbsp;import static org.wikipedia.Constants.ACTIVITY_REQUEST_OFFLINE_TUTORIAL;
+<i>63</i>&nbsp;
+<b class="nc"><i>64</i>&nbsp;public class FeedFragment extends Fragment implements BackPressedHandler {</b>
+<i>65</i>&nbsp;    @BindView(R.id.feed_swipe_refresh_layout) SwipeRefreshLayout swipeRefreshLayout;
+<i>66</i>&nbsp;    @BindView(R.id.fragment_feed_feed) FeedView feedView;
+<i>67</i>&nbsp;    @BindView(R.id.fragment_feed_header) View feedHeader;
+<i>68</i>&nbsp;    @BindView(R.id.fragment_feed_empty_container) View emptyContainer;
+<i>69</i>&nbsp;    private Unbinder unbinder;
+<i>70</i>&nbsp;    private FeedAdapter&lt;?&gt; feedAdapter;
+<i>71</i>&nbsp;    private WikipediaApp app;
+<i>72</i>&nbsp;    private FeedCoordinator coordinator;
+<i>73</i>&nbsp;    private FeedFunnel funnel;
+<b class="nc"><i>74</i>&nbsp;    private final FeedAdapter.Callback feedCallback = new FeedCallback();</b>
+<b class="nc"><i>75</i>&nbsp;    private FeedScrollListener feedScrollListener = new FeedScrollListener();</b>
+<b class="nc"><i>76</i>&nbsp;    private OverflowCallback overflowCallback = new OverflowCallback();</b>
+<i>77</i>&nbsp;    private boolean searchIconVisible;
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    public interface Callback {
+<i>80</i>&nbsp;        void onFeedTabListRequested();
+<i>81</i>&nbsp;        void onFeedSearchRequested();
+<i>82</i>&nbsp;        void onFeedVoiceSearchRequested();
+<i>83</i>&nbsp;        void onFeedSelectPage(HistoryEntry entry);
+<i>84</i>&nbsp;        void onFeedSelectPageFromExistingTab(HistoryEntry entry);
+<i>85</i>&nbsp;        void onFeedAddPageToList(HistoryEntry entry);
+<i>86</i>&nbsp;        void onFeedRemovePageFromList(HistoryEntry entry);
+<i>87</i>&nbsp;        void onFeedSharePage(HistoryEntry entry);
+<i>88</i>&nbsp;        void onFeedNewsItemSelected(NewsItemCard card, HorizontalScrollingListCardItemView view);
+<i>89</i>&nbsp;        void onFeedShareImage(FeaturedImageCard card);
+<i>90</i>&nbsp;        void onFeedDownloadImage(FeaturedImage image);
+<i>91</i>&nbsp;        void onFeaturedImageSelected(FeaturedImageCard card);
+<i>92</i>&nbsp;        void onLoginRequested();
+<i>93</i>&nbsp;        @NonNull View getOverflowMenuAnchor();
+<i>94</i>&nbsp;        void updateToolbarElevation(boolean elevate);
+<i>95</i>&nbsp;    }
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;    @NonNull public static FeedFragment newInstance() {
+<b class="nc"><i>98</i>&nbsp;        FeedFragment fragment = new FeedFragment();</b>
+<b class="nc"><i>99</i>&nbsp;        fragment.setRetainInstance(true);</b>
+<b class="nc"><i>100</i>&nbsp;        return fragment;</b>
+<i>101</i>&nbsp;    }
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;    @Override
+<i>104</i>&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>105</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>106</i>&nbsp;        app = WikipediaApp.getInstance();</b>
+<b class="nc"><i>107</i>&nbsp;        coordinator = new FeedCoordinator(app);</b>
+<b class="nc"><i>108</i>&nbsp;        coordinator.more(app.getWikiSite());</b>
+<b class="nc"><i>109</i>&nbsp;        funnel = new FeedFunnel(app);</b>
+<i>110</i>&nbsp;    }
+<i>111</i>&nbsp;
+<i>112</i>&nbsp;    @Nullable @Override public View onCreateView(LayoutInflater inflater,
+<i>113</i>&nbsp;                                                 @Nullable ViewGroup container,
+<i>114</i>&nbsp;                                                 @Nullable Bundle savedInstanceState) {
+<b class="nc"><i>115</i>&nbsp;        super.onCreateView(inflater, container, savedInstanceState);</b>
+<b class="nc"><i>116</i>&nbsp;        View view = inflater.inflate(R.layout.fragment_feed, container, false);</b>
+<i>117</i>&nbsp;
+<b class="nc"><i>118</i>&nbsp;        unbinder = ButterKnife.bind(this, view);</b>
+<b class="nc"><i>119</i>&nbsp;        feedAdapter = new FeedAdapter&lt;&gt;(coordinator, feedCallback);</b>
+<b class="nc"><i>120</i>&nbsp;        feedView.setAdapter(feedAdapter);</b>
+<b class="nc"><i>121</i>&nbsp;        feedView.setCallback(feedCallback);</b>
+<b class="nc"><i>122</i>&nbsp;        feedView.addOnScrollListener(feedScrollListener);</b>
+<i>123</i>&nbsp;
+<b class="nc"><i>124</i>&nbsp;        swipeRefreshLayout.setColorSchemeResources(ResourceUtil.getThemedAttributeId(getContext(), R.attr.colorAccent));</b>
+<b class="nc"><i>125</i>&nbsp;        swipeRefreshLayout.setOnRefreshListener(this::refresh);</b>
+<i>126</i>&nbsp;
+<b class="nc"><i>127</i>&nbsp;        coordinator.setFeedUpdateListener(new FeedCoordinator.FeedUpdateListener() {</b>
+<i>128</i>&nbsp;            @Override public void insert(Card card, int pos) {
+<b class="nc"><i>129</i>&nbsp;                if (isAdded()) {</b>
+<b class="nc"><i>130</i>&nbsp;                    swipeRefreshLayout.setRefreshing(false);</b>
+<b class="nc"><i>131</i>&nbsp;                    if (feedView != null &amp;&amp; feedAdapter != null) {</b>
+<b class="nc"><i>132</i>&nbsp;                        feedAdapter.notifyItemInserted(pos);</b>
+<i>133</i>&nbsp;                    }
+<i>134</i>&nbsp;                }
+<i>135</i>&nbsp;            }
+<i>136</i>&nbsp;
+<i>137</i>&nbsp;            @Override public void remove(Card card, int pos) {
+<b class="nc"><i>138</i>&nbsp;                if (isAdded()) {</b>
+<b class="nc"><i>139</i>&nbsp;                    swipeRefreshLayout.setRefreshing(false);</b>
+<b class="nc"><i>140</i>&nbsp;                    if (feedView != null &amp;&amp; feedAdapter != null) {</b>
+<b class="nc"><i>141</i>&nbsp;                        feedAdapter.notifyItemRemoved(pos);</b>
+<i>142</i>&nbsp;                    }
+<i>143</i>&nbsp;                }
+<i>144</i>&nbsp;            }
+<i>145</i>&nbsp;
+<i>146</i>&nbsp;            @Override
+<i>147</i>&nbsp;            public void finished(boolean shouldUpdatePreviousCard) {
+<b class="nc"><i>148</i>&nbsp;                if (!isAdded()) {</b>
+<i>149</i>&nbsp;                    return;
+<i>150</i>&nbsp;                }
+<b class="nc"><i>151</i>&nbsp;                if (feedAdapter.getItemCount() &lt; 2) {</b>
+<b class="nc"><i>152</i>&nbsp;                    emptyContainer.setVisibility(View.VISIBLE);</b>
+<i>153</i>&nbsp;                } else {
+<b class="nc"><i>154</i>&nbsp;                    if (shouldUpdatePreviousCard) {</b>
+<b class="nc"><i>155</i>&nbsp;                        feedAdapter.notifyItemChanged(feedAdapter.getItemCount() - 1);</b>
+<i>156</i>&nbsp;                    }
+<i>157</i>&nbsp;                }
+<i>158</i>&nbsp;            }
+<i>159</i>&nbsp;        });
+<i>160</i>&nbsp;
+<b class="nc"><i>161</i>&nbsp;        feedHeader.setBackgroundColor(ResourceUtil.getThemedColor(getContext(), R.attr.main_toolbar_color));</b>
+<b class="nc"><i>162</i>&nbsp;        if (getCallback() != null) {</b>
+<b class="nc"><i>163</i>&nbsp;            getCallback().updateToolbarElevation(shouldElevateToolbar());</b>
+<i>164</i>&nbsp;        }
+<i>165</i>&nbsp;
+<b class="nc"><i>166</i>&nbsp;        ReadingListSyncAdapter.manualSync();</b>
+<i>167</i>&nbsp;
+<b class="nc"><i>168</i>&nbsp;        return view;</b>
+<i>169</i>&nbsp;    }
+<i>170</i>&nbsp;
+<i>171</i>&nbsp;    public boolean shouldElevateToolbar() {
+<b class="nc"><i>172</i>&nbsp;        return searchIconVisible;</b>
+<i>173</i>&nbsp;    }
+<i>174</i>&nbsp;
+<i>175</i>&nbsp;    @Override
+<i>176</i>&nbsp;    public void onActivityCreated(Bundle savedInstanceState) {
+<b class="nc"><i>177</i>&nbsp;        super.onActivityCreated(savedInstanceState);</b>
+<b class="nc"><i>178</i>&nbsp;        setHasOptionsMenu(true);</b>
+<i>179</i>&nbsp;    }
+<i>180</i>&nbsp;
+<i>181</i>&nbsp;    @Override
+<i>182</i>&nbsp;    public void onResume() {
+<b class="nc"><i>183</i>&nbsp;        super.onResume();</b>
+<b class="nc"><i>184</i>&nbsp;        funnel.enter();</b>
+<i>185</i>&nbsp;
+<i>186</i>&nbsp;    }
+<i>187</i>&nbsp;
+<i>188</i>&nbsp;    @Override
+<i>189</i>&nbsp;    public void onPause() {
+<b class="nc"><i>190</i>&nbsp;        super.onPause();</b>
+<b class="nc"><i>191</i>&nbsp;        funnel.exit();</b>
+<i>192</i>&nbsp;    }
+<i>193</i>&nbsp;
+<i>194</i>&nbsp;    @Override
+<i>195</i>&nbsp;    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+<b class="nc"><i>196</i>&nbsp;        super.onActivityResult(requestCode, resultCode, data);</b>
+<b class="nc"><i>197</i>&nbsp;        if (requestCode == ACTIVITY_REQUEST_OFFLINE_TUTORIAL &amp;&amp; resultCode == RESULT_OK) {</b>
+<b class="nc"><i>198</i>&nbsp;            Prefs.setOfflineTutorialCardEnabled(false);</b>
+<b class="nc"><i>199</i>&nbsp;            Prefs.setOfflineTutorialEnabled(false);</b>
+<b class="nc"><i>200</i>&nbsp;            refresh();</b>
+<b class="nc"><i>201</i>&nbsp;            feedCallback.onViewCompilations();</b>
+<b class="nc"><i>202</i>&nbsp;        } else if (requestCode == ACTIVITY_REQUEST_FEED_CONFIGURE</b>
+<i>203</i>&nbsp;                &amp;&amp; resultCode == ConfigureActivity.CONFIGURATION_CHANGED_RESULT) {
+<b class="nc"><i>204</i>&nbsp;            coordinator.updateHiddenCards();</b>
+<b class="nc"><i>205</i>&nbsp;            refresh();</b>
+<i>206</i>&nbsp;        }
+<i>207</i>&nbsp;    }
+<i>208</i>&nbsp;
+<i>209</i>&nbsp;    @Override
+<i>210</i>&nbsp;    public void setUserVisibleHint(boolean visible) {
+<b class="nc"><i>211</i>&nbsp;        super.setUserVisibleHint(visible);</b>
+<b class="nc"><i>212</i>&nbsp;        if (!isAdded()) {</b>
+<i>213</i>&nbsp;            return;
+<i>214</i>&nbsp;        }
+<b class="nc"><i>215</i>&nbsp;        if (visible) {</b>
+<b class="nc"><i>216</i>&nbsp;            funnel.enter();</b>
+<i>217</i>&nbsp;        } else {
+<b class="nc"><i>218</i>&nbsp;            funnel.exit();</b>
+<i>219</i>&nbsp;        }
+<i>220</i>&nbsp;    }
+<i>221</i>&nbsp;
+<i>222</i>&nbsp;    @Override
+<i>223</i>&nbsp;    public void onDestroyView() {
+<b class="nc"><i>224</i>&nbsp;        coordinator.setFeedUpdateListener(null);</b>
+<b class="nc"><i>225</i>&nbsp;        swipeRefreshLayout.setOnRefreshListener(null);</b>
+<b class="nc"><i>226</i>&nbsp;        feedView.removeOnScrollListener(feedScrollListener);</b>
+<b class="nc"><i>227</i>&nbsp;        feedView.setCallback((FeedAdapter.Callback) null);</b>
+<b class="nc"><i>228</i>&nbsp;        feedView.setAdapter(null);</b>
+<b class="nc"><i>229</i>&nbsp;        feedAdapter = null;</b>
+<b class="nc"><i>230</i>&nbsp;        unbinder.unbind();</b>
+<b class="nc"><i>231</i>&nbsp;        unbinder = null;</b>
+<b class="nc"><i>232</i>&nbsp;        super.onDestroyView();</b>
+<i>233</i>&nbsp;    }
+<i>234</i>&nbsp;
+<i>235</i>&nbsp;    @Override
+<i>236</i>&nbsp;    public void onDestroy() {
+<b class="nc"><i>237</i>&nbsp;        super.onDestroy();</b>
+<b class="nc"><i>238</i>&nbsp;        app.getRefWatcher().watch(this);</b>
+<i>239</i>&nbsp;    }
+<i>240</i>&nbsp;
+<i>241</i>&nbsp;    @Override
+<i>242</i>&nbsp;    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+<b class="nc"><i>243</i>&nbsp;        super.onCreateOptionsMenu(menu, inflater);</b>
+<b class="nc"><i>244</i>&nbsp;        inflater.inflate(R.menu.menu_feed, menu);</b>
+<i>245</i>&nbsp;    }
+<i>246</i>&nbsp;
+<i>247</i>&nbsp;    @Override
+<i>248</i>&nbsp;    public void onPrepareOptionsMenu(Menu menu) {
+<b class="nc"><i>249</i>&nbsp;        MenuItem searchItem = menu.findItem(R.id.menu_feed_search);</b>
+<b class="nc"><i>250</i>&nbsp;        MenuItem tabsItem = menu.findItem(R.id.menu_feed_tabs);</b>
+<b class="nc"><i>251</i>&nbsp;        if (searchItem != null) {</b>
+<b class="nc"><i>252</i>&nbsp;            searchItem.setVisible(searchIconVisible);</b>
+<i>253</i>&nbsp;        }
+<b class="nc"><i>254</i>&nbsp;        if (tabsItem != null) {</b>
+<b class="nc"><i>255</i>&nbsp;            int tabCount = Prefs.getTabCount();</b>
+<b class="nc"><i>256</i>&nbsp;            tabsItem.setIcon(ResourceUtil.getTabListIcon(tabCount));</b>
+<b class="nc"><i>257</i>&nbsp;            tabsItem.setVisible(tabCount &gt; 0);</b>
+<i>258</i>&nbsp;        }
+<i>259</i>&nbsp;    }
+<i>260</i>&nbsp;
+<i>261</i>&nbsp;    @Override
+<i>262</i>&nbsp;    public boolean onOptionsItemSelected(MenuItem item) {
+<b class="nc"><i>263</i>&nbsp;        switch (item.getItemId()) {</b>
+<i>264</i>&nbsp;            case R.id.menu_feed_search:
+<b class="nc"><i>265</i>&nbsp;                if (getCallback() != null) {</b>
+<b class="nc"><i>266</i>&nbsp;                    getCallback().onFeedSearchRequested();</b>
+<i>267</i>&nbsp;                }
+<b class="nc"><i>268</i>&nbsp;                return true;</b>
+<i>269</i>&nbsp;            case R.id.menu_feed_tabs:
+<b class="nc"><i>270</i>&nbsp;                if (getCallback() != null) {</b>
+<b class="nc"><i>271</i>&nbsp;                    getCallback().onFeedTabListRequested();</b>
+<i>272</i>&nbsp;                }
+<b class="nc"><i>273</i>&nbsp;                return true;</b>
+<i>274</i>&nbsp;            case R.id.menu_overflow_button:
+<b class="nc"><i>275</i>&nbsp;                Callback callback = getCallback();</b>
+<b class="nc"><i>276</i>&nbsp;                if (callback == null) {</b>
+<b class="nc"><i>277</i>&nbsp;                    return false;</b>
+<i>278</i>&nbsp;                }
+<b class="nc"><i>279</i>&nbsp;                showOverflowMenu(callback.getOverflowMenuAnchor());</b>
+<b class="nc"><i>280</i>&nbsp;                return true;</b>
+<i>281</i>&nbsp;            default:
+<b class="nc"><i>282</i>&nbsp;                return super.onOptionsItemSelected(item);</b>
+<i>283</i>&nbsp;        }
+<i>284</i>&nbsp;    }
+<i>285</i>&nbsp;
+<i>286</i>&nbsp;    @Override
+<i>287</i>&nbsp;    public boolean onBackPressed() {
+<b class="nc"><i>288</i>&nbsp;        return false;</b>
+<i>289</i>&nbsp;    }
+<i>290</i>&nbsp;
+<i>291</i>&nbsp;    @OnClick(R.id.fragment_feed_customize_button) void onCustomizeClick() {
+<b class="nc"><i>292</i>&nbsp;        showConfigureActivity(-1);</b>
+<i>293</i>&nbsp;    }
+<i>294</i>&nbsp;
+<i>295</i>&nbsp;    public void scrollToTop() {
+<b class="nc"><i>296</i>&nbsp;        feedView.smoothScrollToPosition(0);</b>
+<i>297</i>&nbsp;    }
+<i>298</i>&nbsp;
+<i>299</i>&nbsp;    public void onGoOffline() {
+<b class="nc"><i>300</i>&nbsp;        refresh();</b>
+<i>301</i>&nbsp;    }
+<i>302</i>&nbsp;
+<i>303</i>&nbsp;    public void onGoOnline() {
+<b class="nc"><i>304</i>&nbsp;        refresh();</b>
+<i>305</i>&nbsp;    }
+<i>306</i>&nbsp;
+<i>307</i>&nbsp;    private void refresh() {
+<b class="nc"><i>308</i>&nbsp;        funnel.refresh(coordinator.getAge());</b>
+<b class="nc"><i>309</i>&nbsp;        emptyContainer.setVisibility(View.GONE);</b>
+<b class="nc"><i>310</i>&nbsp;        coordinator.reset();</b>
+<b class="nc"><i>311</i>&nbsp;        feedAdapter.notifyDataSetChanged();</b>
+<b class="nc"><i>312</i>&nbsp;        coordinator.more(app.getWikiSite());</b>
+<i>313</i>&nbsp;    }
+<i>314</i>&nbsp;
+<i>315</i>&nbsp;    @Nullable private Callback getCallback() {
+<b class="nc"><i>316</i>&nbsp;        return FragmentUtil.getCallback(this, Callback.class);</b>
+<i>317</i>&nbsp;    }
+<i>318</i>&nbsp;
+<b class="nc"><i>319</i>&nbsp;    private class FeedCallback implements FeedAdapter.Callback {</b>
+<i>320</i>&nbsp;        @Override
+<i>321</i>&nbsp;        public void onShowCard(@Nullable Card card) {
+<b class="nc"><i>322</i>&nbsp;            if (card != null) {</b>
+<b class="nc"><i>323</i>&nbsp;                funnel.cardShown(card.type());</b>
+<i>324</i>&nbsp;            }
+<i>325</i>&nbsp;        }
+<i>326</i>&nbsp;
+<i>327</i>&nbsp;        @Override
+<i>328</i>&nbsp;        public void onRequestMore() {
+<b class="nc"><i>329</i>&nbsp;            funnel.requestMore(coordinator.getAge());</b>
+<b class="nc"><i>330</i>&nbsp;            feedView.post(() -&gt; {</b>
+<b class="nc"><i>331</i>&nbsp;                if (isAdded()) {</b>
+<b class="nc"><i>332</i>&nbsp;                    coordinator.incrementAge();</b>
+<b class="nc"><i>333</i>&nbsp;                    coordinator.more(app.getWikiSite());</b>
+<i>334</i>&nbsp;                }
+<i>335</i>&nbsp;            });
+<i>336</i>&nbsp;        }
+<i>337</i>&nbsp;
+<i>338</i>&nbsp;        @Override
+<i>339</i>&nbsp;        public void onRetryFromOffline() {
+<b class="nc"><i>340</i>&nbsp;            refresh();</b>
+<i>341</i>&nbsp;        }
+<i>342</i>&nbsp;
+<i>343</i>&nbsp;        @Override
+<i>344</i>&nbsp;        public void onError(@NonNull Throwable t) {
+<b class="nc"><i>345</i>&nbsp;            FeedbackUtil.showError(getActivity(), t);</b>
+<i>346</i>&nbsp;        }
+<i>347</i>&nbsp;
+<i>348</i>&nbsp;        @Override
+<i>349</i>&nbsp;        public void onSelectPage(@NonNull Card card, @NonNull HistoryEntry entry) {
+<b class="nc"><i>350</i>&nbsp;            if (getCallback() != null) {</b>
+<b class="nc"><i>351</i>&nbsp;                getCallback().onFeedSelectPage(entry);</b>
+<b class="nc"><i>352</i>&nbsp;                funnel.cardClicked(card.type());</b>
+<i>353</i>&nbsp;            }
+<i>354</i>&nbsp;        }
+<i>355</i>&nbsp;
+<i>356</i>&nbsp;        @Override
+<i>357</i>&nbsp;        public void onSelectPageFromExistingTab(@NonNull Card card, @NonNull HistoryEntry entry) {
+<b class="nc"><i>358</i>&nbsp;            if (getCallback() != null) {</b>
+<b class="nc"><i>359</i>&nbsp;                getCallback().onFeedSelectPageFromExistingTab(entry);</b>
+<b class="nc"><i>360</i>&nbsp;                funnel.cardClicked(card.type());</b>
+<i>361</i>&nbsp;            }
+<i>362</i>&nbsp;        }
+<i>363</i>&nbsp;
+<i>364</i>&nbsp;        @Override
+<i>365</i>&nbsp;        public void onAddPageToList(@NonNull HistoryEntry entry) {
+<b class="nc"><i>366</i>&nbsp;            if (getCallback() != null) {</b>
+<b class="nc"><i>367</i>&nbsp;                getCallback().onFeedAddPageToList(entry);</b>
+<i>368</i>&nbsp;            }
+<i>369</i>&nbsp;        }
+<i>370</i>&nbsp;
+<i>371</i>&nbsp;        @Override
+<i>372</i>&nbsp;        public void onRemovePageFromList(@NonNull HistoryEntry entry) {
+<b class="nc"><i>373</i>&nbsp;            if (getCallback() != null) {</b>
+<b class="nc"><i>374</i>&nbsp;                getCallback().onFeedRemovePageFromList(entry);</b>
+<i>375</i>&nbsp;            }
+<i>376</i>&nbsp;        }
+<i>377</i>&nbsp;
+<i>378</i>&nbsp;        @Override
+<i>379</i>&nbsp;        public void onSharePage(@NonNull HistoryEntry entry) {
+<b class="nc"><i>380</i>&nbsp;            if (getCallback() != null) {</b>
+<b class="nc"><i>381</i>&nbsp;                getCallback().onFeedSharePage(entry);</b>
+<i>382</i>&nbsp;            }
+<i>383</i>&nbsp;        }
+<i>384</i>&nbsp;
+<i>385</i>&nbsp;        @Override
+<i>386</i>&nbsp;        public void onSearchRequested() {
+<b class="nc"><i>387</i>&nbsp;            if (getCallback() != null) {</b>
+<b class="nc"><i>388</i>&nbsp;                getCallback().onFeedSearchRequested();</b>
+<i>389</i>&nbsp;            }
+<i>390</i>&nbsp;        }
+<i>391</i>&nbsp;
+<i>392</i>&nbsp;        @Override
+<i>393</i>&nbsp;        public void onVoiceSearchRequested() {
+<b class="nc"><i>394</i>&nbsp;            if (getCallback() != null) {</b>
+<b class="nc"><i>395</i>&nbsp;                getCallback().onFeedVoiceSearchRequested();</b>
+<i>396</i>&nbsp;            }
+<i>397</i>&nbsp;        }
+<i>398</i>&nbsp;
+<i>399</i>&nbsp;        @Override
+<i>400</i>&nbsp;        public boolean onRequestDismissCard(@NonNull Card card) {
+<b class="nc"><i>401</i>&nbsp;            int position = coordinator.dismissCard(card);</b>
+<b class="nc"><i>402</i>&nbsp;            funnel.dismissCard(card.type(), position);</b>
+<b class="nc"><i>403</i>&nbsp;            showDismissCardUndoSnackbar(card, position);</b>
+<b class="nc"><i>404</i>&nbsp;            return true;</b>
+<i>405</i>&nbsp;        }
+<i>406</i>&nbsp;
+<i>407</i>&nbsp;        @Override
+<i>408</i>&nbsp;        public void onRequestCustomize(@NonNull Card card) {
+<b class="nc"><i>409</i>&nbsp;            showConfigureActivity(card.type().code());</b>
+<i>410</i>&nbsp;        }
+<i>411</i>&nbsp;
+<i>412</i>&nbsp;        @Override
+<i>413</i>&nbsp;        public void onSwiped(@IntRange(from = 0) int itemPos) {
+<b class="nc"><i>414</i>&nbsp;            onRequestDismissCard(coordinator.getCards().get(itemPos));</b>
+<i>415</i>&nbsp;        }
+<i>416</i>&nbsp;
+<i>417</i>&nbsp;        @Override
+<i>418</i>&nbsp;        public void onNewsItemSelected(@NonNull NewsItemCard card, @NonNull HorizontalScrollingListCardItemView view) {
+<b class="nc"><i>419</i>&nbsp;            if (getCallback() != null) {</b>
+<b class="nc"><i>420</i>&nbsp;                funnel.cardClicked(card.type());</b>
+<b class="nc"><i>421</i>&nbsp;                getCallback().onFeedNewsItemSelected(card, view);</b>
+<i>422</i>&nbsp;            }
+<i>423</i>&nbsp;        }
+<i>424</i>&nbsp;
+<i>425</i>&nbsp;        @Override
+<i>426</i>&nbsp;        public void onShareImage(@NonNull FeaturedImageCard card) {
+<b class="nc"><i>427</i>&nbsp;            if (getCallback() != null) {</b>
+<b class="nc"><i>428</i>&nbsp;                getCallback().onFeedShareImage(card);</b>
+<i>429</i>&nbsp;            }
+<i>430</i>&nbsp;        }
+<i>431</i>&nbsp;
+<i>432</i>&nbsp;        @Override
+<i>433</i>&nbsp;        public void onDownloadImage(@NonNull FeaturedImage image) {
+<b class="nc"><i>434</i>&nbsp;            if (getCallback() != null) {</b>
+<b class="nc"><i>435</i>&nbsp;                getCallback().onFeedDownloadImage(image);</b>
+<i>436</i>&nbsp;            }
+<i>437</i>&nbsp;        }
+<i>438</i>&nbsp;
+<i>439</i>&nbsp;        @Override
+<i>440</i>&nbsp;        public void onFeaturedImageSelected(@NonNull FeaturedImageCard card) {
+<b class="nc"><i>441</i>&nbsp;            if (getCallback() != null) {</b>
+<b class="nc"><i>442</i>&nbsp;                funnel.cardClicked(card.type());</b>
+<b class="nc"><i>443</i>&nbsp;                getCallback().onFeaturedImageSelected(card);</b>
+<i>444</i>&nbsp;            }
+<i>445</i>&nbsp;        }
+<i>446</i>&nbsp;
+<i>447</i>&nbsp;        @Override
+<i>448</i>&nbsp;        public void onAnnouncementPositiveAction(@NonNull Card card, @NonNull Uri uri) {
+<b class="nc"><i>449</i>&nbsp;            funnel.cardClicked(card.type());</b>
+<b class="nc"><i>450</i>&nbsp;            if (uri.toString().equals(UriUtil.LOCAL_URL_OFFLINE_LIBRARY)) {</b>
+<b class="nc"><i>451</i>&nbsp;                onViewCompilations();</b>
+<b class="nc"><i>452</i>&nbsp;            } else if (uri.toString().equals(UriUtil.LOCAL_URL_LOGIN)) {</b>
+<b class="nc"><i>453</i>&nbsp;                if (getCallback() != null) {</b>
+<b class="nc"><i>454</i>&nbsp;                    getCallback().onLoginRequested();</b>
+<i>455</i>&nbsp;                }
+<b class="nc"><i>456</i>&nbsp;            } else if (uri.toString().equals(UriUtil.LOCAL_URL_SETTINGS)) {</b>
+<b class="nc"><i>457</i>&nbsp;                startActivityForResult(SettingsActivity.newIntent(getContext()),</b>
+<i>458</i>&nbsp;                        SettingsActivity.ACTIVITY_REQUEST_SHOW_SETTINGS);
+<b class="nc"><i>459</i>&nbsp;            } else if (uri.toString().equals(UriUtil.LOCAL_URL_CUSTOMIZE_FEED)) {</b>
+<b class="nc"><i>460</i>&nbsp;                showConfigureActivity(card.type().code());</b>
+<i>461</i>&nbsp;            } else {
+<b class="nc"><i>462</i>&nbsp;                UriUtil.handleExternalLink(getContext(), uri);</b>
+<i>463</i>&nbsp;            }
+<i>464</i>&nbsp;        }
+<i>465</i>&nbsp;
+<i>466</i>&nbsp;        @Override
+<i>467</i>&nbsp;        public void onAnnouncementNegativeAction(@NonNull Card card) {
+<b class="nc"><i>468</i>&nbsp;            onRequestDismissCard(card);</b>
+<i>469</i>&nbsp;        }
+<i>470</i>&nbsp;
+<i>471</i>&nbsp;        @Override
+<i>472</i>&nbsp;        public void onRandomClick(@NonNull RandomCardView view) {
+<b class="nc"><i>473</i>&nbsp;            if (!DeviceUtil.isOnline()) {</b>
+<b class="nc"><i>474</i>&nbsp;                view.getRandomPage();</b>
+<i>475</i>&nbsp;            } else {
+<b class="nc"><i>476</i>&nbsp;                ActivityOptionsCompat options = ActivityOptionsCompat.</b>
+<b class="nc"><i>477</i>&nbsp;                        makeSceneTransitionAnimation(getActivity(), view, getString(R.string.transition_random_activity));</b>
+<b class="nc"><i>478</i>&nbsp;                startActivity(RandomActivity.newIntent(getActivity(), RandomActivity.INVOKE_SOURCE_FEED), options.toBundle());</b>
+<i>479</i>&nbsp;            }
+<i>480</i>&nbsp;        }
+<i>481</i>&nbsp;
+<i>482</i>&nbsp;        @Override
+<i>483</i>&nbsp;        public void onGetRandomError(@NonNull Throwable t, @NonNull final RandomCardView view) {
+<b class="nc"><i>484</i>&nbsp;            Snackbar snackbar = FeedbackUtil.makeSnackbar(getActivity(), ThrowableUtil.isOffline(t)</b>
+<b class="nc"><i>485</i>&nbsp;                    ? getString(R.string.view_wiki_error_message_offline) : t.getMessage(),</b>
+<i>486</i>&nbsp;                    FeedbackUtil.LENGTH_DEFAULT);
+<b class="nc"><i>487</i>&nbsp;            snackbar.setAction(R.string.page_error_retry, (v) -&gt; view.getRandomPage());</b>
+<b class="nc"><i>488</i>&nbsp;            snackbar.show();</b>
+<i>489</i>&nbsp;        }
+<i>490</i>&nbsp;
+<i>491</i>&nbsp;        public void onViewCompilations() {
+<b class="nc"><i>492</i>&nbsp;            if (Prefs.isOfflineTutorialEnabled()) {</b>
+<b class="nc"><i>493</i>&nbsp;                startActivityForResult(OfflineTutorialActivity.newIntent(getContext()),</b>
+<i>494</i>&nbsp;                        ACTIVITY_REQUEST_OFFLINE_TUTORIAL);
+<i>495</i>&nbsp;            } else {
+<b class="nc"><i>496</i>&nbsp;                startActivity(LocalCompilationsActivity.newIntent(getContext()));</b>
+<i>497</i>&nbsp;            }
+<i>498</i>&nbsp;        }
+<i>499</i>&nbsp;
+<i>500</i>&nbsp;        @Override
+<i>501</i>&nbsp;        public void onMoreContentSelected(@NonNull Card card) {
+<b class="nc"><i>502</i>&nbsp;            startActivity(MostReadArticlesActivity.newIntent(getContext(), (MostReadListCard) card));</b>
+<i>503</i>&nbsp;        }
+<i>504</i>&nbsp;    }
+<i>505</i>&nbsp;
+<b class="nc"><i>506</i>&nbsp;    private class FeedScrollListener extends RecyclerView.OnScrollListener {</b>
+<i>507</i>&nbsp;        @Override
+<i>508</i>&nbsp;        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+<b class="nc"><i>509</i>&nbsp;            super.onScrolled(recyclerView, dx, dy);</b>
+<b class="nc"><i>510</i>&nbsp;            int yOffset = feedView.computeVerticalScrollOffset() * 2;</b>
+<b class="nc"><i>511</i>&nbsp;            if (yOffset &lt;= feedHeader.getHeight()</b>
+<b class="nc"><i>512</i>&nbsp;                    || feedHeader.getTranslationY() &gt; -feedHeader.getHeight()) {</b>
+<b class="nc"><i>513</i>&nbsp;                feedHeader.setTranslationY(-yOffset);</b>
+<i>514</i>&nbsp;            }
+<b class="nc"><i>515</i>&nbsp;            boolean shouldShowSearchIcon = feedView.getFirstVisibleItemPosition() != 0;</b>
+<b class="nc"><i>516</i>&nbsp;            if (shouldShowSearchIcon != searchIconVisible) {</b>
+<b class="nc"><i>517</i>&nbsp;                searchIconVisible = shouldShowSearchIcon;</b>
+<b class="nc"><i>518</i>&nbsp;                getActivity().invalidateOptionsMenu();</b>
+<b class="nc"><i>519</i>&nbsp;                if (getCallback() != null) {</b>
+<b class="nc"><i>520</i>&nbsp;                    getCallback().updateToolbarElevation(shouldElevateToolbar());</b>
+<i>521</i>&nbsp;                }
+<i>522</i>&nbsp;            }
+<i>523</i>&nbsp;        }
+<i>524</i>&nbsp;    }
+<i>525</i>&nbsp;
+<i>526</i>&nbsp;    private void showDismissCardUndoSnackbar(final Card card, final int position) {
+<b class="nc"><i>527</i>&nbsp;        Snackbar snackbar = FeedbackUtil.makeSnackbar(getActivity(),</b>
+<b class="nc"><i>528</i>&nbsp;                getString(R.string.menu_feed_card_dismissed),</b>
+<i>529</i>&nbsp;                FeedbackUtil.LENGTH_DEFAULT);
+<b class="nc"><i>530</i>&nbsp;        snackbar.setAction(R.string.feed_undo_dismiss_card, (v) -&gt; coordinator.undoDismissCard(card, position));</b>
+<b class="nc"><i>531</i>&nbsp;        snackbar.show();</b>
+<i>532</i>&nbsp;    }
+<i>533</i>&nbsp;
+<i>534</i>&nbsp;    private void showConfigureActivity(int invokeSource) {
+<b class="nc"><i>535</i>&nbsp;        startActivityForResult(ConfigureActivity.newIntent(getActivity(), invokeSource),</b>
+<i>536</i>&nbsp;                Constants.ACTIVITY_REQUEST_FEED_CONFIGURE);
+<i>537</i>&nbsp;    }
+<i>538</i>&nbsp;
+<i>539</i>&nbsp;    private void showOverflowMenu(@NonNull View anchor) {
+<b class="nc"><i>540</i>&nbsp;        ExploreOverflowView overflowView = new ExploreOverflowView(getContext());</b>
+<b class="nc"><i>541</i>&nbsp;        overflowView.show(anchor, overflowCallback);</b>
+<i>542</i>&nbsp;    }
+<i>543</i>&nbsp;
+<b class="nc"><i>544</i>&nbsp;    private class OverflowCallback implements ExploreOverflowView.Callback {</b>
+<i>545</i>&nbsp;        @Override
+<i>546</i>&nbsp;        public void loginClick() {
+<b class="nc"><i>547</i>&nbsp;            if (getCallback() != null) {</b>
+<b class="nc"><i>548</i>&nbsp;                getCallback().onLoginRequested();</b>
+<i>549</i>&nbsp;            }
+<i>550</i>&nbsp;        }
+<i>551</i>&nbsp;
+<i>552</i>&nbsp;        @Override
+<i>553</i>&nbsp;        public void settingsClick() {
+<b class="nc"><i>554</i>&nbsp;            startActivityForResult(SettingsActivity.newIntent(getContext()),</b>
+<i>555</i>&nbsp;                    SettingsActivity.ACTIVITY_REQUEST_SHOW_SETTINGS);
+<i>556</i>&nbsp;        }
+<i>557</i>&nbsp;
+<i>558</i>&nbsp;        @Override
+<i>559</i>&nbsp;        public void donateClick() {
+<b class="nc"><i>560</i>&nbsp;            UriUtil.visitInExternalBrowser(getContext(),</b>
+<b class="nc"><i>561</i>&nbsp;                    Uri.parse(String.format(getString(R.string.donate_url),</b>
+<i>562</i>&nbsp;                            BuildConfig.VERSION_NAME,
+<b class="nc"><i>563</i>&nbsp;                            WikipediaApp.getInstance().getSystemLanguageCode())));</b>
+<i>564</i>&nbsp;        }
+<i>565</i>&nbsp;
+<i>566</i>&nbsp;        @Override
+<i>567</i>&nbsp;        public void configureCardsClick() {
+<b class="nc"><i>568</i>&nbsp;            showConfigureActivity(-1);</b>
+<i>569</i>&nbsp;        }
+<i>570</i>&nbsp;
+<i>571</i>&nbsp;        @Override
+<i>572</i>&nbsp;        public void logoutClick() {
+<b class="nc"><i>573</i>&nbsp;            WikipediaApp.getInstance().logOut();</b>
+<b class="nc"><i>574</i>&nbsp;            FeedbackUtil.showMessage(FeedFragment.this, R.string.toast_logout_complete);</b>
+<i>575</i>&nbsp;
+<b class="nc"><i>576</i>&nbsp;            if (Prefs.isReadingListSyncEnabled() &amp;&amp; !ReadingListDbHelper.instance().isEmpty()) {</b>
+<b class="nc"><i>577</i>&nbsp;                ReadingListSyncBehaviorDialogs.removeExistingListsOnLogoutDialog(getActivity());</b>
+<i>578</i>&nbsp;            }
+<b class="nc"><i>579</i>&nbsp;            Prefs.setReadingListsLastSyncTime(null);</b>
+<b class="nc"><i>580</i>&nbsp;            Prefs.setReadingListSyncEnabled(false);</b>
+<i>581</i>&nbsp;        }
+<i>582</i>&nbsp;
+<i>583</i>&nbsp;        @Override
+<i>584</i>&nbsp;        public void compilationsClick() {
+<b class="nc"><i>585</i>&nbsp;            feedCallback.onViewCompilations();</b>
+<i>586</i>&nbsp;        }
+<i>587</i>&nbsp;    }
+<i>588</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

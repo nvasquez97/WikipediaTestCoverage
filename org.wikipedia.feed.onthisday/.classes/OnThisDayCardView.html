@@ -1,0 +1,323 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: OnThisDayCardView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.onthisday</a> ]
+</div>
+
+<h1>Coverage Summary for Class: OnThisDayCardView (org.wikipedia.feed.onthisday)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">OnThisDayCardView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 47)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">OnThisDayCardView$ItemCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">OnThisDayCardView$RecyclerAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 19)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 65)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.feed.onthisday;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.app.Activity;
+<i>4</i>&nbsp;import android.content.Context;
+<i>5</i>&nbsp;import android.support.annotation.NonNull;
+<i>6</i>&nbsp;import android.support.annotation.Nullable;
+<i>7</i>&nbsp;import android.support.v4.app.ActivityOptionsCompat;
+<i>8</i>&nbsp;import android.support.v4.graphics.drawable.DrawableCompat;
+<i>9</i>&nbsp;import android.support.v7.app.AppCompatActivity;
+<i>10</i>&nbsp;import android.support.v7.widget.CardView;
+<i>11</i>&nbsp;import android.support.v7.widget.LinearLayoutManager;
+<i>12</i>&nbsp;import android.support.v7.widget.RecyclerView;
+<i>13</i>&nbsp;import android.view.Gravity;
+<i>14</i>&nbsp;import android.view.LayoutInflater;
+<i>15</i>&nbsp;import android.view.View;
+<i>16</i>&nbsp;import android.view.ViewGroup;
+<i>17</i>&nbsp;import android.widget.ImageView;
+<i>18</i>&nbsp;import android.widget.LinearLayout;
+<i>19</i>&nbsp;import android.widget.TextView;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;import org.wikipedia.R;
+<i>22</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>23</i>&nbsp;import org.wikipedia.dataclient.restbase.page.RbPageSummary;
+<i>24</i>&nbsp;import org.wikipedia.feed.view.CardHeaderView;
+<i>25</i>&nbsp;import org.wikipedia.feed.view.DefaultFeedCardView;
+<i>26</i>&nbsp;import org.wikipedia.feed.view.FeedAdapter;
+<i>27</i>&nbsp;import org.wikipedia.history.HistoryEntry;
+<i>28</i>&nbsp;import org.wikipedia.page.ExclusiveBottomSheetPresenter;
+<i>29</i>&nbsp;import org.wikipedia.readinglist.AddToReadingListDialog;
+<i>30</i>&nbsp;import org.wikipedia.util.DateUtil;
+<i>31</i>&nbsp;import org.wikipedia.util.GradientUtil;
+<i>32</i>&nbsp;import org.wikipedia.util.ResourceUtil;
+<i>33</i>&nbsp;import org.wikipedia.util.ShareUtil;
+<i>34</i>&nbsp;import org.wikipedia.views.DontInterceptTouchListener;
+<i>35</i>&nbsp;import org.wikipedia.views.ItemTouchHelperSwipeAdapter;
+<i>36</i>&nbsp;import org.wikipedia.views.MarginItemDecoration;
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;import java.util.List;
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;import butterknife.BindView;
+<i>41</i>&nbsp;import butterknife.ButterKnife;
+<i>42</i>&nbsp;import butterknife.OnClick;
+<i>43</i>&nbsp;
+<b class="nc"><i>44</i>&nbsp;public class OnThisDayCardView extends DefaultFeedCardView&lt;OnThisDayCard&gt; implements ItemTouchHelperSwipeAdapter.SwipeableView, OnThisDayActionsDialog.Callback {</b>
+<i>45</i>&nbsp;    @BindView(R.id.view_on_this_day_card_header) CardHeaderView headerView;
+<i>46</i>&nbsp;    @BindView(R.id.text) TextView descTextView;
+<i>47</i>&nbsp;    @BindView(R.id.next_event_years) TextView nextEventYearsTextView;
+<i>48</i>&nbsp;    @BindView(R.id.day) TextView dayTextView;
+<i>49</i>&nbsp;    @BindView(R.id.year) TextView yearTextView;
+<i>50</i>&nbsp;    @BindView(R.id.years_text_background) ImageView yearsInfoBackground;
+<i>51</i>&nbsp;    @BindView(R.id.years_text) TextView yearsInfoTextView;
+<i>52</i>&nbsp;    @BindView(R.id.year_layout) LinearLayout yearLayout;
+<i>53</i>&nbsp;    @BindView(R.id.more_events_layout) LinearLayout moreEventsLayout;
+<i>54</i>&nbsp;    @BindView(R.id.pages_recycler) RecyclerView pagesRecycler;
+<i>55</i>&nbsp;    @BindView(R.id.gradient_layout) View gradientLayout;
+<i>56</i>&nbsp;    @BindView(R.id.radio_image_view) View radio;
+<i>57</i>&nbsp;    private int age;
+<b class="nc"><i>58</i>&nbsp;    private ExclusiveBottomSheetPresenter bottomSheetPresenter = new ExclusiveBottomSheetPresenter();</b>
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    public OnThisDayCardView(@NonNull Context context) {
+<b class="nc"><i>61</i>&nbsp;        super(context);</b>
+<b class="nc"><i>62</i>&nbsp;        inflate(getContext(), R.layout.view_card_on_this_day, this);</b>
+<b class="nc"><i>63</i>&nbsp;        ButterKnife.bind(this);</b>
+<b class="nc"><i>64</i>&nbsp;        initRecycler();</b>
+<b class="nc"><i>65</i>&nbsp;        setGradientAndTextColor();</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    private void setGradientAndTextColor() {
+<b class="nc"><i>69</i>&nbsp;        gradientLayout.setBackground(GradientUtil.getPowerGradient(ResourceUtil.getThemedAttributeId(getContext(), R.attr.chart_shade5), Gravity.BOTTOM));</b>
+<b class="nc"><i>70</i>&nbsp;        DrawableCompat.setTint(yearsInfoBackground.getDrawable(), ResourceUtil.getThemedColor(getContext(), R.attr.secondary_text_color));</b>
+<i>71</i>&nbsp;    }
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;    private void initRecycler() {
+<b class="nc"><i>74</i>&nbsp;        pagesRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));</b>
+<b class="nc"><i>75</i>&nbsp;        pagesRecycler.addItemDecoration(new MarginItemDecoration(getContext(),</b>
+<i>76</i>&nbsp;                R.dimen.view_horizontal_scrolling_list_card_item_margin_horizontal,
+<i>77</i>&nbsp;                R.dimen.view_horizontal_scrolling_list_card_item_margin_vertical,
+<i>78</i>&nbsp;                R.dimen.view_horizontal_scrolling_list_card_item_margin_horizontal,
+<i>79</i>&nbsp;                R.dimen.view_horizontal_scrolling_list_card_item_margin_vertical));
+<b class="nc"><i>80</i>&nbsp;        pagesRecycler.addOnItemTouchListener(new DontInterceptTouchListener());</b>
+<b class="nc"><i>81</i>&nbsp;        pagesRecycler.setNestedScrollingEnabled(false);</b>
+<i>82</i>&nbsp;    }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;    @Override
+<i>85</i>&nbsp;    public void onAddPageToList(@NonNull HistoryEntry entry) {
+<b class="nc"><i>86</i>&nbsp;        bottomSheetPresenter.show(((AppCompatActivity)getContext()).getSupportFragmentManager(),</b>
+<b class="nc"><i>87</i>&nbsp;                AddToReadingListDialog.newInstance(entry.getTitle(),</b>
+<i>88</i>&nbsp;                        AddToReadingListDialog.InvokeSource.ON_THIS_DAY_ACTIVITY));
+<i>89</i>&nbsp;    }
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;    @Override
+<i>92</i>&nbsp;    public void onSharePage(@NonNull HistoryEntry entry) {
+<b class="nc"><i>93</i>&nbsp;        ShareUtil.shareText(getContext(), entry.getTitle());</b>
+<i>94</i>&nbsp;    }
+<i>95</i>&nbsp;
+<i>96</i>&nbsp;    static class RecyclerAdapter extends RecyclerView.Adapter&lt;OnThisDayPagesViewHolder&gt; {
+<i>97</i>&nbsp;        private List&lt;RbPageSummary&gt; pages;
+<i>98</i>&nbsp;        private WikiSite wiki;
+<i>99</i>&nbsp;        private final boolean isSingleCard;
+<i>100</i>&nbsp;        private OnThisDayPagesViewHolder.ItemCallBack itemCallback;
+<i>101</i>&nbsp;
+<b class="nc"><i>102</i>&nbsp;        RecyclerAdapter(@NonNull List&lt;RbPageSummary&gt; pages, @NonNull WikiSite wiki, boolean isSingleCard) {</b>
+<b class="nc"><i>103</i>&nbsp;            this.pages = pages;</b>
+<b class="nc"><i>104</i>&nbsp;            this.wiki = wiki;</b>
+<b class="nc"><i>105</i>&nbsp;            this.isSingleCard = isSingleCard;</b>
+<i>106</i>&nbsp;        }
+<i>107</i>&nbsp;
+<i>108</i>&nbsp;        public RecyclerAdapter setCallback(OnThisDayPagesViewHolder.ItemCallBack itemCallBack) {
+<b class="nc"><i>109</i>&nbsp;            this.itemCallback = itemCallBack;</b>
+<b class="nc"><i>110</i>&nbsp;            return this;</b>
+<i>111</i>&nbsp;        }
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;        @Override
+<i>114</i>&nbsp;        public OnThisDayPagesViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+<b class="nc"><i>115</i>&nbsp;            View itemView = LayoutInflater.</b>
+<b class="nc"><i>116</i>&nbsp;                    from(viewGroup.getContext()).</b>
+<b class="nc"><i>117</i>&nbsp;                    inflate(R.layout.item_on_this_day_pages, viewGroup, false);</b>
+<b class="nc"><i>118</i>&nbsp;            return new OnThisDayPagesViewHolder((CardView) itemView, wiki, isSingleCard);</b>
+<i>119</i>&nbsp;        }
+<i>120</i>&nbsp;
+<i>121</i>&nbsp;        @Override
+<i>122</i>&nbsp;        public void onBindViewHolder(OnThisDayPagesViewHolder onThisDayPagesViewHolder, int i) {
+<b class="nc"><i>123</i>&nbsp;            if (itemCallback != null) {</b>
+<b class="nc"><i>124</i>&nbsp;                onThisDayPagesViewHolder</b>
+<b class="nc"><i>125</i>&nbsp;                        .setCallback(itemCallback)</b>
+<b class="nc"><i>126</i>&nbsp;                        .setFields(pages.get(i));</b>
+<i>127</i>&nbsp;            }
+<i>128</i>&nbsp;        }
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;        @Override
+<i>131</i>&nbsp;        public int getItemCount() {
+<b class="nc"><i>132</i>&nbsp;            return pages.size();</b>
+<i>133</i>&nbsp;        }
+<i>134</i>&nbsp;    }
+<i>135</i>&nbsp;
+<i>136</i>&nbsp;    @Override
+<i>137</i>&nbsp;    public void setCallback(@Nullable FeedAdapter.Callback callback) {
+<b class="nc"><i>138</i>&nbsp;        super.setCallback(callback);</b>
+<b class="nc"><i>139</i>&nbsp;        headerView.setCallback(callback);</b>
+<i>140</i>&nbsp;    }
+<i>141</i>&nbsp;
+<i>142</i>&nbsp;    private void header(@NonNull OnThisDayCard card) {
+<b class="nc"><i>143</i>&nbsp;        headerView.setTitle(card.title())</b>
+<b class="nc"><i>144</i>&nbsp;                .setSubtitle(card.subtitle())</b>
+<b class="nc"><i>145</i>&nbsp;                .setImage(R.drawable.ic_otd_icon)</b>
+<b class="nc"><i>146</i>&nbsp;                .setImageCircleColor(ResourceUtil.getThemedAttributeId(getContext(), R.attr.main_toolbar_color))</b>
+<b class="nc"><i>147</i>&nbsp;                .setCard(card)</b>
+<b class="nc"><i>148</i>&nbsp;                .setCallback(getCallback());</b>
+<b class="nc"><i>149</i>&nbsp;        descTextView.setText(card.text());</b>
+<b class="nc"><i>150</i>&nbsp;        yearTextView.setText(DateUtil.yearToStringWithEra(card.year()));</b>
+<b class="nc"><i>151</i>&nbsp;        yearsInfoTextView.setText(DateUtil.getYearDifferenceString(card.year()));</b>
+<b class="nc"><i>152</i>&nbsp;        dayTextView.setText(card.dayString());</b>
+<b class="nc"><i>153</i>&nbsp;        nextEventYearsTextView.setText(DateUtil.getYearDifferenceString(card.nextYear()));</b>
+<i>154</i>&nbsp;    }
+<i>155</i>&nbsp;
+<i>156</i>&nbsp;    @Override
+<i>157</i>&nbsp;    public void setCard(@NonNull OnThisDayCard card) {
+<b class="nc"><i>158</i>&nbsp;        super.setCard(card);</b>
+<b class="nc"><i>159</i>&nbsp;        this.age = card.getAge();</b>
+<b class="nc"><i>160</i>&nbsp;        setPagesRecycler(card);</b>
+<b class="nc"><i>161</i>&nbsp;        header(card);</b>
+<i>162</i>&nbsp;    }
+<i>163</i>&nbsp;
+<i>164</i>&nbsp;    @OnClick({R.id.view_on_this_day_click_container}) void onMoreClick() {
+<b class="nc"><i>165</i>&nbsp;        ActivityOptionsCompat options = ActivityOptionsCompat.</b>
+<b class="nc"><i>166</i>&nbsp;                makeSceneTransitionAnimation((Activity) getContext(), dayTextView, getContext().getString(R.string.transition_on_this_day));</b>
+<b class="nc"><i>167</i>&nbsp;        getContext().startActivity(OnThisDayActivity.newIntent(getContext(), age,</b>
+<b class="nc"><i>168</i>&nbsp;                OnThisDayActivity.INVOKE_SOURCE_CARD_BODY), options.toBundle());</b>
+<i>169</i>&nbsp;    }
+<i>170</i>&nbsp;
+<i>171</i>&nbsp;    @OnClick({R.id.more_events_layout}) void onMoreFooterClick() {
+<b class="nc"><i>172</i>&nbsp;        ActivityOptionsCompat options = ActivityOptionsCompat.</b>
+<b class="nc"><i>173</i>&nbsp;                makeSceneTransitionAnimation((Activity) getContext(), dayTextView, getContext().getString(R.string.transition_on_this_day));</b>
+<b class="nc"><i>174</i>&nbsp;        getContext().startActivity(OnThisDayActivity.newIntent(getContext(), age,</b>
+<b class="nc"><i>175</i>&nbsp;                OnThisDayActivity.INVOKE_SOURCE_CARD_FOOTER), options.toBundle());</b>
+<i>176</i>&nbsp;    }
+<i>177</i>&nbsp;
+<i>178</i>&nbsp;    private void setPagesRecycler(OnThisDayCard card) {
+<b class="nc"><i>179</i>&nbsp;        if (card.pages() != null) {</b>
+<b class="nc"><i>180</i>&nbsp;            RecyclerAdapter recyclerAdapter = new RecyclerAdapter(card.pages(), card.wiki(), true);</b>
+<b class="nc"><i>181</i>&nbsp;            recyclerAdapter.setCallback(new ItemCallback());</b>
+<b class="nc"><i>182</i>&nbsp;            pagesRecycler.setAdapter(recyclerAdapter);</b>
+<b class="nc"><i>183</i>&nbsp;        } else {</b>
+<b class="nc"><i>184</i>&nbsp;            pagesRecycler.setVisibility(GONE);</b>
+<i>185</i>&nbsp;        }
+<i>186</i>&nbsp;    }
+<i>187</i>&nbsp;
+<b class="nc"><i>188</i>&nbsp;    class ItemCallback implements OnThisDayPagesViewHolder.ItemCallBack {</b>
+<i>189</i>&nbsp;        @Override
+<i>190</i>&nbsp;        public void onActionLongClick(@NonNull HistoryEntry entry) {
+<b class="nc"><i>191</i>&nbsp;            bottomSheetPresenter.show(((AppCompatActivity)getContext()).getSupportFragmentManager(),</b>
+<b class="nc"><i>192</i>&nbsp;                    OnThisDayActionsDialog.newInstance(entry));</b>
+<i>193</i>&nbsp;        }
+<i>194</i>&nbsp;    }
+<i>195</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

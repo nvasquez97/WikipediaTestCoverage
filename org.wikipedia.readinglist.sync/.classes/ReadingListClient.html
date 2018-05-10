@@ -1,0 +1,407 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ReadingListClient</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.readinglist.sync</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ReadingListClient (org.wikipedia.readinglist.sync)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ReadingListClient</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 120)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.readinglist.sync;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.annotation.Nullable;
+<i>5</i>&nbsp;import android.text.TextUtils;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>8</i>&nbsp;import org.wikipedia.dataclient.okhttp.HttpStatusException;
+<i>9</i>&nbsp;import org.wikipedia.dataclient.retrofit.RbCachedService;
+<i>10</i>&nbsp;import org.wikipedia.dataclient.retrofit.WikiCachedService;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import java.io.IOException;
+<i>13</i>&nbsp;import java.util.ArrayList;
+<i>14</i>&nbsp;import java.util.List;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;import retrofit2.Call;
+<i>17</i>&nbsp;import retrofit2.Response;
+<i>18</i>&nbsp;import retrofit2.http.Body;
+<i>19</i>&nbsp;import retrofit2.http.DELETE;
+<i>20</i>&nbsp;import retrofit2.http.GET;
+<i>21</i>&nbsp;import retrofit2.http.Headers;
+<i>22</i>&nbsp;import retrofit2.http.POST;
+<i>23</i>&nbsp;import retrofit2.http.PUT;
+<i>24</i>&nbsp;import retrofit2.http.Path;
+<i>25</i>&nbsp;import retrofit2.http.Query;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;import static org.wikipedia.readinglist.sync.SyncedReadingLists.RemoteReadingList;
+<i>28</i>&nbsp;import static org.wikipedia.readinglist.sync.SyncedReadingLists.RemoteReadingListEntry;
+<i>29</i>&nbsp;import static org.wikipedia.readinglist.sync.SyncedReadingLists.RemoteReadingListEntryBatch;
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;public class ReadingListClient {
+<b class="nc"><i>32</i>&nbsp;    @NonNull private final WikiCachedService&lt;Service&gt; cachedService = new RbCachedService&lt;&gt;(Service.class);</b>
+<i>33</i>&nbsp;    @NonNull private final WikiSite wiki;
+<i>34</i>&nbsp;    @Nullable private String lastDateHeader;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    // Artificial upper limit on the number of continuation cycles we can do, to prevent
+<i>37</i>&nbsp;    // getting stuck in an infinite loop.
+<i>38</i>&nbsp;    private static final int MAX_CONTINUE_CYCLES = 256;
+<i>39</i>&nbsp;
+<b class="nc"><i>40</i>&nbsp;    public ReadingListClient(@NonNull WikiSite wiki) {</b>
+<b class="nc"><i>41</i>&nbsp;        this.wiki = wiki;</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    @Nullable public String getLastDateHeader() {
+<b class="nc"><i>45</i>&nbsp;        return lastDateHeader;</b>
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    /**
+<i>49</i>&nbsp;     * Sets up reading list syncing on the server, and returns true if the setup was successful,
+<i>50</i>&nbsp;     * or false if syncing is already set up.
+<i>51</i>&nbsp;     */
+<i>52</i>&nbsp;    public boolean setup(@NonNull String csrfToken) throws Throwable {
+<i>53</i>&nbsp;        try {
+<b class="nc"><i>54</i>&nbsp;            cachedService.service(wiki).setup(csrfToken).execute();</b>
+<b class="nc"><i>55</i>&nbsp;            return true;</b>
+<b class="nc"><i>56</i>&nbsp;        } catch (Throwable t) {</b>
+<b class="nc"><i>57</i>&nbsp;            if (isErrorType(t, &quot;already-set-up&quot;)) {</b>
+<b class="nc"><i>58</i>&nbsp;                return false;</b>
+<i>59</i>&nbsp;            }
+<b class="nc"><i>60</i>&nbsp;            throw t;</b>
+<i>61</i>&nbsp;        }
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    public void tearDown(@NonNull String csrfToken) throws Throwable {
+<i>65</i>&nbsp;        try {
+<b class="nc"><i>66</i>&nbsp;            cachedService.service(wiki).tearDown(csrfToken).execute();</b>
+<b class="nc"><i>67</i>&nbsp;        } catch (Throwable t) {</b>
+<b class="nc"><i>68</i>&nbsp;            if (isErrorType(t, &quot;not-set-up&quot;)) {</b>
+<i>69</i>&nbsp;                return;
+<i>70</i>&nbsp;            }
+<b class="nc"><i>71</i>&nbsp;            throw t;</b>
+<b class="nc"><i>72</i>&nbsp;        }</b>
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    @NonNull
+<i>76</i>&nbsp;    public List&lt;RemoteReadingList&gt; getAllLists() throws Throwable {
+<b class="nc"><i>77</i>&nbsp;        List&lt;RemoteReadingList&gt; totalLists = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>78</i>&nbsp;        int totalCycles = 0;</b>
+<b class="nc"><i>79</i>&nbsp;        String continueStr = null;</b>
+<i>80</i>&nbsp;        do {
+<b class="nc"><i>81</i>&nbsp;            Response&lt;SyncedReadingLists&gt; response = cachedService.service(wiki).getLists(continueStr).execute();</b>
+<b class="nc"><i>82</i>&nbsp;            SyncedReadingLists lists = response.body();</b>
+<b class="nc"><i>83</i>&nbsp;            if (lists == null || lists.getLists() == null) {</b>
+<b class="nc"><i>84</i>&nbsp;                throw new IOException(&quot;Incorrect response format.&quot;);</b>
+<i>85</i>&nbsp;            }
+<b class="nc"><i>86</i>&nbsp;            totalLists.addAll(lists.getLists());</b>
+<b class="nc"><i>87</i>&nbsp;            continueStr = TextUtils.isEmpty(lists.getContinueStr()) ? null : lists.getContinueStr();</b>
+<b class="nc"><i>88</i>&nbsp;            saveLastDateHeader(response);</b>
+<b class="nc"><i>89</i>&nbsp;        } while (!TextUtils.isEmpty(continueStr) &amp;&amp; (totalCycles++ &lt; MAX_CONTINUE_CYCLES));</b>
+<b class="nc"><i>90</i>&nbsp;        return totalLists;</b>
+<i>91</i>&nbsp;    }
+<i>92</i>&nbsp;
+<i>93</i>&nbsp;    @NonNull
+<i>94</i>&nbsp;    public SyncedReadingLists getChangesSince(@NonNull String date) throws Throwable {
+<b class="nc"><i>95</i>&nbsp;        List&lt;RemoteReadingList&gt; totalLists = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>96</i>&nbsp;        List&lt;RemoteReadingListEntry&gt; totalEntries = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>97</i>&nbsp;        int totalCycles = 0;</b>
+<b class="nc"><i>98</i>&nbsp;        String continueStr = null;</b>
+<i>99</i>&nbsp;        do {
+<b class="nc"><i>100</i>&nbsp;            Response&lt;SyncedReadingLists&gt; response = cachedService.service(wiki).getChangesSince(date, continueStr).execute();</b>
+<b class="nc"><i>101</i>&nbsp;            SyncedReadingLists body = response.body();</b>
+<b class="nc"><i>102</i>&nbsp;            if (body == null) {</b>
+<b class="nc"><i>103</i>&nbsp;                throw new IOException(&quot;Incorrect response format.&quot;);</b>
+<i>104</i>&nbsp;            }
+<b class="nc"><i>105</i>&nbsp;            if (body.getLists() != null) {</b>
+<b class="nc"><i>106</i>&nbsp;                totalLists.addAll(body.getLists());</b>
+<i>107</i>&nbsp;            }
+<b class="nc"><i>108</i>&nbsp;            if (body.getEntries() != null) {</b>
+<b class="nc"><i>109</i>&nbsp;                totalEntries.addAll(body.getEntries());</b>
+<i>110</i>&nbsp;            }
+<b class="nc"><i>111</i>&nbsp;            continueStr = TextUtils.isEmpty(body.getContinueStr()) ? null : body.getContinueStr();</b>
+<b class="nc"><i>112</i>&nbsp;            saveLastDateHeader(response);</b>
+<b class="nc"><i>113</i>&nbsp;        } while (!TextUtils.isEmpty(continueStr) &amp;&amp; (totalCycles++ &lt; MAX_CONTINUE_CYCLES));</b>
+<b class="nc"><i>114</i>&nbsp;        return new SyncedReadingLists(totalLists, totalEntries);</b>
+<i>115</i>&nbsp;    }
+<i>116</i>&nbsp;
+<i>117</i>&nbsp;    @NonNull
+<i>118</i>&nbsp;    public List&lt;RemoteReadingList&gt; getListsContaining(@NonNull RemoteReadingListEntry entry) throws Throwable {
+<b class="nc"><i>119</i>&nbsp;        List&lt;RemoteReadingList&gt; totalLists = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>120</i>&nbsp;        int totalCycles = 0;</b>
+<b class="nc"><i>121</i>&nbsp;        String continueStr = null;</b>
+<i>122</i>&nbsp;        do {
+<b class="nc"><i>123</i>&nbsp;            Response&lt;SyncedReadingLists&gt; response = cachedService.service(wiki)</b>
+<b class="nc"><i>124</i>&nbsp;                    .getListsContaining(entry.project(), entry.title(), continueStr).execute();</b>
+<b class="nc"><i>125</i>&nbsp;            SyncedReadingLists lists = response.body();</b>
+<b class="nc"><i>126</i>&nbsp;            if (lists == null || lists.getLists() == null) {</b>
+<b class="nc"><i>127</i>&nbsp;                throw new IOException(&quot;Incorrect response format.&quot;);</b>
+<i>128</i>&nbsp;            }
+<b class="nc"><i>129</i>&nbsp;            totalLists.addAll(lists.getLists());</b>
+<b class="nc"><i>130</i>&nbsp;            continueStr = TextUtils.isEmpty(lists.getContinueStr()) ? null : lists.getContinueStr();</b>
+<b class="nc"><i>131</i>&nbsp;            saveLastDateHeader(response);</b>
+<b class="nc"><i>132</i>&nbsp;        } while (!TextUtils.isEmpty(continueStr) &amp;&amp; (totalCycles++ &lt; MAX_CONTINUE_CYCLES));</b>
+<b class="nc"><i>133</i>&nbsp;        return totalLists;</b>
+<i>134</i>&nbsp;    }
+<i>135</i>&nbsp;
+<i>136</i>&nbsp;    @NonNull
+<i>137</i>&nbsp;    public List&lt;RemoteReadingListEntry&gt; getListEntries(long listId) throws Throwable {
+<b class="nc"><i>138</i>&nbsp;        List&lt;RemoteReadingListEntry&gt; totalEntries = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>139</i>&nbsp;        int totalCycles = 0;</b>
+<b class="nc"><i>140</i>&nbsp;        String continueStr = null;</b>
+<i>141</i>&nbsp;        do {
+<b class="nc"><i>142</i>&nbsp;            Response&lt;SyncedReadingLists&gt; response</b>
+<b class="nc"><i>143</i>&nbsp;                    = cachedService.service(wiki).getListEntries(listId, continueStr).execute();</b>
+<b class="nc"><i>144</i>&nbsp;            SyncedReadingLists body = response.body();</b>
+<b class="nc"><i>145</i>&nbsp;            if (body == null || body.getEntries() == null) {</b>
+<b class="nc"><i>146</i>&nbsp;                throw new IOException(&quot;Incorrect response format.&quot;);</b>
+<i>147</i>&nbsp;            }
+<b class="nc"><i>148</i>&nbsp;            totalEntries.addAll(body.getEntries());</b>
+<b class="nc"><i>149</i>&nbsp;            continueStr = TextUtils.isEmpty(body.getContinueStr()) ? null : body.getContinueStr();</b>
+<b class="nc"><i>150</i>&nbsp;            saveLastDateHeader(response);</b>
+<b class="nc"><i>151</i>&nbsp;        } while (!TextUtils.isEmpty(continueStr) &amp;&amp; (totalCycles++ &lt; MAX_CONTINUE_CYCLES));</b>
+<b class="nc"><i>152</i>&nbsp;        return totalEntries;</b>
+<i>153</i>&nbsp;    }
+<i>154</i>&nbsp;
+<i>155</i>&nbsp;    public long createList(@NonNull String csrfToken, @NonNull RemoteReadingList list) throws Throwable {
+<b class="nc"><i>156</i>&nbsp;        Response&lt;SyncedReadingLists.RemoteIdResponse&gt; response</b>
+<b class="nc"><i>157</i>&nbsp;                = cachedService.service(wiki).createList(csrfToken, list).execute();</b>
+<b class="nc"><i>158</i>&nbsp;        SyncedReadingLists.RemoteIdResponse idResponse = response.body();</b>
+<b class="nc"><i>159</i>&nbsp;        if (idResponse == null) {</b>
+<b class="nc"><i>160</i>&nbsp;            throw new IOException(&quot;Incorrect response format.&quot;);</b>
+<i>161</i>&nbsp;        }
+<b class="nc"><i>162</i>&nbsp;        saveLastDateHeader(response);</b>
+<b class="nc"><i>163</i>&nbsp;        return idResponse.id();</b>
+<i>164</i>&nbsp;    }
+<i>165</i>&nbsp;
+<i>166</i>&nbsp;    public void updateList(@NonNull String csrfToken, long listId, @NonNull RemoteReadingList list) throws Throwable {
+<b class="nc"><i>167</i>&nbsp;        Response response = cachedService.service(wiki).updateList(listId, csrfToken, list).execute();</b>
+<b class="nc"><i>168</i>&nbsp;        saveLastDateHeader(response);</b>
+<i>169</i>&nbsp;    }
+<i>170</i>&nbsp;
+<i>171</i>&nbsp;    public void deleteList(@NonNull String csrfToken, long listId) throws Throwable {
+<b class="nc"><i>172</i>&nbsp;        Response response = cachedService.service(wiki).deleteList(listId, csrfToken).execute();</b>
+<b class="nc"><i>173</i>&nbsp;        saveLastDateHeader(response);</b>
+<i>174</i>&nbsp;    }
+<i>175</i>&nbsp;
+<i>176</i>&nbsp;    public long addPageToList(@NonNull String csrfToken, long listId, @NonNull RemoteReadingListEntry entry) throws Throwable {
+<b class="nc"><i>177</i>&nbsp;        Response&lt;SyncedReadingLists.RemoteIdResponse&gt; response</b>
+<b class="nc"><i>178</i>&nbsp;                = cachedService.service(wiki).addEntryToList(listId, csrfToken, entry).execute();</b>
+<b class="nc"><i>179</i>&nbsp;        SyncedReadingLists.RemoteIdResponse idResponse = response.body();</b>
+<b class="nc"><i>180</i>&nbsp;        if (idResponse == null) {</b>
+<b class="nc"><i>181</i>&nbsp;            throw new IOException(&quot;Incorrect response format.&quot;);</b>
+<i>182</i>&nbsp;        }
+<b class="nc"><i>183</i>&nbsp;        saveLastDateHeader(response);</b>
+<b class="nc"><i>184</i>&nbsp;        return idResponse.id();</b>
+<i>185</i>&nbsp;    }
+<i>186</i>&nbsp;
+<i>187</i>&nbsp;    public List&lt;Long&gt; addPagesToList(@NonNull String csrfToken, long listId, @NonNull List&lt;RemoteReadingListEntry&gt; entries) throws Throwable {
+<b class="nc"><i>188</i>&nbsp;        final int maxBatchSize = 50;</b>
+<b class="nc"><i>189</i>&nbsp;        int batchIndex = 0;</b>
+<b class="nc"><i>190</i>&nbsp;        List&lt;Long&gt; ids = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>191</i>&nbsp;        List&lt;RemoteReadingListEntry&gt; currentBatch = new ArrayList&lt;&gt;();</b>
+<i>192</i>&nbsp;        while (true) {
+<b class="nc"><i>193</i>&nbsp;            currentBatch.clear();</b>
+<b class="nc"><i>194</i>&nbsp;            while (batchIndex &lt; entries.size() &amp;&amp; currentBatch.size() &lt; maxBatchSize) {</b>
+<b class="nc"><i>195</i>&nbsp;                currentBatch.add(entries.get(batchIndex++));</b>
+<i>196</i>&nbsp;            }
+<b class="nc"><i>197</i>&nbsp;            if (currentBatch.isEmpty()) {</b>
+<b class="nc"><i>198</i>&nbsp;                break;</b>
+<i>199</i>&nbsp;            }
+<i>200</i>&nbsp;
+<i>201</i>&nbsp;            try {
+<b class="nc"><i>202</i>&nbsp;                Response&lt;SyncedReadingLists.RemoteIdResponseBatch&gt; response</b>
+<b class="nc"><i>203</i>&nbsp;                        = cachedService.service(wiki).addEntriesToList(listId, csrfToken, new RemoteReadingListEntryBatch(currentBatch)).execute();</b>
+<b class="nc"><i>204</i>&nbsp;                SyncedReadingLists.RemoteIdResponseBatch idResponse = response.body();</b>
+<b class="nc"><i>205</i>&nbsp;                if (idResponse == null) {</b>
+<b class="nc"><i>206</i>&nbsp;                    throw new IOException(&quot;Incorrect response format.&quot;);</b>
+<i>207</i>&nbsp;                }
+<b class="nc"><i>208</i>&nbsp;                saveLastDateHeader(response);</b>
+<i>209</i>&nbsp;
+<b class="nc"><i>210</i>&nbsp;                for (SyncedReadingLists.RemoteIdResponse id : idResponse.batch()) {</b>
+<b class="nc"><i>211</i>&nbsp;                    ids.add(id.id());</b>
+<i>212</i>&nbsp;                }
+<b class="nc"><i>213</i>&nbsp;            } catch (Throwable t) {</b>
+<b class="nc"><i>214</i>&nbsp;                if (isErrorType(t, &quot;entry-limit&quot;)) {</b>
+<i>215</i>&nbsp;                    // TODO: handle more meaningfully than ignoring, for now.
+<b class="nc"><i>216</i>&nbsp;                    break;</b>
+<i>217</i>&nbsp;                }
+<b class="nc"><i>218</i>&nbsp;                throw t;</b>
+<b class="nc"><i>219</i>&nbsp;            }</b>
+<i>220</i>&nbsp;        }
+<b class="nc"><i>221</i>&nbsp;        return ids;</b>
+<i>222</i>&nbsp;    }
+<i>223</i>&nbsp;
+<i>224</i>&nbsp;    public void deletePageFromList(@NonNull String csrfToken, long listId, long entryId) throws Throwable {
+<b class="nc"><i>225</i>&nbsp;        Response response = cachedService.service(wiki).deleteEntryFromList(listId, entryId, csrfToken).execute();</b>
+<b class="nc"><i>226</i>&nbsp;        saveLastDateHeader(response);</b>
+<i>227</i>&nbsp;    }
+<i>228</i>&nbsp;
+<i>229</i>&nbsp;    public boolean isErrorType(Throwable t, @NonNull String errorType) {
+<b class="nc"><i>230</i>&nbsp;        return (t instanceof HttpStatusException</b>
+<b class="nc"><i>231</i>&nbsp;                &amp;&amp; ((HttpStatusException) t).serviceError() != null</b>
+<b class="nc"><i>232</i>&nbsp;                &amp;&amp; ((HttpStatusException) t).serviceError().getTitle().contains(errorType));</b>
+<i>233</i>&nbsp;    }
+<i>234</i>&nbsp;
+<i>235</i>&nbsp;    public boolean isServiceError(Throwable t) {
+<b class="nc"><i>236</i>&nbsp;        final int code = 400;</b>
+<b class="nc"><i>237</i>&nbsp;        return (t instanceof HttpStatusException &amp;&amp; ((HttpStatusException) t).code() == code);</b>
+<i>238</i>&nbsp;    }
+<i>239</i>&nbsp;
+<i>240</i>&nbsp;    public boolean isUnavailableError(Throwable t) {
+<b class="nc"><i>241</i>&nbsp;        final int code = 405;</b>
+<b class="nc"><i>242</i>&nbsp;        return (t instanceof HttpStatusException &amp;&amp; ((HttpStatusException) t).code() == code);</b>
+<i>243</i>&nbsp;    }
+<i>244</i>&nbsp;
+<i>245</i>&nbsp;    private void saveLastDateHeader(@NonNull Response response) {
+<b class="nc"><i>246</i>&nbsp;        lastDateHeader = response.headers().get(&quot;date&quot;);</b>
+<i>247</i>&nbsp;    }
+<i>248</i>&nbsp;
+<i>249</i>&nbsp;    // Documentation: https://en.wikipedia.org/api/rest_v1/#/Reading_lists
+<i>250</i>&nbsp;    private interface Service {
+<i>251</i>&nbsp;
+<i>252</i>&nbsp;        @POST(&quot;data/lists/setup&quot;)
+<i>253</i>&nbsp;        @Headers(&quot;Cache-Control: no-cache&quot;)
+<i>254</i>&nbsp;        @NonNull
+<i>255</i>&nbsp;        Call&lt;Void&gt; setup(@Query(&quot;csrf_token&quot;) String token);
+<i>256</i>&nbsp;
+<i>257</i>&nbsp;        @POST(&quot;data/lists/teardown&quot;)
+<i>258</i>&nbsp;        @Headers(&quot;Cache-Control: no-cache&quot;)
+<i>259</i>&nbsp;        @NonNull
+<i>260</i>&nbsp;        Call&lt;Void&gt; tearDown(@Query(&quot;csrf_token&quot;) String token);
+<i>261</i>&nbsp;
+<i>262</i>&nbsp;        @GET(&quot;data/lists/&quot;)
+<i>263</i>&nbsp;        @Headers(&quot;Cache-Control: no-cache&quot;)
+<i>264</i>&nbsp;        @NonNull
+<i>265</i>&nbsp;        Call&lt;SyncedReadingLists&gt; getLists(@Query(&quot;next&quot;) String next);
+<i>266</i>&nbsp;
+<i>267</i>&nbsp;        @POST(&quot;data/lists/&quot;)
+<i>268</i>&nbsp;        @Headers(&quot;Cache-Control: no-cache&quot;)
+<i>269</i>&nbsp;        @NonNull
+<i>270</i>&nbsp;        Call&lt;SyncedReadingLists.RemoteIdResponse&gt; createList(@Query(&quot;csrf_token&quot;) String token,
+<i>271</i>&nbsp;                                                             @Body RemoteReadingList list);
+<i>272</i>&nbsp;
+<i>273</i>&nbsp;        @PUT(&quot;data/lists/{id}&quot;)
+<i>274</i>&nbsp;        @Headers(&quot;Cache-Control: no-cache&quot;)
+<i>275</i>&nbsp;        @NonNull
+<i>276</i>&nbsp;        Call&lt;Void&gt; updateList(@Path(&quot;id&quot;) long listId, @Query(&quot;csrf_token&quot;) String token,
+<i>277</i>&nbsp;                              @Body RemoteReadingList list);
+<i>278</i>&nbsp;
+<i>279</i>&nbsp;        @DELETE(&quot;data/lists/{id}&quot;)
+<i>280</i>&nbsp;        @Headers(&quot;Cache-Control: no-cache&quot;)
+<i>281</i>&nbsp;        @NonNull
+<i>282</i>&nbsp;        Call&lt;Void&gt; deleteList(@Path(&quot;id&quot;) long listId, @Query(&quot;csrf_token&quot;) String token);
+<i>283</i>&nbsp;
+<i>284</i>&nbsp;        @GET(&quot;data/lists/changes/since/{date}&quot;)
+<i>285</i>&nbsp;        @Headers(&quot;Cache-Control: no-cache&quot;)
+<i>286</i>&nbsp;        @NonNull
+<i>287</i>&nbsp;        Call&lt;SyncedReadingLists&gt; getChangesSince(@Path(&quot;date&quot;) String iso8601Date,
+<i>288</i>&nbsp;                                                 @Query(&quot;next&quot;) String next);
+<i>289</i>&nbsp;
+<i>290</i>&nbsp;        @GET(&quot;data/lists/pages/{project}/{title}&quot;)
+<i>291</i>&nbsp;        @Headers(&quot;Cache-Control: no-cache&quot;)
+<i>292</i>&nbsp;        @NonNull
+<i>293</i>&nbsp;        Call&lt;SyncedReadingLists&gt; getListsContaining(@Path(&quot;project&quot;) String project,
+<i>294</i>&nbsp;                                                    @Path(&quot;title&quot;) String title,
+<i>295</i>&nbsp;                                                    @Query(&quot;next&quot;) String next);
+<i>296</i>&nbsp;
+<i>297</i>&nbsp;        @GET(&quot;data/lists/{id}/entries/&quot;)
+<i>298</i>&nbsp;        @Headers(&quot;Cache-Control: no-cache&quot;)
+<i>299</i>&nbsp;        @NonNull
+<i>300</i>&nbsp;        Call&lt;SyncedReadingLists&gt; getListEntries(@Path(&quot;id&quot;) long listId,
+<i>301</i>&nbsp;                                                @Query(&quot;next&quot;) String next);
+<i>302</i>&nbsp;
+<i>303</i>&nbsp;        @POST(&quot;data/lists/{id}/entries/&quot;)
+<i>304</i>&nbsp;        @Headers(&quot;Cache-Control: no-cache&quot;)
+<i>305</i>&nbsp;        @NonNull
+<i>306</i>&nbsp;        Call&lt;SyncedReadingLists.RemoteIdResponse&gt; addEntryToList(@Path(&quot;id&quot;) long listId,
+<i>307</i>&nbsp;                                                                 @Query(&quot;csrf_token&quot;) String token,
+<i>308</i>&nbsp;                                                                 @Body RemoteReadingListEntry entry);
+<i>309</i>&nbsp;
+<i>310</i>&nbsp;        @POST(&quot;data/lists/{id}/entries/batch&quot;)
+<i>311</i>&nbsp;        @Headers(&quot;Cache-Control: no-cache&quot;)
+<i>312</i>&nbsp;        @NonNull
+<i>313</i>&nbsp;        Call&lt;SyncedReadingLists.RemoteIdResponseBatch&gt; addEntriesToList(@Path(&quot;id&quot;) long listId,
+<i>314</i>&nbsp;                                                                        @Query(&quot;csrf_token&quot;) String token,
+<i>315</i>&nbsp;                                                                        @Body RemoteReadingListEntryBatch batch);
+<i>316</i>&nbsp;
+<i>317</i>&nbsp;        @DELETE(&quot;data/lists/{id}/entries/{entry_id}&quot;)
+<i>318</i>&nbsp;        @Headers(&quot;Cache-Control: no-cache&quot;)
+<i>319</i>&nbsp;        @NonNull
+<i>320</i>&nbsp;        Call&lt;Void&gt; deleteEntryFromList(@Path(&quot;id&quot;) long listId, @Path(&quot;entry_id&quot;) long entryId,
+<i>321</i>&nbsp;                                       @Query(&quot;csrf_token&quot;) String token);
+<i>322</i>&nbsp;
+<i>323</i>&nbsp;    }
+<i>324</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

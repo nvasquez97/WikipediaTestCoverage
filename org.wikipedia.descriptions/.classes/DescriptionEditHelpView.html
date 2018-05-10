@@ -1,0 +1,170 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DescriptionEditHelpView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.descriptions</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DescriptionEditHelpView (org.wikipedia.descriptions)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DescriptionEditHelpView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 29)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.descriptions;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.annotation.TargetApi;
+<i>4</i>&nbsp;import android.content.Context;
+<i>5</i>&nbsp;import android.os.Build;
+<i>6</i>&nbsp;import android.support.annotation.Nullable;
+<i>7</i>&nbsp;import android.support.annotation.StringRes;
+<i>8</i>&nbsp;import android.util.AttributeSet;
+<i>9</i>&nbsp;import android.widget.ScrollView;
+<i>10</i>&nbsp;import android.widget.TextView;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import org.wikipedia.R;
+<i>13</i>&nbsp;import org.wikipedia.util.StringUtil;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import butterknife.BindView;
+<i>16</i>&nbsp;import butterknife.ButterKnife;
+<i>17</i>&nbsp;import butterknife.OnClick;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;public class DescriptionEditHelpView extends ScrollView {
+<i>20</i>&nbsp;    @BindView(R.id.view_description_edit_help_contents) TextView helpText;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    @Nullable private Callback callback;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    public interface Callback {
+<i>25</i>&nbsp;        void onAboutClick();
+<i>26</i>&nbsp;        void onGuideClick();
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    public DescriptionEditHelpView(Context context) {
+<b class="nc"><i>30</i>&nbsp;        super(context);</b>
+<b class="nc"><i>31</i>&nbsp;        init();</b>
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    public DescriptionEditHelpView(Context context, AttributeSet attrs) {
+<b class="nc"><i>35</i>&nbsp;        super(context, attrs);</b>
+<b class="nc"><i>36</i>&nbsp;        init();</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    public DescriptionEditHelpView(Context context, AttributeSet attrs, int defStyleAttr) {
+<b class="nc"><i>40</i>&nbsp;        super(context, attrs, defStyleAttr);</b>
+<b class="nc"><i>41</i>&nbsp;        init();</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+<i>45</i>&nbsp;    public DescriptionEditHelpView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+<b class="nc"><i>46</i>&nbsp;        super(context, attrs, defStyleAttr, defStyleRes);</b>
+<b class="nc"><i>47</i>&nbsp;        init();</b>
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    public void setCallback(@Nullable Callback callback) {
+<b class="nc"><i>51</i>&nbsp;        this.callback = callback;</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    @OnClick(R.id.view_description_edit_help_about) void onAboutClick() {
+<b class="nc"><i>55</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>56</i>&nbsp;            callback.onAboutClick();</b>
+<i>57</i>&nbsp;        }
+<i>58</i>&nbsp;    }
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    @OnClick(R.id.view_description_edit_help_guide) void onGuideClick() {
+<b class="nc"><i>61</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>62</i>&nbsp;            callback.onGuideClick();</b>
+<i>63</i>&nbsp;        }
+<i>64</i>&nbsp;    }
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    private void init() {
+<b class="nc"><i>67</i>&nbsp;        inflate(getContext(), R.layout.view_description_edit_help, this);</b>
+<b class="nc"><i>68</i>&nbsp;        ButterKnife.bind(this);</b>
+<b class="nc"><i>69</i>&nbsp;        String helpStr = getString(R.string.description_edit_help_body)</b>
+<b class="nc"><i>70</i>&nbsp;                .replaceAll(&quot;:helpAboutTitle&quot;, getString(R.string.description_edit_help_about_title))</b>
+<b class="nc"><i>71</i>&nbsp;                .replaceAll(&quot;:helpAboutDescription&quot;, getString(R.string.description_edit_help_description))</b>
+<b class="nc"><i>72</i>&nbsp;                .replaceAll(&quot;:helpTipsTitle&quot;, getString(R.string.description_edit_help_tips))</b>
+<b class="nc"><i>73</i>&nbsp;                .replaceAll(&quot;:helpTipsDescription&quot;, getString(R.string.description_edit_help_tips_description))</b>
+<b class="nc"><i>74</i>&nbsp;                .replaceAll(&quot;:helpTipsExamples&quot;, getString(R.string.description_edit_help_tips_examples))</b>
+<b class="nc"><i>75</i>&nbsp;                .replaceAll(&quot;:helpTipsExample1Hint&quot;, getString(R.string.description_edit_help_tips_example1_hint))</b>
+<b class="nc"><i>76</i>&nbsp;                .replaceAll(&quot;:helpTipsExample1&quot;, getString(R.string.description_edit_help_tips_example1))</b>
+<b class="nc"><i>77</i>&nbsp;                .replaceAll(&quot;:helpTipsExample2Hint&quot;, getString(R.string.description_edit_help_tips_example2_hint))</b>
+<b class="nc"><i>78</i>&nbsp;                .replaceAll(&quot;:helpTipsExample2&quot;, getString(R.string.description_edit_help_tips_example2))</b>
+<b class="nc"><i>79</i>&nbsp;                .replaceAll(&quot;:helpMoreInfo&quot;, getString(R.string.description_edit_help_more_info))</b>
+<b class="nc"><i>80</i>&nbsp;                .replaceAll(&quot;:helpMetaInfo&quot;, getString(R.string.description_edit_help_meta_info));</b>
+<b class="nc"><i>81</i>&nbsp;        helpText.setText(StringUtil.fromHtml(helpStr));</b>
+<i>82</i>&nbsp;    }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;    private String getString(@StringRes int id) {
+<b class="nc"><i>85</i>&nbsp;        return getContext().getString(id);</b>
+<i>86</i>&nbsp;    }
+<i>87</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

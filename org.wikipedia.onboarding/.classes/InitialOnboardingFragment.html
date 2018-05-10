@@ -1,0 +1,290 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: InitialOnboardingFragment</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.onboarding</a> ]
+</div>
+
+<h1>Coverage Summary for Class: InitialOnboardingFragment (org.wikipedia.onboarding)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">InitialOnboardingFragment</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">InitialOnboardingFragment$OnboardingPage</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">InitialOnboardingFragment$OnboardingPagerAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 18)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">InitialOnboardingFragment$PageViewCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 22)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 53)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.onboarding;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Intent;
+<i>4</i>&nbsp;import android.net.Uri;
+<i>5</i>&nbsp;import android.support.annotation.LayoutRes;
+<i>6</i>&nbsp;import android.support.annotation.NonNull;
+<i>7</i>&nbsp;import android.support.v4.view.PagerAdapter;
+<i>8</i>&nbsp;import android.view.LayoutInflater;
+<i>9</i>&nbsp;import android.view.View;
+<i>10</i>&nbsp;import android.view.ViewGroup;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import org.wikipedia.Constants;
+<i>13</i>&nbsp;import org.wikipedia.R;
+<i>14</i>&nbsp;import org.wikipedia.analytics.LoginFunnel;
+<i>15</i>&nbsp;import org.wikipedia.login.LoginActivity;
+<i>16</i>&nbsp;import org.wikipedia.model.EnumCode;
+<i>17</i>&nbsp;import org.wikipedia.model.EnumCodeMap;
+<i>18</i>&nbsp;import org.wikipedia.settings.Prefs;
+<i>19</i>&nbsp;import org.wikipedia.util.FeedbackUtil;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;import static org.wikipedia.util.UriUtil.handleExternalLink;
+<i>22</i>&nbsp;
+<b class="nc"><i>23</i>&nbsp;public class InitialOnboardingFragment extends OnboardingFragment {</b>
+<b class="nc"><i>24</i>&nbsp;    private PageViewCallback pageViewCallback = new PageViewCallback();</b>
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    @NonNull public static InitialOnboardingFragment newInstance() {
+<b class="nc"><i>27</i>&nbsp;        return new InitialOnboardingFragment();</b>
+<i>28</i>&nbsp;    }
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    @Override protected PagerAdapter getAdapter() {
+<b class="nc"><i>31</i>&nbsp;        return new OnboardingPagerAdapter();</b>
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    @Override protected int getDoneButtonText() {
+<b class="nc"><i>35</i>&nbsp;        return R.string.onboarding_get_started;</b>
+<i>36</i>&nbsp;    }
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    @Override protected int getBackgroundResId() {
+<b class="nc"><i>39</i>&nbsp;        return R.drawable.onboarding_gradient_background_135;</b>
+<i>40</i>&nbsp;    }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    @Override public void onActivityResult(int requestCode, int resultCode, final Intent data) {
+<b class="nc"><i>43</i>&nbsp;        if (requestCode == Constants.ACTIVITY_REQUEST_LOGIN</b>
+<i>44</i>&nbsp;                &amp;&amp; resultCode == LoginActivity.RESULT_LOGIN_SUCCESS) {
+<b class="nc"><i>45</i>&nbsp;            FeedbackUtil.showMessage(this, R.string.login_success_toast);</b>
+<b class="nc"><i>46</i>&nbsp;            advancePage();</b>
+<i>47</i>&nbsp;        } else {
+<b class="nc"><i>48</i>&nbsp;            super.onActivityResult(requestCode, resultCode, data);</b>
+<i>49</i>&nbsp;        }
+<i>50</i>&nbsp;    }
+<i>51</i>&nbsp;
+<b class="nc"><i>52</i>&nbsp;    private class PageViewCallback implements OnboardingPageView.Callback {</b>
+<i>53</i>&nbsp;        @Override public void onSwitchChange(@NonNull OnboardingPageView view, boolean checked) {
+<b class="nc"><i>54</i>&nbsp;            if (OnboardingPage.of((int) view.getTag()).equals(OnboardingPage.PAGE_USAGE_DATA)) {</b>
+<b class="nc"><i>55</i>&nbsp;                Prefs.setEventLoggingEnabled(checked);</b>
+<i>56</i>&nbsp;            }
+<i>57</i>&nbsp;        }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;        @Override public void onLinkClick(@NonNull OnboardingPageView view, @NonNull String url) {
+<b class="nc"><i>60</i>&nbsp;            if (url.equals(&quot;#login&quot;)) {</b>
+<b class="nc"><i>61</i>&nbsp;                startActivityForResult(LoginActivity</b>
+<b class="nc"><i>62</i>&nbsp;                        .newIntent(getContext(), LoginFunnel.SOURCE_ONBOARDING),</b>
+<i>63</i>&nbsp;                        Constants.ACTIVITY_REQUEST_LOGIN);
+<b class="nc"><i>64</i>&nbsp;            } else if (url.equals(&quot;#privacy&quot;)) {</b>
+<b class="nc"><i>65</i>&nbsp;                FeedbackUtil.showPrivacyPolicy(getContext());</b>
+<b class="nc"><i>66</i>&nbsp;            } else if (url.equals(&quot;#about&quot;)) {</b>
+<b class="nc"><i>67</i>&nbsp;                FeedbackUtil.showAboutWikipedia(getContext());</b>
+<b class="nc"><i>68</i>&nbsp;            } else if (url.equals(&quot;#offline&quot;)) {</b>
+<b class="nc"><i>69</i>&nbsp;                FeedbackUtil.showOfflineReadingAndData(getContext());</b>
+<i>70</i>&nbsp;            } else {
+<b class="nc"><i>71</i>&nbsp;                handleExternalLink(getActivity(), Uri.parse(url));</b>
+<i>72</i>&nbsp;            }
+<i>73</i>&nbsp;        }
+<i>74</i>&nbsp;    }
+<i>75</i>&nbsp;
+<b class="nc"><i>76</i>&nbsp;    private class OnboardingPagerAdapter extends PagerAdapter {</b>
+<i>77</i>&nbsp;        @Override public Object instantiateItem(ViewGroup container, int position) {
+<b class="nc"><i>78</i>&nbsp;            OnboardingPage page = OnboardingPage.of(position);</b>
+<b class="nc"><i>79</i>&nbsp;            OnboardingPageView view = inflate(page, container);</b>
+<b class="nc"><i>80</i>&nbsp;            view.setTag(position);</b>
+<b class="nc"><i>81</i>&nbsp;            view.setCallback(pageViewCallback);</b>
+<b class="nc"><i>82</i>&nbsp;            if (page.equals(OnboardingPage.PAGE_USAGE_DATA)) {</b>
+<b class="nc"><i>83</i>&nbsp;                view.setSwitchChecked(Prefs.isEventLoggingEnabled());</b>
+<i>84</i>&nbsp;            }
+<b class="nc"><i>85</i>&nbsp;            return view;</b>
+<i>86</i>&nbsp;        }
+<i>87</i>&nbsp;
+<i>88</i>&nbsp;        @NonNull public OnboardingPageView inflate(@NonNull OnboardingPage page,
+<i>89</i>&nbsp;                                                                @NonNull ViewGroup parent) {
+<b class="nc"><i>90</i>&nbsp;            LayoutInflater inflater = LayoutInflater.from(parent.getContext());</b>
+<b class="nc"><i>91</i>&nbsp;            OnboardingPageView view =</b>
+<b class="nc"><i>92</i>&nbsp;                    (OnboardingPageView) inflater.inflate(page.getLayout(), parent, false);</b>
+<b class="nc"><i>93</i>&nbsp;            parent.addView(view);</b>
+<b class="nc"><i>94</i>&nbsp;            return view;</b>
+<i>95</i>&nbsp;        }
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;        @Override public void destroyItem(ViewGroup container, int position, Object object) {
+<b class="nc"><i>98</i>&nbsp;            OnboardingPageView view = ((OnboardingPageView) object);</b>
+<b class="nc"><i>99</i>&nbsp;            view.setCallback(null);</b>
+<b class="nc"><i>100</i>&nbsp;            view.setTag(-1);</b>
+<i>101</i>&nbsp;        }
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;        @Override public int getCount() {
+<b class="nc"><i>104</i>&nbsp;            return OnboardingPage.size();</b>
+<i>105</i>&nbsp;        }
+<i>106</i>&nbsp;
+<i>107</i>&nbsp;        @Override public boolean isViewFromObject(View view, Object object) {
+<b class="nc"><i>108</i>&nbsp;            return view == object;</b>
+<i>109</i>&nbsp;        }
+<i>110</i>&nbsp;    }
+<i>111</i>&nbsp;
+<b class="nc"><i>112</i>&nbsp;    private enum OnboardingPage implements EnumCode {</b>
+<b class="nc"><i>113</i>&nbsp;        PAGE_WELCOME(R.layout.inflate_initial_onboarding_page_zero),</b>
+<b class="nc"><i>114</i>&nbsp;        PAGE_EXPLORE(R.layout.inflate_initial_onboarding_page_one),</b>
+<b class="nc"><i>115</i>&nbsp;        PAGE_READING_LISTS(R.layout.inflate_initial_onboarding_page_two),</b>
+<b class="nc"><i>116</i>&nbsp;        PAGE_USAGE_DATA(R.layout.inflate_initial_onboarding_page_three);</b>
+<i>117</i>&nbsp;
+<b class="nc"><i>118</i>&nbsp;        private static EnumCodeMap&lt;OnboardingPage&gt; MAP</b>
+<i>119</i>&nbsp;                = new EnumCodeMap&lt;&gt;(OnboardingPage.class);
+<i>120</i>&nbsp;
+<i>121</i>&nbsp;        @LayoutRes private final int layout;
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;        int getLayout() {
+<b class="nc"><i>124</i>&nbsp;            return layout;</b>
+<i>125</i>&nbsp;        }
+<i>126</i>&nbsp;
+<i>127</i>&nbsp;        @NonNull public static OnboardingPage of(int code) {
+<b class="nc"><i>128</i>&nbsp;            return MAP.get(code);</b>
+<i>129</i>&nbsp;        }
+<i>130</i>&nbsp;
+<i>131</i>&nbsp;        public static int size() {
+<b class="nc"><i>132</i>&nbsp;            return MAP.size();</b>
+<i>133</i>&nbsp;        }
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;        @Override public int code() {
+<b class="nc"><i>136</i>&nbsp;            return ordinal();</b>
+<i>137</i>&nbsp;        }
+<i>138</i>&nbsp;
+<b class="nc"><i>139</i>&nbsp;        OnboardingPage(@LayoutRes int layout) {</b>
+<b class="nc"><i>140</i>&nbsp;            this.layout = layout;</b>
+<i>141</i>&nbsp;        }
+<i>142</i>&nbsp;    }
+<i>143</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

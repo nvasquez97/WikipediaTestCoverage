@@ -1,0 +1,397 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ThemeChooserDialog</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.theme</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ThemeChooserDialog (org.wikipedia.theme)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ThemeChooserDialog</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 55)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ThemeChooserDialog$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ThemeChooserDialog$FontSizeAction</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ThemeChooserDialog$FontSizeButtonListener</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ThemeChooserDialog$ThemeButtonListener</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 85)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.theme;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.DialogInterface;
+<i>4</i>&nbsp;import android.os.Bundle;
+<i>5</i>&nbsp;import android.support.annotation.Nullable;
+<i>6</i>&nbsp;import android.support.v4.content.ContextCompat;
+<i>7</i>&nbsp;import android.support.v7.widget.SwitchCompat;
+<i>8</i>&nbsp;import android.view.LayoutInflater;
+<i>9</i>&nbsp;import android.view.View;
+<i>10</i>&nbsp;import android.view.ViewGroup;
+<i>11</i>&nbsp;import android.widget.ProgressBar;
+<i>12</i>&nbsp;import android.widget.SeekBar;
+<i>13</i>&nbsp;import android.widget.TextView;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import com.squareup.otto.Subscribe;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;import org.wikipedia.R;
+<i>18</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>19</i>&nbsp;import org.wikipedia.activity.FragmentUtil;
+<i>20</i>&nbsp;import org.wikipedia.analytics.AppearanceChangeFunnel;
+<i>21</i>&nbsp;import org.wikipedia.events.WebViewInvalidateEvent;
+<i>22</i>&nbsp;import org.wikipedia.page.ExtendedBottomSheetDialogFragment;
+<i>23</i>&nbsp;import org.wikipedia.settings.Prefs;
+<i>24</i>&nbsp;import org.wikipedia.util.DimenUtil;
+<i>25</i>&nbsp;import org.wikipedia.util.FeedbackUtil;
+<i>26</i>&nbsp;import org.wikipedia.util.ResourceUtil;
+<i>27</i>&nbsp;import org.wikipedia.views.DiscreteSeekBar;
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;import butterknife.BindView;
+<i>30</i>&nbsp;import butterknife.ButterKnife;
+<i>31</i>&nbsp;import butterknife.OnCheckedChanged;
+<i>32</i>&nbsp;import butterknife.Unbinder;
+<i>33</i>&nbsp;
+<b class="nc"><i>34</i>&nbsp;public class ThemeChooserDialog extends ExtendedBottomSheetDialogFragment {</b>
+<i>35</i>&nbsp;    @BindView(R.id.buttonDecreaseTextSize) TextView buttonDecreaseTextSize;
+<i>36</i>&nbsp;    @BindView(R.id.buttonIncreaseTextSize) TextView buttonIncreaseTextSize;
+<i>37</i>&nbsp;    @BindView(R.id.text_size_percent) TextView textSizePercent;
+<i>38</i>&nbsp;    @BindView(R.id.text_size_seek_bar) DiscreteSeekBar textSizeSeekBar;
+<i>39</i>&nbsp;    @BindView(R.id.button_theme_light) TextView buttonThemeLight;
+<i>40</i>&nbsp;    @BindView(R.id.button_theme_dark) TextView buttonThemeDark;
+<i>41</i>&nbsp;    @BindView(R.id.button_theme_black) TextView buttonThemeBlack;
+<i>42</i>&nbsp;    @BindView(R.id.button_theme_light_highlight) View buttonThemeLightHighlight;
+<i>43</i>&nbsp;    @BindView(R.id.button_theme_dark_highlight) View buttonThemeDarkHighlight;
+<i>44</i>&nbsp;    @BindView(R.id.button_theme_black_highlight) View buttonThemeBlackHighlight;
+<i>45</i>&nbsp;    @BindView(R.id.theme_chooser_dark_mode_dim_images_switch) SwitchCompat dimImagesSwitch;
+<i>46</i>&nbsp;    @BindView(R.id.font_change_progress_bar) ProgressBar fontChangeProgressBar;
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    public interface Callback {
+<i>49</i>&nbsp;        void onToggleDimImages();
+<i>50</i>&nbsp;        void onCancel();
+<i>51</i>&nbsp;    }
+<i>52</i>&nbsp;
+<b class="nc"><i>53</i>&nbsp;    private enum FontSizeAction { INCREASE, DECREASE, RESET }</b>
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    private WikipediaApp app;
+<i>56</i>&nbsp;    private Unbinder unbinder;
+<i>57</i>&nbsp;    private AppearanceChangeFunnel funnel;
+<i>58</i>&nbsp;
+<b class="nc"><i>59</i>&nbsp;    private boolean updatingFont = false;</b>
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    @Override
+<i>62</i>&nbsp;    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+<b class="nc"><i>63</i>&nbsp;        View rootView = inflater.inflate(R.layout.dialog_theme_chooser, container);</b>
+<b class="nc"><i>64</i>&nbsp;        unbinder = ButterKnife.bind(this, rootView);</b>
+<b class="nc"><i>65</i>&nbsp;        buttonDecreaseTextSize.setOnClickListener(new FontSizeButtonListener(FontSizeAction.DECREASE));</b>
+<b class="nc"><i>66</i>&nbsp;        buttonIncreaseTextSize.setOnClickListener(new FontSizeButtonListener(FontSizeAction.INCREASE));</b>
+<b class="nc"><i>67</i>&nbsp;        FeedbackUtil.setToolbarButtonLongPressToast(buttonDecreaseTextSize, buttonIncreaseTextSize);</b>
+<b class="nc"><i>68</i>&nbsp;        buttonThemeLight.setOnClickListener(new ThemeButtonListener(Theme.LIGHT));</b>
+<b class="nc"><i>69</i>&nbsp;        buttonThemeDark.setOnClickListener(new ThemeButtonListener(Theme.DARK));</b>
+<b class="nc"><i>70</i>&nbsp;        buttonThemeBlack.setOnClickListener(new ThemeButtonListener(Theme.BLACK));</b>
+<i>71</i>&nbsp;
+<b class="nc"><i>72</i>&nbsp;        textSizeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {</b>
+<i>73</i>&nbsp;            @Override
+<i>74</i>&nbsp;            public void onProgressChanged(SeekBar seekBar, int value, boolean fromUser) {
+<b class="nc"><i>75</i>&nbsp;                if (!fromUser) {</b>
+<i>76</i>&nbsp;                    return;
+<i>77</i>&nbsp;                }
+<b class="nc"><i>78</i>&nbsp;                int currentMultiplier = Prefs.getTextSizeMultiplier();</b>
+<b class="nc"><i>79</i>&nbsp;                boolean changed = app.setFontSizeMultiplier(textSizeSeekBar.getValue());</b>
+<b class="nc"><i>80</i>&nbsp;                if (changed) {</b>
+<b class="nc"><i>81</i>&nbsp;                    updatingFont = true;</b>
+<b class="nc"><i>82</i>&nbsp;                    updateFontSize();</b>
+<b class="nc"><i>83</i>&nbsp;                    funnel.logFontSizeChange(currentMultiplier, Prefs.getTextSizeMultiplier());</b>
+<i>84</i>&nbsp;                }
+<i>85</i>&nbsp;            }
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;            @Override
+<i>88</i>&nbsp;            public void onStartTrackingTouch(SeekBar seekBar) {
+<i>89</i>&nbsp;            }
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;            @Override
+<i>92</i>&nbsp;            public void onStopTrackingTouch(SeekBar seekBar) {
+<i>93</i>&nbsp;            }
+<i>94</i>&nbsp;        });
+<i>95</i>&nbsp;
+<b class="nc"><i>96</i>&nbsp;        updateComponents();</b>
+<b class="nc"><i>97</i>&nbsp;        disableBackgroundDim();</b>
+<b class="nc"><i>98</i>&nbsp;        return rootView;</b>
+<i>99</i>&nbsp;    }
+<i>100</i>&nbsp;
+<i>101</i>&nbsp;    @Override
+<i>102</i>&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>103</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>104</i>&nbsp;        app = WikipediaApp.getInstance();</b>
+<b class="nc"><i>105</i>&nbsp;        app.getBus().register(this);</b>
+<b class="nc"><i>106</i>&nbsp;        funnel = new AppearanceChangeFunnel(app, app.getWikiSite());</b>
+<i>107</i>&nbsp;    }
+<i>108</i>&nbsp;
+<i>109</i>&nbsp;    @Override
+<i>110</i>&nbsp;    public void onDestroyView() {
+<b class="nc"><i>111</i>&nbsp;        super.onDestroyView();</b>
+<b class="nc"><i>112</i>&nbsp;        unbinder.unbind();</b>
+<i>113</i>&nbsp;    }
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;    @Override
+<i>116</i>&nbsp;    public void onDestroy() {
+<b class="nc"><i>117</i>&nbsp;        super.onDestroy();</b>
+<b class="nc"><i>118</i>&nbsp;        app.getBus().unregister(this);</b>
+<i>119</i>&nbsp;    }
+<i>120</i>&nbsp;
+<i>121</i>&nbsp;    @Override
+<i>122</i>&nbsp;    public void onCancel(DialogInterface dialog) {
+<b class="nc"><i>123</i>&nbsp;        super.onCancel(dialog);</b>
+<b class="nc"><i>124</i>&nbsp;        if (callback() != null) {</b>
+<i>125</i>&nbsp;            // noinspection ConstantConditions
+<b class="nc"><i>126</i>&nbsp;            callback().onCancel();</b>
+<i>127</i>&nbsp;        }
+<i>128</i>&nbsp;    }
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;    @Subscribe public void on(WebViewInvalidateEvent event) {
+<b class="nc"><i>131</i>&nbsp;        updatingFont = false;</b>
+<b class="nc"><i>132</i>&nbsp;        updateComponents();</b>
+<i>133</i>&nbsp;    }
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;    @OnCheckedChanged(R.id.theme_chooser_dark_mode_dim_images_switch)
+<i>136</i>&nbsp;    void onToggleDimImages(boolean enabled) {
+<b class="nc"><i>137</i>&nbsp;        if (enabled == Prefs.shouldDimDarkModeImages()) {</b>
+<i>138</i>&nbsp;            return;
+<i>139</i>&nbsp;        }
+<b class="nc"><i>140</i>&nbsp;        Prefs.setDimDarkModeImages(enabled);</b>
+<b class="nc"><i>141</i>&nbsp;        if (callback() != null) {</b>
+<i>142</i>&nbsp;            // noinspection ConstantConditions
+<b class="nc"><i>143</i>&nbsp;            callback().onToggleDimImages();</b>
+<i>144</i>&nbsp;        }
+<i>145</i>&nbsp;    }
+<i>146</i>&nbsp;
+<i>147</i>&nbsp;    private void updateComponents() {
+<b class="nc"><i>148</i>&nbsp;        updateFontSize();</b>
+<b class="nc"><i>149</i>&nbsp;        updateThemeButtons();</b>
+<b class="nc"><i>150</i>&nbsp;        updateDimImagesSwitch();</b>
+<i>151</i>&nbsp;    }
+<i>152</i>&nbsp;
+<i>153</i>&nbsp;    @SuppressWarnings(&quot;checkstyle:magicnumber&quot;)
+<i>154</i>&nbsp;    private void updateFontSize() {
+<b class="nc"><i>155</i>&nbsp;        int mult = Prefs.getTextSizeMultiplier();</b>
+<b class="nc"><i>156</i>&nbsp;        textSizeSeekBar.setValue(mult);</b>
+<b class="nc"><i>157</i>&nbsp;        String percentStr = getString(R.string.text_size_percent,</b>
+<b class="nc"><i>158</i>&nbsp;                (int) (100 * (1 + mult * DimenUtil.getFloat(R.dimen.textSizeMultiplierFactor))));</b>
+<b class="nc"><i>159</i>&nbsp;        textSizePercent.setText(mult == 0</b>
+<b class="nc"><i>160</i>&nbsp;                ? getString(R.string.text_size_percent_default, percentStr) : percentStr);</b>
+<b class="nc"><i>161</i>&nbsp;        if (updatingFont) {</b>
+<b class="nc"><i>162</i>&nbsp;            fontChangeProgressBar.setVisibility(View.VISIBLE);</b>
+<i>163</i>&nbsp;        } else {
+<b class="nc"><i>164</i>&nbsp;            fontChangeProgressBar.setVisibility(View.GONE);</b>
+<i>165</i>&nbsp;        }
+<i>166</i>&nbsp;    }
+<i>167</i>&nbsp;
+<i>168</i>&nbsp;    private void updateThemeButtons() {
+<b class="nc"><i>169</i>&nbsp;        buttonThemeLightHighlight.setVisibility(app.getCurrentTheme() == Theme.LIGHT ? View.VISIBLE : View.GONE);</b>
+<b class="nc"><i>170</i>&nbsp;        buttonThemeLight.setClickable(app.getCurrentTheme() != Theme.LIGHT);</b>
+<b class="nc"><i>171</i>&nbsp;        buttonThemeDarkHighlight.setVisibility(app.getCurrentTheme() == Theme.DARK ? View.VISIBLE : View.GONE);</b>
+<b class="nc"><i>172</i>&nbsp;        buttonThemeDark.setClickable(app.getCurrentTheme() != Theme.DARK);</b>
+<b class="nc"><i>173</i>&nbsp;        buttonThemeBlackHighlight.setVisibility(app.getCurrentTheme() == Theme.BLACK ? View.VISIBLE : View.GONE);</b>
+<b class="nc"><i>174</i>&nbsp;        buttonThemeBlack.setClickable(app.getCurrentTheme() != Theme.BLACK);</b>
+<i>175</i>&nbsp;    }
+<i>176</i>&nbsp;
+<i>177</i>&nbsp;    private void updateDimImagesSwitch() {
+<b class="nc"><i>178</i>&nbsp;        dimImagesSwitch.setChecked(Prefs.shouldDimDarkModeImages());</b>
+<b class="nc"><i>179</i>&nbsp;        dimImagesSwitch.setEnabled(app.getCurrentTheme().isDark());</b>
+<b class="nc"><i>180</i>&nbsp;        dimImagesSwitch.setTextColor(dimImagesSwitch.isEnabled()</b>
+<b class="nc"><i>181</i>&nbsp;                ? ResourceUtil.getThemedColor(getContext(), R.attr.section_title_color)</b>
+<b class="nc"><i>182</i>&nbsp;                : ContextCompat.getColor(getContext(), R.color.black26));</b>
+<i>183</i>&nbsp;    }
+<i>184</i>&nbsp;
+<b class="nc"><i>185</i>&nbsp;    private final class ThemeButtonListener implements View.OnClickListener {</b>
+<i>186</i>&nbsp;        private Theme theme;
+<i>187</i>&nbsp;
+<b class="nc"><i>188</i>&nbsp;        private ThemeButtonListener(Theme theme) {</b>
+<b class="nc"><i>189</i>&nbsp;            this.theme = theme;</b>
+<i>190</i>&nbsp;        }
+<i>191</i>&nbsp;
+<i>192</i>&nbsp;        @Override
+<i>193</i>&nbsp;        public void onClick(View v) {
+<b class="nc"><i>194</i>&nbsp;            if (app.getCurrentTheme() != theme) {</b>
+<b class="nc"><i>195</i>&nbsp;                funnel.logThemeChange(app.getCurrentTheme(), theme);</b>
+<b class="nc"><i>196</i>&nbsp;                app.setCurrentTheme(theme);</b>
+<i>197</i>&nbsp;            }
+<i>198</i>&nbsp;        }
+<i>199</i>&nbsp;    }
+<i>200</i>&nbsp;
+<b class="nc"><i>201</i>&nbsp;    private final class FontSizeButtonListener implements View.OnClickListener {</b>
+<i>202</i>&nbsp;        private FontSizeAction action;
+<i>203</i>&nbsp;
+<b class="nc"><i>204</i>&nbsp;        private FontSizeButtonListener(FontSizeAction action) {</b>
+<b class="nc"><i>205</i>&nbsp;            this.action = action;</b>
+<i>206</i>&nbsp;        }
+<i>207</i>&nbsp;
+<i>208</i>&nbsp;        @Override
+<i>209</i>&nbsp;        public void onClick(View view) {
+<b class="nc"><i>210</i>&nbsp;            boolean changed = false;</b>
+<b class="nc"><i>211</i>&nbsp;            int currentMultiplier = Prefs.getTextSizeMultiplier();</b>
+<b class="nc"><i>212</i>&nbsp;            if (action == FontSizeAction.INCREASE) {</b>
+<b class="nc"><i>213</i>&nbsp;                changed = app.setFontSizeMultiplier(Prefs.getTextSizeMultiplier() + 1);</b>
+<b class="nc"><i>214</i>&nbsp;            } else if (action == FontSizeAction.DECREASE) {</b>
+<b class="nc"><i>215</i>&nbsp;                changed = app.setFontSizeMultiplier(Prefs.getTextSizeMultiplier() - 1);</b>
+<b class="nc"><i>216</i>&nbsp;            } else if (action == FontSizeAction.RESET) {</b>
+<b class="nc"><i>217</i>&nbsp;                changed = app.setFontSizeMultiplier(0);</b>
+<i>218</i>&nbsp;            }
+<b class="nc"><i>219</i>&nbsp;            if (changed) {</b>
+<b class="nc"><i>220</i>&nbsp;                updatingFont = true;</b>
+<b class="nc"><i>221</i>&nbsp;                updateFontSize();</b>
+<b class="nc"><i>222</i>&nbsp;                funnel.logFontSizeChange(currentMultiplier, Prefs.getTextSizeMultiplier());</b>
+<i>223</i>&nbsp;            }
+<i>224</i>&nbsp;        }
+<i>225</i>&nbsp;    }
+<i>226</i>&nbsp;
+<i>227</i>&nbsp;    @Nullable
+<i>228</i>&nbsp;    public Callback callback() {
+<b class="nc"><i>229</i>&nbsp;        return FragmentUtil.getCallback(this, Callback.class);</b>
+<i>230</i>&nbsp;    }
+<i>231</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

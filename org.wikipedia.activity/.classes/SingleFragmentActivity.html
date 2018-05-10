@@ -1,0 +1,137 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SingleFragmentActivity</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.activity</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SingleFragmentActivity (org.wikipedia.activity)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SingleFragmentActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.activity;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.os.Bundle;
+<i>4</i>&nbsp;import android.support.annotation.IdRes;
+<i>5</i>&nbsp;import android.support.annotation.LayoutRes;
+<i>6</i>&nbsp;import android.support.v4.app.Fragment;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import org.wikipedia.R;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;/**
+<i>11</i>&nbsp; * Boilerplate for a {@link android.support.v4.app.FragmentActivity} containing a single stack of
+<i>12</i>&nbsp; * Fragments.
+<i>13</i>&nbsp; */
+<b class="nc"><i>14</i>&nbsp;public abstract class SingleFragmentActivity&lt;T extends Fragment&gt; extends BaseActivity {</b>
+<i>15</i>&nbsp;    @Override
+<i>16</i>&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>17</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>18</i>&nbsp;        setContentView(getLayout());</b>
+<i>19</i>&nbsp;
+<b class="nc"><i>20</i>&nbsp;        if (!isFragmentCreated()) {</b>
+<b class="nc"><i>21</i>&nbsp;            addFragment(createFragment());</b>
+<i>22</i>&nbsp;        }
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    protected void addFragment(T fragment) {
+<b class="nc"><i>26</i>&nbsp;        getSupportFragmentManager().beginTransaction().add(getContainerId(), fragment).commit();</b>
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    protected abstract T createFragment();
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    /** @return The Fragment added to the stack. */
+<i>32</i>&nbsp;    protected T getFragment() {
+<i>33</i>&nbsp;        //noinspection unchecked
+<b class="nc"><i>34</i>&nbsp;        return (T) getSupportFragmentManager().findFragmentById(getContainerId());</b>
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    /** @return The resource layout to inflate which must contain a {@link android.view.ViewGroup}
+<i>38</i>&nbsp;     * whose ID is {@link #getContainerId()}. */
+<i>39</i>&nbsp;    @LayoutRes
+<i>40</i>&nbsp;    protected int getLayout() {
+<b class="nc"><i>41</i>&nbsp;        return R.layout.activity_single_fragment;</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    /** @return The resource identifier for the Fragment container. */
+<i>45</i>&nbsp;    @IdRes
+<i>46</i>&nbsp;    protected int getContainerId() {
+<b class="nc"><i>47</i>&nbsp;        return R.id.fragment_container;</b>
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    protected boolean isFragmentCreated() {
+<b class="nc"><i>51</i>&nbsp;        return getFragment() != null;</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

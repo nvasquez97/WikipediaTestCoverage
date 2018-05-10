@@ -1,0 +1,551 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: WikipediaApp</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia</a> ]
+</div>
+
+<h1>Coverage Summary for Class: WikipediaApp (org.wikipedia)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">WikipediaApp</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 41)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 150)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">WikipediaApp$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 44)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 155)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.app.Activity;
+<i>4</i>&nbsp;import android.app.Application;
+<i>5</i>&nbsp;import android.content.IntentFilter;
+<i>6</i>&nbsp;import android.net.ConnectivityManager;
+<i>7</i>&nbsp;import android.os.Build;
+<i>8</i>&nbsp;import android.os.Handler;
+<i>9</i>&nbsp;import android.support.annotation.NonNull;
+<i>10</i>&nbsp;import android.support.annotation.Nullable;
+<i>11</i>&nbsp;import android.support.v7.app.AppCompatDelegate;
+<i>12</i>&nbsp;import android.text.TextUtils;
+<i>13</i>&nbsp;import android.view.Window;
+<i>14</i>&nbsp;import android.webkit.WebView;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;import com.facebook.drawee.backends.pipeline.Fresco;
+<i>17</i>&nbsp;import com.facebook.imagepipeline.core.ImagePipelineConfig;
+<i>18</i>&nbsp;import com.squareup.leakcanary.LeakCanary;
+<i>19</i>&nbsp;import com.squareup.leakcanary.RefWatcher;
+<i>20</i>&nbsp;import com.squareup.otto.Bus;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;import org.wikipedia.analytics.FunnelManager;
+<i>23</i>&nbsp;import org.wikipedia.analytics.SessionFunnel;
+<i>24</i>&nbsp;import org.wikipedia.auth.AccountUtil;
+<i>25</i>&nbsp;import org.wikipedia.concurrency.ThreadSafeBus;
+<i>26</i>&nbsp;import org.wikipedia.connectivity.NetworkConnectivityReceiver;
+<i>27</i>&nbsp;import org.wikipedia.crash.CrashReporter;
+<i>28</i>&nbsp;import org.wikipedia.crash.hockeyapp.HockeyAppCrashReporter;
+<i>29</i>&nbsp;import org.wikipedia.database.Database;
+<i>30</i>&nbsp;import org.wikipedia.database.DatabaseClient;
+<i>31</i>&nbsp;import org.wikipedia.dataclient.SharedPreferenceCookieManager;
+<i>32</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>33</i>&nbsp;import org.wikipedia.dataclient.fresco.DisabledCache;
+<i>34</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwQueryResponse;
+<i>35</i>&nbsp;import org.wikipedia.dataclient.okhttp.CacheableOkHttpNetworkFetcher;
+<i>36</i>&nbsp;import org.wikipedia.dataclient.okhttp.OkHttpConnectionFactory;
+<i>37</i>&nbsp;import org.wikipedia.edit.summaries.EditSummary;
+<i>38</i>&nbsp;import org.wikipedia.events.ChangeTextSizeEvent;
+<i>39</i>&nbsp;import org.wikipedia.events.ThemeChangeEvent;
+<i>40</i>&nbsp;import org.wikipedia.history.HistoryEntry;
+<i>41</i>&nbsp;import org.wikipedia.language.AcceptLanguageUtil;
+<i>42</i>&nbsp;import org.wikipedia.language.AppLanguageState;
+<i>43</i>&nbsp;import org.wikipedia.login.UserExtendedInfoClient;
+<i>44</i>&nbsp;import org.wikipedia.notifications.NotificationPollBroadcastReceiver;
+<i>45</i>&nbsp;import org.wikipedia.pageimages.PageImage;
+<i>46</i>&nbsp;import org.wikipedia.search.RecentSearch;
+<i>47</i>&nbsp;import org.wikipedia.settings.Prefs;
+<i>48</i>&nbsp;import org.wikipedia.settings.RemoteConfig;
+<i>49</i>&nbsp;import org.wikipedia.settings.SiteInfoClient;
+<i>50</i>&nbsp;import org.wikipedia.theme.Theme;
+<i>51</i>&nbsp;import org.wikipedia.util.DimenUtil;
+<i>52</i>&nbsp;import org.wikipedia.util.ReleaseUtil;
+<i>53</i>&nbsp;import org.wikipedia.util.log.L;
+<i>54</i>&nbsp;import org.wikipedia.views.ViewAnimations;
+<i>55</i>&nbsp;import org.wikipedia.zero.WikipediaZeroHandler;
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;import java.util.Collections;
+<i>58</i>&nbsp;import java.util.HashMap;
+<i>59</i>&nbsp;import java.util.List;
+<i>60</i>&nbsp;import java.util.Map;
+<i>61</i>&nbsp;import java.util.UUID;
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;import retrofit2.Call;
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;import static org.apache.commons.lang3.StringUtils.defaultString;
+<i>66</i>&nbsp;import static org.wikipedia.settings.Prefs.getTextSizeMultiplier;
+<i>67</i>&nbsp;import static org.wikipedia.util.DimenUtil.getFontSizeFromSp;
+<i>68</i>&nbsp;import static org.wikipedia.util.ReleaseUtil.getChannel;
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;public class WikipediaApp extends Application {
+<b class="nc"><i>71</i>&nbsp;    private final RemoteConfig remoteConfig = new RemoteConfig();</b>
+<b class="nc"><i>72</i>&nbsp;    private final Map&lt;Class&lt;?&gt;, DatabaseClient&lt;?&gt;&gt; databaseClients = Collections.synchronizedMap(new HashMap&lt;Class&lt;?&gt;, DatabaseClient&lt;?&gt;&gt;());</b>
+<i>73</i>&nbsp;    private Handler mainThreadHandler;
+<i>74</i>&nbsp;    private AppLanguageState appLanguageState;
+<i>75</i>&nbsp;    private FunnelManager funnelManager;
+<i>76</i>&nbsp;    private SessionFunnel sessionFunnel;
+<b class="nc"><i>77</i>&nbsp;    private NotificationPollBroadcastReceiver notificationReceiver = new NotificationPollBroadcastReceiver();</b>
+<b class="nc"><i>78</i>&nbsp;    private NetworkConnectivityReceiver connectivityReceiver = new NetworkConnectivityReceiver();</b>
+<i>79</i>&nbsp;    private Database database;
+<i>80</i>&nbsp;    private String userAgent;
+<i>81</i>&nbsp;    private WikiSite wiki;
+<b class="nc"><i>82</i>&nbsp;    private UserExtendedInfoClient userInfoClient = new UserExtendedInfoClient();</b>
+<i>83</i>&nbsp;    private CrashReporter crashReporter;
+<i>84</i>&nbsp;    private RefWatcher refWatcher;
+<i>85</i>&nbsp;    private Bus bus;
+<b class="nc"><i>86</i>&nbsp;    private Theme currentTheme = Theme.getFallback();</b>
+<i>87</i>&nbsp;    private WikipediaZeroHandler zeroHandler;
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;    private static WikipediaApp INSTANCE;
+<i>90</i>&nbsp;
+<b class="nc"><i>91</i>&nbsp;    public WikipediaApp() {</b>
+<b class="nc"><i>92</i>&nbsp;        INSTANCE = this;</b>
+<b class="nc"><i>93</i>&nbsp;    }</b>
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;    public static WikipediaApp getInstance() {
+<b class="nc"><i>96</i>&nbsp;        return INSTANCE;</b>
+<i>97</i>&nbsp;    }
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;    public SessionFunnel getSessionFunnel() {
+<b class="nc"><i>100</i>&nbsp;        return sessionFunnel;</b>
+<i>101</i>&nbsp;    }
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;    public RefWatcher getRefWatcher() {
+<b class="nc"><i>104</i>&nbsp;        return refWatcher;</b>
+<i>105</i>&nbsp;    }
+<i>106</i>&nbsp;
+<i>107</i>&nbsp;    public Bus getBus() {
+<b class="nc"><i>108</i>&nbsp;        return bus;</b>
+<i>109</i>&nbsp;    }
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;    public Database getDatabase() {
+<b class="nc"><i>112</i>&nbsp;        return database;</b>
+<i>113</i>&nbsp;    }
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;    public FunnelManager getFunnelManager() {
+<b class="nc"><i>116</i>&nbsp;        return funnelManager;</b>
+<i>117</i>&nbsp;    }
+<i>118</i>&nbsp;
+<i>119</i>&nbsp;    public WikipediaZeroHandler getWikipediaZeroHandler() {
+<b class="nc"><i>120</i>&nbsp;        return zeroHandler;</b>
+<i>121</i>&nbsp;    }
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;    public RemoteConfig getRemoteConfig() {
+<b class="nc"><i>124</i>&nbsp;        return remoteConfig;</b>
+<i>125</i>&nbsp;    }
+<i>126</i>&nbsp;
+<i>127</i>&nbsp;    /**
+<i>128</i>&nbsp;     * Gets the currently-selected theme for the app.
+<i>129</i>&nbsp;     * @return Theme that is currently selected, which is the actual theme ID that can
+<i>130</i>&nbsp;     * be passed to setTheme() when creating an activity.
+<i>131</i>&nbsp;     */
+<i>132</i>&nbsp;    @NonNull
+<i>133</i>&nbsp;    public Theme getCurrentTheme() {
+<b class="nc"><i>134</i>&nbsp;        return currentTheme;</b>
+<i>135</i>&nbsp;    }
+<i>136</i>&nbsp;
+<i>137</i>&nbsp;    @NonNull
+<i>138</i>&nbsp;    public String getAppLanguageCode() {
+<b class="nc"><i>139</i>&nbsp;        return defaultString(appLanguageState.getAppLanguageCode());</b>
+<i>140</i>&nbsp;    }
+<i>141</i>&nbsp;
+<i>142</i>&nbsp;    @NonNull
+<i>143</i>&nbsp;    public String getAppOrSystemLanguageCode() {
+<b class="nc"><i>144</i>&nbsp;        String code = appLanguageState.getAppOrSystemLanguageCode();</b>
+<b class="nc"><i>145</i>&nbsp;        if (AccountUtil.getUserIdForLanguage(code) == 0) {</b>
+<b class="nc"><i>146</i>&nbsp;            getUserIdForLanguage(code);</b>
+<i>147</i>&nbsp;        }
+<b class="nc"><i>148</i>&nbsp;        return code;</b>
+<i>149</i>&nbsp;    }
+<i>150</i>&nbsp;
+<i>151</i>&nbsp;    @NonNull
+<i>152</i>&nbsp;    public String getSystemLanguageCode() {
+<b class="nc"><i>153</i>&nbsp;        return appLanguageState.getSystemLanguageCode();</b>
+<i>154</i>&nbsp;    }
+<i>155</i>&nbsp;
+<i>156</i>&nbsp;    public void setAppLanguageCode(@Nullable String code) {
+<b class="nc"><i>157</i>&nbsp;        appLanguageState.setAppLanguageCode(code);</b>
+<b class="nc"><i>158</i>&nbsp;        resetWikiSite();</b>
+<b class="nc"><i>159</i>&nbsp;    }</b>
+<i>160</i>&nbsp;
+<i>161</i>&nbsp;    @Nullable
+<i>162</i>&nbsp;    public String getAppOrSystemLanguageLocalizedName() {
+<b class="nc"><i>163</i>&nbsp;        return appLanguageState.getAppOrSystemLanguageLocalizedName();</b>
+<i>164</i>&nbsp;    }
+<i>165</i>&nbsp;
+<i>166</i>&nbsp;    @NonNull
+<i>167</i>&nbsp;    public List&lt;String&gt; getMruLanguageCodes() {
+<b class="nc"><i>168</i>&nbsp;        return appLanguageState.getMruLanguageCodes();</b>
+<i>169</i>&nbsp;    }
+<i>170</i>&nbsp;
+<i>171</i>&nbsp;    @NonNull
+<i>172</i>&nbsp;    public List&lt;String&gt; getAppMruLanguageCodes() {
+<b class="nc"><i>173</i>&nbsp;        return appLanguageState.getAppMruLanguageCodes();</b>
+<i>174</i>&nbsp;    }
+<i>175</i>&nbsp;
+<i>176</i>&nbsp;    public void setMruLanguageCode(@Nullable String code) {
+<b class="nc"><i>177</i>&nbsp;        appLanguageState.setMruLanguageCode(code);</b>
+<b class="nc"><i>178</i>&nbsp;    }</b>
+<i>179</i>&nbsp;
+<i>180</i>&nbsp;    @Nullable
+<i>181</i>&nbsp;    public String getAppLanguageLocalizedName(String code) {
+<b class="nc"><i>182</i>&nbsp;        return appLanguageState.getAppLanguageLocalizedName(code);</b>
+<i>183</i>&nbsp;    }
+<i>184</i>&nbsp;
+<i>185</i>&nbsp;    @Nullable
+<i>186</i>&nbsp;    public String getAppLanguageCanonicalName(String code) {
+<b class="nc"><i>187</i>&nbsp;        return appLanguageState.getAppLanguageCanonicalName(code);</b>
+<i>188</i>&nbsp;    }
+<i>189</i>&nbsp;
+<i>190</i>&nbsp;    @Override
+<i>191</i>&nbsp;    public void onCreate() {
+<b class="nc"><i>192</i>&nbsp;        super.onCreate();</b>
+<i>193</i>&nbsp;
+<b class="nc"><i>194</i>&nbsp;        zeroHandler = new WikipediaZeroHandler(this);</b>
+<i>195</i>&nbsp;
+<i>196</i>&nbsp;        // HockeyApp exception handling interferes with the test runner, so enable it only for
+<i>197</i>&nbsp;        // beta and stable releases
+<b class="nc"><i>198</i>&nbsp;        if (!ReleaseUtil.isPreBetaRelease()) {</b>
+<b class="nc"><i>199</i>&nbsp;            initExceptionHandling();</b>
+<i>200</i>&nbsp;        }
+<i>201</i>&nbsp;
+<b class="nc"><i>202</i>&nbsp;        refWatcher = Prefs.isMemoryLeakTestEnabled() ? LeakCanary.install(this) : RefWatcher.DISABLED;</b>
+<i>203</i>&nbsp;
+<i>204</i>&nbsp;        // See Javadocs and http://developer.android.com/tools/support-library/index.html#rev23-4-0
+<b class="nc"><i>205</i>&nbsp;        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);</b>
+<i>206</i>&nbsp;
+<b class="nc"><i>207</i>&nbsp;        bus = new ThreadSafeBus();</b>
+<i>208</i>&nbsp;
+<b class="nc"><i>209</i>&nbsp;        ViewAnimations.init(getResources());</b>
+<b class="nc"><i>210</i>&nbsp;        currentTheme = unmarshalCurrentTheme();</b>
+<i>211</i>&nbsp;
+<b class="nc"><i>212</i>&nbsp;        appLanguageState = new AppLanguageState(this);</b>
+<b class="nc"><i>213</i>&nbsp;        funnelManager = new FunnelManager(this);</b>
+<b class="nc"><i>214</i>&nbsp;        sessionFunnel = new SessionFunnel(this);</b>
+<b class="nc"><i>215</i>&nbsp;        database = new Database(this);</b>
+<i>216</i>&nbsp;
+<b class="nc"><i>217</i>&nbsp;        enableWebViewDebugging();</b>
+<i>218</i>&nbsp;
+<b class="nc"><i>219</i>&nbsp;        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)</b>
+<b class="nc"><i>220</i>&nbsp;                .setNetworkFetcher(new CacheableOkHttpNetworkFetcher(OkHttpConnectionFactory.getClient()))</b>
+<b class="nc"><i>221</i>&nbsp;                .setFileCacheFactory(DisabledCache.factory())</b>
+<b class="nc"><i>222</i>&nbsp;                .build();</b>
+<i>223</i>&nbsp;        try {
+<b class="nc"><i>224</i>&nbsp;            Fresco.initialize(this, config);</b>
+<b class="nc"><i>225</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i>226</i>&nbsp;            L.e(e);</b>
+<i>227</i>&nbsp;            // TODO: Remove when we&#39;re able to initialize Fresco in test builds.
+<b class="nc"><i>228</i>&nbsp;        }</b>
+<i>229</i>&nbsp;
+<i>230</i>&nbsp;        // TODO: Remove when user accounts have been migrated to AccountManager (June 2018)
+<b class="nc"><i>231</i>&nbsp;        AccountUtil.migrateAccountFromSharedPrefs();</b>
+<i>232</i>&nbsp;
+<b class="nc"><i>233</i>&nbsp;        registerConnectivityReceiver();</b>
+<i>234</i>&nbsp;
+<b class="nc"><i>235</i>&nbsp;        listenForNotifications();</b>
+<b class="nc"><i>236</i>&nbsp;    }</b>
+<i>237</i>&nbsp;
+<i>238</i>&nbsp;    public String getUserAgent() {
+<b class="nc"><i>239</i>&nbsp;        if (userAgent == null) {</b>
+<b class="nc"><i>240</i>&nbsp;            String channel = getChannel(this);</b>
+<b class="nc"><i>241</i>&nbsp;            channel = channel.equals(&quot;&quot;) ? channel : &quot; &quot;.concat(channel);</b>
+<b class="nc"><i>242</i>&nbsp;            userAgent = String.format(&quot;WikipediaApp/%s (Android %s; %s)%s&quot;,</b>
+<i>243</i>&nbsp;                    BuildConfig.VERSION_NAME,
+<i>244</i>&nbsp;                    Build.VERSION.RELEASE,
+<b class="nc"><i>245</i>&nbsp;                    getString(R.string.device_type),</b>
+<i>246</i>&nbsp;                    channel
+<i>247</i>&nbsp;            );
+<i>248</i>&nbsp;        }
+<b class="nc"><i>249</i>&nbsp;        return userAgent;</b>
+<i>250</i>&nbsp;    }
+<i>251</i>&nbsp;
+<i>252</i>&nbsp;    /**
+<i>253</i>&nbsp;     * @return the value that should go in the Accept-Language header.
+<i>254</i>&nbsp;     */
+<i>255</i>&nbsp;    @NonNull
+<i>256</i>&nbsp;    public String getAcceptLanguage(@Nullable WikiSite wiki) {
+<b class="nc"><i>257</i>&nbsp;        String wikiLang = wiki == null || &quot;meta&quot;.equals(wiki.languageCode())</b>
+<i>258</i>&nbsp;                ? &quot;&quot;
+<b class="nc"><i>259</i>&nbsp;                : defaultString(wiki.languageCode());</b>
+<b class="nc"><i>260</i>&nbsp;        return AcceptLanguageUtil.getAcceptLanguage(wikiLang, getAppLanguageCode(),</b>
+<b class="nc"><i>261</i>&nbsp;                appLanguageState.getSystemLanguageCode());</b>
+<i>262</i>&nbsp;    }
+<i>263</i>&nbsp;
+<i>264</i>&nbsp;    /**
+<i>265</i>&nbsp;     * Default wiki for the app
+<i>266</i>&nbsp;     * You should use PageTitle.getWikiSite() to get the article wiki
+<i>267</i>&nbsp;     */
+<i>268</i>&nbsp;    @NonNull public WikiSite getWikiSite() {
+<i>269</i>&nbsp;        // TODO: why don&#39;t we ensure that the app language hasn&#39;t changed here instead of the client?
+<b class="nc"><i>270</i>&nbsp;        if (wiki == null) {</b>
+<b class="nc"><i>271</i>&nbsp;            String lang = Prefs.getMediaWikiBaseUriSupportsLangCode() ? getAppOrSystemLanguageCode() : &quot;&quot;;</b>
+<b class="nc"><i>272</i>&nbsp;            wiki = WikiSite.forLanguageCode(lang);</b>
+<i>273</i>&nbsp;            // Kick off a task to retrieve the site info for the current wiki
+<b class="nc"><i>274</i>&nbsp;            new SiteInfoClient().request(wiki, null);</b>
+<i>275</i>&nbsp;        }
+<b class="nc"><i>276</i>&nbsp;        return wiki;</b>
+<i>277</i>&nbsp;    }
+<i>278</i>&nbsp;
+<i>279</i>&nbsp;    public &lt;T&gt; DatabaseClient&lt;T&gt; getDatabaseClient(Class&lt;T&gt; cls) {
+<b class="nc"><i>280</i>&nbsp;        if (!databaseClients.containsKey(cls)) {</b>
+<i>281</i>&nbsp;            DatabaseClient&lt;?&gt; client;
+<b class="nc"><i>282</i>&nbsp;            if (cls.equals(HistoryEntry.class)) {</b>
+<b class="nc"><i>283</i>&nbsp;                client = new DatabaseClient&lt;&gt;(this, HistoryEntry.DATABASE_TABLE);</b>
+<b class="nc"><i>284</i>&nbsp;            } else if (cls.equals(PageImage.class)) {</b>
+<b class="nc"><i>285</i>&nbsp;                client = new DatabaseClient&lt;&gt;(this, PageImage.DATABASE_TABLE);</b>
+<b class="nc"><i>286</i>&nbsp;            } else if (cls.equals(RecentSearch.class)) {</b>
+<b class="nc"><i>287</i>&nbsp;                client = new DatabaseClient&lt;&gt;(this, RecentSearch.DATABASE_TABLE);</b>
+<b class="nc"><i>288</i>&nbsp;            } else if (cls.equals(EditSummary.class)) {</b>
+<b class="nc"><i>289</i>&nbsp;                client = new DatabaseClient&lt;&gt;(this, EditSummary.DATABASE_TABLE);</b>
+<i>290</i>&nbsp;            } else {
+<b class="nc"><i>291</i>&nbsp;                throw new RuntimeException(&quot;No persister found for class &quot; + cls.getCanonicalName());</b>
+<i>292</i>&nbsp;            }
+<b class="nc"><i>293</i>&nbsp;            databaseClients.put(cls, client);</b>
+<i>294</i>&nbsp;        }
+<i>295</i>&nbsp;        //noinspection unchecked
+<b class="nc"><i>296</i>&nbsp;        return (DatabaseClient&lt;T&gt;) databaseClients.get(cls);</b>
+<i>297</i>&nbsp;    }
+<i>298</i>&nbsp;
+<i>299</i>&nbsp;    /**
+<i>300</i>&nbsp;     * Get this app&#39;s unique install ID, which is a UUID that should be unique for each install
+<i>301</i>&nbsp;     * of the app. Useful for anonymous analytics.
+<i>302</i>&nbsp;     * @return Unique install ID for this app.
+<i>303</i>&nbsp;     */
+<i>304</i>&nbsp;    public String getAppInstallID() {
+<b class="nc"><i>305</i>&nbsp;        String id = Prefs.getAppInstallId();</b>
+<b class="nc"><i>306</i>&nbsp;        if (id == null) {</b>
+<b class="nc"><i>307</i>&nbsp;            id = UUID.randomUUID().toString();</b>
+<b class="nc"><i>308</i>&nbsp;            Prefs.setAppInstallId(id);</b>
+<i>309</i>&nbsp;        }
+<b class="nc"><i>310</i>&nbsp;        return id;</b>
+<i>311</i>&nbsp;    }
+<i>312</i>&nbsp;
+<i>313</i>&nbsp;    /**
+<i>314</i>&nbsp;     * Sets the theme of the app. If the new theme is the same as the current theme, nothing happens.
+<i>315</i>&nbsp;     * Otherwise, an event is sent to notify of the theme change.
+<i>316</i>&nbsp;     */
+<i>317</i>&nbsp;    public void setCurrentTheme(@NonNull Theme theme) {
+<b class="nc"><i>318</i>&nbsp;        if (theme != currentTheme) {</b>
+<b class="nc"><i>319</i>&nbsp;            currentTheme = theme;</b>
+<b class="nc"><i>320</i>&nbsp;            Prefs.setThemeId(currentTheme.getMarshallingId());</b>
+<b class="nc"><i>321</i>&nbsp;            bus.post(new ThemeChangeEvent());</b>
+<i>322</i>&nbsp;        }
+<b class="nc"><i>323</i>&nbsp;    }</b>
+<i>324</i>&nbsp;
+<i>325</i>&nbsp;    public boolean setFontSizeMultiplier(int multiplier) {
+<b class="nc"><i>326</i>&nbsp;        int minMultiplier = getResources().getInteger(R.integer.minTextSizeMultiplier);</b>
+<b class="nc"><i>327</i>&nbsp;        int maxMultiplier = getResources().getInteger(R.integer.maxTextSizeMultiplier);</b>
+<b class="nc"><i>328</i>&nbsp;        if (multiplier &lt; minMultiplier) {</b>
+<b class="nc"><i>329</i>&nbsp;            multiplier = minMultiplier;</b>
+<b class="nc"><i>330</i>&nbsp;        } else if (multiplier &gt; maxMultiplier) {</b>
+<b class="nc"><i>331</i>&nbsp;            multiplier = maxMultiplier;</b>
+<i>332</i>&nbsp;        }
+<b class="nc"><i>333</i>&nbsp;        if (multiplier != getTextSizeMultiplier()) {</b>
+<b class="nc"><i>334</i>&nbsp;            Prefs.setTextSizeMultiplier(multiplier);</b>
+<b class="nc"><i>335</i>&nbsp;            bus.post(new ChangeTextSizeEvent());</b>
+<b class="nc"><i>336</i>&nbsp;            return true;</b>
+<i>337</i>&nbsp;        }
+<b class="nc"><i>338</i>&nbsp;        return false;</b>
+<i>339</i>&nbsp;    }
+<i>340</i>&nbsp;
+<i>341</i>&nbsp;    public void putCrashReportProperty(String key, String value) {
+<b class="nc"><i>342</i>&nbsp;        if (!ReleaseUtil.isPreBetaRelease()) {</b>
+<b class="nc"><i>343</i>&nbsp;            crashReporter.putReportProperty(key, value);</b>
+<i>344</i>&nbsp;        }
+<b class="nc"><i>345</i>&nbsp;    }</b>
+<i>346</i>&nbsp;
+<i>347</i>&nbsp;    public void checkCrashes(@NonNull Activity activity) {
+<b class="nc"><i>348</i>&nbsp;        if (!ReleaseUtil.isPreBetaRelease()) {</b>
+<b class="nc"><i>349</i>&nbsp;            crashReporter.checkCrashes(activity);</b>
+<i>350</i>&nbsp;        }
+<b class="nc"><i>351</i>&nbsp;    }</b>
+<i>352</i>&nbsp;
+<i>353</i>&nbsp;    public Handler getMainThreadHandler() {
+<b class="nc"><i>354</i>&nbsp;        if (mainThreadHandler == null) {</b>
+<b class="nc"><i>355</i>&nbsp;            mainThreadHandler = new Handler(getMainLooper());</b>
+<i>356</i>&nbsp;        }
+<b class="nc"><i>357</i>&nbsp;        return mainThreadHandler;</b>
+<i>358</i>&nbsp;    }
+<i>359</i>&nbsp;
+<i>360</i>&nbsp;    /**
+<i>361</i>&nbsp;     * Gets the current size of the app&#39;s font. This is given as a device-specific size (not &quot;sp&quot;),
+<i>362</i>&nbsp;     * and can be passed directly to setTextSize() functions.
+<i>363</i>&nbsp;     * @param window The window on which the font will be displayed.
+<i>364</i>&nbsp;     * @return Actual current size of the font.
+<i>365</i>&nbsp;     */
+<i>366</i>&nbsp;    public float getFontSize(Window window) {
+<b class="nc"><i>367</i>&nbsp;        return getFontSizeFromSp(window,</b>
+<b class="nc"><i>368</i>&nbsp;                getResources().getDimension(R.dimen.textSize)) * (1.0f + getTextSizeMultiplier()</b>
+<b class="nc"><i>369</i>&nbsp;                * DimenUtil.getFloat(R.dimen.textSizeMultiplierFactor));</b>
+<i>370</i>&nbsp;    }
+<i>371</i>&nbsp;
+<i>372</i>&nbsp;    public void resetWikiSite() {
+<b class="nc"><i>373</i>&nbsp;        wiki = null;</b>
+<b class="nc"><i>374</i>&nbsp;    }</b>
+<i>375</i>&nbsp;
+<i>376</i>&nbsp;    public void logOut() {
+<b class="nc"><i>377</i>&nbsp;        L.v(&quot;logging out&quot;);</b>
+<b class="nc"><i>378</i>&nbsp;        AccountUtil.removeAccount();</b>
+<b class="nc"><i>379</i>&nbsp;        SharedPreferenceCookieManager.getInstance().clearAllCookies();</b>
+<b class="nc"><i>380</i>&nbsp;    }</b>
+<i>381</i>&nbsp;
+<i>382</i>&nbsp;    public void listenForNotifications() {
+<b class="nc"><i>383</i>&nbsp;        if (!Prefs.suppressNotificationPolling()) {</b>
+<b class="nc"><i>384</i>&nbsp;            notificationReceiver.startPollTask(this);</b>
+<i>385</i>&nbsp;        }
+<b class="nc"><i>386</i>&nbsp;    }</b>
+<i>387</i>&nbsp;
+<i>388</i>&nbsp;    private void initExceptionHandling() {
+<b class="nc"><i>389</i>&nbsp;        crashReporter = new HockeyAppCrashReporter(getString(R.string.hockeyapp_app_id), consentAccessor());</b>
+<b class="nc"><i>390</i>&nbsp;        crashReporter.registerCrashHandler(this);</b>
+<i>391</i>&nbsp;
+<b class="nc"><i>392</i>&nbsp;        L.setRemoteLogger(crashReporter);</b>
+<b class="nc"><i>393</i>&nbsp;    }</b>
+<i>394</i>&nbsp;
+<i>395</i>&nbsp;    private CrashReporter.AutoUploadConsentAccessor consentAccessor() {
+<b class="nc"><i>396</i>&nbsp;        return Prefs::isCrashReportAutoUploadEnabled;</b>
+<i>397</i>&nbsp;    }
+<i>398</i>&nbsp;
+<i>399</i>&nbsp;    private void enableWebViewDebugging() {
+<b class="nc"><i>400</i>&nbsp;        if (BuildConfig.DEBUG) {</b>
+<b class="nc"><i>401</i>&nbsp;            WebView.setWebContentsDebuggingEnabled(true);</b>
+<i>402</i>&nbsp;        }
+<b class="nc"><i>403</i>&nbsp;    }</b>
+<i>404</i>&nbsp;
+<i>405</i>&nbsp;    private Theme unmarshalCurrentTheme() {
+<b class="nc"><i>406</i>&nbsp;        int id = Prefs.getThemeId();</b>
+<b class="nc"><i>407</i>&nbsp;        Theme result = Theme.ofMarshallingId(id);</b>
+<b class="nc"><i>408</i>&nbsp;        if (result == null) {</b>
+<b class="nc"><i>409</i>&nbsp;            L.d(&quot;Theme id=&quot; + id + &quot; is invalid, using fallback.&quot;);</b>
+<b class="nc"><i>410</i>&nbsp;            result = Theme.getFallback();</b>
+<i>411</i>&nbsp;        }
+<b class="nc"><i>412</i>&nbsp;        return result;</b>
+<i>413</i>&nbsp;    }
+<i>414</i>&nbsp;
+<i>415</i>&nbsp;    // Register here rather than in AndroidManifest.xml so that we can target Android N.
+<i>416</i>&nbsp;    // https://developer.android.com/topic/performance/background-optimization.html#connectivity-action
+<i>417</i>&nbsp;    private void registerConnectivityReceiver() {
+<b class="nc"><i>418</i>&nbsp;        registerReceiver(connectivityReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));</b>
+<b class="nc"><i>419</i>&nbsp;    }</b>
+<i>420</i>&nbsp;
+<i>421</i>&nbsp;    private void getUserIdForLanguage(@NonNull final String code) {
+<b class="nc"><i>422</i>&nbsp;        if (!AccountUtil.isLoggedIn() || TextUtils.isEmpty(AccountUtil.getUserName())) {</b>
+<b class="nc"><i>423</i>&nbsp;            return;</b>
+<i>424</i>&nbsp;        }
+<b class="nc"><i>425</i>&nbsp;        final WikiSite wikiSite = WikiSite.forLanguageCode(code);</b>
+<b class="nc"><i>426</i>&nbsp;        userInfoClient.request(wikiSite, AccountUtil.getUserName(), new UserExtendedInfoClient.Callback() {</b>
+<i>427</i>&nbsp;            @Override
+<i>428</i>&nbsp;            public void success(@NonNull Call&lt;MwQueryResponse&gt; call, int id,
+<i>429</i>&nbsp;                                @NonNull UserExtendedInfoClient.ListUserResponse user) {
+<b class="nc"><i>430</i>&nbsp;                if (AccountUtil.isLoggedIn()) {</b>
+<b class="nc"><i>431</i>&nbsp;                    AccountUtil.putUserIdForLanguage(code, id);</b>
+<b class="nc"><i>432</i>&nbsp;                    L.v(&quot;Found user ID &quot; + id + &quot; for &quot; + code);</b>
+<i>433</i>&nbsp;                }
+<i>434</i>&nbsp;            }
+<i>435</i>&nbsp;
+<i>436</i>&nbsp;            @Override
+<i>437</i>&nbsp;            public void failure(@NonNull Call&lt;MwQueryResponse&gt; call, @NonNull Throwable caught) {
+<b class="nc"><i>438</i>&nbsp;                L.e(&quot;Failed to get user ID for &quot; + code, caught);</b>
+<i>439</i>&nbsp;            }
+<i>440</i>&nbsp;        });
+<b class="nc"><i>441</i>&nbsp;    }</b>
+<i>442</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

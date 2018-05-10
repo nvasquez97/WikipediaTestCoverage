@@ -1,0 +1,82 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PageLead</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.dataclient.page</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PageLead (org.wikipedia.dataclient.page)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">PageLead$$EnhancerByMockitoWithCGLIB$$b9459760</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.dataclient.page;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.location.Location;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;import android.support.annotation.Nullable;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.wikipedia.dataclient.ServiceError;
+<i>8</i>&nbsp;import org.wikipedia.page.Page;
+<i>9</i>&nbsp;import org.wikipedia.page.PageTitle;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;/**
+<i>12</i>&nbsp; * Gson POJI for loading the first stage of page content.
+<i>13</i>&nbsp; */
+<i>14</i>&nbsp;public interface PageLead {
+<i>15</i>&nbsp;    boolean hasError();
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    ServiceError getError();
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    void logError(String message);
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    /** Note: before using this check that #hasError is false */
+<i>22</i>&nbsp;    Page toPage(PageTitle title);
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    @NonNull String getLeadSectionContent();
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    @Nullable String getTitlePronunciationUrl();
+<i>27</i>&nbsp;    @Nullable String getLeadImageUrl(int leadImageWidth);
+<i>28</i>&nbsp;    @Nullable String getThumbUrl();
+<i>29</i>&nbsp;    @Nullable String getDescription();
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    @Nullable Location getGeo();
+<i>32</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DownloadObserverFragment</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.offline</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DownloadObserverFragment (org.wikipedia.offline)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DownloadObserverFragment</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DownloadObserverFragment$DownloadObserverCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.offline;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.v4.app.Fragment;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.util.Collections;
+<i>7</i>&nbsp;import java.util.List;
+<i>8</i>&nbsp;
+<b class="nc"><i>9</i>&nbsp;public abstract class DownloadObserverFragment extends Fragment {</b>
+<i>10</i>&nbsp;
+<b class="nc"><i>11</i>&nbsp;    private DownloadManagerObserver downloadObserver = new DownloadManagerObserver();</b>
+<b class="nc"><i>12</i>&nbsp;    private DownloadObserverCallback downloadObserverCallback = new DownloadObserverCallback();</b>
+<b class="nc"><i>13</i>&nbsp;    @NonNull private List&lt;DownloadManagerItem&gt; currentDownloads = Collections.emptyList();</b>
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    @Override
+<i>16</i>&nbsp;    public void onPause() {
+<b class="nc"><i>17</i>&nbsp;        downloadObserver.unregister();</b>
+<b class="nc"><i>18</i>&nbsp;        super.onPause();</b>
+<i>19</i>&nbsp;    }
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    @Override
+<i>22</i>&nbsp;    public void onResume() {
+<b class="nc"><i>23</i>&nbsp;        downloadObserver.register(downloadObserverCallback);</b>
+<b class="nc"><i>24</i>&nbsp;        super.onResume();</b>
+<i>25</i>&nbsp;    }
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    protected abstract void onPollDownloads();
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    protected DownloadManagerObserver getDownloadObserver() {
+<b class="nc"><i>30</i>&nbsp;        return downloadObserver;</b>
+<i>31</i>&nbsp;    }
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    @NonNull
+<i>34</i>&nbsp;    protected List&lt;DownloadManagerItem&gt; getCurrentDownloads() {
+<b class="nc"><i>35</i>&nbsp;        return currentDownloads;</b>
+<i>36</i>&nbsp;    }
+<i>37</i>&nbsp;
+<b class="nc"><i>38</i>&nbsp;    private class DownloadObserverCallback implements DownloadManagerObserver.Callback {</b>
+<i>39</i>&nbsp;        @Override
+<i>40</i>&nbsp;        public void onDownloadStatus(@NonNull List&lt;DownloadManagerItem&gt; items) {
+<b class="nc"><i>41</i>&nbsp;            currentDownloads = items;</b>
+<b class="nc"><i>42</i>&nbsp;            onPollDownloads();</b>
+<i>43</i>&nbsp;        }
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

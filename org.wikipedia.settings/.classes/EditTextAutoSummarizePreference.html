@@ -1,0 +1,180 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: EditTextAutoSummarizePreference</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.settings</a> ]
+</div>
+
+<h1>Coverage Summary for Class: EditTextAutoSummarizePreference (org.wikipedia.settings)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">EditTextAutoSummarizePreference</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 26)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.settings;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.annotation.TargetApi;
+<i>4</i>&nbsp;import android.content.Context;
+<i>5</i>&nbsp;import android.content.res.TypedArray;
+<i>6</i>&nbsp;import android.os.Build;
+<i>7</i>&nbsp;import android.support.v7.preference.EditTextPreference;
+<i>8</i>&nbsp;import android.util.AttributeSet;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import org.wikipedia.R;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;public class EditTextAutoSummarizePreference extends EditTextPreference {
+<i>13</i>&nbsp;    protected static final int DEFAULT_STYLE_ATTR = R.attr.editTextAutoSummarizePreferenceStyle;
+<b class="nc"><i>14</i>&nbsp;    private static final int[] DEFAULT_STYLEABLE = R.styleable.EditTextAutoSummarizePreference;</b>
+<i>15</i>&nbsp;    private static final int DEFAULT_STYLE = R.style.EditTextAutoSummarizePreference;
+<i>16</i>&nbsp;    private static final boolean DEFAULT_AUTO_SUMMARIZE = true;
+<i>17</i>&nbsp;
+<b class="nc"><i>18</i>&nbsp;    private boolean autoSummarize = DEFAULT_AUTO_SUMMARIZE;</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    public EditTextAutoSummarizePreference(Context context) {
+<b class="nc"><i>21</i>&nbsp;        this(context, null);</b>
+<i>22</i>&nbsp;    }
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    public EditTextAutoSummarizePreference(Context context, AttributeSet attrs) {
+<b class="nc"><i>25</i>&nbsp;        this(context, attrs, DEFAULT_STYLE_ATTR);</b>
+<i>26</i>&nbsp;    }
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    public EditTextAutoSummarizePreference(Context context, AttributeSet attrs, int defStyleAttr) {
+<b class="nc"><i>29</i>&nbsp;        super(context, attrs, defStyleAttr);</b>
+<b class="nc"><i>30</i>&nbsp;        init(attrs, defStyleAttr, DEFAULT_STYLE);</b>
+<i>31</i>&nbsp;    }
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+<i>34</i>&nbsp;    public EditTextAutoSummarizePreference(Context context, AttributeSet attrs, int defStyleAttr,
+<i>35</i>&nbsp;           int defStyleRes) {
+<b class="nc"><i>36</i>&nbsp;        super(context, attrs, defStyleAttr, defStyleRes);</b>
+<b class="nc"><i>37</i>&nbsp;        init(attrs, defStyleAttr, defStyleRes);</b>
+<i>38</i>&nbsp;    }
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    public boolean isAutoSummarize() {
+<b class="nc"><i>41</i>&nbsp;        return autoSummarize;</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    public void setAutoSummarize(boolean summarize) {
+<b class="nc"><i>45</i>&nbsp;        autoSummarize = summarize;</b>
+<b class="nc"><i>46</i>&nbsp;        updateAutoSummary();</b>
+<i>47</i>&nbsp;    }
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    @Override
+<i>50</i>&nbsp;    public void onAttached() {
+<b class="nc"><i>51</i>&nbsp;        super.onAttached();</b>
+<b class="nc"><i>52</i>&nbsp;        updateAutoSummary();</b>
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    @Override
+<i>56</i>&nbsp;    protected boolean persistString(String value) {
+<b class="nc"><i>57</i>&nbsp;        boolean persistent = super.persistString(value);</b>
+<i>58</i>&nbsp;
+<b class="nc"><i>59</i>&nbsp;        updateAutoSummary(value);</b>
+<i>60</i>&nbsp;
+<b class="nc"><i>61</i>&nbsp;        return persistent;</b>
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    protected boolean isSet() {
+<b class="nc"><i>65</i>&nbsp;        return shouldPersist() &amp;&amp; getSharedPreferences().contains(getKey());</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    protected String getString(int id, Object... formatArgs) {
+<b class="nc"><i>69</i>&nbsp;        return getContext().getString(id, formatArgs);</b>
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    protected void updateAutoSummary() {
+<b class="nc"><i>73</i>&nbsp;        updateAutoSummary(getPersistedString(null));</b>
+<i>74</i>&nbsp;    }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    protected void updateAutoSummary(String value) {
+<b class="nc"><i>77</i>&nbsp;        if (isAutoSummarize()) {</b>
+<b class="nc"><i>78</i>&nbsp;            setSummary(isSet() ? value : getNoValueSummary());</b>
+<i>79</i>&nbsp;        }
+<i>80</i>&nbsp;    }
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    protected String getNoValueSummary() {
+<b class="nc"><i>83</i>&nbsp;        return getString(R.string.preference_summary_no_value);</b>
+<i>84</i>&nbsp;    }
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;    private void setAttributes(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+<b class="nc"><i>87</i>&nbsp;        TypedArray array = getContext().obtainStyledAttributes(attrs, DEFAULT_STYLEABLE,</b>
+<i>88</i>&nbsp;                defStyleAttr, defStyleRes);
+<b class="nc"><i>89</i>&nbsp;        autoSummarize = array.getBoolean(R.styleable.EditTextAutoSummarizePreference_autoSummarize,</b>
+<i>90</i>&nbsp;                DEFAULT_AUTO_SUMMARIZE);
+<b class="nc"><i>91</i>&nbsp;        array.recycle();</b>
+<i>92</i>&nbsp;    }
+<i>93</i>&nbsp;
+<i>94</i>&nbsp;    private void init(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+<b class="nc"><i>95</i>&nbsp;        setAttributes(attrs, defStyleAttr, defStyleRes);</b>
+<i>96</i>&nbsp;    }
+<i>97</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

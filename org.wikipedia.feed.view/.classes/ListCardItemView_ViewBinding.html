@@ -1,0 +1,198 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ListCardItemView_ViewBinding</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.view</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ListCardItemView_ViewBinding (org.wikipedia.feed.view)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ListCardItemView_ViewBinding</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 22)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ListCardItemView_ViewBinding$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ListCardItemView_ViewBinding$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 26)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;// Generated code from Butter Knife. Do not modify!
+<i>2</i>&nbsp;package org.wikipedia.feed.view;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import android.support.annotation.CallSuper;
+<i>5</i>&nbsp;import android.support.annotation.UiThread;
+<i>6</i>&nbsp;import android.view.View;
+<i>7</i>&nbsp;import android.widget.TextView;
+<i>8</i>&nbsp;import butterknife.Unbinder;
+<i>9</i>&nbsp;import butterknife.internal.DebouncingOnClickListener;
+<i>10</i>&nbsp;import com.facebook.drawee.view.SimpleDraweeView;
+<i>11</i>&nbsp;import java.lang.IllegalStateException;
+<i>12</i>&nbsp;import java.lang.Override;
+<i>13</i>&nbsp;import org.wikipedia.R;
+<i>14</i>&nbsp;import org.wikipedia.views.GoneIfEmptyTextView;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;public class ListCardItemView_ViewBinding implements Unbinder {
+<i>17</i>&nbsp;  private ListCardItemView target;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;  private View viewSource;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;  private View view2131297016;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;  @UiThread
+<i>24</i>&nbsp;  public ListCardItemView_ViewBinding(ListCardItemView target) {
+<b class="nc"><i>25</i>&nbsp;    this(target, target);</b>
+<i>26</i>&nbsp;  }
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;  @UiThread
+<b class="nc"><i>29</i>&nbsp;  public ListCardItemView_ViewBinding(final ListCardItemView target, View source) {</b>
+<b class="nc"><i>30</i>&nbsp;    this.target = target;</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    View view;
+<b class="nc"><i>33</i>&nbsp;    target.imageView = (SimpleDraweeView) source.findViewById(R.id.view_list_card_item_image);</b>
+<b class="nc"><i>34</i>&nbsp;    target.titleView = (TextView) source.findViewById(R.id.view_list_card_item_title);</b>
+<b class="nc"><i>35</i>&nbsp;    target.subtitleView = (GoneIfEmptyTextView) source.findViewById(R.id.view_list_card_item_subtitle);</b>
+<b class="nc"><i>36</i>&nbsp;    view = source.findViewById(-1);</b>
+<b class="nc"><i>37</i>&nbsp;    viewSource = source;</b>
+<b class="nc"><i>38</i>&nbsp;    source.setOnClickListener(new DebouncingOnClickListener() {</b>
+<i>39</i>&nbsp;      @Override
+<i>40</i>&nbsp;      public void doClick(View p0) {
+<b class="nc"><i>41</i>&nbsp;        target.onClick(p0);</b>
+<i>42</i>&nbsp;      }
+<i>43</i>&nbsp;    });
+<b class="nc"><i>44</i>&nbsp;    view = source.findViewById(R.id.view_list_card_item_menu);</b>
+<b class="nc"><i>45</i>&nbsp;    view2131297016 = view;</b>
+<b class="nc"><i>46</i>&nbsp;    view.setOnClickListener(new DebouncingOnClickListener() {</b>
+<i>47</i>&nbsp;      @Override
+<i>48</i>&nbsp;      public void doClick(View p0) {
+<b class="nc"><i>49</i>&nbsp;        target.showOverflowMenu(p0);</b>
+<i>50</i>&nbsp;      }
+<i>51</i>&nbsp;    });
+<i>52</i>&nbsp;  }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;  @Override
+<i>55</i>&nbsp;  @CallSuper
+<i>56</i>&nbsp;  public void unbind() {
+<b class="nc"><i>57</i>&nbsp;    ListCardItemView target = this.target;</b>
+<b class="nc"><i>58</i>&nbsp;    if (target == null) throw new IllegalStateException(&quot;Bindings already cleared.&quot;);</b>
+<b class="nc"><i>59</i>&nbsp;    this.target = null;</b>
+<i>60</i>&nbsp;
+<b class="nc"><i>61</i>&nbsp;    target.imageView = null;</b>
+<b class="nc"><i>62</i>&nbsp;    target.titleView = null;</b>
+<b class="nc"><i>63</i>&nbsp;    target.subtitleView = null;</b>
+<i>64</i>&nbsp;
+<b class="nc"><i>65</i>&nbsp;    viewSource.setOnClickListener(null);</b>
+<b class="nc"><i>66</i>&nbsp;    viewSource = null;</b>
+<b class="nc"><i>67</i>&nbsp;    view2131297016.setOnClickListener(null);</b>
+<b class="nc"><i>68</i>&nbsp;    view2131297016 = null;</b>
+<i>69</i>&nbsp;  }
+<i>70</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

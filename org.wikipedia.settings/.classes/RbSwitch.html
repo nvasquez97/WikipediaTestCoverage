@@ -1,0 +1,225 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: RbSwitch</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.settings</a> ]
+</div>
+
+<h1>Coverage Summary for Class: RbSwitch (org.wikipedia.settings)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RbSwitch</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 41)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.settings;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.IntRange;
+<i>4</i>&nbsp;import android.support.annotation.Nullable;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>7</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>8</i>&nbsp;import org.wikipedia.dataclient.okhttp.HttpStatusException;
+<i>9</i>&nbsp;import org.wikipedia.dataclient.retrofit.RetrofitException;
+<i>10</i>&nbsp;import org.wikipedia.util.ReleaseUtil;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import java.util.Random;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;/**
+<i>17</i>&nbsp; * This class encapsulates logic to turn on or off usage of our RESTBase service for a certain
+<i>18</i>&nbsp; * percentage of beta (=non-production) app installs. The percentage is remote controlled,
+<i>19</i>&nbsp; * so we can turn it off if necessary and can better control the roll-out in the unlikely case
+<i>20</i>&nbsp; * that the new content service cannot handle the load from the app.
+<i>21</i>&nbsp; * It also has an automatic fallback to using the MW API after the first significant error.
+<i>22</i>&nbsp; * So, 404s and network errors are ignored.
+<i>23</i>&nbsp; */
+<i>24</i>&nbsp;public final class RbSwitch {
+<i>25</i>&nbsp;    public static final int FAILED = -1;
+<i>26</i>&nbsp;    private static final int HUNDRED_PERCENT = 100;
+<i>27</i>&nbsp;    private static final int SUCCESS_THRESHOLD = 5; // page loads
+<b class="nc"><i>28</i>&nbsp;    private static final String ENABLE_RESTBASE_PERCENT_CONFIG_KEY = ReleaseUtil.isProdRelease()</b>
+<i>29</i>&nbsp;            ? &quot;restbaseProdPercent&quot; : &quot;restbaseBetaPercent&quot;;
+<i>30</i>&nbsp;
+<b class="nc"><i>31</i>&nbsp;    public static final RbSwitch INSTANCE = new RbSwitch();</b>
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    /**
+<i>34</i>&nbsp;     * Returns true if RB is enabled for a particular WikiSite (or PageTitle if you will).
+<i>35</i>&nbsp;     * This method has a few extra checks over the overloaded #isRestBaseEnabled():
+<i>36</i>&nbsp;     * It also disables RB usage if the wiki is zhwiki since RB endpoints have a harder time
+<i>37</i>&nbsp;     * dealing with caching of language variants. T118905
+<i>38</i>&nbsp;     * @param wiki the WikiSite of the PageTitle to use for the check
+<i>39</i>&nbsp;     * @return true is RB is enabled for a particular WikiSite
+<i>40</i>&nbsp;     */
+<i>41</i>&nbsp;    public boolean isRestBaseEnabled(WikiSite wiki) {
+<b class="nc"><i>42</i>&nbsp;        return isRestBaseEnabled()</b>
+<b class="nc"><i>43</i>&nbsp;                &amp;&amp; !wiki.languageCode().startsWith(&quot;zh&quot;);</b>
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    public boolean isRestBaseEnabled() {
+<b class="nc"><i>47</i>&nbsp;        return Prefs.useRestBase();</b>
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    public void update() {
+<b class="nc"><i>51</i>&nbsp;        if (!Prefs.useRestBaseSetManually()) {</b>
+<b class="nc"><i>52</i>&nbsp;            Prefs.setUseRestBase(shouldUseRestBase());</b>
+<i>53</i>&nbsp;        }
+<i>54</i>&nbsp;    }
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    private static boolean shouldUseRestBase() {
+<b class="nc"><i>57</i>&nbsp;        return isSlatedForRestBase() &amp;&amp; hasNotRecentlyFailed();</b>
+<i>58</i>&nbsp;    }
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    private static boolean isSlatedForRestBase() {
+<b class="nc"><i>61</i>&nbsp;        int ticket = Prefs.getRbTicket(0);</b>
+<b class="nc"><i>62</i>&nbsp;        if (ticket == 0) {</b>
+<b class="nc"><i>63</i>&nbsp;            ticket = new Random().nextInt(HUNDRED_PERCENT) + 1; // [1, 100]</b>
+<b class="nc"><i>64</i>&nbsp;            Prefs.setRbTicket(ticket);</b>
+<i>65</i>&nbsp;        }
+<i>66</i>&nbsp;
+<b class="nc"><i>67</i>&nbsp;        return isAdmitted(ticket, ENABLE_RESTBASE_PERCENT_CONFIG_KEY);</b>
+<i>68</i>&nbsp;    }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;    @SuppressWarnings(&quot;checkstyle:magicnumber&quot;)
+<i>71</i>&nbsp;    private static boolean isAdmitted(@IntRange(from = 1, to = 100) int ticket, String configKey) {
+<b class="nc"><i>72</i>&nbsp;        @IntRange(from = 0, to = 100) int admittedPct = WikipediaApp.getInstance()</b>
+<b class="nc"><i>73</i>&nbsp;                .getRemoteConfig().getConfig().optInt(configKey, 100); // 0 = disable</b>
+<b class="nc"><i>74</i>&nbsp;        return ticket &lt;= admittedPct;</b>
+<i>75</i>&nbsp;    }
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    private static boolean hasNotRecentlyFailed() {
+<b class="nc"><i>78</i>&nbsp;        return Prefs.getRequestSuccessCounter(0) &gt;= 0;</b>
+<i>79</i>&nbsp;    }
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    /**
+<i>82</i>&nbsp;     * For automatically bouncing back from MW API to RB API after SUCCESS_THRESHOLD number of
+<i>83</i>&nbsp;     * successful requests happened after #markRbFailed.
+<i>84</i>&nbsp;     */
+<i>85</i>&nbsp;    public void onMwSuccess() {
+<b class="nc"><i>86</i>&nbsp;        if (isSlatedForRestBase()) {</b>
+<b class="nc"><i>87</i>&nbsp;            int successes = Prefs.getRequestSuccessCounter(0);</b>
+<b class="nc"><i>88</i>&nbsp;            successes++;</b>
+<b class="nc"><i>89</i>&nbsp;            Prefs.setRequestSuccessCounter(successes);</b>
+<b class="nc"><i>90</i>&nbsp;            resetFailed();</b>
+<b class="nc"><i>91</i>&nbsp;            if (successes &gt;= SUCCESS_THRESHOLD &amp;&amp; !Prefs.useRestBaseSetManually()) {</b>
+<b class="nc"><i>92</i>&nbsp;                Prefs.setUseRestBase(true);</b>
+<i>93</i>&nbsp;            }
+<i>94</i>&nbsp;        }
+<i>95</i>&nbsp;    }
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;    /**
+<i>98</i>&nbsp;     * Call this method when a RESTBase call fails.
+<i>99</i>&nbsp;     */
+<i>100</i>&nbsp;    public void onRbRequestFailed(@Nullable Throwable error) {
+<b class="nc"><i>101</i>&nbsp;        if (isSignificantFailure(error)) {</b>
+<b class="nc"><i>102</i>&nbsp;            markRbFailed();</b>
+<b class="nc"><i>103</i>&nbsp;            if (!Prefs.useRestBaseSetManually()) {</b>
+<b class="nc"><i>104</i>&nbsp;                Prefs.setUseRestBase(false);</b>
+<i>105</i>&nbsp;            }
+<i>106</i>&nbsp;        }
+<i>107</i>&nbsp;    }
+<i>108</i>&nbsp;
+<i>109</i>&nbsp;    /**
+<i>110</i>&nbsp;     * Determines if an error is significant enough to warrant a fallback to MwApi.
+<i>111</i>&nbsp;     * We don&#39;t want to fallback just because of a user error (404)
+<i>112</i>&nbsp;     * or a network issue on the client side (RetrofitError.Kind.NETWORK).
+<i>113</i>&nbsp;     */
+<i>114</i>&nbsp;    private static boolean isSignificantFailure(@Nullable Throwable throwable) {
+<b class="nc"><i>115</i>&nbsp;        if (throwable instanceof RetrofitException) {</b>
+<b class="nc"><i>116</i>&nbsp;            RetrofitException error = (RetrofitException) throwable;</b>
+<b class="nc"><i>117</i>&nbsp;            if (error.getKind() == RetrofitException.Kind.HTTP) {</b>
+<b class="nc"><i>118</i>&nbsp;                return error.getCode() != null &amp;&amp; error.getCode() != HTTP_NOT_FOUND;</b>
+<i>119</i>&nbsp;            }
+<b class="nc"><i>120</i>&nbsp;            return error.getKind() != RetrofitException.Kind.NETWORK;</b>
+<i>121</i>&nbsp;        }
+<i>122</i>&nbsp;
+<b class="nc"><i>123</i>&nbsp;        if (throwable instanceof HttpStatusException) {</b>
+<b class="nc"><i>124</i>&nbsp;            HttpStatusException e = (HttpStatusException) throwable;</b>
+<b class="nc"><i>125</i>&nbsp;            return e.code() != HTTP_NOT_FOUND;</b>
+<i>126</i>&nbsp;        }
+<i>127</i>&nbsp;
+<b class="nc"><i>128</i>&nbsp;        return false;</b>
+<i>129</i>&nbsp;    }
+<i>130</i>&nbsp;
+<i>131</i>&nbsp;    private static void markRbFailed() {
+<b class="nc"><i>132</i>&nbsp;        Prefs.setRequestSuccessCounter(FAILED);</b>
+<i>133</i>&nbsp;    }
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;    private static void resetFailed() {
+<b class="nc"><i>136</i>&nbsp;        Prefs.setRequestSuccessCounter(0);</b>
+<i>137</i>&nbsp;    }
+<i>138</i>&nbsp;
+<b class="nc"><i>139</i>&nbsp;    private RbSwitch() {</b>
+<b class="nc"><i>140</i>&nbsp;        update();</b>
+<i>141</i>&nbsp;    }
+<i>142</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

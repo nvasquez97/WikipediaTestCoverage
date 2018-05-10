@@ -1,0 +1,190 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: FaceAndColorDetectImageView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.views</a> ]
+</div>
+
+<h1>Coverage Summary for Class: FaceAndColorDetectImageView (org.wikipedia.views)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FaceAndColorDetectImageView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 14)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">FaceAndColorDetectImageView$DefaultListener</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 19)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.views;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.graphics.PointF;
+<i>5</i>&nbsp;import android.net.Uri;
+<i>6</i>&nbsp;import android.support.annotation.ColorInt;
+<i>7</i>&nbsp;import android.support.annotation.DrawableRes;
+<i>8</i>&nbsp;import android.support.annotation.NonNull;
+<i>9</i>&nbsp;import android.support.annotation.Nullable;
+<i>10</i>&nbsp;import android.util.AttributeSet;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import com.facebook.drawee.backends.pipeline.Fresco;
+<i>13</i>&nbsp;import com.facebook.drawee.interfaces.DraweeController;
+<i>14</i>&nbsp;import com.facebook.drawee.view.SimpleDraweeView;
+<i>15</i>&nbsp;import com.facebook.imagepipeline.request.ImageRequestBuilder;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;import org.wikipedia.R;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;import static org.wikipedia.settings.Prefs.isImageDownloadEnabled;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;public class FaceAndColorDetectImageView extends SimpleDraweeView {
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    public interface OnImageLoadListener {
+<i>24</i>&nbsp;        void onImageLoaded(int bmpHeight, @Nullable PointF faceLocation, @ColorInt int mainColor);
+<i>25</i>&nbsp;        void onImageFailed();
+<i>26</i>&nbsp;    }
+<i>27</i>&nbsp;
+<b class="nc"><i>28</i>&nbsp;    @NonNull private OnImageLoadListener listener = new DefaultListener();</b>
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    public FaceAndColorDetectImageView(Context context) {
+<b class="nc"><i>31</i>&nbsp;        super(context);</b>
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    public FaceAndColorDetectImageView(Context context, AttributeSet attrs) {
+<b class="nc"><i>35</i>&nbsp;        super(context, attrs);</b>
+<i>36</i>&nbsp;    }
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    public FaceAndColorDetectImageView(Context context, AttributeSet attrs, int defStyle) {
+<b class="nc"><i>39</i>&nbsp;        super(context, attrs, defStyle);</b>
+<i>40</i>&nbsp;    }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    public void setOnImageLoadListener(@Nullable OnImageLoadListener listener) {
+<b class="nc"><i>43</i>&nbsp;        this.listener = listener == null ? new DefaultListener() : listener;</b>
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    public void loadImage(@Nullable Uri uri) {
+<b class="nc"><i>47</i>&nbsp;        if (!isImageDownloadEnabled() || uri == null) {</b>
+<b class="nc"><i>48</i>&nbsp;            setImageURI((Uri) null);</b>
+<i>49</i>&nbsp;            return;
+<i>50</i>&nbsp;        }
+<b class="nc"><i>51</i>&nbsp;        loadImage(ImageRequestBuilder.newBuilderWithSource(uri));</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    public void loadImage(@DrawableRes int id) {
+<b class="nc"><i>55</i>&nbsp;        loadImage(ImageRequestBuilder.newBuilderWithResourceId(id));</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    private void loadImage(@NonNull ImageRequestBuilder builder) {
+<b class="nc"><i>59</i>&nbsp;        DraweeController controller = Fresco.newDraweeControllerBuilder()</b>
+<b class="nc"><i>60</i>&nbsp;                .setImageRequest(builder.setPostprocessor(new FacePostprocessor(listener)).build())</b>
+<b class="nc"><i>61</i>&nbsp;                .setAutoPlayAnimations(true)</b>
+<b class="nc"><i>62</i>&nbsp;                .build();</b>
+<b class="nc"><i>63</i>&nbsp;        setController(controller);</b>
+<i>64</i>&nbsp;    }
+<i>65</i>&nbsp;
+<b class="nc"><i>66</i>&nbsp;    private class DefaultListener implements OnImageLoadListener {</b>
+<i>67</i>&nbsp;        @Override
+<i>68</i>&nbsp;        public void onImageLoaded(int bmpHeight, @Nullable final PointF faceLocation, @ColorInt int mainColor) {
+<b class="nc"><i>69</i>&nbsp;            post(() -&gt; {</b>
+<b class="nc"><i>70</i>&nbsp;                if (faceLocation != null) {</b>
+<b class="nc"><i>71</i>&nbsp;                    getHierarchy().setActualImageFocusPoint(faceLocation);</b>
+<i>72</i>&nbsp;                }
+<i>73</i>&nbsp;            });
+<i>74</i>&nbsp;        }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;        @Override
+<i>77</i>&nbsp;        public void onImageFailed() {
+<b class="nc"><i>78</i>&nbsp;            post(() -&gt; setActualImageResource(R.drawable.lead_default));</b>
+<i>79</i>&nbsp;        }
+<i>80</i>&nbsp;    }
+<i>81</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,123 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ActivityUtil</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.activity</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ActivityUtil (org.wikipedia.activity)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ActivityUtil</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.activity;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.app.Activity;
+<i>4</i>&nbsp;import android.view.MenuItem;
+<i>5</i>&nbsp;import android.view.View;
+<i>6</i>&nbsp;import android.view.ViewConfiguration;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.lang.reflect.Field;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;public final class ActivityUtil {
+<i>11</i>&nbsp;    public static View getRootView(Activity activity) {
+<b class="nc"><i>12</i>&nbsp;        return activity.findViewById(android.R.id.content).getRootView();</b>
+<i>13</i>&nbsp;    }
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    public static View getMenuItemView(Activity activity, MenuItem item) {
+<b class="nc"><i>16</i>&nbsp;        return activity.findViewById(item.getItemId());</b>
+<i>17</i>&nbsp;    }
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    /**
+<i>20</i>&nbsp;     * Helper function to force the Activity to show the three-dot overflow icon in its ActionBar.
+<i>21</i>&nbsp;     * @param activity Activity whose overflow icon will be forced.
+<i>22</i>&nbsp;     */
+<i>23</i>&nbsp;    public static void forceOverflowMenuIcon(Activity activity) {
+<i>24</i>&nbsp;        // API 19 is required for ReflectiveOperationException subclasses
+<i>25</i>&nbsp;        //noinspection TryWithIdenticalCatches
+<i>26</i>&nbsp;        try {
+<b class="nc"><i>27</i>&nbsp;            ViewConfiguration config = ViewConfiguration.get(activity);</b>
+<i>28</i>&nbsp;            // This field doesn&#39;t exist in 4.4, where the overflow icon is always shown:
+<i>29</i>&nbsp;            // https://android.googlesource.com/platform/frameworks/base.git/+/ea04f3cfc6e245fb415fd352ed0048cd940a46fe%5E!/
+<b class="nc"><i>30</i>&nbsp;            Field menuKeyField = ViewConfiguration.class.getDeclaredField(&quot;sHasPermanentMenuKey&quot;);</b>
+<b class="nc"><i>31</i>&nbsp;            if (menuKeyField != null) {</b>
+<b class="nc"><i>32</i>&nbsp;                menuKeyField.setAccessible(true);</b>
+<b class="nc"><i>33</i>&nbsp;                menuKeyField.setBoolean(config, false);</b>
+<i>34</i>&nbsp;            }
+<b class="nc"><i>35</i>&nbsp;        } catch (IllegalAccessException ignore) {</b>
+<b class="nc"><i>36</i>&nbsp;        } catch (NoSuchFieldException ignore) { }</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<b class="nc"><i>39</i>&nbsp;    private ActivityUtil() { }</b>
+<i>40</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

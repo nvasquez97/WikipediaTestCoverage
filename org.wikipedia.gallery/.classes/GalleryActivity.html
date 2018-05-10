@@ -1,0 +1,875 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GalleryActivity</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.gallery</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GalleryActivity (org.wikipedia.gallery)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GalleryActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 42)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 223)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">GalleryActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GalleryActivity$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GalleryActivity$GalleryItemAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 25)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GalleryActivity$GalleryPageChangeListener</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GalleryActivity$MediaDownloadReceiverCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 59)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 269)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.gallery;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.app.Activity;
+<i>4</i>&nbsp;import android.app.DownloadManager;
+<i>5</i>&nbsp;import android.content.Context;
+<i>6</i>&nbsp;import android.content.Intent;
+<i>7</i>&nbsp;import android.content.IntentFilter;
+<i>8</i>&nbsp;import android.graphics.Bitmap;
+<i>9</i>&nbsp;import android.net.Uri;
+<i>10</i>&nbsp;import android.os.Bundle;
+<i>11</i>&nbsp;import android.support.annotation.ColorInt;
+<i>12</i>&nbsp;import android.support.annotation.ColorRes;
+<i>13</i>&nbsp;import android.support.annotation.NonNull;
+<i>14</i>&nbsp;import android.support.annotation.Nullable;
+<i>15</i>&nbsp;import android.support.v4.app.Fragment;
+<i>16</i>&nbsp;import android.support.v4.app.FragmentManager;
+<i>17</i>&nbsp;import android.support.v4.app.FragmentPagerAdapter;
+<i>18</i>&nbsp;import android.support.v4.app.FragmentTransaction;
+<i>19</i>&nbsp;import android.support.v4.content.ContextCompat;
+<i>20</i>&nbsp;import android.support.v4.view.ViewPager;
+<i>21</i>&nbsp;import android.support.v7.app.AppCompatActivity;
+<i>22</i>&nbsp;import android.text.TextUtils;
+<i>23</i>&nbsp;import android.util.SparseArray;
+<i>24</i>&nbsp;import android.view.Gravity;
+<i>25</i>&nbsp;import android.view.Menu;
+<i>26</i>&nbsp;import android.view.View;
+<i>27</i>&nbsp;import android.view.ViewGroup;
+<i>28</i>&nbsp;import android.widget.ImageView;
+<i>29</i>&nbsp;import android.widget.ProgressBar;
+<i>30</i>&nbsp;import android.widget.TextView;
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;import org.wikipedia.R;
+<i>33</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>34</i>&nbsp;import org.wikipedia.activity.BaseActivity;
+<i>35</i>&nbsp;import org.wikipedia.analytics.GalleryFunnel;
+<i>36</i>&nbsp;import org.wikipedia.concurrency.CallbackTask;
+<i>37</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>38</i>&nbsp;import org.wikipedia.feed.image.FeaturedImage;
+<i>39</i>&nbsp;import org.wikipedia.history.HistoryEntry;
+<i>40</i>&nbsp;import org.wikipedia.json.GsonMarshaller;
+<i>41</i>&nbsp;import org.wikipedia.json.GsonUnmarshaller;
+<i>42</i>&nbsp;import org.wikipedia.page.ExclusiveBottomSheetPresenter;
+<i>43</i>&nbsp;import org.wikipedia.page.LinkMovementMethodExt;
+<i>44</i>&nbsp;import org.wikipedia.page.PageActivity;
+<i>45</i>&nbsp;import org.wikipedia.page.PageTitle;
+<i>46</i>&nbsp;import org.wikipedia.page.linkpreview.LinkPreviewDialog;
+<i>47</i>&nbsp;import org.wikipedia.readinglist.AddToReadingListDialog;
+<i>48</i>&nbsp;import org.wikipedia.theme.Theme;
+<i>49</i>&nbsp;import org.wikipedia.util.ClipboardUtil;
+<i>50</i>&nbsp;import org.wikipedia.util.FeedbackUtil;
+<i>51</i>&nbsp;import org.wikipedia.util.GradientUtil;
+<i>52</i>&nbsp;import org.wikipedia.util.ShareUtil;
+<i>53</i>&nbsp;import org.wikipedia.util.StringUtil;
+<i>54</i>&nbsp;import org.wikipedia.util.log.L;
+<i>55</i>&nbsp;import org.wikipedia.views.ViewAnimations;
+<i>56</i>&nbsp;import org.wikipedia.views.WikiErrorView;
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;import java.io.File;
+<i>59</i>&nbsp;import java.util.ArrayList;
+<i>60</i>&nbsp;import java.util.HashMap;
+<i>61</i>&nbsp;import java.util.List;
+<i>62</i>&nbsp;import java.util.Map;
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;import static org.wikipedia.util.StringUtil.addUnderscores;
+<i>65</i>&nbsp;import static org.wikipedia.util.StringUtil.removeUnderscores;
+<i>66</i>&nbsp;import static org.wikipedia.util.StringUtil.strip;
+<i>67</i>&nbsp;import static org.wikipedia.util.UriUtil.handleExternalLink;
+<i>68</i>&nbsp;import static org.wikipedia.util.UriUtil.resolveProtocolRelativeUrl;
+<i>69</i>&nbsp;
+<b class="nc"><i>70</i>&nbsp;public class GalleryActivity extends BaseActivity implements LinkPreviewDialog.Callback,</b>
+<i>71</i>&nbsp;        GalleryItemFragment.Callback {
+<i>72</i>&nbsp;    public static final int ACTIVITY_RESULT_PAGE_SELECTED = 1;
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;    public static final String EXTRA_PAGETITLE = &quot;pageTitle&quot;;
+<i>75</i>&nbsp;    public static final String EXTRA_FILENAME = &quot;filename&quot;;
+<i>76</i>&nbsp;    public static final String EXTRA_WIKI = &quot;wiki&quot;;
+<i>77</i>&nbsp;    public static final String EXTRA_SOURCE = &quot;source&quot;;
+<i>78</i>&nbsp;    public static final String EXTRA_FEATURED_IMAGE = &quot;featuredImage&quot;;
+<i>79</i>&nbsp;    public static final String EXTRA_FEATURED_IMAGE_AGE = &quot;featuredImageAge&quot;;
+<i>80</i>&nbsp;
+<b class="nc"><i>81</i>&nbsp;    @NonNull private WikipediaApp app = WikipediaApp.getInstance();</b>
+<b class="nc"><i>82</i>&nbsp;    @NonNull private ExclusiveBottomSheetPresenter bottomSheetPresenter = new ExclusiveBottomSheetPresenter();</b>
+<i>83</i>&nbsp;    @Nullable private PageTitle pageTitle;
+<i>84</i>&nbsp;    @Nullable private WikiSite wiki;
+<b class="nc"><i>85</i>&nbsp;    @NonNull private GalleryCollectionClient client = new GalleryCollectionClient();</b>
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;    private ViewGroup toolbarContainer;
+<i>88</i>&nbsp;    private ViewGroup infoContainer;
+<i>89</i>&nbsp;    private ProgressBar progressBar;
+<i>90</i>&nbsp;    private TextView descriptionText;
+<i>91</i>&nbsp;    private ImageView licenseIcon;
+<i>92</i>&nbsp;    private TextView creditText;
+<i>93</i>&nbsp;    private WikiErrorView errorView;
+<i>94</i>&nbsp;
+<b class="nc"><i>95</i>&nbsp;    private boolean controlsShowing = true;</b>
+<i>96</i>&nbsp;    @Nullable private ViewPager.OnPageChangeListener pageChangeListener;
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;    @Nullable private GalleryFunnel funnel;
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    /**
+<i>101</i>&nbsp;     * If we have an intent that tells us a specific image to jump to within the gallery,
+<i>102</i>&nbsp;     * then this will be non-null.
+<i>103</i>&nbsp;     */
+<i>104</i>&nbsp;    private String initialFilename;
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;    /**
+<i>107</i>&nbsp;     * If we come back from savedInstanceState, then this will be the previous pager position.
+<i>108</i>&nbsp;     */
+<b class="nc"><i>109</i>&nbsp;    private int initialImageIndex = -1;</b>
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;    private ViewPager galleryPager;
+<i>112</i>&nbsp;    private GalleryItemAdapter galleryAdapter;
+<b class="nc"><i>113</i>&nbsp;    private MediaDownloadReceiver downloadReceiver = new MediaDownloadReceiver();</b>
+<b class="nc"><i>114</i>&nbsp;    private MediaDownloadReceiverCallback downloadReceiverCallback = new MediaDownloadReceiverCallback();</b>
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;    /**
+<i>117</i>&nbsp;     * Cache that stores GalleryItem information for each corresponding media item in
+<i>118</i>&nbsp;     * our gallery collection.
+<i>119</i>&nbsp;     */
+<i>120</i>&nbsp;    @Nullable private Map&lt;PageTitle, GalleryItem&gt; galleryCache;
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;    @Nullable
+<i>123</i>&nbsp;    public Map&lt;PageTitle, GalleryItem&gt; getGalleryCache() {
+<b class="nc"><i>124</i>&nbsp;        return galleryCache;</b>
+<i>125</i>&nbsp;    }
+<i>126</i>&nbsp;
+<b class="nc"><i>127</i>&nbsp;    private View.OnClickListener licenseShortClickListener = v -&gt; {</b>
+<b class="nc"><i>128</i>&nbsp;        if (v.getContentDescription() == null) {</b>
+<i>129</i>&nbsp;            return;
+<i>130</i>&nbsp;        }
+<b class="nc"><i>131</i>&nbsp;        FeedbackUtil.showMessageAsPlainText((Activity) v.getContext(), v.getContentDescription());</b>
+<i>132</i>&nbsp;    };
+<i>133</i>&nbsp;
+<b class="nc"><i>134</i>&nbsp;    private View.OnLongClickListener licenseLongClickListener = v -&gt; {</b>
+<b class="nc"><i>135</i>&nbsp;        String licenseUrl = (String) v.getTag();</b>
+<b class="nc"><i>136</i>&nbsp;        if (!TextUtils.isEmpty(licenseUrl)) {</b>
+<b class="nc"><i>137</i>&nbsp;            handleExternalLink(GalleryActivity.this, Uri.parse(resolveProtocolRelativeUrl(licenseUrl)));</b>
+<i>138</i>&nbsp;        }
+<b class="nc"><i>139</i>&nbsp;        return true;</b>
+<i>140</i>&nbsp;    };
+<i>141</i>&nbsp;
+<i>142</i>&nbsp;    @NonNull
+<i>143</i>&nbsp;    public static Intent newIntent(@NonNull Context context, int age, @NonNull String filename,
+<i>144</i>&nbsp;                                   @NonNull FeaturedImage image, @NonNull WikiSite wiki, int source) {
+<b class="nc"><i>145</i>&nbsp;        return newIntent(context, null, filename, wiki, source)</b>
+<b class="nc"><i>146</i>&nbsp;                .putExtra(EXTRA_FEATURED_IMAGE, GsonMarshaller.marshal(image))</b>
+<b class="nc"><i>147</i>&nbsp;                .putExtra(EXTRA_FEATURED_IMAGE_AGE, age);</b>
+<i>148</i>&nbsp;    }
+<i>149</i>&nbsp;
+<i>150</i>&nbsp;    @NonNull
+<i>151</i>&nbsp;    public static Intent newIntent(@NonNull Context context, @Nullable PageTitle pageTitle,
+<i>152</i>&nbsp;                                   @NonNull String filename, @NonNull WikiSite wiki, int source) {
+<b class="nc"><i>153</i>&nbsp;        Intent intent = new Intent()</b>
+<b class="nc"><i>154</i>&nbsp;                .setClass(context, GalleryActivity.class)</b>
+<b class="nc"><i>155</i>&nbsp;                .putExtra(EXTRA_FILENAME, filename)</b>
+<b class="nc"><i>156</i>&nbsp;                .putExtra(EXTRA_WIKI, wiki)</b>
+<b class="nc"><i>157</i>&nbsp;                .putExtra(EXTRA_SOURCE, source);</b>
+<b class="nc"><i>158</i>&nbsp;        if (pageTitle != null) {</b>
+<b class="nc"><i>159</i>&nbsp;            intent.putExtra(EXTRA_PAGETITLE, pageTitle);</b>
+<i>160</i>&nbsp;        }
+<i>161</i>&nbsp;
+<b class="nc"><i>162</i>&nbsp;        return intent;</b>
+<i>163</i>&nbsp;    }
+<i>164</i>&nbsp;
+<i>165</i>&nbsp;    @Override
+<i>166</i>&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>167</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<i>168</i>&nbsp;
+<b class="nc"><i>169</i>&nbsp;        setContentView(R.layout.activity_gallery);</b>
+<b class="nc"><i>170</i>&nbsp;        setSupportActionBar(findViewById(R.id.gallery_toolbar));</b>
+<b class="nc"><i>171</i>&nbsp;        getSupportActionBar().setDisplayHomeAsUpEnabled(true);</b>
+<b class="nc"><i>172</i>&nbsp;        getSupportActionBar().setTitle(&quot;&quot;);</b>
+<i>173</i>&nbsp;
+<b class="nc"><i>174</i>&nbsp;        toolbarContainer = findViewById(R.id.gallery_toolbar_container);</b>
+<b class="nc"><i>175</i>&nbsp;        infoContainer = findViewById(R.id.gallery_info_container);</b>
+<i>176</i>&nbsp;
+<b class="nc"><i>177</i>&nbsp;        findViewById(R.id.gallery_toolbar_gradient)</b>
+<b class="nc"><i>178</i>&nbsp;                .setBackground(GradientUtil.getPowerGradient(R.color.black26, Gravity.TOP));</b>
+<b class="nc"><i>179</i>&nbsp;        findViewById(R.id.gallery_info_gradient)</b>
+<b class="nc"><i>180</i>&nbsp;                .setBackground(GradientUtil.getPowerGradient(R.color.black38, Gravity.BOTTOM));</b>
+<i>181</i>&nbsp;
+<b class="nc"><i>182</i>&nbsp;        progressBar = findViewById(R.id.gallery_progressbar);</b>
+<i>183</i>&nbsp;
+<b class="nc"><i>184</i>&nbsp;        descriptionText = findViewById(R.id.gallery_description_text);</b>
+<b class="nc"><i>185</i>&nbsp;        descriptionText.setMovementMethod(linkMovementMethod);</b>
+<i>186</i>&nbsp;
+<b class="nc"><i>187</i>&nbsp;        licenseIcon = findViewById(R.id.gallery_license_icon);</b>
+<b class="nc"><i>188</i>&nbsp;        licenseIcon.setOnClickListener(licenseShortClickListener);</b>
+<b class="nc"><i>189</i>&nbsp;        licenseIcon.setOnLongClickListener(licenseLongClickListener);</b>
+<i>190</i>&nbsp;
+<b class="nc"><i>191</i>&nbsp;        creditText = findViewById(R.id.gallery_credit_text);</b>
+<i>192</i>&nbsp;
+<b class="nc"><i>193</i>&nbsp;        errorView = findViewById(R.id.view_gallery_error);</b>
+<b class="nc"><i>194</i>&nbsp;        ((ImageView) errorView.findViewById(R.id.view_wiki_error_icon))</b>
+<b class="nc"><i>195</i>&nbsp;                .setColorFilter(color(R.color.base70));</b>
+<b class="nc"><i>196</i>&nbsp;        ((TextView) errorView.findViewById(R.id.view_wiki_error_text))</b>
+<b class="nc"><i>197</i>&nbsp;                .setTextColor(color(R.color.base70));</b>
+<b class="nc"><i>198</i>&nbsp;        errorView.setBackClickListener(v -&gt; onBackPressed());</b>
+<b class="nc"><i>199</i>&nbsp;        errorView.setRetryClickListener(v -&gt; {</b>
+<b class="nc"><i>200</i>&nbsp;            errorView.setVisibility(View.GONE);</b>
+<b class="nc"><i>201</i>&nbsp;            loadGalleryContent();</b>
+<i>202</i>&nbsp;        });
+<i>203</i>&nbsp;
+<b class="nc"><i>204</i>&nbsp;        if (getIntent().hasExtra(EXTRA_PAGETITLE)) {</b>
+<b class="nc"><i>205</i>&nbsp;            pageTitle = getIntent().getParcelableExtra(EXTRA_PAGETITLE);</b>
+<i>206</i>&nbsp;        }
+<b class="nc"><i>207</i>&nbsp;        initialFilename = getIntent().getStringExtra(EXTRA_FILENAME);</b>
+<b class="nc"><i>208</i>&nbsp;        wiki = getIntent().getParcelableExtra(EXTRA_WIKI);</b>
+<i>209</i>&nbsp;
+<b class="nc"><i>210</i>&nbsp;        galleryCache = new HashMap&lt;&gt;();</b>
+<b class="nc"><i>211</i>&nbsp;        galleryAdapter = new GalleryItemAdapter(this);</b>
+<b class="nc"><i>212</i>&nbsp;        galleryPager = findViewById(R.id.gallery_item_pager);</b>
+<b class="nc"><i>213</i>&nbsp;        galleryPager.setAdapter(galleryAdapter);</b>
+<b class="nc"><i>214</i>&nbsp;        pageChangeListener = new GalleryPageChangeListener();</b>
+<b class="nc"><i>215</i>&nbsp;        galleryPager.addOnPageChangeListener(pageChangeListener);</b>
+<i>216</i>&nbsp;
+<b class="nc"><i>217</i>&nbsp;        funnel = new GalleryFunnel(app, wiki, getIntent().getIntExtra(EXTRA_SOURCE, 0));</b>
+<i>218</i>&nbsp;
+<b class="nc"><i>219</i>&nbsp;        if (savedInstanceState == null) {</b>
+<b class="nc"><i>220</i>&nbsp;            if (initialFilename != null) {</b>
+<b class="nc"><i>221</i>&nbsp;                funnel.logGalleryOpen(pageTitle, removeUnderscores(initialFilename));</b>
+<i>222</i>&nbsp;            }
+<i>223</i>&nbsp;        } else {
+<b class="nc"><i>224</i>&nbsp;            controlsShowing = savedInstanceState.getBoolean(&quot;controlsShowing&quot;);</b>
+<b class="nc"><i>225</i>&nbsp;            initialImageIndex = savedInstanceState.getInt(&quot;pagerIndex&quot;);</b>
+<i>226</i>&nbsp;            // if we have a savedInstanceState, then the initial index overrides
+<i>227</i>&nbsp;            // the initial Title from our intent.
+<b class="nc"><i>228</i>&nbsp;            initialFilename = null;</b>
+<b class="nc"><i>229</i>&nbsp;            FragmentManager fm = getSupportFragmentManager();</b>
+<b class="nc"><i>230</i>&nbsp;            if (getSupportFragmentManager().getBackStackEntryCount() &gt; 0) {</b>
+<b class="nc"><i>231</i>&nbsp;                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();</b>
+<b class="nc"><i>232</i>&nbsp;                for (int i = 0; i &lt; fm.getBackStackEntryCount(); i++) {</b>
+<b class="nc"><i>233</i>&nbsp;                    Fragment fragment = fm.findFragmentById(fm.getBackStackEntryAt(i).getId());</b>
+<b class="nc"><i>234</i>&nbsp;                    if (fragment instanceof GalleryItemFragment) {</b>
+<b class="nc"><i>235</i>&nbsp;                        ft.remove(fragment);</b>
+<i>236</i>&nbsp;                    }
+<i>237</i>&nbsp;                }
+<b class="nc"><i>238</i>&nbsp;                ft.commitAllowingStateLoss();</b>
+<i>239</i>&nbsp;            }
+<i>240</i>&nbsp;        }
+<b class="nc"><i>241</i>&nbsp;        toolbarContainer.post(() -&gt; setControlsShowing(controlsShowing));</b>
+<b class="nc"><i>242</i>&nbsp;        loadGalleryContent();</b>
+<i>243</i>&nbsp;    }
+<i>244</i>&nbsp;
+<i>245</i>&nbsp;    @Override public void onDestroy() {
+<b class="nc"><i>246</i>&nbsp;        galleryPager.removeOnPageChangeListener(pageChangeListener);</b>
+<b class="nc"><i>247</i>&nbsp;        pageChangeListener = null;</b>
+<b class="nc"><i>248</i>&nbsp;        super.onDestroy();</b>
+<i>249</i>&nbsp;    }
+<i>250</i>&nbsp;
+<i>251</i>&nbsp;    private void loadGalleryItemFor(@NonNull FeaturedImage image, int age) {
+<b class="nc"><i>252</i>&nbsp;        List&lt;GalleryItem&gt; list = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>253</i>&nbsp;        list.add(new FeaturedImageGalleryItem(image, age));</b>
+<b class="nc"><i>254</i>&nbsp;        applyGalleryCollection(new GalleryCollection(list));</b>
+<i>255</i>&nbsp;    }
+<i>256</i>&nbsp;
+<i>257</i>&nbsp;    @Override
+<i>258</i>&nbsp;    public void onResume() {
+<b class="nc"><i>259</i>&nbsp;        super.onResume();</b>
+<b class="nc"><i>260</i>&nbsp;        registerReceiver(downloadReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));</b>
+<b class="nc"><i>261</i>&nbsp;        downloadReceiver.setCallback(downloadReceiverCallback);</b>
+<i>262</i>&nbsp;    }
+<i>263</i>&nbsp;
+<i>264</i>&nbsp;    @Override
+<i>265</i>&nbsp;    public void onPause() {
+<b class="nc"><i>266</i>&nbsp;        super.onPause();</b>
+<b class="nc"><i>267</i>&nbsp;        downloadReceiver.setCallback(null);</b>
+<b class="nc"><i>268</i>&nbsp;        unregisterReceiver(downloadReceiver);</b>
+<i>269</i>&nbsp;    }
+<i>270</i>&nbsp;
+<i>271</i>&nbsp;    @Override
+<i>272</i>&nbsp;    public boolean onCreateOptionsMenu(Menu menu) {
+<b class="nc"><i>273</i>&nbsp;        getMenuInflater().inflate(R.menu.menu_gallery, menu);</b>
+<b class="nc"><i>274</i>&nbsp;        return true;</b>
+<i>275</i>&nbsp;    }
+<i>276</i>&nbsp;
+<i>277</i>&nbsp;    @Override
+<i>278</i>&nbsp;    public void onDownload(@NonNull GalleryItem item) {
+<b class="nc"><i>279</i>&nbsp;        funnel.logGallerySave(pageTitle, item.getName());</b>
+<b class="nc"><i>280</i>&nbsp;        downloadReceiver.download(this, item);</b>
+<b class="nc"><i>281</i>&nbsp;        FeedbackUtil.showMessage(this, R.string.gallery_save_progress);</b>
+<i>282</i>&nbsp;    }
+<i>283</i>&nbsp;
+<i>284</i>&nbsp;    @Override
+<i>285</i>&nbsp;    public void onShare(@NonNull GalleryItem item, @Nullable Bitmap bitmap, @NonNull String subject, @NonNull PageTitle title) {
+<b class="nc"><i>286</i>&nbsp;        funnel.logGalleryShare(pageTitle, item.getName());</b>
+<b class="nc"><i>287</i>&nbsp;        if (bitmap != null) {</b>
+<b class="nc"><i>288</i>&nbsp;            ShareUtil.shareImage(this, bitmap, new File(item.getUrl()).getName(), subject,</b>
+<b class="nc"><i>289</i>&nbsp;                    title.getCanonicalUri());</b>
+<i>290</i>&nbsp;        } else {
+<b class="nc"><i>291</i>&nbsp;            ShareUtil.shareText(this, title);</b>
+<i>292</i>&nbsp;        }
+<i>293</i>&nbsp;    }
+<i>294</i>&nbsp;
+<i>295</i>&nbsp;    @Override
+<i>296</i>&nbsp;    protected void setTheme() {
+<b class="nc"><i>297</i>&nbsp;        setTheme(Theme.DARK.getResourceId());</b>
+<i>298</i>&nbsp;    }
+<i>299</i>&nbsp;
+<b class="nc"><i>300</i>&nbsp;    private class GalleryPageChangeListener extends ViewPager.SimpleOnPageChangeListener {</b>
+<b class="nc"><i>301</i>&nbsp;        private int currentPosition = -1;</b>
+<i>302</i>&nbsp;        @Override
+<i>303</i>&nbsp;        public void onPageSelected(int position) {
+<i>304</i>&nbsp;            // the pager has settled on a new position
+<b class="nc"><i>305</i>&nbsp;            layOutGalleryDescription();</b>
+<b class="nc"><i>306</i>&nbsp;            galleryAdapter.notifyFragments(position);</b>
+<b class="nc"><i>307</i>&nbsp;            if (currentPosition != -1 &amp;&amp; getCurrentItem() != null) {</b>
+<b class="nc"><i>308</i>&nbsp;                if (position &lt; currentPosition) {</b>
+<b class="nc"><i>309</i>&nbsp;                    funnel.logGallerySwipeLeft(pageTitle, getCurrentItem().getName());</b>
+<b class="nc"><i>310</i>&nbsp;                } else if (position &gt; currentPosition) {</b>
+<b class="nc"><i>311</i>&nbsp;                    funnel.logGallerySwipeRight(pageTitle, getCurrentItem().getName());</b>
+<i>312</i>&nbsp;                }
+<i>313</i>&nbsp;            }
+<b class="nc"><i>314</i>&nbsp;            currentPosition = position;</b>
+<i>315</i>&nbsp;        }
+<i>316</i>&nbsp;        @Override
+<i>317</i>&nbsp;        public void onPageScrollStateChanged(int state) {
+<b class="nc"><i>318</i>&nbsp;            if (state == ViewPager.SCROLL_STATE_IDLE) {</b>
+<b class="nc"><i>319</i>&nbsp;                galleryAdapter.purgeFragments(false);</b>
+<i>320</i>&nbsp;            }
+<i>321</i>&nbsp;        }
+<i>322</i>&nbsp;    }
+<i>323</i>&nbsp;
+<i>324</i>&nbsp;    @Override
+<i>325</i>&nbsp;    protected void onSaveInstanceState(Bundle outState) {
+<b class="nc"><i>326</i>&nbsp;        super.onSaveInstanceState(outState);</b>
+<b class="nc"><i>327</i>&nbsp;        outState.putBoolean(&quot;controlsShowing&quot;, controlsShowing);</b>
+<b class="nc"><i>328</i>&nbsp;        outState.putInt(&quot;pagerIndex&quot;, galleryPager.getCurrentItem());</b>
+<i>329</i>&nbsp;    }
+<i>330</i>&nbsp;
+<i>331</i>&nbsp;    private void updateProgressBar(boolean visible, boolean indeterminate, int value) {
+<b class="nc"><i>332</i>&nbsp;        progressBar.setIndeterminate(indeterminate);</b>
+<b class="nc"><i>333</i>&nbsp;        if (!indeterminate) {</b>
+<b class="nc"><i>334</i>&nbsp;            progressBar.setProgress(value);</b>
+<i>335</i>&nbsp;        }
+<b class="nc"><i>336</i>&nbsp;        progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);</b>
+<i>337</i>&nbsp;    }
+<i>338</i>&nbsp;
+<i>339</i>&nbsp;    @Override
+<i>340</i>&nbsp;    public void onBackPressed() {
+<i>341</i>&nbsp;        // log the &quot;gallery close&quot; event only upon explicit closing of the activity
+<i>342</i>&nbsp;        // (back button, or home-as-up button in the toolbar)
+<b class="nc"><i>343</i>&nbsp;        if (getCurrentItem() != null) {</b>
+<b class="nc"><i>344</i>&nbsp;            funnel.logGalleryClose(pageTitle, getCurrentItem().getName());</b>
+<i>345</i>&nbsp;        }
+<b class="nc"><i>346</i>&nbsp;        super.onBackPressed();</b>
+<i>347</i>&nbsp;    }
+<i>348</i>&nbsp;
+<i>349</i>&nbsp;    /**
+<i>350</i>&nbsp;     * Show or hide all the UI controls in this activity (slide them out or in).
+<i>351</i>&nbsp;     * @param showing Whether to show or hide the controls.
+<i>352</i>&nbsp;     */
+<i>353</i>&nbsp;    private void setControlsShowing(boolean showing) {
+<b class="nc"><i>354</i>&nbsp;        controlsShowing = showing;</b>
+<b class="nc"><i>355</i>&nbsp;        if (controlsShowing) {</b>
+<b class="nc"><i>356</i>&nbsp;            ViewAnimations.ensureTranslationY(toolbarContainer, 0);</b>
+<b class="nc"><i>357</i>&nbsp;            ViewAnimations.ensureTranslationY(infoContainer, 0);</b>
+<i>358</i>&nbsp;        } else {
+<b class="nc"><i>359</i>&nbsp;            ViewAnimations.ensureTranslationY(toolbarContainer, -toolbarContainer.getHeight());</b>
+<b class="nc"><i>360</i>&nbsp;            ViewAnimations.ensureTranslationY(infoContainer, infoContainer.getHeight());</b>
+<i>361</i>&nbsp;        }
+<i>362</i>&nbsp;    }
+<i>363</i>&nbsp;
+<i>364</i>&nbsp;    /**
+<i>365</i>&nbsp;     * Toggle showing or hiding of all the UI controls.
+<i>366</i>&nbsp;     */
+<i>367</i>&nbsp;    public void toggleControls() {
+<b class="nc"><i>368</i>&nbsp;        setControlsShowing(!controlsShowing);</b>
+<i>369</i>&nbsp;    }
+<i>370</i>&nbsp;
+<i>371</i>&nbsp;    public void showLinkPreview(@NonNull PageTitle title) {
+<b class="nc"><i>372</i>&nbsp;        bottomSheetPresenter.show(getSupportFragmentManager(),</b>
+<b class="nc"><i>373</i>&nbsp;                LinkPreviewDialog.newInstance(title, HistoryEntry.SOURCE_GALLERY, null));</b>
+<i>374</i>&nbsp;    }
+<i>375</i>&nbsp;
+<i>376</i>&nbsp;    /**
+<i>377</i>&nbsp;     * LinkMovementMethod for handling clicking of links in the description or metadata
+<i>378</i>&nbsp;     * text fields. For internal links, this activity will close, and pass the page title as
+<i>379</i>&nbsp;     * the result. For external links, they will be bounced out to the Browser.
+<i>380</i>&nbsp;     */
+<b class="nc"><i>381</i>&nbsp;    private LinkMovementMethodExt linkMovementMethod =</b>
+<i>382</i>&nbsp;        new LinkMovementMethodExt((@NonNull String url, @Nullable String notUsed) -&gt; {
+<b class="nc"><i>383</i>&nbsp;        L.v(&quot;Link clicked was &quot; + url);</b>
+<b class="nc"><i>384</i>&nbsp;        url = resolveProtocolRelativeUrl(url);</b>
+<b class="nc"><i>385</i>&nbsp;        if (url.startsWith(&quot;/wiki/&quot;)) {</b>
+<b class="nc"><i>386</i>&nbsp;            PageTitle title = app.getWikiSite().titleForInternalLink(url);</b>
+<b class="nc"><i>387</i>&nbsp;            showLinkPreview(title);</b>
+<b class="nc"><i>388</i>&nbsp;        } else {</b>
+<b class="nc"><i>389</i>&nbsp;            Uri uri = Uri.parse(url);</b>
+<b class="nc"><i>390</i>&nbsp;            String authority = uri.getAuthority();</b>
+<b class="nc"><i>391</i>&nbsp;            if (authority != null &amp;&amp; WikiSite.supportedAuthority(authority)</b>
+<b class="nc"><i>392</i>&nbsp;                &amp;&amp; uri.getPath().startsWith(&quot;/wiki/&quot;)) {</b>
+<b class="nc"><i>393</i>&nbsp;                PageTitle title = new WikiSite(uri).titleForUri(uri);</b>
+<b class="nc"><i>394</i>&nbsp;                showLinkPreview(title);</b>
+<b class="nc"><i>395</i>&nbsp;            } else {</b>
+<i>396</i>&nbsp;                // if it&#39;s a /w/ URI, turn it into a full URI and go external
+<b class="nc"><i>397</i>&nbsp;                if (url.startsWith(&quot;/w/&quot;)) {</b>
+<b class="nc"><i>398</i>&nbsp;                    url = String.format(&quot;%1$s://%2$s&quot;, app.getWikiSite().scheme(),</b>
+<b class="nc"><i>399</i>&nbsp;                            app.getWikiSite().authority()) + url;</b>
+<i>400</i>&nbsp;                }
+<b class="nc"><i>401</i>&nbsp;                handleExternalLink(GalleryActivity.this, Uri.parse(url));</b>
+<i>402</i>&nbsp;            }
+<i>403</i>&nbsp;        }
+<i>404</i>&nbsp;    });
+<i>405</i>&nbsp;
+<i>406</i>&nbsp;    /**
+<i>407</i>&nbsp;     * Close this activity, with the specified PageTitle as the activity result, to be picked up
+<i>408</i>&nbsp;     * by the activity that originally launched us.
+<i>409</i>&nbsp;     * @param resultTitle PageTitle to pass as the activity result.
+<i>410</i>&nbsp;     */
+<i>411</i>&nbsp;    public void finishWithPageResult(@NonNull PageTitle resultTitle) {
+<b class="nc"><i>412</i>&nbsp;        finishWithPageResult(resultTitle, new HistoryEntry(resultTitle, HistoryEntry.SOURCE_GALLERY));</b>
+<i>413</i>&nbsp;    }
+<i>414</i>&nbsp;
+<i>415</i>&nbsp;    public void finishWithPageResult(@NonNull PageTitle resultTitle, @NonNull HistoryEntry historyEntry) {
+<b class="nc"><i>416</i>&nbsp;        Intent intent = PageActivity.newIntentForCurrentTab(GalleryActivity.this, historyEntry, resultTitle);</b>
+<b class="nc"><i>417</i>&nbsp;        setResult(ACTIVITY_RESULT_PAGE_SELECTED, intent);</b>
+<b class="nc"><i>418</i>&nbsp;        finish();</b>
+<i>419</i>&nbsp;    }
+<i>420</i>&nbsp;
+<i>421</i>&nbsp;    @Override public void onLinkPreviewLoadPage(@NonNull PageTitle title, @NonNull HistoryEntry entry, boolean inNewTab) {
+<b class="nc"><i>422</i>&nbsp;        finishWithPageResult(title, entry);</b>
+<i>423</i>&nbsp;    }
+<i>424</i>&nbsp;
+<i>425</i>&nbsp;    @Override public void onLinkPreviewCopyLink(@NonNull PageTitle title) {
+<b class="nc"><i>426</i>&nbsp;        ClipboardUtil.setPlainText(this, null, title.getCanonicalUri());</b>
+<b class="nc"><i>427</i>&nbsp;        FeedbackUtil.showMessage(this, R.string.address_copied);</b>
+<i>428</i>&nbsp;    }
+<i>429</i>&nbsp;
+<i>430</i>&nbsp;    @Override public void onLinkPreviewAddToList(@NonNull PageTitle title) {
+<b class="nc"><i>431</i>&nbsp;        bottomSheetPresenter.showAddToListDialog(getSupportFragmentManager(), title, AddToReadingListDialog.InvokeSource.LINK_PREVIEW_MENU);</b>
+<i>432</i>&nbsp;    }
+<i>433</i>&nbsp;
+<i>434</i>&nbsp;    @Override public void onLinkPreviewShareLink(@NonNull PageTitle title) {
+<b class="nc"><i>435</i>&nbsp;        ShareUtil.shareText(this, title);</b>
+<i>436</i>&nbsp;    }
+<i>437</i>&nbsp;
+<i>438</i>&nbsp;    void showError(@Nullable Throwable caught, boolean backOnError) {
+<i>439</i>&nbsp;        // Force going back on button press if coming from a single-item featured-image gallery,
+<i>440</i>&nbsp;        // because re-setting the collection and calling notifyDataSetChanged() fails to compel the
+<i>441</i>&nbsp;        // GalleryItemFragment to attempt to reload its image.
+<i>442</i>&nbsp;        // TODO: Find a way to remove this workaround
+<b class="nc"><i>443</i>&nbsp;        if (backOnError) {</b>
+<b class="nc"><i>444</i>&nbsp;            errorView.setRetryClickListener((v) -&gt; onBackPressed());</b>
+<i>445</i>&nbsp;        }
+<i>446</i>&nbsp;
+<b class="nc"><i>447</i>&nbsp;        errorView.setError(caught);</b>
+<b class="nc"><i>448</i>&nbsp;        errorView.setVisibility(View.VISIBLE);</b>
+<i>449</i>&nbsp;    }
+<i>450</i>&nbsp;
+<i>451</i>&nbsp;    /**
+<i>452</i>&nbsp;     * Kicks off the activity after the views are initialized in onCreate.
+<i>453</i>&nbsp;     */
+<i>454</i>&nbsp;    private void loadGalleryContent() {
+<b class="nc"><i>455</i>&nbsp;        updateProgressBar(false, true, 0);</b>
+<b class="nc"><i>456</i>&nbsp;        if (getIntent().hasExtra(EXTRA_FEATURED_IMAGE)) {</b>
+<b class="nc"><i>457</i>&nbsp;            FeaturedImage featuredImage = GsonUnmarshaller.unmarshal(FeaturedImage.class,</b>
+<b class="nc"><i>458</i>&nbsp;                    getIntent().getStringExtra(EXTRA_FEATURED_IMAGE));</b>
+<b class="nc"><i>459</i>&nbsp;            int age = getIntent().getIntExtra(EXTRA_FEATURED_IMAGE_AGE, 0);</b>
+<b class="nc"><i>460</i>&nbsp;            loadGalleryItemFor(featuredImage, age);</b>
+<b class="nc"><i>461</i>&nbsp;        } else {</b>
+<b class="nc"><i>462</i>&nbsp;            fetchGalleryCollection();</b>
+<i>463</i>&nbsp;        }
+<i>464</i>&nbsp;    }
+<i>465</i>&nbsp;
+<i>466</i>&nbsp;    /**
+<i>467</i>&nbsp;     * Retrieve the complete list of media items for the current page.
+<i>468</i>&nbsp;     * When retrieved, the list will be passed to the ViewPager, and will become a
+<i>469</i>&nbsp;     * scrollable gallery of media.
+<i>470</i>&nbsp;     */
+<i>471</i>&nbsp;    private void fetchGalleryCollection() {
+<b class="nc"><i>472</i>&nbsp;        if (pageTitle == null) {</b>
+<i>473</i>&nbsp;            return;
+<i>474</i>&nbsp;        }
+<b class="nc"><i>475</i>&nbsp;        updateProgressBar(true, true, 0);</b>
+<i>476</i>&nbsp;
+<b class="nc"><i>477</i>&nbsp;        CallbackTask.execute(new CallbackTask.Task&lt;Map&lt;String, ImageInfo&gt;&gt;() {</b>
+<i>478</i>&nbsp;            @Override public Map&lt;String, ImageInfo&gt; execute() throws Throwable {
+<b class="nc"><i>479</i>&nbsp;                return client.request(pageTitle.getWikiSite(), pageTitle, false);</b>
+<i>480</i>&nbsp;            }
+<b class="nc"><i>481</i>&nbsp;        }, new CallbackTask.Callback&lt;Map&lt;String, ImageInfo&gt;&gt;() {</b>
+<i>482</i>&nbsp;            @Override public void success(Map&lt;String, ImageInfo&gt; result) {
+<b class="nc"><i>483</i>&nbsp;                updateProgressBar(false, true, 0);</b>
+<b class="nc"><i>484</i>&nbsp;                applyGalleryCollection(buildCollection(result));</b>
+<i>485</i>&nbsp;            }
+<i>486</i>&nbsp;
+<i>487</i>&nbsp;            @Override public void failure(Throwable caught) {
+<b class="nc"><i>488</i>&nbsp;                updateProgressBar(false, true, 0);</b>
+<b class="nc"><i>489</i>&nbsp;                showError(caught, false);</b>
+<i>490</i>&nbsp;            }
+<i>491</i>&nbsp;        });
+<i>492</i>&nbsp;    }
+<i>493</i>&nbsp;
+<i>494</i>&nbsp;    @NonNull private GalleryCollection buildCollection(Map&lt;String, ImageInfo&gt; result) {
+<b class="nc"><i>495</i>&nbsp;        List&lt;GalleryItem&gt; list = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>496</i>&nbsp;        for (Map.Entry&lt;String, ImageInfo&gt; entry : result.entrySet()) {</b>
+<b class="nc"><i>497</i>&nbsp;            if (GalleryCollection.shouldIncludeImage(entry.getValue())) {</b>
+<b class="nc"><i>498</i>&nbsp;                list.add(new GalleryItem(entry.getKey(), entry.getValue()));</b>
+<i>499</i>&nbsp;            }
+<b class="nc"><i>500</i>&nbsp;        }</b>
+<b class="nc"><i>501</i>&nbsp;        return new GalleryCollection(list);</b>
+<i>502</i>&nbsp;    }
+<i>503</i>&nbsp;
+<i>504</i>&nbsp;    /**
+<i>505</i>&nbsp;     * Apply a complete collection of media to our scrollable gallery.
+<i>506</i>&nbsp;     * @param collection GalleryCollection to apply to the ViewPager.
+<i>507</i>&nbsp;     */
+<i>508</i>&nbsp;    private void applyGalleryCollection(@NonNull GalleryCollection collection) {
+<i>509</i>&nbsp;        // remove the page transformer while we operate on the pager...
+<b class="nc"><i>510</i>&nbsp;        galleryPager.setPageTransformer(false, null);</b>
+<i>511</i>&nbsp;        // first, verify that the collection contains the item that the user
+<i>512</i>&nbsp;        // initially requested, if we have one...
+<b class="nc"><i>513</i>&nbsp;        int initialImagePos = -1;</b>
+<b class="nc"><i>514</i>&nbsp;        if (initialFilename != null) {</b>
+<b class="nc"><i>515</i>&nbsp;            for (GalleryItem item : collection.getItemList()) {</b>
+<b class="nc"><i>516</i>&nbsp;                if (addUnderscores(item.getName()).equals(addUnderscores(initialFilename))) {</b>
+<b class="nc"><i>517</i>&nbsp;                    initialImagePos = collection.getItemList().indexOf(item);</b>
+<b class="nc"><i>518</i>&nbsp;                    break;</b>
+<i>519</i>&nbsp;                }
+<b class="nc"><i>520</i>&nbsp;            }</b>
+<b class="nc"><i>521</i>&nbsp;            if (initialImagePos == -1) {</b>
+<i>522</i>&nbsp;                // the requested image is not present in the gallery collection, so
+<i>523</i>&nbsp;                // add it manually.
+<i>524</i>&nbsp;                // (this can happen if the user clicked on an SVG file, since we hide SVGs
+<i>525</i>&nbsp;                // by default in the gallery)
+<b class="nc"><i>526</i>&nbsp;                initialImagePos = 0;</b>
+<b class="nc"><i>527</i>&nbsp;                collection.getItemList().add(initialImagePos,</b>
+<i>528</i>&nbsp;                        new GalleryItem(initialFilename));
+<i>529</i>&nbsp;            }
+<i>530</i>&nbsp;        }
+<i>531</i>&nbsp;
+<i>532</i>&nbsp;        // pass the collection to the adapter!
+<b class="nc"><i>533</i>&nbsp;        galleryAdapter.setCollection(collection);</b>
+<b class="nc"><i>534</i>&nbsp;        if (initialImagePos != -1) {</b>
+<i>535</i>&nbsp;            // if we have a target image to jump to, then do it!
+<b class="nc"><i>536</i>&nbsp;            galleryPager.setCurrentItem(initialImagePos, false);</b>
+<b class="nc"><i>537</i>&nbsp;        } else if (initialImageIndex &gt;= 0</b>
+<b class="nc"><i>538</i>&nbsp;                &amp;&amp; initialImageIndex &lt; galleryAdapter.getCount()) {</b>
+<i>539</i>&nbsp;            // if we have a target image index to jump to, then do it!
+<b class="nc"><i>540</i>&nbsp;            galleryPager.setCurrentItem(initialImageIndex, false);</b>
+<i>541</i>&nbsp;        }
+<b class="nc"><i>542</i>&nbsp;        galleryPager.setPageTransformer(false, new GalleryPagerTransformer());</b>
+<i>543</i>&nbsp;    }
+<i>544</i>&nbsp;
+<i>545</i>&nbsp;    private GalleryItem getCurrentItem() {
+<b class="nc"><i>546</i>&nbsp;        if (galleryAdapter.getItem(galleryPager.getCurrentItem()) == null) {</b>
+<b class="nc"><i>547</i>&nbsp;            return null;</b>
+<i>548</i>&nbsp;        }
+<b class="nc"><i>549</i>&nbsp;        return ((GalleryItemFragment) galleryAdapter.getItem(galleryPager.getCurrentItem()))</b>
+<b class="nc"><i>550</i>&nbsp;                .getGalleryItem();</b>
+<i>551</i>&nbsp;    }
+<i>552</i>&nbsp;
+<i>553</i>&nbsp;    /**
+<i>554</i>&nbsp;     * Populate the description and license text fields with data from the current gallery item.
+<i>555</i>&nbsp;     */
+<i>556</i>&nbsp;    public void layOutGalleryDescription() {
+<b class="nc"><i>557</i>&nbsp;        GalleryItem item = getCurrentItem();</b>
+<b class="nc"><i>558</i>&nbsp;        if (item == null) {</b>
+<b class="nc"><i>559</i>&nbsp;            infoContainer.setVisibility(View.GONE);</b>
+<i>560</i>&nbsp;            return;
+<i>561</i>&nbsp;        }
+<b class="nc"><i>562</i>&nbsp;        galleryAdapter.notifyFragments(galleryPager.getCurrentItem());</b>
+<i>563</i>&nbsp;
+<b class="nc"><i>564</i>&nbsp;        CharSequence descriptionStr = &quot;&quot;;</b>
+<b class="nc"><i>565</i>&nbsp;        if (item.getMetadata() != null &amp;&amp; item.getMetadata().imageDescription() != null) {</b>
+<b class="nc"><i>566</i>&nbsp;            descriptionStr = StringUtil.fromHtml(item.getMetadata().imageDescription().value());</b>
+<b class="nc"><i>567</i>&nbsp;        } else if (item.getMetadata() != null &amp;&amp; item.getMetadata().objectName() != null) {</b>
+<b class="nc"><i>568</i>&nbsp;            descriptionStr = StringUtil.fromHtml(item.getMetadata().objectName().value());</b>
+<i>569</i>&nbsp;        }
+<b class="nc"><i>570</i>&nbsp;        if (descriptionStr.length() &gt; 0) {</b>
+<b class="nc"><i>571</i>&nbsp;            descriptionText.setText(strip(descriptionStr));</b>
+<b class="nc"><i>572</i>&nbsp;            descriptionText.setVisibility(View.VISIBLE);</b>
+<i>573</i>&nbsp;        } else {
+<b class="nc"><i>574</i>&nbsp;            descriptionText.setVisibility(View.GONE);</b>
+<i>575</i>&nbsp;        }
+<i>576</i>&nbsp;
+<i>577</i>&nbsp;        // determine which icon to display...
+<b class="nc"><i>578</i>&nbsp;        licenseIcon.setImageResource(getLicenseIcon(item));</b>
+<i>579</i>&nbsp;        // Set the icon&#39;s content description to the UsageTerms property.
+<i>580</i>&nbsp;        // (if UsageTerms is not present, then default to Fair Use)
+<b class="nc"><i>581</i>&nbsp;        String usageTerms = (item.getMetadata() == null || item.getMetadata().usageTerms() == null)</b>
+<b class="nc"><i>582</i>&nbsp;                ? null : item.getMetadata().usageTerms().value();</b>
+<b class="nc"><i>583</i>&nbsp;        if (TextUtils.isEmpty(usageTerms)) {</b>
+<b class="nc"><i>584</i>&nbsp;            usageTerms = getString(R.string.gallery_fair_use_license);</b>
+<i>585</i>&nbsp;        }
+<b class="nc"><i>586</i>&nbsp;        licenseIcon.setContentDescription(usageTerms);</b>
+<i>587</i>&nbsp;        // Give the license URL to the icon, to be received by the click handler (may be null).
+<b class="nc"><i>588</i>&nbsp;        licenseIcon.setTag(item.getLicenseUrl());</b>
+<i>589</i>&nbsp;
+<b class="nc"><i>590</i>&nbsp;        String creditStr = &quot;&quot;;</b>
+<b class="nc"><i>591</i>&nbsp;        if (item.getMetadata() != null &amp;&amp; item.getMetadata().artist() != null) {</b>
+<i>592</i>&nbsp;            // todo: is it intentional to convert to a String?
+<b class="nc"><i>593</i>&nbsp;            creditStr = StringUtil.fromHtml(item.getMetadata().artist().value()).toString().trim();</b>
+<i>594</i>&nbsp;        }
+<i>595</i>&nbsp;        // if we couldn&#39;t find a attribution string, then default to unknown
+<b class="nc"><i>596</i>&nbsp;        if (TextUtils.isEmpty(creditStr)) {</b>
+<b class="nc"><i>597</i>&nbsp;            creditStr = getString(R.string.gallery_uploader_unknown);</b>
+<i>598</i>&nbsp;        }
+<b class="nc"><i>599</i>&nbsp;        creditText.setText(creditStr);</b>
+<i>600</i>&nbsp;
+<b class="nc"><i>601</i>&nbsp;        infoContainer.setVisibility(View.VISIBLE);</b>
+<i>602</i>&nbsp;    }
+<i>603</i>&nbsp;
+<i>604</i>&nbsp;    /**
+<i>605</i>&nbsp;     * Return an icon (drawable resource id) that corresponds to the type of license
+<i>606</i>&nbsp;     * under which the specified Gallery item is provided.
+<i>607</i>&nbsp;     * @param item Gallery item for which to give a license icon.
+<i>608</i>&nbsp;     * @return Resource ID of the icon to display, or 0 if no license is available.
+<i>609</i>&nbsp;     */
+<i>610</i>&nbsp;    private static int getLicenseIcon(GalleryItem item) {
+<b class="nc"><i>611</i>&nbsp;        return item.getLicense().getLicenseIcon();</b>
+<i>612</i>&nbsp;    }
+<i>613</i>&nbsp;
+<i>614</i>&nbsp;    /**
+<i>615</i>&nbsp;     * Adapter that will provide the contents for the ViewPager.
+<i>616</i>&nbsp;     * Each media item will be represented by a GalleryItemFragment, which will be instantiated
+<i>617</i>&nbsp;     * lazily, and then cached for future use.
+<i>618</i>&nbsp;     */
+<i>619</i>&nbsp;    private class GalleryItemAdapter extends FragmentPagerAdapter {
+<i>620</i>&nbsp;        private GalleryCollection galleryCollection;
+<i>621</i>&nbsp;        private SparseArray&lt;GalleryItemFragment&gt; fragmentArray;
+<i>622</i>&nbsp;
+<b class="nc"><i>623</i>&nbsp;        GalleryItemAdapter(AppCompatActivity activity) {</b>
+<b class="nc"><i>624</i>&nbsp;            super(activity.getSupportFragmentManager());</b>
+<b class="nc"><i>625</i>&nbsp;            fragmentArray = new SparseArray&lt;&gt;();</b>
+<i>626</i>&nbsp;        }
+<i>627</i>&nbsp;
+<i>628</i>&nbsp;        public void setCollection(@NonNull GalleryCollection collection) {
+<b class="nc"><i>629</i>&nbsp;            galleryCollection = collection;</b>
+<b class="nc"><i>630</i>&nbsp;            notifyDataSetChanged();</b>
+<i>631</i>&nbsp;        }
+<i>632</i>&nbsp;
+<i>633</i>&nbsp;        public void notifyFragments(int currentPosition) {
+<b class="nc"><i>634</i>&nbsp;            for (int i = 0; i &lt; getCount(); i++) {</b>
+<b class="nc"><i>635</i>&nbsp;                if (fragmentArray.get(i) != null) {</b>
+<b class="nc"><i>636</i>&nbsp;                    fragmentArray.get(i).onUpdatePosition(i, currentPosition);</b>
+<i>637</i>&nbsp;                }
+<i>638</i>&nbsp;            }
+<i>639</i>&nbsp;        }
+<i>640</i>&nbsp;
+<i>641</i>&nbsp;        /**
+<i>642</i>&nbsp;         * Remove any active fragments to the left+1 and right+1 of the current
+<i>643</i>&nbsp;         * fragment, to reduce memory usage.
+<i>644</i>&nbsp;         */
+<i>645</i>&nbsp;        public void purgeFragments(boolean removeAll) {
+<b class="nc"><i>646</i>&nbsp;            int position = galleryPager.getCurrentItem();</b>
+<b class="nc"><i>647</i>&nbsp;            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();</b>
+<b class="nc"><i>648</i>&nbsp;            for (int i = 0; i &lt; getCount(); i++) {</b>
+<b class="nc"><i>649</i>&nbsp;                if (!removeAll &amp;&amp; Math.abs(position - i) &lt; 2) {</b>
+<b class="nc"><i>650</i>&nbsp;                    continue;</b>
+<i>651</i>&nbsp;                }
+<b class="nc"><i>652</i>&nbsp;                if (fragmentArray.get(i) != null) {</b>
+<b class="nc"><i>653</i>&nbsp;                    trans.remove(fragmentArray.get(i));</b>
+<b class="nc"><i>654</i>&nbsp;                    fragmentArray.remove(i);</b>
+<b class="nc"><i>655</i>&nbsp;                    fragmentArray.put(i, null);</b>
+<i>656</i>&nbsp;                }
+<i>657</i>&nbsp;            }
+<b class="nc"><i>658</i>&nbsp;            trans.commitAllowingStateLoss();</b>
+<i>659</i>&nbsp;        }
+<i>660</i>&nbsp;
+<i>661</i>&nbsp;        @Override
+<i>662</i>&nbsp;        public int getCount() {
+<b class="nc"><i>663</i>&nbsp;            return galleryCollection == null ? 0 : galleryCollection.getItemList().size();</b>
+<i>664</i>&nbsp;        }
+<i>665</i>&nbsp;
+<i>666</i>&nbsp;        @Override
+<i>667</i>&nbsp;        public Fragment getItem(int position) {
+<b class="nc"><i>668</i>&nbsp;            if (galleryCollection == null || galleryCollection.getItemList().size() &lt;= position) {</b>
+<b class="nc"><i>669</i>&nbsp;                return null;</b>
+<i>670</i>&nbsp;            }
+<i>671</i>&nbsp;            // instantiate a new fragment if it doesn&#39;t exist
+<b class="nc"><i>672</i>&nbsp;            if (fragmentArray.get(position) == null) {</b>
+<b class="nc"><i>673</i>&nbsp;                fragmentArray.put(position, GalleryItemFragment</b>
+<b class="nc"><i>674</i>&nbsp;                        .newInstance(pageTitle, wiki, galleryCollection.getItemList().get(position)));</b>
+<i>675</i>&nbsp;            }
+<b class="nc"><i>676</i>&nbsp;            return fragmentArray.get(position);</b>
+<i>677</i>&nbsp;        }
+<i>678</i>&nbsp;    }
+<i>679</i>&nbsp;
+<b class="nc"><i>680</i>&nbsp;    private class MediaDownloadReceiverCallback implements MediaDownloadReceiver.Callback {</b>
+<i>681</i>&nbsp;        @Override
+<i>682</i>&nbsp;        public void onSuccess() {
+<b class="nc"><i>683</i>&nbsp;            FeedbackUtil.showMessage(GalleryActivity.this, R.string.gallery_save_success);</b>
+<i>684</i>&nbsp;        }
+<i>685</i>&nbsp;    }
+<i>686</i>&nbsp;
+<i>687</i>&nbsp;    @ColorInt private int color(@ColorRes int id) {
+<b class="nc"><i>688</i>&nbsp;        return ContextCompat.getColor(this, id);</b>
+<i>689</i>&nbsp;    }
+<i>690</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

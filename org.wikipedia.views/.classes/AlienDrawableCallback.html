@@ -1,0 +1,125 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: AlienDrawableCallback</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.views</a> ]
+</div>
+
+<h1>Coverage Summary for Class: AlienDrawableCallback (org.wikipedia.views)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AlienDrawableCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.views;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.graphics.drawable.Drawable;
+<i>4</i>&nbsp;import android.os.Handler;
+<i>5</i>&nbsp;import android.support.annotation.NonNull;
+<i>6</i>&nbsp;import android.view.View;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;/**
+<i>9</i>&nbsp; * A {@link Drawable.Callback} for any {@link Drawable} on any {@link View}.
+<i>10</i>&nbsp; * {@link View#verifyDrawable} does not permit callbacks on unknown {@link Drawable}s so this
+<i>11</i>&nbsp; * wrapper invokes the {@link View}&#39;s {@link Handler} directly when available, or its own handler
+<i>12</i>&nbsp; * otherwise.
+<i>13</i>&nbsp; */
+<i>14</i>&nbsp;public class AlienDrawableCallback implements Drawable.Callback {
+<i>15</i>&nbsp;    @NonNull
+<i>16</i>&nbsp;    private final Handler handler;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    @NonNull
+<i>19</i>&nbsp;    private final View view;
+<i>20</i>&nbsp;
+<b class="nc"><i>21</i>&nbsp;    public AlienDrawableCallback(@NonNull View view) {</b>
+<b class="nc"><i>22</i>&nbsp;        handler = view.getHandler() == null ? new Handler() : view.getHandler();</b>
+<b class="nc"><i>23</i>&nbsp;        this.view = view;</b>
+<i>24</i>&nbsp;    }
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    @Override
+<i>27</i>&nbsp;    public void invalidateDrawable(Drawable who) {
+<i>28</i>&nbsp;        // view.invalidate(who.getDirtyBounds()) would be more efficient but it doesn&#39;t seem to
+<i>29</i>&nbsp;        // be practical to obtain the relative coordinates of the Drawable.
+<b class="nc"><i>30</i>&nbsp;        view.invalidate();</b>
+<i>31</i>&nbsp;    }
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    @Override
+<i>34</i>&nbsp;    public void scheduleDrawable(Drawable who, Runnable what, long when) {
+<b class="nc"><i>35</i>&nbsp;        handler.postAtTime(what, when);</b>
+<i>36</i>&nbsp;    }
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    @Override
+<i>39</i>&nbsp;    public void unscheduleDrawable(Drawable who, Runnable what) {
+<b class="nc"><i>40</i>&nbsp;        handler.removeCallbacks(what);</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

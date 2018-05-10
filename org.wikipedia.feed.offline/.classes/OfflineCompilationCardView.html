@@ -1,0 +1,111 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: OfflineCompilationCardView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.offline</a> ]
+</div>
+
+<h1>Coverage Summary for Class: OfflineCompilationCardView (org.wikipedia.feed.offline)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">OfflineCompilationCardView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.feed.offline;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import org.wikipedia.R;
+<i>6</i>&nbsp;import org.wikipedia.feed.view.DefaultFeedCardView;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import butterknife.ButterKnife;
+<i>9</i>&nbsp;import butterknife.OnClick;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;public class OfflineCompilationCardView extends DefaultFeedCardView&lt;OfflineCard&gt; {
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    public interface Callback {
+<i>14</i>&nbsp;        void onViewCompilations();
+<i>15</i>&nbsp;    }
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    public OfflineCompilationCardView(Context context) {
+<b class="nc"><i>18</i>&nbsp;        super(context);</b>
+<b class="nc"><i>19</i>&nbsp;        inflate(getContext(), R.layout.view_card_offline_compilation, this);</b>
+<b class="nc"><i>20</i>&nbsp;        ButterKnife.bind(this);</b>
+<i>21</i>&nbsp;    }
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    @OnClick(R.id.view_offline_action_my_compilations) void onViewCompilationsClick() {
+<b class="nc"><i>24</i>&nbsp;        if (getCallback() != null) {</b>
+<b class="nc"><i>25</i>&nbsp;            getCallback().onViewCompilations();</b>
+<i>26</i>&nbsp;        }
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

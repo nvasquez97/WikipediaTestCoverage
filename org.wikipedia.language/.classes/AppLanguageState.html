@@ -1,0 +1,214 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: AppLanguageState</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.language</a> ]
+</div>
+
+<h1>Coverage Summary for Class: AppLanguageState (org.wikipedia.language)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AppLanguageState</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 35)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.language;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;import android.support.annotation.Nullable;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.apache.commons.lang3.StringUtils;
+<i>8</i>&nbsp;import org.wikipedia.settings.Prefs;
+<i>9</i>&nbsp;import org.wikipedia.util.StringUtil;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import java.util.ArrayList;
+<i>12</i>&nbsp;import java.util.Collections;
+<i>13</i>&nbsp;import java.util.List;
+<i>14</i>&nbsp;import java.util.Locale;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;import static org.apache.commons.lang3.StringUtils.defaultString;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;/** Language lookup and state management for the application language and most recently used article
+<i>19</i>&nbsp; * and application languages. */
+<i>20</i>&nbsp;public class AppLanguageState {
+<b class="nc"><i>21</i>&nbsp;    private static final String SYSTEM_LANGUAGE_CODE = null;</b>
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    @NonNull
+<i>24</i>&nbsp;    private final AppLanguageLookUpTable appLanguageLookUpTable;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    // The language code used by the app when the article language is unspecified. It&#39;s possible for
+<i>27</i>&nbsp;    // this code to be unsupported if the languages supported changes. Null is a special value that
+<i>28</i>&nbsp;    // indicates the system language should used.
+<i>29</i>&nbsp;    @Nullable
+<i>30</i>&nbsp;    private String appLanguageCode;
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    // Language codes that have been explicitly chosen by the user in most recently used order. This
+<i>33</i>&nbsp;    // list includes both app and article languages.
+<i>34</i>&nbsp;    @NonNull
+<i>35</i>&nbsp;    private final List&lt;String&gt; mruLanguageCodes;
+<i>36</i>&nbsp;
+<b class="nc"><i>37</i>&nbsp;    public AppLanguageState(@NonNull Context context) {</b>
+<b class="nc"><i>38</i>&nbsp;        appLanguageLookUpTable = new AppLanguageLookUpTable(context);</b>
+<b class="nc"><i>39</i>&nbsp;        appLanguageCode = Prefs.getAppLanguageCode();</b>
+<b class="nc"><i>40</i>&nbsp;        mruLanguageCodes = unmarshalMruLanguageCodes();</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    @Nullable
+<i>44</i>&nbsp;    public String getAppLanguageCode() {
+<b class="nc"><i>45</i>&nbsp;        return appLanguageCode;</b>
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    @NonNull
+<i>49</i>&nbsp;    public String getAppOrSystemLanguageCode() {
+<b class="nc"><i>50</i>&nbsp;        return isSystemLanguageEnabled() ? getSystemLanguageCode() : appLanguageCode;</b>
+<i>51</i>&nbsp;    }
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    public void setAppLanguageCode(@Nullable String code) {
+<b class="nc"><i>54</i>&nbsp;        appLanguageCode = code;</b>
+<b class="nc"><i>55</i>&nbsp;        Prefs.setAppLanguageCode(code);</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    private boolean isSystemLanguageEnabled() {
+<b class="nc"><i>59</i>&nbsp;        return isSystemLanguageCode(appLanguageCode);</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    private boolean isSystemLanguageCode(@Nullable String code) {
+<b class="nc"><i>63</i>&nbsp;        return StringUtils.equals(code, SYSTEM_LANGUAGE_CODE);</b>
+<i>64</i>&nbsp;    }
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    @NonNull
+<i>67</i>&nbsp;    public String getSystemLanguageCode() {
+<b class="nc"><i>68</i>&nbsp;        String code = LanguageUtil.localeToWikiLanguageCode(Locale.getDefault());</b>
+<b class="nc"><i>69</i>&nbsp;        return appLanguageLookUpTable.isSupportedCode(code)</b>
+<i>70</i>&nbsp;                ? code
+<i>71</i>&nbsp;                : AppLanguageLookUpTable.FALLBACK_LANGUAGE_CODE;
+<i>72</i>&nbsp;    }
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;    /** Note: returned codes may include languages offered by articles but not the app. */
+<i>75</i>&nbsp;    @NonNull
+<i>76</i>&nbsp;    public List&lt;String&gt; getMruLanguageCodes() {
+<b class="nc"><i>77</i>&nbsp;        return mruLanguageCodes;</b>
+<i>78</i>&nbsp;    }
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;    public void setMruLanguageCode(@Nullable String code) {
+<b class="nc"><i>81</i>&nbsp;        List&lt;String&gt; codes = getMruLanguageCodes();</b>
+<b class="nc"><i>82</i>&nbsp;        codes.remove(code);</b>
+<b class="nc"><i>83</i>&nbsp;        codes.add(0, code);</b>
+<b class="nc"><i>84</i>&nbsp;        Prefs.setMruLanguageCodeCsv(StringUtil.listToCsv(codes));</b>
+<i>85</i>&nbsp;    }
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;    /** @return All app supported languages in MRU order. */
+<i>88</i>&nbsp;    public List&lt;String&gt; getAppMruLanguageCodes() {
+<b class="nc"><i>89</i>&nbsp;        List&lt;String&gt; codes = new ArrayList&lt;&gt;(appLanguageLookUpTable.getCodes());</b>
+<b class="nc"><i>90</i>&nbsp;        int insertIndex = 0;</b>
+<b class="nc"><i>91</i>&nbsp;        for (String code : getMruLanguageCodes()) {</b>
+<b class="nc"><i>92</i>&nbsp;            if (codes.contains(code)) {</b>
+<b class="nc"><i>93</i>&nbsp;                codes.remove(code);</b>
+<b class="nc"><i>94</i>&nbsp;                codes.add(insertIndex, code);</b>
+<b class="nc"><i>95</i>&nbsp;                ++insertIndex;</b>
+<i>96</i>&nbsp;            }
+<b class="nc"><i>97</i>&nbsp;        }</b>
+<b class="nc"><i>98</i>&nbsp;        return codes;</b>
+<i>99</i>&nbsp;    }
+<i>100</i>&nbsp;
+<i>101</i>&nbsp;    /** @return English name if app language is supported. */
+<i>102</i>&nbsp;    @Nullable
+<i>103</i>&nbsp;    public String getAppLanguageCanonicalName(@Nullable String code) {
+<b class="nc"><i>104</i>&nbsp;        return appLanguageLookUpTable.getCanonicalName(code);</b>
+<i>105</i>&nbsp;    }
+<i>106</i>&nbsp;
+<i>107</i>&nbsp;    @Nullable
+<i>108</i>&nbsp;    public String getAppOrSystemLanguageLocalizedName() {
+<b class="nc"><i>109</i>&nbsp;        return getAppLanguageLocalizedName(getAppOrSystemLanguageCode());</b>
+<i>110</i>&nbsp;    }
+<i>111</i>&nbsp;
+<i>112</i>&nbsp;    /** @return Native name if app language is supported. */
+<i>113</i>&nbsp;    @Nullable
+<i>114</i>&nbsp;    public String getAppLanguageLocalizedName(@Nullable String code) {
+<b class="nc"><i>115</i>&nbsp;        return appLanguageLookUpTable.getLocalizedName(code);</b>
+<i>116</i>&nbsp;    }
+<i>117</i>&nbsp;
+<i>118</i>&nbsp;    @NonNull
+<i>119</i>&nbsp;    private List&lt;String&gt; unmarshalMruLanguageCodes() {
+<i>120</i>&nbsp;        // Null value is used to indicate that system language should be used.
+<b class="nc"><i>121</i>&nbsp;        String systemLanguageCodeString = String.valueOf(SYSTEM_LANGUAGE_CODE);</b>
+<i>122</i>&nbsp;
+<b class="nc"><i>123</i>&nbsp;        String csv = defaultString(Prefs.getMruLanguageCodeCsv(), systemLanguageCodeString);</b>
+<i>124</i>&nbsp;
+<b class="nc"><i>125</i>&nbsp;        List&lt;String&gt; list = new ArrayList&lt;&gt;(StringUtil.csvToList(csv));</b>
+<i>126</i>&nbsp;
+<b class="nc"><i>127</i>&nbsp;        Collections.replaceAll(list, systemLanguageCodeString, SYSTEM_LANGUAGE_CODE);</b>
+<i>128</i>&nbsp;
+<b class="nc"><i>129</i>&nbsp;        return list;</b>
+<i>130</i>&nbsp;    }
+<i>131</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

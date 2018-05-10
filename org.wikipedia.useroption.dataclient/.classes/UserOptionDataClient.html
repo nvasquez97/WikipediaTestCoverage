@@ -1,0 +1,371 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: UserOptionDataClient</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.useroption.dataclient</a> ]
+</div>
+
+<h1>Coverage Summary for Class: UserOptionDataClient (org.wikipedia.useroption.dataclient)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserOptionDataClient</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">UserOptionDataClient$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">UserOptionDataClient$1$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">UserOptionDataClient$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">UserOptionDataClient$2$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">UserOptionDataClient$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">UserOptionDataClient$3$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">UserOptionDataClient$PostResponse</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 36)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.useroption.dataclient;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.annotation.Nullable;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>7</i>&nbsp;import org.wikipedia.csrf.CsrfTokenClient;
+<i>8</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>9</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwPostResponse;
+<i>10</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwQueryResponse;
+<i>11</i>&nbsp;import org.wikipedia.dataclient.retrofit.RetrofitFactory;
+<i>12</i>&nbsp;import org.wikipedia.useroption.UserOption;
+<i>13</i>&nbsp;import org.wikipedia.util.log.L;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import retrofit2.Call;
+<i>16</i>&nbsp;import retrofit2.Callback;
+<i>17</i>&nbsp;import retrofit2.Response;
+<i>18</i>&nbsp;import retrofit2.http.Field;
+<i>19</i>&nbsp;import retrofit2.http.FormUrlEncoded;
+<i>20</i>&nbsp;import retrofit2.http.GET;
+<i>21</i>&nbsp;import retrofit2.http.POST;
+<i>22</i>&nbsp;import retrofit2.http.Query;
+<i>23</i>&nbsp;
+<b class="nc"><i>24</i>&nbsp;public class UserOptionDataClient {</b>
+<i>25</i>&nbsp;    @NonNull private final WikiSite wiki;
+<i>26</i>&nbsp;    @NonNull private final Service service;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    public interface UserInfoCallback {
+<i>29</i>&nbsp;        void success(@NonNull UserInfo userInfo);
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    public interface UserOptionPostCallback {
+<i>33</i>&nbsp;        void success();
+<i>34</i>&nbsp;        void failure(Throwable t);
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<b class="nc"><i>37</i>&nbsp;    public UserOptionDataClient(@NonNull WikiSite wiki) {</b>
+<b class="nc"><i>38</i>&nbsp;        this.wiki = wiki;</b>
+<b class="nc"><i>39</i>&nbsp;        service = RetrofitFactory.newInstance(wiki).create(Service.class);</b>
+<i>40</i>&nbsp;    }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    public void get(@NonNull final UserInfoCallback callback) {
+<i>43</i>&nbsp;        // Get a CSRF token, even though we won&#39;t use it, to ensure that the user is properly
+<i>44</i>&nbsp;        // logged in. Otherwise, we might receive user-options for an anonymous IP &quot;user&quot;.
+<b class="nc"><i>45</i>&nbsp;        new CsrfTokenClient(wiki, app().getWikiSite()).request(new CsrfTokenClient.DefaultCallback() {</b>
+<i>46</i>&nbsp;            @Override
+<i>47</i>&nbsp;            public void success(@NonNull String token) {
+<b class="nc"><i>48</i>&nbsp;                service.get().enqueue(new Callback&lt;MwQueryResponse&gt;() {</b>
+<i>49</i>&nbsp;                    @Override
+<i>50</i>&nbsp;                    public void onResponse(Call&lt;MwQueryResponse&gt; call, Response&lt;MwQueryResponse&gt; response) {
+<b class="nc"><i>51</i>&nbsp;                        if (response.body() != null &amp;&amp; response.body().success()) {</b>
+<i>52</i>&nbsp;                            //noinspection ConstantConditions
+<b class="nc"><i>53</i>&nbsp;                            callback.success(response.body().query().userInfo());</b>
+<i>54</i>&nbsp;                        }
+<i>55</i>&nbsp;                    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;                    @Override
+<i>58</i>&nbsp;                    public void onFailure(Call&lt;MwQueryResponse&gt; call, Throwable t) {
+<b class="nc"><i>59</i>&nbsp;                        L.e(t);</b>
+<i>60</i>&nbsp;                    }
+<i>61</i>&nbsp;                });
+<i>62</i>&nbsp;            }
+<i>63</i>&nbsp;        });
+<i>64</i>&nbsp;    }
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    public void post(@NonNull final UserOption option, @Nullable final UserOptionPostCallback callback) {
+<b class="nc"><i>67</i>&nbsp;        new CsrfTokenClient(wiki, app().getWikiSite()).request(new CsrfTokenClient.DefaultCallback() {</b>
+<i>68</i>&nbsp;            @Override
+<i>69</i>&nbsp;            public void success(@NonNull String token) {
+<b class="nc"><i>70</i>&nbsp;                service.post(token, option.key(), option.val()).enqueue(new Callback&lt;PostResponse&gt;() {</b>
+<i>71</i>&nbsp;                    @Override
+<i>72</i>&nbsp;                    public void onResponse(Call&lt;PostResponse&gt; call, Response&lt;PostResponse&gt; response) {
+<b class="nc"><i>73</i>&nbsp;                        if (response.body() != null &amp;&amp; !response.body().success(response.body().result())) {</b>
+<b class="nc"><i>74</i>&nbsp;                            L.e(&quot;Bad response for wiki &quot; + wiki.authority() + &quot; = &quot; + response.body().result());</b>
+<b class="nc"><i>75</i>&nbsp;                        } else if (callback != null) {</b>
+<b class="nc"><i>76</i>&nbsp;                            callback.success();</b>
+<i>77</i>&nbsp;                        }
+<i>78</i>&nbsp;                    }
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;                    @Override
+<i>81</i>&nbsp;                    public void onFailure(Call&lt;PostResponse&gt; call, Throwable caught) {
+<b class="nc"><i>82</i>&nbsp;                        L.e(caught);</b>
+<b class="nc"><i>83</i>&nbsp;                        if (callback != null) {</b>
+<b class="nc"><i>84</i>&nbsp;                            callback.failure(caught);</b>
+<i>85</i>&nbsp;                        }
+<i>86</i>&nbsp;                    }
+<i>87</i>&nbsp;                });
+<i>88</i>&nbsp;            }
+<i>89</i>&nbsp;        });
+<i>90</i>&nbsp;    }
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;    public void delete(@NonNull final String key, @Nullable final UserOptionPostCallback callback) {
+<b class="nc"><i>93</i>&nbsp;        new CsrfTokenClient(wiki, app().getWikiSite()).request(new CsrfTokenClient.DefaultCallback() {</b>
+<i>94</i>&nbsp;            @Override
+<i>95</i>&nbsp;            public void success(@NonNull String token) {
+<b class="nc"><i>96</i>&nbsp;                service.delete(token, key).enqueue(new Callback&lt;PostResponse&gt;() {</b>
+<i>97</i>&nbsp;                    @Override
+<i>98</i>&nbsp;                    public void onResponse(Call&lt;PostResponse&gt; call, Response&lt;PostResponse&gt; response) {
+<b class="nc"><i>99</i>&nbsp;                        if (response.body() != null &amp;&amp; !response.body().success(response.body().result())) {</b>
+<b class="nc"><i>100</i>&nbsp;                            L.e(&quot;Bad response for wiki &quot; + wiki.authority() + &quot; = &quot; + response.body().result());</b>
+<b class="nc"><i>101</i>&nbsp;                        } else if (callback != null) {</b>
+<b class="nc"><i>102</i>&nbsp;                            callback.success();</b>
+<i>103</i>&nbsp;                        }
+<i>104</i>&nbsp;                    }
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;                    @Override
+<i>107</i>&nbsp;                    public void onFailure(Call&lt;PostResponse&gt; call, Throwable caught) {
+<b class="nc"><i>108</i>&nbsp;                        L.e(caught);</b>
+<b class="nc"><i>109</i>&nbsp;                        if (callback != null) {</b>
+<b class="nc"><i>110</i>&nbsp;                            callback.failure(caught);</b>
+<i>111</i>&nbsp;                        }
+<i>112</i>&nbsp;                    }
+<i>113</i>&nbsp;                });
+<i>114</i>&nbsp;            }
+<i>115</i>&nbsp;        });
+<i>116</i>&nbsp;    }
+<i>117</i>&nbsp;
+<i>118</i>&nbsp;    private static WikipediaApp app() {
+<b class="nc"><i>119</i>&nbsp;        return WikipediaApp.getInstance();</b>
+<i>120</i>&nbsp;    }
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;    // todo: rename service
+<i>123</i>&nbsp;    private interface Service {
+<i>124</i>&nbsp;        String ACTION = &quot;w/api.php?format=json&amp;formatversion=2&amp;action=&quot;;
+<i>125</i>&nbsp;
+<i>126</i>&nbsp;        @GET(ACTION + &quot;query&amp;meta=userinfo&amp;uiprop=options&quot;)
+<i>127</i>&nbsp;        @NonNull Call&lt;MwQueryResponse&gt; get();
+<i>128</i>&nbsp;
+<i>129</i>&nbsp;        @FormUrlEncoded
+<i>130</i>&nbsp;        @POST(ACTION + &quot;options&quot;)
+<i>131</i>&nbsp;        @NonNull Call&lt;PostResponse&gt; post(@Field(&quot;token&quot;) @NonNull String token,
+<i>132</i>&nbsp;                                         @Query(&quot;optionname&quot;) @NonNull String key,
+<i>133</i>&nbsp;                                         @Query(&quot;optionvalue&quot;) @Nullable String value);
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;        @FormUrlEncoded
+<i>136</i>&nbsp;        @POST(ACTION + &quot;options&quot;)
+<i>137</i>&nbsp;        @NonNull Call&lt;PostResponse&gt; delete(@Field(&quot;token&quot;) @NonNull String token,
+<i>138</i>&nbsp;                                           @Query(&quot;change&quot;) @NonNull String key);
+<i>139</i>&nbsp;    }
+<i>140</i>&nbsp;
+<b class="nc"><i>141</i>&nbsp;    private static class PostResponse extends MwPostResponse {</b>
+<i>142</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) private String options;
+<i>143</i>&nbsp;
+<i>144</i>&nbsp;        public String result() {
+<b class="nc"><i>145</i>&nbsp;            return options;</b>
+<i>146</i>&nbsp;        }
+<i>147</i>&nbsp;    }
+<i>148</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

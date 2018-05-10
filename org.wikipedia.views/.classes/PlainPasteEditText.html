@@ -1,0 +1,150 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PlainPasteEditText</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.views</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PlainPasteEditText (org.wikipedia.views)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PlainPasteEditText</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 20)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.views;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.ClipData;
+<i>4</i>&nbsp;import android.content.ClipboardManager;
+<i>5</i>&nbsp;import android.content.Context;
+<i>6</i>&nbsp;import android.support.design.widget.TextInputEditText;
+<i>7</i>&nbsp;import android.util.AttributeSet;
+<i>8</i>&nbsp;import android.view.inputmethod.EditorInfo;
+<i>9</i>&nbsp;import android.view.inputmethod.InputConnection;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import org.wikipedia.util.ClipboardUtil;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import static android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;public class PlainPasteEditText extends TextInputEditText {
+<i>16</i>&nbsp;    public PlainPasteEditText(Context context) {
+<b class="nc"><i>17</i>&nbsp;        super(context);</b>
+<i>18</i>&nbsp;    }
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    public PlainPasteEditText(Context context, AttributeSet attrs) {
+<b class="nc"><i>21</i>&nbsp;        super(context, attrs);</b>
+<i>22</i>&nbsp;    }
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    public PlainPasteEditText(Context context, AttributeSet attrs, int defStyle) {
+<b class="nc"><i>25</i>&nbsp;        super(context, attrs, defStyle);</b>
+<i>26</i>&nbsp;    }
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    @Override
+<i>29</i>&nbsp;    public boolean onTextContextMenuItem(int id) {
+<b class="nc"><i>30</i>&nbsp;        if (id == android.R.id.paste) {</b>
+<b class="nc"><i>31</i>&nbsp;            return onTextContextMenuPaste();</b>
+<i>32</i>&nbsp;        }
+<b class="nc"><i>33</i>&nbsp;        return super.onTextContextMenuItem(id);</b>
+<i>34</i>&nbsp;    }
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    @Override public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
+<b class="nc"><i>37</i>&nbsp;        InputConnection connection = super.onCreateInputConnection(outAttrs);</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;        // For multiline EditTexts that specify a done keyboard action, unset the no carriage return
+<i>40</i>&nbsp;        // flag which otherwise limits the EditText to a single line
+<b class="nc"><i>41</i>&nbsp;        boolean multilineInput = (getInputType() &amp; TYPE_TEXT_FLAG_MULTI_LINE) == TYPE_TEXT_FLAG_MULTI_LINE;</b>
+<b class="nc"><i>42</i>&nbsp;        boolean actionDone = (outAttrs.imeOptions &amp; EditorInfo.IME_ACTION_DONE) == EditorInfo.IME_ACTION_DONE;</b>
+<b class="nc"><i>43</i>&nbsp;        if (actionDone &amp;&amp; multilineInput) {</b>
+<b class="nc"><i>44</i>&nbsp;            outAttrs.imeOptions &amp;= ~EditorInfo.IME_FLAG_NO_ENTER_ACTION;</b>
+<i>45</i>&nbsp;        }
+<i>46</i>&nbsp;
+<b class="nc"><i>47</i>&nbsp;        return connection;</b>
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    private boolean onTextContextMenuPaste() {
+<i>51</i>&nbsp;        // Do not allow pasting of formatted text!
+<i>52</i>&nbsp;        // We do this by intercepting the clipboard and temporarily replacing its
+<i>53</i>&nbsp;        // contents with plain text.
+<b class="nc"><i>54</i>&nbsp;        ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);</b>
+<b class="nc"><i>55</i>&nbsp;        if (clipboard.hasPrimaryClip()) {</b>
+<b class="nc"><i>56</i>&nbsp;            ClipData oldClipData = clipboard.getPrimaryClip();</b>
+<b class="nc"><i>57</i>&nbsp;            String lastClipText = oldClipData.getItemAt(oldClipData.getItemCount() - 1).coerceToText(getContext()).toString();</b>
+<i>58</i>&nbsp;            // temporarily set the new clip data as the primary
+<b class="nc"><i>59</i>&nbsp;            ClipboardUtil.setPlainText(getContext(), null, lastClipText);</b>
+<i>60</i>&nbsp;            // execute the paste!
+<b class="nc"><i>61</i>&nbsp;            super.onTextContextMenuItem(android.R.id.paste);</b>
+<i>62</i>&nbsp;            // restore the clip data back to the old one.
+<b class="nc"><i>63</i>&nbsp;            clipboard.setPrimaryClip(oldClipData);</b>
+<i>64</i>&nbsp;        }
+<b class="nc"><i>65</i>&nbsp;        return true;</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

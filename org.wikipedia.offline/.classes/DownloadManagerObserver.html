@@ -1,0 +1,251 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DownloadManagerObserver</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.offline</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DownloadManagerObserver (org.wikipedia.offline)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DownloadManagerObserver</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 59)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DownloadManagerObserver$PollRunnable</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 65)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.offline;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.app.DownloadManager;
+<i>4</i>&nbsp;import android.content.Context;
+<i>5</i>&nbsp;import android.content.DialogInterface;
+<i>6</i>&nbsp;import android.database.Cursor;
+<i>7</i>&nbsp;import android.net.Uri;
+<i>8</i>&nbsp;import android.os.Handler;
+<i>9</i>&nbsp;import android.support.annotation.NonNull;
+<i>10</i>&nbsp;import android.support.annotation.Nullable;
+<i>11</i>&nbsp;import android.support.v4.util.SparseArrayCompat;
+<i>12</i>&nbsp;import android.support.v7.app.AlertDialog;
+<i>13</i>&nbsp;import android.text.TextUtils;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import org.wikipedia.R;
+<i>16</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;import java.util.ArrayList;
+<i>19</i>&nbsp;import java.util.List;
+<i>20</i>&nbsp;import java.util.concurrent.TimeUnit;
+<i>21</i>&nbsp;
+<b class="nc"><i>22</i>&nbsp;public class DownloadManagerObserver {</b>
+<i>23</i>&nbsp;    private static final int POLL_INTERVAL_MS = 500;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    public interface Callback {
+<i>26</i>&nbsp;        void onDownloadStatus(@NonNull List&lt;DownloadManagerItem&gt; items);
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    @Nullable private DownloadManager downloadManager;
+<i>30</i>&nbsp;    @Nullable private Callback callback;
+<i>31</i>&nbsp;    @Nullable private Handler handler;
+<b class="nc"><i>32</i>&nbsp;    private PollRunnable pollRunnable = new PollRunnable();</b>
+<i>33</i>&nbsp;
+<b class="nc"><i>34</i>&nbsp;    private SparseArrayCompat&lt;Long&gt; downloadAmountCache = new SparseArrayCompat&lt;&gt;();</b>
+<b class="nc"><i>35</i>&nbsp;    private SparseArrayCompat&lt;Long&gt; downloadTimeMillis = new SparseArrayCompat&lt;&gt;();</b>
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    public void register(@NonNull Callback callback) {
+<b class="nc"><i>38</i>&nbsp;        downloadManager = (DownloadManager) WikipediaApp.getInstance().getSystemService(Context.DOWNLOAD_SERVICE);</b>
+<b class="nc"><i>39</i>&nbsp;        handler = new Handler(WikipediaApp.getInstance().getMainLooper());</b>
+<b class="nc"><i>40</i>&nbsp;        this.callback = callback;</b>
+<b class="nc"><i>41</i>&nbsp;        handler.postDelayed(pollRunnable, POLL_INTERVAL_MS);</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    public void unregister() {
+<b class="nc"><i>45</i>&nbsp;        downloadManager = null;</b>
+<b class="nc"><i>46</i>&nbsp;        callback = null;</b>
+<b class="nc"><i>47</i>&nbsp;        handler = null;</b>
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    public boolean isDownloading(@NonNull Compilation compilation) {
+<b class="nc"><i>51</i>&nbsp;        for (DownloadManagerItem item : queryCurrentDownloads()) {</b>
+<b class="nc"><i>52</i>&nbsp;            if (item.is(compilation)) {</b>
+<b class="nc"><i>53</i>&nbsp;                return true;</b>
+<i>54</i>&nbsp;            }
+<b class="nc"><i>55</i>&nbsp;        }</b>
+<b class="nc"><i>56</i>&nbsp;        return false;</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    public void remove(@NonNull Compilation compilation) {
+<b class="nc"><i>60</i>&nbsp;        if (downloadManager == null) {</b>
+<i>61</i>&nbsp;            return;
+<i>62</i>&nbsp;        }
+<b class="nc"><i>63</i>&nbsp;        for (DownloadManagerItem item : queryCurrentDownloads()) {</b>
+<b class="nc"><i>64</i>&nbsp;            if (item.is(compilation)) {</b>
+<b class="nc"><i>65</i>&nbsp;                downloadManager.remove(item.id());</b>
+<i>66</i>&nbsp;            }
+<b class="nc"><i>67</i>&nbsp;        }</b>
+<i>68</i>&nbsp;    }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;    public void removeWithConfirmation(@NonNull Context context,
+<i>71</i>&nbsp;                                       @NonNull final Compilation compilation,
+<i>72</i>&nbsp;                                       @NonNull final DialogInterface.OnClickListener onRemoveClick) {
+<b class="nc"><i>73</i>&nbsp;        new AlertDialog.Builder(context)</b>
+<b class="nc"><i>74</i>&nbsp;                .setMessage(R.string.compilation_remove_confirm)</b>
+<b class="nc"><i>75</i>&nbsp;                .setPositiveButton(android.R.string.yes, (dialog, i) -&gt; {</b>
+<b class="nc"><i>76</i>&nbsp;                    remove(compilation);</b>
+<b class="nc"><i>77</i>&nbsp;                    OfflineManager.instance().remove(compilation);</b>
+<b class="nc"><i>78</i>&nbsp;                    onRemoveClick.onClick(dialog, i);</b>
+<i>79</i>&nbsp;                })
+<b class="nc"><i>80</i>&nbsp;                .setNegativeButton(android.R.string.no, null)</b>
+<b class="nc"><i>81</i>&nbsp;                .show();</b>
+<i>82</i>&nbsp;    }
+<i>83</i>&nbsp;
+<b class="nc"><i>84</i>&nbsp;    private class PollRunnable implements Runnable {</b>
+<i>85</i>&nbsp;        @Override
+<i>86</i>&nbsp;        public void run() {
+<b class="nc"><i>87</i>&nbsp;            if (handler == null) {</b>
+<i>88</i>&nbsp;                return;
+<i>89</i>&nbsp;            }
+<b class="nc"><i>90</i>&nbsp;            List&lt;DownloadManagerItem&gt; items = queryCurrentDownloads();</b>
+<b class="nc"><i>91</i>&nbsp;            if (callback != null) {</b>
+<b class="nc"><i>92</i>&nbsp;                callback.onDownloadStatus(items);</b>
+<i>93</i>&nbsp;            }
+<i>94</i>&nbsp;
+<b class="nc"><i>95</i>&nbsp;            handler.postDelayed(pollRunnable, POLL_INTERVAL_MS);</b>
+<i>96</i>&nbsp;        }
+<i>97</i>&nbsp;    }
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;    @NonNull
+<i>100</i>&nbsp;    private List&lt;DownloadManagerItem&gt; queryCurrentDownloads() {
+<b class="nc"><i>101</i>&nbsp;        List&lt;DownloadManagerItem&gt; items = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>102</i>&nbsp;        if (downloadManager == null) {</b>
+<b class="nc"><i>103</i>&nbsp;            return items;</b>
+<i>104</i>&nbsp;        }
+<b class="nc"><i>105</i>&nbsp;        DownloadManager.Query query = new DownloadManager.Query();</b>
+<b class="nc"><i>106</i>&nbsp;        Cursor cursor = downloadManager.query(query);</b>
+<b class="nc"><i>107</i>&nbsp;        while (cursor.moveToNext()) {</b>
+<b class="nc"><i>108</i>&nbsp;            String mimeType = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_MEDIA_TYPE));</b>
+<b class="nc"><i>109</i>&nbsp;            if (!Compilation.MIME_TYPE.equals(mimeType)) {</b>
+<b class="nc"><i>110</i>&nbsp;                continue;</b>
+<i>111</i>&nbsp;            }
+<i>112</i>&nbsp;
+<b class="nc"><i>113</i>&nbsp;            int id = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_ID));</b>
+<b class="nc"><i>114</i>&nbsp;            String uri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));</b>
+<b class="nc"><i>115</i>&nbsp;            int status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));</b>
+<b class="nc"><i>116</i>&nbsp;            long bytesDownloaded = cursor.getLong(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));</b>
+<b class="nc"><i>117</i>&nbsp;            long bytesTotal = cursor.getLong(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));</b>
+<i>118</i>&nbsp;
+<b class="nc"><i>119</i>&nbsp;            long bytesPerSec = -1;</b>
+<i>120</i>&nbsp;
+<b class="nc"><i>121</i>&nbsp;            if (downloadAmountCache.get(id) == null) {</b>
+<b class="nc"><i>122</i>&nbsp;                downloadAmountCache.put(id, bytesDownloaded);</b>
+<b class="nc"><i>123</i>&nbsp;                downloadTimeMillis.put(id, System.currentTimeMillis());</b>
+<i>124</i>&nbsp;            }
+<i>125</i>&nbsp;
+<b class="nc"><i>126</i>&nbsp;            if (System.currentTimeMillis() &gt; downloadTimeMillis.get(id)</b>
+<b class="nc"><i>127</i>&nbsp;                    &amp;&amp; bytesDownloaded &gt; downloadAmountCache.get(id)) {</b>
+<b class="nc"><i>128</i>&nbsp;                bytesPerSec = (bytesDownloaded - downloadAmountCache.get(id))</b>
+<b class="nc"><i>129</i>&nbsp;                        * TimeUnit.SECONDS.toMillis(1)</b>
+<b class="nc"><i>130</i>&nbsp;                        / (System.currentTimeMillis() - downloadTimeMillis.get(id));</b>
+<b class="nc"><i>131</i>&nbsp;                downloadAmountCache.put(id, bytesDownloaded);</b>
+<b class="nc"><i>132</i>&nbsp;                downloadTimeMillis.put(id, System.currentTimeMillis());</b>
+<i>133</i>&nbsp;            }
+<b class="nc"><i>134</i>&nbsp;            if (!TextUtils.isEmpty(uri)) {</b>
+<b class="nc"><i>135</i>&nbsp;                items.add(new DownloadManagerItem(id, Uri.parse(uri), status, bytesDownloaded,</b>
+<i>136</i>&nbsp;                        bytesTotal, bytesPerSec));
+<i>137</i>&nbsp;            }
+<b class="nc"><i>138</i>&nbsp;        }</b>
+<b class="nc"><i>139</i>&nbsp;        cursor.close();</b>
+<b class="nc"><i>140</i>&nbsp;        return items;</b>
+<i>141</i>&nbsp;    }
+<i>142</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

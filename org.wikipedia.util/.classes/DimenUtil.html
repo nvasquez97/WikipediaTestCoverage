@@ -1,0 +1,222 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DimenUtil</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.util</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DimenUtil (org.wikipedia.util)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DimenUtil</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 35)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.util;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.content.res.Resources;
+<i>5</i>&nbsp;import android.content.res.TypedArray;
+<i>6</i>&nbsp;import android.support.annotation.DimenRes;
+<i>7</i>&nbsp;import android.util.DisplayMetrics;
+<i>8</i>&nbsp;import android.util.TypedValue;
+<i>9</i>&nbsp;import android.view.View;
+<i>10</i>&nbsp;import android.view.ViewGroup;
+<i>11</i>&nbsp;import android.view.Window;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import org.wikipedia.R;
+<i>14</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;public final class DimenUtil {
+<i>17</i>&nbsp;    public static float dpToPx(float dp) {
+<b class="nc"><i>18</i>&nbsp;        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getDisplayMetrics());</b>
+<i>19</i>&nbsp;    }
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    public static int roundedDpToPx(float dp) {
+<b class="nc"><i>22</i>&nbsp;        return Math.round(dpToPx(dp));</b>
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    public static float pxToDp(float px) {
+<b class="nc"><i>26</i>&nbsp;        return px / getDensityScalar();</b>
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    public static int roundedPxToDp(float px) {
+<b class="nc"><i>30</i>&nbsp;        return Math.round(pxToDp(px));</b>
+<i>31</i>&nbsp;    }
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    public static float getDensityScalar() {
+<b class="nc"><i>34</i>&nbsp;        return getDisplayMetrics().density;</b>
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    public static float getFloat(@DimenRes int id) {
+<b class="nc"><i>38</i>&nbsp;        return getValue(id).getFloat();</b>
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    /** @return Dimension in dp. */
+<i>42</i>&nbsp;    public static float getDimension(@DimenRes int id) {
+<b class="nc"><i>43</i>&nbsp;        return TypedValue.complexToFloat(getValue(id).data);</b>
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    /**
+<i>47</i>&nbsp;     * Calculates the actual font size for the current device, based on an &quot;sp&quot; measurement.
+<i>48</i>&nbsp;     * @param window The window on which the font will be rendered.
+<i>49</i>&nbsp;     * @param fontSp Measurement in &quot;sp&quot; units of the font.
+<i>50</i>&nbsp;     * @return Actual font size for the given sp amount.
+<i>51</i>&nbsp;     */
+<i>52</i>&nbsp;    public static float getFontSizeFromSp(Window window, float fontSp) {
+<b class="nc"><i>53</i>&nbsp;        final DisplayMetrics metrics = new DisplayMetrics();</b>
+<b class="nc"><i>54</i>&nbsp;        window.getWindowManager().getDefaultDisplay().getMetrics(metrics);</b>
+<b class="nc"><i>55</i>&nbsp;        return fontSp / metrics.scaledDensity;</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    // TODO: use getResources().getDimensionPixelSize()?  Define leadImageWidth with px, not dp?
+<i>59</i>&nbsp;    public static int calculateLeadImageWidth() {
+<b class="nc"><i>60</i>&nbsp;        Resources res = WikipediaApp.getInstance().getResources();</b>
+<b class="nc"><i>61</i>&nbsp;        return (int) (res.getDimension(R.dimen.leadImageWidth) / getDensityScalar());</b>
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    public static int getDisplayWidthPx() {
+<b class="nc"><i>65</i>&nbsp;        return getDisplayMetrics().widthPixels;</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    public static int getDisplayHeightPx() {
+<b class="nc"><i>69</i>&nbsp;        return getDisplayMetrics().heightPixels;</b>
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    public static int getContentTopOffsetPx(Context context) {
+<b class="nc"><i>73</i>&nbsp;        return roundedDpToPx(getContentTopOffset(context));</b>
+<i>74</i>&nbsp;    }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    public static float getContentTopOffset(Context context) {
+<b class="nc"><i>77</i>&nbsp;        return getToolbarHeight(context);</b>
+<i>78</i>&nbsp;    }
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;    private static TypedValue getValue(@DimenRes int id) {
+<b class="nc"><i>81</i>&nbsp;        TypedValue typedValue = new TypedValue();</b>
+<b class="nc"><i>82</i>&nbsp;        getResources().getValue(id, typedValue, true);</b>
+<b class="nc"><i>83</i>&nbsp;        return typedValue;</b>
+<i>84</i>&nbsp;    }
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;    private static DisplayMetrics getDisplayMetrics() {
+<b class="nc"><i>87</i>&nbsp;        return getResources().getDisplayMetrics();</b>
+<i>88</i>&nbsp;    }
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;    private static Resources getResources() {
+<b class="nc"><i>91</i>&nbsp;        return WikipediaApp.getInstance().getResources();</b>
+<i>92</i>&nbsp;    }
+<i>93</i>&nbsp;
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;    private static float getStatusBarHeight(Context context) {
+<b class="nc"><i>96</i>&nbsp;        int id = getStatusBarId(context);</b>
+<b class="nc"><i>97</i>&nbsp;        return id &gt; 0 ? DimenUtil.getDimension(id) : 0;</b>
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    private static float getToolbarHeight(Context context) {
+<b class="nc"><i>101</i>&nbsp;        return DimenUtil.roundedPxToDp(getToolbarHeightPx(context));</b>
+<i>102</i>&nbsp;    }
+<i>103</i>&nbsp;
+<i>104</i>&nbsp;    /**
+<i>105</i>&nbsp;     * Returns the height of the toolbar in the current activity. The system controls the height of
+<i>106</i>&nbsp;     * the toolbar, which may be slightly different depending on screen orientation, and device
+<i>107</i>&nbsp;     * version.
+<i>108</i>&nbsp;     * @param context Context used for retrieving the height attribute.
+<i>109</i>&nbsp;     * @return Height of the toolbar.
+<i>110</i>&nbsp;     */
+<i>111</i>&nbsp;    public static int getToolbarHeightPx(Context context) {
+<b class="nc"><i>112</i>&nbsp;        final TypedArray styledAttributes = context.getTheme().obtainStyledAttributes(new int[] {</b>
+<i>113</i>&nbsp;                android.support.v7.appcompat.R.attr.actionBarSize
+<i>114</i>&nbsp;        });
+<b class="nc"><i>115</i>&nbsp;        int size = styledAttributes.getDimensionPixelSize(0, 0);</b>
+<b class="nc"><i>116</i>&nbsp;        styledAttributes.recycle();</b>
+<b class="nc"><i>117</i>&nbsp;        return size;</b>
+<i>118</i>&nbsp;    }
+<i>119</i>&nbsp;
+<i>120</i>&nbsp;    @DimenRes private static int getStatusBarId(Context context) {
+<b class="nc"><i>121</i>&nbsp;        return context.getResources().getIdentifier(&quot;status_bar_height&quot;, &quot;dimen&quot;, &quot;android&quot;);</b>
+<i>122</i>&nbsp;    }
+<i>123</i>&nbsp;
+<i>124</i>&nbsp;    public static void setViewHeight(View view, int height) {
+<b class="nc"><i>125</i>&nbsp;        ViewGroup.LayoutParams params = view.getLayoutParams();</b>
+<b class="nc"><i>126</i>&nbsp;        params.height = height;</b>
+<b class="nc"><i>127</i>&nbsp;        view.setLayoutParams(params);</b>
+<i>128</i>&nbsp;    }
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;    public static int leadImageHeightForDevice() {
+<b class="nc"><i>131</i>&nbsp;        return (int) (getDisplayHeightPx() * articleHeaderViewScreenHeightRatio());</b>
+<i>132</i>&nbsp;    }
+<i>133</i>&nbsp;
+<i>134</i>&nbsp;    private static float articleHeaderViewScreenHeightRatio() {
+<b class="nc"><i>135</i>&nbsp;        return DimenUtil.getFloat(R.dimen.articleHeaderViewScreenHeightRatio);</b>
+<i>136</i>&nbsp;    }
+<i>137</i>&nbsp;
+<b class="nc"><i>138</i>&nbsp;    private DimenUtil() { }</b>
+<i>139</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

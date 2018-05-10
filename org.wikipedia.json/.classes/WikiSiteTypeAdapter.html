@@ -1,0 +1,146 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: WikiSiteTypeAdapter</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.json</a> ]
+</div>
+
+<h1>Coverage Summary for Class: WikiSiteTypeAdapter (org.wikipedia.json)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">WikiSiteTypeAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33,3%
+  </span>
+  <span class="absValue">
+    (1/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    3,6%
+  </span>
+  <span class="absValue">
+    (1/ 28)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.json;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.net.Uri;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import com.google.gson.JsonParseException;
+<i>6</i>&nbsp;import com.google.gson.TypeAdapter;
+<i>7</i>&nbsp;import com.google.gson.stream.JsonReader;
+<i>8</i>&nbsp;import com.google.gson.stream.JsonToken;
+<i>9</i>&nbsp;import com.google.gson.stream.JsonWriter;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import java.io.IOException;
+<i>14</i>&nbsp;
+<b class="fc"><i>15</i>&nbsp;public class WikiSiteTypeAdapter extends TypeAdapter&lt;WikiSite&gt; {</b>
+<i>16</i>&nbsp;    private static final String DOMAIN = &quot;domain&quot;;
+<i>17</i>&nbsp;    private static final String LANGUAGE_CODE = &quot;languageCode&quot;;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    @Override public void write(JsonWriter out, WikiSite value) throws IOException {
+<b class="nc"><i>20</i>&nbsp;        out.beginObject();</b>
+<b class="nc"><i>21</i>&nbsp;        out.name(DOMAIN);</b>
+<b class="nc"><i>22</i>&nbsp;        out.value(value.url());</b>
+<i>23</i>&nbsp;
+<b class="nc"><i>24</i>&nbsp;        out.name(LANGUAGE_CODE);</b>
+<b class="nc"><i>25</i>&nbsp;        out.value(value.languageCode());</b>
+<b class="nc"><i>26</i>&nbsp;        out.endObject();</b>
+<b class="nc"><i>27</i>&nbsp;    }</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    @Override public WikiSite read(JsonReader in) throws IOException {
+<i>30</i>&nbsp;        // todo: legacy; remove in June 2018
+<b class="nc"><i>31</i>&nbsp;        if (in.peek() == JsonToken.STRING) {</b>
+<b class="nc"><i>32</i>&nbsp;            return new WikiSite(Uri.parse(in.nextString()));</b>
+<i>33</i>&nbsp;        }
+<i>34</i>&nbsp;
+<b class="nc"><i>35</i>&nbsp;        String domain = null;</b>
+<b class="nc"><i>36</i>&nbsp;        String languageCode = null;</b>
+<b class="nc"><i>37</i>&nbsp;        in.beginObject();</b>
+<b class="nc"><i>38</i>&nbsp;        while (in.hasNext()) {</b>
+<b class="nc"><i>39</i>&nbsp;            String field = in.nextName();</b>
+<b class="nc"><i>40</i>&nbsp;            String val = in.nextString();</b>
+<b class="nc"><i>41</i>&nbsp;            switch (field) {</b>
+<i>42</i>&nbsp;                case DOMAIN:
+<b class="nc"><i>43</i>&nbsp;                    domain = val;</b>
+<b class="nc"><i>44</i>&nbsp;                    break;</b>
+<i>45</i>&nbsp;                case LANGUAGE_CODE:
+<b class="nc"><i>46</i>&nbsp;                    languageCode = val;</b>
+<b class="nc"><i>47</i>&nbsp;                    break;</b>
+<i>48</i>&nbsp;                default: break;
+<i>49</i>&nbsp;            }
+<b class="nc"><i>50</i>&nbsp;        }</b>
+<b class="nc"><i>51</i>&nbsp;        in.endObject();</b>
+<i>52</i>&nbsp;
+<b class="nc"><i>53</i>&nbsp;        if (domain == null) {</b>
+<b class="nc"><i>54</i>&nbsp;            throw new JsonParseException(&quot;Missing domain&quot;);</b>
+<i>55</i>&nbsp;        }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;        // todo: legacy; remove in June 2018
+<b class="nc"><i>58</i>&nbsp;        if (languageCode == null) {</b>
+<b class="nc"><i>59</i>&nbsp;            return new WikiSite(domain);</b>
+<i>60</i>&nbsp;        }
+<b class="nc"><i>61</i>&nbsp;        return new WikiSite(domain, languageCode);</b>
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

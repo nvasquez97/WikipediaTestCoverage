@@ -1,0 +1,442 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: MwQueryResult</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.dataclient.mwapi</a> ]
+</div>
+
+<h1>Coverage Summary for Class: MwQueryResult (org.wikipedia.dataclient.mwapi)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MwQueryResult</td>
+<td class="coverageStat">
+  <span class="percent">
+    27,8%
+  </span>
+  <span class="absValue">
+    (5/ 18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    29,9%
+  </span>
+  <span class="absValue">
+    (23/ 77)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">MwQueryResult$ConvertedTitle</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MwQueryResult$MarkReadResponse</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MwQueryResult$NotificationList</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MwQueryResult$Redirect</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MwQueryResult$Tokens</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    36,4%
+  </span>
+  <span class="absValue">
+    (12/ 33)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    32,6%
+  </span>
+  <span class="absValue">
+    (30/ 92)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.dataclient.mwapi;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.annotation.Nullable;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import com.google.gson.annotations.SerializedName;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import org.apache.commons.lang3.StringUtils;
+<i>9</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>10</i>&nbsp;import org.wikipedia.gallery.ImageInfo;
+<i>11</i>&nbsp;import org.wikipedia.gallery.VideoInfo;
+<i>12</i>&nbsp;import org.wikipedia.json.PostProcessingTypeAdapter;
+<i>13</i>&nbsp;import org.wikipedia.login.UserExtendedInfoClient;
+<i>14</i>&nbsp;import org.wikipedia.model.BaseModel;
+<i>15</i>&nbsp;import org.wikipedia.nearby.NearbyPage;
+<i>16</i>&nbsp;import org.wikipedia.notifications.Notification;
+<i>17</i>&nbsp;import org.wikipedia.page.PageTitle;
+<i>18</i>&nbsp;import org.wikipedia.settings.SiteInfo;
+<i>19</i>&nbsp;import org.wikipedia.useroption.dataclient.UserInfo;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;import java.util.ArrayList;
+<i>22</i>&nbsp;import java.util.HashMap;
+<i>23</i>&nbsp;import java.util.List;
+<i>24</i>&nbsp;import java.util.Map;
+<i>25</i>&nbsp;
+<b class="fc"><i>26</i>&nbsp;public class MwQueryResult extends BaseModel implements PostProcessingTypeAdapter.PostProcessable {</b>
+<i>27</i>&nbsp;    @SuppressWarnings(&quot;unused&quot;) @Nullable private List&lt;MwQueryPage&gt; pages;
+<i>28</i>&nbsp;    @SuppressWarnings(&quot;unused&quot;) @Nullable private List&lt;Redirect&gt; redirects;
+<i>29</i>&nbsp;    @SuppressWarnings(&quot;unused&quot;) @Nullable private List&lt;ConvertedTitle&gt; converted;
+<i>30</i>&nbsp;    @SuppressWarnings(&quot;unused&quot;) @SerializedName(&quot;userinfo&quot;) private UserInfo userInfo;
+<i>31</i>&nbsp;    @SuppressWarnings(&quot;unused&quot;) @Nullable private List&lt;UserExtendedInfoClient.ListUserResponse&gt; users;
+<i>32</i>&nbsp;    @SuppressWarnings(&quot;unused&quot;) @Nullable private Tokens tokens;
+<i>33</i>&nbsp;    @SuppressWarnings(&quot;unused,NullableProblems&quot;) @SerializedName(&quot;authmanagerinfo&quot;)
+<i>34</i>&nbsp;    @Nullable private MwAuthManagerInfo amInfo;
+<i>35</i>&nbsp;    @SuppressWarnings(&quot;unused&quot;) @Nullable private MarkReadResponse echomarkread;
+<i>36</i>&nbsp;    @SuppressWarnings(&quot;unused,NullableProblems&quot;)
+<i>37</i>&nbsp;    @Nullable private NotificationList notifications;
+<i>38</i>&nbsp;    @SuppressWarnings(&quot;unused&quot;) @SerializedName(&quot;general&quot;)
+<i>39</i>&nbsp;    @Nullable private SiteInfo generalSiteInfo;
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    @Nullable public List&lt;MwQueryPage&gt; pages() {
+<b class="fc"><i>42</i>&nbsp;        return pages;</b>
+<i>43</i>&nbsp;    }
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    @Nullable public MwQueryPage firstPage() {
+<b class="nc"><i>46</i>&nbsp;        if (pages != null &amp;&amp; pages.size() &gt; 0) {</b>
+<b class="nc"><i>47</i>&nbsp;            return pages.get(0);</b>
+<i>48</i>&nbsp;        }
+<b class="nc"><i>49</i>&nbsp;        return null;</b>
+<i>50</i>&nbsp;    }
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    @Nullable public UserInfo userInfo() {
+<b class="nc"><i>53</i>&nbsp;        return userInfo;</b>
+<i>54</i>&nbsp;    }
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    @Nullable public String csrfToken() {
+<b class="nc"><i>57</i>&nbsp;        return tokens != null ? tokens.csrf() : null;</b>
+<i>58</i>&nbsp;    }
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    @Nullable public String createAccountToken() {
+<b class="nc"><i>61</i>&nbsp;        return tokens != null ? tokens.createAccount() : null;</b>
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    @Nullable public String loginToken() {
+<b class="nc"><i>65</i>&nbsp;        return tokens != null ? tokens.login() : null;</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    @Nullable public List&lt;Notification&gt; notifications() {
+<b class="nc"><i>69</i>&nbsp;        return notifications != null ? notifications.list() : null;</b>
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    @Nullable public String captchaId() {
+<b class="nc"><i>73</i>&nbsp;        String captchaId = null;</b>
+<b class="nc"><i>74</i>&nbsp;        if (amInfo != null) {</b>
+<b class="nc"><i>75</i>&nbsp;            for (MwAuthManagerInfo.Request request : amInfo.requests()) {</b>
+<b class="nc"><i>76</i>&nbsp;                if (&quot;CaptchaAuthenticationRequest&quot;.equals(request.id())) {</b>
+<b class="nc"><i>77</i>&nbsp;                    captchaId = request.fields().get(&quot;captchaId&quot;).value();</b>
+<i>78</i>&nbsp;                }
+<b class="nc"><i>79</i>&nbsp;            }</b>
+<i>80</i>&nbsp;        }
+<b class="nc"><i>81</i>&nbsp;        return captchaId;</b>
+<i>82</i>&nbsp;    }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;    @Nullable public UserExtendedInfoClient.ListUserResponse getUserResponse(@NonNull String userName) {
+<b class="nc"><i>85</i>&nbsp;        if (users != null) {</b>
+<b class="nc"><i>86</i>&nbsp;            for (UserExtendedInfoClient.ListUserResponse user : users) {</b>
+<i>87</i>&nbsp;                // MediaWiki user names are case sensitive, but the first letter is always capitalized.
+<b class="nc"><i>88</i>&nbsp;                if (StringUtils.capitalize(userName).equals(user.name())) {</b>
+<b class="nc"><i>89</i>&nbsp;                    return user;</b>
+<i>90</i>&nbsp;                }
+<b class="nc"><i>91</i>&nbsp;            }</b>
+<i>92</i>&nbsp;        }
+<b class="nc"><i>93</i>&nbsp;        return null;</b>
+<i>94</i>&nbsp;    }
+<i>95</i>&nbsp;
+<i>96</i>&nbsp;    @NonNull public Map&lt;String, ImageInfo&gt; images() {
+<b class="nc"><i>97</i>&nbsp;        Map&lt;String, ImageInfo&gt; result = new HashMap&lt;&gt;();</b>
+<b class="nc"><i>98</i>&nbsp;        if (pages != null) {</b>
+<b class="nc"><i>99</i>&nbsp;            for (MwQueryPage page : pages) {</b>
+<b class="nc"><i>100</i>&nbsp;                if (page.imageInfo() != null) {</b>
+<b class="nc"><i>101</i>&nbsp;                    result.put(page.title(), page.imageInfo());</b>
+<i>102</i>&nbsp;                }
+<b class="nc"><i>103</i>&nbsp;            }</b>
+<i>104</i>&nbsp;        }
+<b class="nc"><i>105</i>&nbsp;        return result;</b>
+<i>106</i>&nbsp;    }
+<i>107</i>&nbsp;
+<i>108</i>&nbsp;    @NonNull public Map&lt;String, VideoInfo&gt; videos() {
+<b class="nc"><i>109</i>&nbsp;        Map&lt;String, VideoInfo&gt; result = new HashMap&lt;&gt;();</b>
+<b class="nc"><i>110</i>&nbsp;        if (pages != null) {</b>
+<b class="nc"><i>111</i>&nbsp;            for (MwQueryPage page : pages) {</b>
+<b class="nc"><i>112</i>&nbsp;                if (page.videoInfo() != null) {</b>
+<b class="nc"><i>113</i>&nbsp;                    result.put(page.title(), page.videoInfo());</b>
+<i>114</i>&nbsp;                }
+<b class="nc"><i>115</i>&nbsp;            }</b>
+<i>116</i>&nbsp;        }
+<b class="nc"><i>117</i>&nbsp;        return result;</b>
+<i>118</i>&nbsp;    }
+<i>119</i>&nbsp;
+<i>120</i>&nbsp;    @NonNull public List&lt;PageTitle&gt; langLinks() {
+<b class="nc"><i>121</i>&nbsp;        List&lt;PageTitle&gt; result = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>122</i>&nbsp;        if (pages == null || pages.isEmpty() || pages.get(0).langLinks() == null) {</b>
+<b class="nc"><i>123</i>&nbsp;            return result;</b>
+<i>124</i>&nbsp;        }
+<i>125</i>&nbsp;        // noinspection ConstantConditions
+<b class="nc"><i>126</i>&nbsp;        for (MwQueryPage.LangLink link : pages.get(0).langLinks()) {</b>
+<b class="nc"><i>127</i>&nbsp;            PageTitle title = new PageTitle(link.title(), WikiSite.forLanguageCode(link.lang()));</b>
+<b class="nc"><i>128</i>&nbsp;            result.add(title);</b>
+<b class="nc"><i>129</i>&nbsp;        }</b>
+<b class="nc"><i>130</i>&nbsp;        return result;</b>
+<i>131</i>&nbsp;    }
+<i>132</i>&nbsp;
+<i>133</i>&nbsp;    @NonNull public List&lt;NearbyPage&gt; nearbyPages() {
+<b class="nc"><i>134</i>&nbsp;        List&lt;NearbyPage&gt; result = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>135</i>&nbsp;        if (pages != null) {</b>
+<b class="nc"><i>136</i>&nbsp;            for (MwQueryPage page : pages) {</b>
+<b class="nc"><i>137</i>&nbsp;                NearbyPage nearbyPage = new NearbyPage(page);</b>
+<b class="nc"><i>138</i>&nbsp;                if (nearbyPage.getLocation() != null) {</b>
+<b class="nc"><i>139</i>&nbsp;                    result.add(nearbyPage);</b>
+<i>140</i>&nbsp;                }
+<b class="nc"><i>141</i>&nbsp;            }</b>
+<i>142</i>&nbsp;        }
+<b class="nc"><i>143</i>&nbsp;        return result;</b>
+<i>144</i>&nbsp;    }
+<i>145</i>&nbsp;
+<i>146</i>&nbsp;    @Nullable public SiteInfo siteInfo() {
+<b class="nc"><i>147</i>&nbsp;        return generalSiteInfo;</b>
+<i>148</i>&nbsp;    }
+<i>149</i>&nbsp;
+<i>150</i>&nbsp;    @Override
+<i>151</i>&nbsp;    public void postProcess() {
+<b class="fc"><i>152</i>&nbsp;        resolveConvertedTitles();</b>
+<b class="fc"><i>153</i>&nbsp;        resolveRedirectedTitles();</b>
+<b class="fc"><i>154</i>&nbsp;    }</b>
+<i>155</i>&nbsp;
+<i>156</i>&nbsp;    private void resolveRedirectedTitles() {
+<b class="fc"><i>157</i>&nbsp;        if (redirects == null || pages == null) {</b>
+<b class="nc"><i>158</i>&nbsp;            return;</b>
+<i>159</i>&nbsp;        }
+<b class="fc"><i>160</i>&nbsp;        for (MwQueryPage page : pages) {</b>
+<b class="fc"><i>161</i>&nbsp;            for (MwQueryResult.Redirect redirect : redirects) {</b>
+<i>162</i>&nbsp;                // TODO: Looks like result pages and redirects can also be matched on the &quot;index&quot;
+<i>163</i>&nbsp;                // property.  Confirm in the API docs and consider updating.
+<b class="fc"><i>164</i>&nbsp;                if (page.title().equals(redirect.to())) {</b>
+<b class="fc"><i>165</i>&nbsp;                    page.redirectFrom(redirect.from());</b>
+<b class="fc"><i>166</i>&nbsp;                    if (redirect.toFragment() != null) {</b>
+<b class="fc"><i>167</i>&nbsp;                        page.appendTitleFragment(redirect.toFragment());</b>
+<i>168</i>&nbsp;                    }
+<i>169</i>&nbsp;                }
+<b class="fc"><i>170</i>&nbsp;            }</b>
+<b class="fc"><i>171</i>&nbsp;        }</b>
+<b class="fc"><i>172</i>&nbsp;    }</b>
+<i>173</i>&nbsp;
+<i>174</i>&nbsp;    private void resolveConvertedTitles() {
+<b class="fc"><i>175</i>&nbsp;        if (converted == null || pages == null) {</b>
+<b class="nc"><i>176</i>&nbsp;            return;</b>
+<i>177</i>&nbsp;        }
+<i>178</i>&nbsp;        // noinspection ConstantConditions
+<b class="fc"><i>179</i>&nbsp;        for (MwQueryResult.ConvertedTitle convertedTitle : converted) {</b>
+<i>180</i>&nbsp;            // noinspection ConstantConditions
+<b class="fc"><i>181</i>&nbsp;            for (MwQueryPage page : pages) {</b>
+<b class="fc"><i>182</i>&nbsp;                if (page.title().equals(convertedTitle.to())) {</b>
+<b class="fc"><i>183</i>&nbsp;                    page.convertedFrom(convertedTitle.from());</b>
+<i>184</i>&nbsp;                }
+<b class="fc"><i>185</i>&nbsp;            }</b>
+<b class="fc"><i>186</i>&nbsp;        }</b>
+<b class="fc"><i>187</i>&nbsp;    }</b>
+<i>188</i>&nbsp;
+<b class="fc"><i>189</i>&nbsp;    private static class Redirect {</b>
+<i>190</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) private int index;
+<i>191</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) @Nullable private String from;
+<i>192</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) @Nullable private String to;
+<i>193</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) @SerializedName(&quot;tofragment&quot;) @Nullable private String toFragment;
+<i>194</i>&nbsp;
+<i>195</i>&nbsp;        @Nullable public String to() {
+<b class="fc"><i>196</i>&nbsp;            return to;</b>
+<i>197</i>&nbsp;        }
+<i>198</i>&nbsp;
+<i>199</i>&nbsp;        @Nullable public String from() {
+<b class="fc"><i>200</i>&nbsp;            return from;</b>
+<i>201</i>&nbsp;        }
+<i>202</i>&nbsp;
+<i>203</i>&nbsp;        @Nullable public String toFragment() {
+<b class="fc"><i>204</i>&nbsp;            return toFragment;</b>
+<i>205</i>&nbsp;        }
+<i>206</i>&nbsp;    }
+<i>207</i>&nbsp;
+<b class="fc"><i>208</i>&nbsp;    private static class ConvertedTitle {</b>
+<i>209</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) @Nullable private String from;
+<i>210</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) @Nullable private String to;
+<i>211</i>&nbsp;
+<i>212</i>&nbsp;        @Nullable public String to() {
+<b class="fc"><i>213</i>&nbsp;            return to;</b>
+<i>214</i>&nbsp;        }
+<i>215</i>&nbsp;
+<i>216</i>&nbsp;        @Nullable public String from() {
+<b class="fc"><i>217</i>&nbsp;            return from;</b>
+<i>218</i>&nbsp;        }
+<i>219</i>&nbsp;    }
+<i>220</i>&nbsp;
+<b class="nc"><i>221</i>&nbsp;    private static class Tokens {</b>
+<i>222</i>&nbsp;        @SuppressWarnings(&quot;unused,NullableProblems&quot;) @SerializedName(&quot;csrftoken&quot;)
+<i>223</i>&nbsp;        @Nullable private String csrf;
+<i>224</i>&nbsp;        @SuppressWarnings(&quot;unused,NullableProblems&quot;) @SerializedName(&quot;createaccounttoken&quot;)
+<i>225</i>&nbsp;        @Nullable private String createAccount;
+<i>226</i>&nbsp;        @SuppressWarnings(&quot;unused,NullableProblems&quot;) @SerializedName(&quot;logintoken&quot;)
+<i>227</i>&nbsp;        @Nullable private String login;
+<i>228</i>&nbsp;
+<i>229</i>&nbsp;        @Nullable private String csrf() {
+<b class="nc"><i>230</i>&nbsp;            return csrf;</b>
+<i>231</i>&nbsp;        }
+<i>232</i>&nbsp;
+<i>233</i>&nbsp;        @Nullable private String createAccount() {
+<b class="nc"><i>234</i>&nbsp;            return createAccount;</b>
+<i>235</i>&nbsp;        }
+<i>236</i>&nbsp;
+<i>237</i>&nbsp;        @Nullable private String login() {
+<b class="nc"><i>238</i>&nbsp;            return login;</b>
+<i>239</i>&nbsp;        }
+<i>240</i>&nbsp;    }
+<i>241</i>&nbsp;
+<b class="nc"><i>242</i>&nbsp;    private static class MarkReadResponse {</b>
+<i>243</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) @Nullable private String result;
+<i>244</i>&nbsp;
+<i>245</i>&nbsp;        @Nullable public String result() {
+<b class="nc"><i>246</i>&nbsp;            return result;</b>
+<i>247</i>&nbsp;        }
+<i>248</i>&nbsp;    }
+<i>249</i>&nbsp;
+<b class="nc"><i>250</i>&nbsp;    private static class NotificationList {</b>
+<i>251</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) @Nullable private List&lt;Notification&gt; list;
+<i>252</i>&nbsp;
+<i>253</i>&nbsp;        @Nullable private List&lt;Notification&gt; list() {
+<b class="nc"><i>254</i>&nbsp;            return list;</b>
+<i>255</i>&nbsp;        }
+<i>256</i>&nbsp;    }
+<i>257</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

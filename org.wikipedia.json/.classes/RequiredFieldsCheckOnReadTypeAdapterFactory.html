@@ -1,0 +1,203 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: RequiredFieldsCheckOnReadTypeAdapterFactory</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.json</a> ]
+</div>
+
+<h1>Coverage Summary for Class: RequiredFieldsCheckOnReadTypeAdapterFactory (org.wikipedia.json)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RequiredFieldsCheckOnReadTypeAdapterFactory</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (17/ 17)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">RequiredFieldsCheckOnReadTypeAdapterFactory$Adapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    40%
+  </span>
+  <span class="absValue">
+    (2/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    29,4%
+  </span>
+  <span class="absValue">
+    (5/ 17)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (6/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    64,7%
+  </span>
+  <span class="absValue">
+    (22/ 34)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.json;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.annotation.Nullable;
+<i>5</i>&nbsp;import android.support.v4.util.ArraySet;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import com.google.gson.Gson;
+<i>8</i>&nbsp;import com.google.gson.JsonParseException;
+<i>9</i>&nbsp;import com.google.gson.TypeAdapter;
+<i>10</i>&nbsp;import com.google.gson.TypeAdapterFactory;
+<i>11</i>&nbsp;import com.google.gson.reflect.TypeToken;
+<i>12</i>&nbsp;import com.google.gson.stream.JsonReader;
+<i>13</i>&nbsp;import com.google.gson.stream.JsonWriter;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import org.wikipedia.json.annotations.Required;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;import java.io.IOException;
+<i>18</i>&nbsp;import java.lang.reflect.Field;
+<i>19</i>&nbsp;import java.util.Collections;
+<i>20</i>&nbsp;import java.util.Set;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;/**
+<i>23</i>&nbsp; * TypeAdapterFactory that provides TypeAdapters that return null values for objects that are
+<i>24</i>&nbsp; * missing fields annotated with @Required.
+<i>25</i>&nbsp; *
+<i>26</i>&nbsp; * BEWARE: This means that a List or other Collection of objects that have @Required fields can
+<i>27</i>&nbsp; * contain null elements after deserialization!
+<i>28</i>&nbsp; *
+<i>29</i>&nbsp; * TODO: Handle null values in lists during deserialization, perhaps with a new @RequiredElements
+<i>30</i>&nbsp; * annotation and another corresponding TypeAdapter(Factory).
+<i>31</i>&nbsp; */
+<b class="fc"><i>32</i>&nbsp;class RequiredFieldsCheckOnReadTypeAdapterFactory implements TypeAdapterFactory {</b>
+<i>33</i>&nbsp;    @Nullable @Override public final &lt;T&gt; TypeAdapter&lt;T&gt; create(@NonNull Gson gson, @NonNull TypeToken&lt;T&gt; typeToken) {
+<b class="fc"><i>34</i>&nbsp;        Class&lt;?&gt; rawType = typeToken.getRawType();</b>
+<b class="fc"><i>35</i>&nbsp;        Set&lt;Field&gt; requiredFields = collectRequiredFields(rawType);</b>
+<i>36</i>&nbsp;
+<b class="fc"><i>37</i>&nbsp;        if (requiredFields.isEmpty()) {</b>
+<b class="fc"><i>38</i>&nbsp;            return null;</b>
+<i>39</i>&nbsp;        }
+<i>40</i>&nbsp;
+<b class="fc"><i>41</i>&nbsp;        setFieldsAccessible(requiredFields, true);</b>
+<b class="fc"><i>42</i>&nbsp;        return new Adapter&lt;&gt;(gson.getDelegateAdapter(this, typeToken), requiredFields);</b>
+<i>43</i>&nbsp;    }
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    @NonNull private Set&lt;Field&gt; collectRequiredFields(@NonNull Class&lt;?&gt; clazz) {
+<b class="fc"><i>46</i>&nbsp;        Field[] fields = clazz.getDeclaredFields();</b>
+<b class="fc"><i>47</i>&nbsp;        Set&lt;Field&gt; required = new ArraySet&lt;&gt;();</b>
+<b class="fc"><i>48</i>&nbsp;        for (Field field : fields) {</b>
+<b class="fc"><i>49</i>&nbsp;            if (field.isAnnotationPresent(Required.class)) {</b>
+<b class="fc"><i>50</i>&nbsp;                required.add(field);</b>
+<i>51</i>&nbsp;            }
+<i>52</i>&nbsp;        }
+<b class="fc"><i>53</i>&nbsp;        return Collections.unmodifiableSet(required);</b>
+<i>54</i>&nbsp;    }
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    private void setFieldsAccessible(Iterable&lt;Field&gt; fields, boolean accessible) {
+<b class="fc"><i>57</i>&nbsp;        for (Field field : fields) {</b>
+<b class="fc"><i>58</i>&nbsp;            field.setAccessible(accessible);</b>
+<b class="fc"><i>59</i>&nbsp;        }</b>
+<b class="fc"><i>60</i>&nbsp;    }</b>
+<i>61</i>&nbsp;
+<b class="fc"><i>62</i>&nbsp;    private static final class Adapter&lt;T&gt; extends TypeAdapter&lt;T&gt; {</b>
+<i>63</i>&nbsp;        @NonNull private final TypeAdapter&lt;T&gt; delegate;
+<i>64</i>&nbsp;        @NonNull private final Set&lt;Field&gt; requiredFields;
+<i>65</i>&nbsp;
+<b class="fc"><i>66</i>&nbsp;        private Adapter(@NonNull TypeAdapter&lt;T&gt; delegate, @NonNull final Set&lt;Field&gt; requiredFields) {</b>
+<b class="fc"><i>67</i>&nbsp;            this.delegate = delegate;</b>
+<b class="fc"><i>68</i>&nbsp;            this.requiredFields = requiredFields;</b>
+<b class="fc"><i>69</i>&nbsp;        }</b>
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;        @Override public void write(JsonWriter out, T value) throws IOException {
+<b class="nc"><i>72</i>&nbsp;            delegate.write(out, value);</b>
+<b class="nc"><i>73</i>&nbsp;        }</b>
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;        @Override @Nullable public T read(JsonReader in) throws IOException {
+<b class="nc"><i>76</i>&nbsp;            T deserialized = delegate.read(in);</b>
+<b class="nc"><i>77</i>&nbsp;            return allRequiredFieldsPresent(deserialized, requiredFields) ? deserialized : null;</b>
+<i>78</i>&nbsp;        }
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;        private boolean allRequiredFieldsPresent(@NonNull T deserialized,
+<i>81</i>&nbsp;                                                 @NonNull Set&lt;Field&gt; required) {
+<b class="nc"><i>82</i>&nbsp;            for (Field field : required) {</b>
+<i>83</i>&nbsp;                try {
+<b class="nc"><i>84</i>&nbsp;                    if (field.get(deserialized) == null) {</b>
+<b class="nc"><i>85</i>&nbsp;                        return false;</b>
+<i>86</i>&nbsp;                    }
+<b class="nc"><i>87</i>&nbsp;                } catch (IllegalArgumentException | IllegalAccessException e) {</b>
+<b class="nc"><i>88</i>&nbsp;                    throw new JsonParseException(e);</b>
+<b class="nc"><i>89</i>&nbsp;                }</b>
+<b class="nc"><i>90</i>&nbsp;            }</b>
+<b class="nc"><i>91</i>&nbsp;            return true;</b>
+<i>92</i>&nbsp;        }
+<i>93</i>&nbsp;    }
+<i>94</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

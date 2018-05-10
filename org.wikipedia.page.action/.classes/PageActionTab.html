@@ -1,0 +1,248 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PageActionTab</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.page.action</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PageActionTab (org.wikipedia.page.action)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PageActionTab</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">PageActionTab$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">PageActionTab$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">PageActionTab$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">PageActionTab$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">PageActionTab$5</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 19)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.page.action;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import org.wikipedia.model.EnumCode;
+<i>6</i>&nbsp;import org.wikipedia.model.EnumCodeMap;
+<i>7</i>&nbsp;
+<b class="nc"><i>8</i>&nbsp;public enum PageActionTab implements EnumCode {</b>
+<b class="nc"><i>9</i>&nbsp;    ADD_TO_READING_LIST() {</b>
+<i>10</i>&nbsp;        @Override
+<i>11</i>&nbsp;        public void select(@NonNull Callback cb) {
+<b class="nc"><i>12</i>&nbsp;            cb.onAddToReadingListTabSelected();</b>
+<i>13</i>&nbsp;        }
+<i>14</i>&nbsp;    },
+<b class="nc"><i>15</i>&nbsp;    SHARE() {</b>
+<i>16</i>&nbsp;        @Override
+<i>17</i>&nbsp;        public void select(@NonNull Callback cb) {
+<b class="nc"><i>18</i>&nbsp;            cb.onSharePageTabSelected();</b>
+<i>19</i>&nbsp;        }
+<i>20</i>&nbsp;    },
+<b class="nc"><i>21</i>&nbsp;    CHOOSE_LANGUAGE() {</b>
+<i>22</i>&nbsp;        @Override
+<i>23</i>&nbsp;        public void select(@NonNull Callback cb) {
+<b class="nc"><i>24</i>&nbsp;            cb.onChooseLangTabSelected();</b>
+<i>25</i>&nbsp;        }
+<i>26</i>&nbsp;    },
+<b class="nc"><i>27</i>&nbsp;    FIND_IN_PAGE() {</b>
+<i>28</i>&nbsp;        @Override
+<i>29</i>&nbsp;        public void select(@NonNull Callback cb) {
+<b class="nc"><i>30</i>&nbsp;            cb.onFindInPageTabSelected();</b>
+<i>31</i>&nbsp;        }
+<i>32</i>&nbsp;    },
+<b class="nc"><i>33</i>&nbsp;    VIEW_TOC() {</b>
+<i>34</i>&nbsp;        @Override
+<i>35</i>&nbsp;        public void select(@NonNull Callback cb) {
+<b class="nc"><i>36</i>&nbsp;            cb.onViewToCTabSelected();</b>
+<i>37</i>&nbsp;        }
+<i>38</i>&nbsp;    };
+<i>39</i>&nbsp;
+<b class="nc"><i>40</i>&nbsp;    private static final EnumCodeMap&lt;PageActionTab&gt; MAP = new EnumCodeMap&lt;&gt;(PageActionTab.class);</b>
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    @NonNull
+<i>43</i>&nbsp;    public static PageActionTab of(int code) {
+<b class="nc"><i>44</i>&nbsp;        return MAP.get(code);</b>
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    public abstract void select(@NonNull Callback cb);
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    @Override public int code() {
+<i>50</i>&nbsp;        // This enumeration is not marshalled so tying declaration order to presentation order is
+<i>51</i>&nbsp;        // convenient and consistent.
+<b class="nc"><i>52</i>&nbsp;        return ordinal();</b>
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    public interface Callback {
+<i>56</i>&nbsp;        void onAddToReadingListTabSelected();
+<i>57</i>&nbsp;        void onSharePageTabSelected();
+<i>58</i>&nbsp;        void onChooseLangTabSelected();
+<i>59</i>&nbsp;        void onFindInPageTabSelected();
+<i>60</i>&nbsp;        void onViewToCTabSelected();
+<i>61</i>&nbsp;        void updateBookmark(boolean pageSaved);
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

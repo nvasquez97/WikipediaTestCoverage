@@ -1,0 +1,166 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: TabUnmarshaller</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.json</a> ]
+</div>
+
+<h1>Coverage Summary for Class: TabUnmarshaller (org.wikipedia.json)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TabUnmarshaller</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 22)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">TabUnmarshaller$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 23)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.json;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.annotation.Nullable;
+<i>5</i>&nbsp;import android.text.TextUtils;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import com.google.gson.reflect.TypeToken;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import org.wikipedia.crash.RemoteLogException;
+<i>10</i>&nbsp;import org.wikipedia.page.PageBackStackItem;
+<i>11</i>&nbsp;import org.wikipedia.page.tabs.Tab;
+<i>12</i>&nbsp;import org.wikipedia.util.log.L;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import java.util.Collections;
+<i>15</i>&nbsp;import java.util.List;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;public final class TabUnmarshaller {
+<b class="nc"><i>18</i>&nbsp;    private static final TypeToken&lt;List&lt;Tab&gt;&gt; TYPE_TOKEN = new TypeToken&lt;List&lt;Tab&gt;&gt;() { };</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    @NonNull public static List&lt;Tab&gt; unmarshal(@Nullable String json) {
+<b class="nc"><i>21</i>&nbsp;        List&lt;Tab&gt; object = null;</b>
+<i>22</i>&nbsp;        try {
+<b class="nc"><i>23</i>&nbsp;            object = GsonUnmarshaller.unmarshal(TYPE_TOKEN, json);</b>
+<b class="nc"><i>24</i>&nbsp;        } catch (Exception e) {</b>
+<i>25</i>&nbsp;            // Catch all. Any Exception can be thrown when unmarshalling.
+<b class="nc"><i>26</i>&nbsp;            L.logRemoteErrorIfProd(new RemoteLogException(e).put(&quot;json&quot;, json));</b>
+<b class="nc"><i>27</i>&nbsp;        }</b>
+<b class="nc"><i>28</i>&nbsp;        if (object == null) {</b>
+<b class="nc"><i>29</i>&nbsp;            object = Collections.emptyList();</b>
+<i>30</i>&nbsp;        }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;        // T152980
+<i>33</i>&nbsp;        // When upgrading from much older versions (namely, 2.1.141 or earlier), the serialized
+<i>34</i>&nbsp;        // tab list may be in a format that causes WikiSite objects to have null Uri components.
+<i>35</i>&nbsp;        // If we encounter one of these occurrences, just clear out the entire tab list.
+<i>36</i>&nbsp;        // to be on the safe side.
+<i>37</i>&nbsp;        // TODO: Remove when the incidence of this is sufficiently diminished (April 2017?)
+<b class="nc"><i>38</i>&nbsp;        boolean bad = false;</b>
+<b class="nc"><i>39</i>&nbsp;        for (Tab tab : object) {</b>
+<b class="nc"><i>40</i>&nbsp;            for (PageBackStackItem item : tab.getBackStack()) {</b>
+<b class="nc"><i>41</i>&nbsp;                if (TextUtils.isEmpty(item.getTitle().getWikiSite().authority())</b>
+<b class="nc"><i>42</i>&nbsp;                        || TextUtils.isEmpty(item.getHistoryEntry().getTitle().getWikiSite().authority())) {</b>
+<b class="nc"><i>43</i>&nbsp;                    L.logRemoteErrorIfProd(new IllegalArgumentException(&quot;Format error in serialized tab list.&quot;));</b>
+<b class="nc"><i>44</i>&nbsp;                    bad = true;</b>
+<b class="nc"><i>45</i>&nbsp;                    break;</b>
+<i>46</i>&nbsp;                }
+<b class="nc"><i>47</i>&nbsp;            }</b>
+<b class="nc"><i>48</i>&nbsp;        }</b>
+<b class="nc"><i>49</i>&nbsp;        if (bad) {</b>
+<b class="nc"><i>50</i>&nbsp;            object.clear();</b>
+<i>51</i>&nbsp;        }
+<i>52</i>&nbsp;
+<b class="nc"><i>53</i>&nbsp;        return object;</b>
+<i>54</i>&nbsp;    }
+<i>55</i>&nbsp;
+<b class="nc"><i>56</i>&nbsp;    private TabUnmarshaller() { }</b>
+<i>57</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,210 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PageToolbarHideHandler</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.page</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PageToolbarHideHandler (org.wikipedia.page)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PageToolbarHideHandler</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 43)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.page;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.animation.ArgbEvaluator;
+<i>4</i>&nbsp;import android.graphics.Color;
+<i>5</i>&nbsp;import android.graphics.PorterDuff;
+<i>6</i>&nbsp;import android.graphics.drawable.Drawable;
+<i>7</i>&nbsp;import android.os.Build;
+<i>8</i>&nbsp;import android.support.annotation.ColorInt;
+<i>9</i>&nbsp;import android.support.annotation.NonNull;
+<i>10</i>&nbsp;import android.support.v4.content.ContextCompat;
+<i>11</i>&nbsp;import android.support.v7.widget.Toolbar;
+<i>12</i>&nbsp;import android.view.Gravity;
+<i>13</i>&nbsp;import android.view.View;
+<i>14</i>&nbsp;import android.view.ViewGroup;
+<i>15</i>&nbsp;import android.widget.ImageView;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;import org.wikipedia.R;
+<i>18</i>&nbsp;import org.wikipedia.util.DimenUtil;
+<i>19</i>&nbsp;import org.wikipedia.util.ResourceUtil;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;import static org.wikipedia.util.ResourceUtil.getThemedColor;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;public class PageToolbarHideHandler extends ViewHideHandler {
+<i>24</i>&nbsp;    private static final int FULL_OPACITY = 255;
+<i>25</i>&nbsp;
+<b class="nc"><i>26</i>&nbsp;    private ArgbEvaluator argbEvaluator = new ArgbEvaluator();</b>
+<i>27</i>&nbsp;    private boolean fadeEnabled;
+<i>28</i>&nbsp;    private boolean forceNoFade;
+<i>29</i>&nbsp;    @NonNull private PageFragment pageFragment;
+<i>30</i>&nbsp;    @NonNull private Toolbar toolbar;
+<i>31</i>&nbsp;    @NonNull private Drawable toolbarBackground;
+<i>32</i>&nbsp;    @NonNull private ImageView tabsButton;
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    @ColorInt private int themedIconColor;
+<i>35</i>&nbsp;    @ColorInt private int baseStatusBarColor;
+<i>36</i>&nbsp;    @ColorInt private int themedStatusBarColor;
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    public PageToolbarHideHandler(@NonNull PageFragment pageFragment, @NonNull View hideableView,
+<i>39</i>&nbsp;                                  @NonNull Toolbar toolbar, @NonNull ImageView tabsButton) {
+<b class="nc"><i>40</i>&nbsp;        super(hideableView, null, Gravity.TOP);</b>
+<b class="nc"><i>41</i>&nbsp;        this.pageFragment = pageFragment;</b>
+<b class="nc"><i>42</i>&nbsp;        this.toolbar = toolbar;</b>
+<b class="nc"><i>43</i>&nbsp;        this.toolbarBackground = hideableView.getBackground().mutate();</b>
+<b class="nc"><i>44</i>&nbsp;        this.tabsButton = tabsButton;</b>
+<i>45</i>&nbsp;
+<b class="nc"><i>46</i>&nbsp;        themedIconColor = getThemedColor(toolbar.getContext(), R.attr.page_toolbar_icon_color);</b>
+<b class="nc"><i>47</i>&nbsp;        baseStatusBarColor = getThemedColor(toolbar.getContext(), R.attr.page_expanded_status_bar_color);</b>
+<b class="nc"><i>48</i>&nbsp;        themedStatusBarColor = getThemedColor(toolbar.getContext(), R.attr.page_status_bar_color);</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    /**
+<i>52</i>&nbsp;     * Whether to enable fading in/out of the search bar when near the top of the article.
+<i>53</i>&nbsp;     * @param enabled True to enable fading, false otherwise.
+<i>54</i>&nbsp;     */
+<i>55</i>&nbsp;    public void setFadeEnabled(boolean enabled) {
+<b class="nc"><i>56</i>&nbsp;        fadeEnabled = enabled;</b>
+<b class="nc"><i>57</i>&nbsp;        update();</b>
+<i>58</i>&nbsp;    }
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    /**
+<i>61</i>&nbsp;     * Whether to temporarily disable fading of the search bar, even if fading is enabled otherwise.
+<i>62</i>&nbsp;     * May be used when displaying a temporary UI element that requires the search bar to be shown
+<i>63</i>&nbsp;     * fully, e.g. when the ToC is pulled out.
+<i>64</i>&nbsp;     * @param force True to temporarily disable fading, false otherwise.
+<i>65</i>&nbsp;     */
+<i>66</i>&nbsp;    public void setForceNoFade(boolean force) {
+<b class="nc"><i>67</i>&nbsp;        forceNoFade = force;</b>
+<b class="nc"><i>68</i>&nbsp;        update();</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    @Override
+<i>72</i>&nbsp;    protected void onScrolled(int oldScrollY, int scrollY) {
+<b class="nc"><i>73</i>&nbsp;        tabsButton.setImageDrawable(ContextCompat.getDrawable(pageFragment.getContext(),</b>
+<b class="nc"><i>74</i>&nbsp;                ResourceUtil.getTabListIcon(pageFragment.getTabCount())));</b>
+<i>75</i>&nbsp;
+<b class="nc"><i>76</i>&nbsp;        int opacity = calculateScrollOpacity(scrollY);</b>
+<b class="nc"><i>77</i>&nbsp;        toolbarBackground.setAlpha(opacity);</b>
+<b class="nc"><i>78</i>&nbsp;        updateChildIconTint(toolbar, opacity);</b>
+<b class="nc"><i>79</i>&nbsp;        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) {</b>
+<b class="nc"><i>80</i>&nbsp;            pageFragment.getActivity().getWindow()</b>
+<b class="nc"><i>81</i>&nbsp;                    .setStatusBarColor(calculateStatusBarTintForOpacity(opacity));</b>
+<i>82</i>&nbsp;        }
+<i>83</i>&nbsp;    }
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    /** @return Alpha value between 0 and 0xff. */
+<i>86</i>&nbsp;    private int calculateScrollOpacity(int scrollY) {
+<b class="nc"><i>87</i>&nbsp;        final int fadeHeight = 200;</b>
+<b class="nc"><i>88</i>&nbsp;        int opacity = FULL_OPACITY;</b>
+<b class="nc"><i>89</i>&nbsp;        if (fadeEnabled &amp;&amp; !forceNoFade) {</b>
+<b class="nc"><i>90</i>&nbsp;            opacity = scrollY * FULL_OPACITY / (int) (fadeHeight * DimenUtil.getDensityScalar());</b>
+<i>91</i>&nbsp;        }
+<b class="nc"><i>92</i>&nbsp;        opacity = Math.max(0, opacity);</b>
+<b class="nc"><i>93</i>&nbsp;        opacity = Math.min(FULL_OPACITY, opacity);</b>
+<b class="nc"><i>94</i>&nbsp;        return opacity;</b>
+<i>95</i>&nbsp;    }
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;    private void updateChildIconTint(@NonNull ViewGroup viewGroup, float opacity) {
+<b class="nc"><i>98</i>&nbsp;        int iconColor = calculateIconTintForOpacity(opacity);</b>
+<b class="nc"><i>99</i>&nbsp;        for (int i = 0; i &lt; viewGroup.getChildCount(); i++) {</b>
+<b class="nc"><i>100</i>&nbsp;            View childView = viewGroup.getChildAt(i);</b>
+<b class="nc"><i>101</i>&nbsp;            if (childView instanceof ImageView) {</b>
+<b class="nc"><i>102</i>&nbsp;                Drawable icon = ((ImageView) childView).getDrawable();</b>
+<b class="nc"><i>103</i>&nbsp;                if (icon != null) {</b>
+<b class="nc"><i>104</i>&nbsp;                    icon.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);</b>
+<i>105</i>&nbsp;                }
+<b class="nc"><i>106</i>&nbsp;            } else if (childView instanceof ViewGroup) {</b>
+<b class="nc"><i>107</i>&nbsp;                updateChildIconTint((ViewGroup) childView, opacity);</b>
+<i>108</i>&nbsp;            }
+<i>109</i>&nbsp;        }
+<b class="nc"><i>110</i>&nbsp;        if (toolbar.getOverflowIcon() != null) {</b>
+<b class="nc"><i>111</i>&nbsp;            toolbar.getOverflowIcon().setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);</b>
+<i>112</i>&nbsp;        }
+<i>113</i>&nbsp;    }
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;    /** @return A @ColorInt value between R.attr.page_toolbar_icon_color) and Color.WHITE. */
+<i>116</i>&nbsp;    @ColorInt
+<i>117</i>&nbsp;    private int calculateIconTintForOpacity(float opacity) {
+<b class="nc"><i>118</i>&nbsp;        return (Integer) argbEvaluator.evaluate(opacity / FULL_OPACITY, Color.WHITE,</b>
+<b class="nc"><i>119</i>&nbsp;                themedIconColor);</b>
+<i>120</i>&nbsp;    }
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;    @ColorInt
+<i>123</i>&nbsp;    private int calculateStatusBarTintForOpacity(float opacity) {
+<b class="nc"><i>124</i>&nbsp;        return (Integer) argbEvaluator.evaluate(opacity / FULL_OPACITY, baseStatusBarColor,</b>
+<b class="nc"><i>125</i>&nbsp;                themedStatusBarColor);</b>
+<i>126</i>&nbsp;    }
+<i>127</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

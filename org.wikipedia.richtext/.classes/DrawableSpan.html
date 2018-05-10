@@ -1,0 +1,214 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DrawableSpan</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.richtext</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DrawableSpan (org.wikipedia.richtext)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DrawableSpan</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 36)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.richtext;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.graphics.Bitmap;
+<i>5</i>&nbsp;import android.graphics.Canvas;
+<i>6</i>&nbsp;import android.graphics.Paint;
+<i>7</i>&nbsp;import android.graphics.drawable.Drawable;
+<i>8</i>&nbsp;import android.net.Uri;
+<i>9</i>&nbsp;import android.support.annotation.DrawableRes;
+<i>10</i>&nbsp;import android.support.annotation.NonNull;
+<i>11</i>&nbsp;import android.support.annotation.Nullable;
+<i>12</i>&nbsp;import android.text.style.ImageSpan;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;/** A more mutable ImageSpan better suited to Drawables. */
+<i>15</i>&nbsp;public class DrawableSpan extends ImageSpan {
+<i>16</i>&nbsp;    @Nullable
+<i>17</i>&nbsp;    private Drawable drawable;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    public DrawableSpan(@NonNull Context context, Bitmap bitmap) {
+<b class="nc"><i>20</i>&nbsp;        super(context, bitmap);</b>
+<b class="nc"><i>21</i>&nbsp;        init();</b>
+<i>22</i>&nbsp;    }
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    public DrawableSpan(@NonNull Context context, Bitmap bitmap, int verticalAlignment) {
+<b class="nc"><i>25</i>&nbsp;        super(context, bitmap, verticalAlignment);</b>
+<b class="nc"><i>26</i>&nbsp;        init();</b>
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    public DrawableSpan(Drawable drawable) {
+<b class="nc"><i>30</i>&nbsp;        super(drawable);</b>
+<b class="nc"><i>31</i>&nbsp;        init();</b>
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    public DrawableSpan(Drawable drawable, int verticalAlignment) {
+<b class="nc"><i>35</i>&nbsp;        super(drawable, verticalAlignment);</b>
+<b class="nc"><i>36</i>&nbsp;        init();</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    public DrawableSpan(Drawable drawable, String source) {
+<b class="nc"><i>40</i>&nbsp;        super(drawable, source);</b>
+<b class="nc"><i>41</i>&nbsp;        init();</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    public DrawableSpan(Drawable drawable, String source, int verticalAlignment) {
+<b class="nc"><i>45</i>&nbsp;        super(drawable, source, verticalAlignment);</b>
+<b class="nc"><i>46</i>&nbsp;        init();</b>
+<i>47</i>&nbsp;    }
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    public DrawableSpan(@NonNull Context context, Uri uri) {
+<b class="nc"><i>50</i>&nbsp;        super(context, uri);</b>
+<b class="nc"><i>51</i>&nbsp;        init();</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    public DrawableSpan(@NonNull Context context, Uri uri, int verticalAlignment) {
+<b class="nc"><i>55</i>&nbsp;        super(context, uri, verticalAlignment);</b>
+<b class="nc"><i>56</i>&nbsp;        init();</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    public DrawableSpan(@NonNull Context context, @DrawableRes int resourceId) {
+<b class="nc"><i>60</i>&nbsp;        super(context, resourceId);</b>
+<b class="nc"><i>61</i>&nbsp;        init();</b>
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    public DrawableSpan(@NonNull Context context, @DrawableRes int resourceId, int verticalAlignment) {
+<b class="nc"><i>65</i>&nbsp;        super(context, resourceId, verticalAlignment);</b>
+<b class="nc"><i>66</i>&nbsp;        init();</b>
+<i>67</i>&nbsp;    }
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;    @Override
+<i>70</i>&nbsp;    @Nullable
+<i>71</i>&nbsp;    public Drawable getDrawable() {
+<b class="nc"><i>72</i>&nbsp;        return drawable;</b>
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    // Make vertical alignment consistent across APIs. See https://code.google.com/p/android/issues/detail?id=21397
+<i>76</i>&nbsp;    @Override
+<i>77</i>&nbsp;    @SuppressWarnings(&quot;checkstyle:parameternumber&quot;)
+<i>78</i>&nbsp;    public void draw(Canvas canvas,
+<i>79</i>&nbsp;                     CharSequence text,
+<i>80</i>&nbsp;                     int start,
+<i>81</i>&nbsp;                     int end,
+<i>82</i>&nbsp;                     float x,
+<i>83</i>&nbsp;                     int top,
+<i>84</i>&nbsp;                     int y,
+<i>85</i>&nbsp;                     int bottom,
+<i>86</i>&nbsp;                     Paint paint) {
+<b class="nc"><i>87</i>&nbsp;        if (drawable == null) {</b>
+<i>88</i>&nbsp;            return;
+<i>89</i>&nbsp;        }
+<i>90</i>&nbsp;
+<b class="nc"><i>91</i>&nbsp;        canvas.save();</b>
+<i>92</i>&nbsp;
+<b class="nc"><i>93</i>&nbsp;        canvas.translate(x, drawY(y, bottom));</b>
+<b class="nc"><i>94</i>&nbsp;        drawable.draw(canvas);</b>
+<b class="nc"><i>95</i>&nbsp;        canvas.restore();</b>
+<i>96</i>&nbsp;    }
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;    public void setDrawable(@Nullable Drawable drawable) {
+<b class="nc"><i>99</i>&nbsp;        this.drawable = drawable;</b>
+<i>100</i>&nbsp;    }
+<i>101</i>&nbsp;
+<i>102</i>&nbsp;    public void setIntrinsicBounds() {
+<b class="nc"><i>103</i>&nbsp;        if (drawable != null &amp;&amp; drawable.getBounds().isEmpty()) {</b>
+<b class="nc"><i>104</i>&nbsp;            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());</b>
+<i>105</i>&nbsp;        }
+<i>106</i>&nbsp;    }
+<i>107</i>&nbsp;
+<i>108</i>&nbsp;    protected int drawY(int y, int bottom) {
+<i>109</i>&nbsp;        int ret;
+<b class="nc"><i>110</i>&nbsp;        if (mVerticalAlignment == ALIGN_BASELINE) {</b>
+<b class="nc"><i>111</i>&nbsp;            ret = y;</b>
+<i>112</i>&nbsp;        } else {
+<b class="nc"><i>113</i>&nbsp;            ret = bottom;</b>
+<i>114</i>&nbsp;        }
+<b class="nc"><i>115</i>&nbsp;        ret -= drawable == null ? 0 : drawable.getBounds().bottom;</b>
+<b class="nc"><i>116</i>&nbsp;        return ret;</b>
+<i>117</i>&nbsp;    }
+<i>118</i>&nbsp;
+<i>119</i>&nbsp;    private void init() {
+<i>120</i>&nbsp;        // super.getDrawable() is convoluted:
+<i>121</i>&nbsp;        // * May return an original or a new Drawable; does not keep a reference in the latter
+<i>122</i>&nbsp;        //   case.
+<i>123</i>&nbsp;        // * May set the bounds or not.
+<i>124</i>&nbsp;        // * May set the bounds differently.
+<i>125</i>&nbsp;        //
+<i>126</i>&nbsp;        // This is the only seam to change the Drawable state.
+<b class="nc"><i>127</i>&nbsp;        drawable = super.getDrawable();</b>
+<i>128</i>&nbsp;
+<b class="nc"><i>129</i>&nbsp;        setIntrinsicBounds();</b>
+<i>130</i>&nbsp;    }
+<i>131</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

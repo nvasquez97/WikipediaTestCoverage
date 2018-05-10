@@ -1,0 +1,610 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CreateAccountActivity</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.createaccount</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CreateAccountActivity (org.wikipedia.createaccount)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CreateAccountActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 25)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 103)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CreateAccountActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">CreateAccountActivity$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">CreateAccountActivity$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">CreateAccountActivity$UserNameTextWatcher</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">CreateAccountActivity$UserNameVerifyRunnable</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">CreateAccountActivity$UserNameVerifyRunnable$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">CreateAccountActivity$ValidateResult</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 40)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 137)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.createaccount;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.app.ProgressDialog;
+<i>4</i>&nbsp;import android.content.Intent;
+<i>5</i>&nbsp;import android.os.Bundle;
+<i>6</i>&nbsp;import android.support.annotation.NonNull;
+<i>7</i>&nbsp;import android.support.annotation.VisibleForTesting;
+<i>8</i>&nbsp;import android.support.design.widget.TextInputLayout;
+<i>9</i>&nbsp;import android.text.Editable;
+<i>10</i>&nbsp;import android.text.TextUtils;
+<i>11</i>&nbsp;import android.text.TextWatcher;
+<i>12</i>&nbsp;import android.util.Patterns;
+<i>13</i>&nbsp;import android.view.KeyEvent;
+<i>14</i>&nbsp;import android.view.View;
+<i>15</i>&nbsp;import android.widget.TextView;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;import org.wikipedia.R;
+<i>18</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>19</i>&nbsp;import org.wikipedia.activity.BaseActivity;
+<i>20</i>&nbsp;import org.wikipedia.analytics.CreateAccountFunnel;
+<i>21</i>&nbsp;import org.wikipedia.captcha.CaptchaHandler;
+<i>22</i>&nbsp;import org.wikipedia.captcha.CaptchaResult;
+<i>23</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>24</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwQueryResponse;
+<i>25</i>&nbsp;import org.wikipedia.login.UserExtendedInfoClient;
+<i>26</i>&nbsp;import org.wikipedia.readinglist.sync.ReadingListSyncAdapter;
+<i>27</i>&nbsp;import org.wikipedia.util.FeedbackUtil;
+<i>28</i>&nbsp;import org.wikipedia.util.log.L;
+<i>29</i>&nbsp;import org.wikipedia.views.NonEmptyValidator;
+<i>30</i>&nbsp;import org.wikipedia.views.WikiErrorView;
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;import java.util.concurrent.TimeUnit;
+<i>33</i>&nbsp;import java.util.regex.Pattern;
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;import butterknife.BindView;
+<i>36</i>&nbsp;import butterknife.ButterKnife;
+<i>37</i>&nbsp;import butterknife.OnClick;
+<i>38</i>&nbsp;import retrofit2.Call;
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;import static org.wikipedia.util.DeviceUtil.hideSoftKeyboard;
+<i>41</i>&nbsp;
+<b class="nc"><i>42</i>&nbsp;public class CreateAccountActivity extends BaseActivity {</b>
+<i>43</i>&nbsp;    public static final int RESULT_ACCOUNT_CREATED = 1;
+<i>44</i>&nbsp;    public static final int RESULT_ACCOUNT_NOT_CREATED = 2;
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    public static final int ACTION_CREATE_ACCOUNT = 1;
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    public static final String LOGIN_REQUEST_SOURCE = &quot;login_request_source&quot;;
+<i>49</i>&nbsp;    public static final String LOGIN_SESSION_TOKEN = &quot;login_session_token&quot;;
+<i>50</i>&nbsp;    public static final String CREATE_ACCOUNT_RESULT_USERNAME = &quot;username&quot;;
+<i>51</i>&nbsp;    public static final String CREATE_ACCOUNT_RESULT_PASSWORD = &quot;password&quot;;
+<i>52</i>&nbsp;
+<b class="nc"><i>53</i>&nbsp;    public static final Pattern USERNAME_PATTERN = Pattern.compile(&quot;[^#&lt;&gt;\\[\\]|{}\\/@]*&quot;);</b>
+<i>54</i>&nbsp;    private static final int PASSWORD_MIN_LENGTH = 6;
+<i>55</i>&nbsp;
+<b class="nc"><i>56</i>&nbsp;    enum ValidateResult {</b>
+<b class="nc"><i>57</i>&nbsp;        SUCCESS, INVALID_USERNAME, INVALID_PASSWORD, PASSWORD_MISMATCH, INVALID_EMAIL</b>
+<i>58</i>&nbsp;    }
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    private CreateAccountInfoClient createAccountInfoClient;
+<i>61</i>&nbsp;    private CreateAccountClient createAccountClient;
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    @BindView(R.id.create_account_primary_container) View primaryContainer;
+<i>64</i>&nbsp;    @BindView(R.id.create_account_onboarding_container) View onboardingContainer;
+<i>65</i>&nbsp;    @BindView(R.id.create_account_username) TextInputLayout usernameInput;
+<i>66</i>&nbsp;    @BindView(R.id.create_account_password_input) TextInputLayout passwordInput;
+<i>67</i>&nbsp;    @BindView(R.id.create_account_password_repeat) TextInputLayout passwordRepeatInput;
+<i>68</i>&nbsp;    @BindView(R.id.create_account_email) TextInputLayout emailInput;
+<i>69</i>&nbsp;    @BindView(R.id.create_account_submit_button) TextView createAccountButton;
+<i>70</i>&nbsp;    @BindView(R.id.view_create_account_error) WikiErrorView errorView;
+<i>71</i>&nbsp;    @BindView(R.id.captcha_text) TextInputLayout captchaText;
+<i>72</i>&nbsp;    @BindView(R.id.captcha_submit_button) TextView createAccountButtonCaptcha;
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;    private ProgressDialog progressDialog;
+<i>75</i>&nbsp;    private CaptchaHandler captchaHandler;
+<i>76</i>&nbsp;    private CreateAccountResult createAccountResult;
+<i>77</i>&nbsp;    private CreateAccountFunnel funnel;
+<i>78</i>&nbsp;    private WikiSite wiki;
+<b class="nc"><i>79</i>&nbsp;    private UserNameTextWatcher userNameTextWatcher = new UserNameTextWatcher();</b>
+<b class="nc"><i>80</i>&nbsp;    private UserNameVerifyRunnable userNameVerifyRunnable = new UserNameVerifyRunnable();</b>
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    @Override
+<i>83</i>&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>84</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>85</i>&nbsp;        setContentView(R.layout.activity_create_account);</b>
+<b class="nc"><i>86</i>&nbsp;        ButterKnife.bind(this);</b>
+<i>87</i>&nbsp;
+<b class="nc"><i>88</i>&nbsp;        if (ReadingListSyncAdapter.isDisabledByRemoteConfig()) {</b>
+<b class="nc"><i>89</i>&nbsp;            onboardingContainer.setVisibility(View.GONE);</b>
+<i>90</i>&nbsp;        }
+<i>91</i>&nbsp;
+<b class="nc"><i>92</i>&nbsp;        progressDialog = new ProgressDialog(this);</b>
+<b class="nc"><i>93</i>&nbsp;        progressDialog.setIndeterminate(true);</b>
+<b class="nc"><i>94</i>&nbsp;        progressDialog.setCancelable(false);</b>
+<b class="nc"><i>95</i>&nbsp;        progressDialog.setMessage(getString(R.string.dialog_create_account_checking_progress));</b>
+<i>96</i>&nbsp;
+<b class="nc"><i>97</i>&nbsp;        errorView.setBackClickListener((v) -&gt; onBackPressed());</b>
+<b class="nc"><i>98</i>&nbsp;        errorView.setRetryClickListener((v) -&gt; errorView.setVisibility(View.GONE));</b>
+<i>99</i>&nbsp;
+<b class="nc"><i>100</i>&nbsp;        wiki = WikipediaApp.getInstance().getWikiSite();</b>
+<b class="nc"><i>101</i>&nbsp;        createAccountInfoClient = new CreateAccountInfoClient();</b>
+<b class="nc"><i>102</i>&nbsp;        createAccountClient = new CreateAccountClient();</b>
+<i>103</i>&nbsp;
+<b class="nc"><i>104</i>&nbsp;        captchaHandler = new CaptchaHandler(this, WikipediaApp.getInstance().getWikiSite(),</b>
+<b class="nc"><i>105</i>&nbsp;                progressDialog, primaryContainer, getString(R.string.create_account_activity_title),</b>
+<b class="nc"><i>106</i>&nbsp;                getString(R.string.create_account_button));</b>
+<i>107</i>&nbsp;
+<i>108</i>&nbsp;        // Don&#39;t allow user to submit registration unless they&#39;ve put in a username and password
+<b class="nc"><i>109</i>&nbsp;        new NonEmptyValidator((isValid) -&gt; createAccountButton.setEnabled(isValid), usernameInput, passwordInput);</b>
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;        // Don&#39;t allow user to continue when they&#39;re shown a captcha until they fill it in
+<b class="nc"><i>112</i>&nbsp;        new NonEmptyValidator((isValid) -&gt; createAccountButtonCaptcha.setEnabled(isValid), captchaText);</b>
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;        // Add listener so that when the user taps enter, it submits the captcha
+<b class="nc"><i>115</i>&nbsp;        captchaText.setOnKeyListener((v, keyCode, event) -&gt; {</b>
+<b class="nc"><i>116</i>&nbsp;            if ((event.getAction() == KeyEvent.ACTION_UP) &amp;&amp; (keyCode == KeyEvent.KEYCODE_ENTER)) {</b>
+<b class="nc"><i>117</i>&nbsp;                validateThenCreateAccount();</b>
+<b class="nc"><i>118</i>&nbsp;                return true;</b>
+<i>119</i>&nbsp;            }
+<b class="nc"><i>120</i>&nbsp;            return false;</b>
+<i>121</i>&nbsp;        });
+<i>122</i>&nbsp;
+<b class="nc"><i>123</i>&nbsp;        usernameInput.getEditText().addTextChangedListener(userNameTextWatcher);</b>
+<i>124</i>&nbsp;
+<b class="nc"><i>125</i>&nbsp;        if (savedInstanceState != null &amp;&amp; savedInstanceState.containsKey(&quot;result&quot;)) {</b>
+<b class="nc"><i>126</i>&nbsp;            createAccountResult = savedInstanceState.getParcelable(&quot;result&quot;);</b>
+<i>127</i>&nbsp;        }
+<i>128</i>&nbsp;
+<b class="nc"><i>129</i>&nbsp;        funnel = new CreateAccountFunnel(WikipediaApp.getInstance(),</b>
+<b class="nc"><i>130</i>&nbsp;                getIntent().getStringExtra(LOGIN_REQUEST_SOURCE));</b>
+<i>131</i>&nbsp;
+<i>132</i>&nbsp;        // Only send the editing start log event if the activity is created for the first time
+<b class="nc"><i>133</i>&nbsp;        if (savedInstanceState == null) {</b>
+<b class="nc"><i>134</i>&nbsp;            funnel.logStart(getIntent().getStringExtra(LOGIN_SESSION_TOKEN));</b>
+<i>135</i>&nbsp;        }
+<i>136</i>&nbsp;        // Set default result to failed, so we can override if it did not
+<b class="nc"><i>137</i>&nbsp;        setResult(RESULT_ACCOUNT_NOT_CREATED);</b>
+<i>138</i>&nbsp;    }
+<i>139</i>&nbsp;
+<i>140</i>&nbsp;    @OnClick({R.id.create_account_submit_button, R.id.captcha_submit_button}) void onCreateAccountClick() {
+<b class="nc"><i>141</i>&nbsp;        validateThenCreateAccount();</b>
+<i>142</i>&nbsp;    }
+<i>143</i>&nbsp;
+<i>144</i>&nbsp;    @OnClick(R.id.create_account_login_button) void onLoginClick() {
+<i>145</i>&nbsp;        // This assumes that the CreateAccount activity was launched from the Login activity
+<i>146</i>&nbsp;        // (since there&#39;s currently no other mechanism to invoke CreateAccountActivity),
+<i>147</i>&nbsp;        // so finishing this activity will implicitly go back to Login.
+<b class="nc"><i>148</i>&nbsp;        finish();</b>
+<i>149</i>&nbsp;    }
+<i>150</i>&nbsp;
+<i>151</i>&nbsp;    @OnClick(R.id.privacy_policy_link) void onPrivacyPolicyClick() {
+<b class="nc"><i>152</i>&nbsp;        FeedbackUtil.showPrivacyPolicy(this);</b>
+<i>153</i>&nbsp;    }
+<i>154</i>&nbsp;
+<i>155</i>&nbsp;    @Override
+<i>156</i>&nbsp;    protected void onSaveInstanceState(Bundle outState) {
+<b class="nc"><i>157</i>&nbsp;        super.onSaveInstanceState(outState);</b>
+<b class="nc"><i>158</i>&nbsp;        outState.putParcelable(&quot;result&quot;, createAccountResult);</b>
+<i>159</i>&nbsp;    }
+<i>160</i>&nbsp;
+<i>161</i>&nbsp;    public void handleAccountCreationError(@NonNull String message) {
+<b class="nc"><i>162</i>&nbsp;        FeedbackUtil.showMessage(this, message);</b>
+<b class="nc"><i>163</i>&nbsp;        L.w(&quot;Account creation failed with result &quot; + message);</b>
+<i>164</i>&nbsp;    }
+<i>165</i>&nbsp;
+<i>166</i>&nbsp;    public void getCreateAccountInfo() {
+<b class="nc"><i>167</i>&nbsp;        createAccountInfoClient.request(wiki, new CreateAccountInfoClient.Callback() {</b>
+<i>168</i>&nbsp;            @Override
+<i>169</i>&nbsp;            public void success(@NonNull Call&lt;MwQueryResponse&gt; call,
+<i>170</i>&nbsp;                                @NonNull CreateAccountInfoResult result) {
+<b class="nc"><i>171</i>&nbsp;                if (result.token() == null) {</b>
+<b class="nc"><i>172</i>&nbsp;                    handleAccountCreationError(getString(R.string.create_account_generic_error));</b>
+<b class="nc"><i>173</i>&nbsp;                } else if (result.hasCaptcha()) {</b>
+<b class="nc"><i>174</i>&nbsp;                    captchaHandler.handleCaptcha(result.token(), new CaptchaResult(result.captchaId()));</b>
+<i>175</i>&nbsp;                } else {
+<b class="nc"><i>176</i>&nbsp;                    doCreateAccount(result.token());</b>
+<i>177</i>&nbsp;                }
+<i>178</i>&nbsp;            }
+<i>179</i>&nbsp;
+<i>180</i>&nbsp;            @Override
+<i>181</i>&nbsp;            public void failure(@NonNull Call&lt;MwQueryResponse&gt; call,
+<i>182</i>&nbsp;                                @NonNull Throwable caught) {
+<b class="nc"><i>183</i>&nbsp;                showError(caught);</b>
+<b class="nc"><i>184</i>&nbsp;                L.e(caught);</b>
+<i>185</i>&nbsp;            }
+<i>186</i>&nbsp;        });
+<i>187</i>&nbsp;    }
+<i>188</i>&nbsp;
+<i>189</i>&nbsp;    public void doCreateAccount(@NonNull String token) {
+<b class="nc"><i>190</i>&nbsp;        progressDialog.show();</b>
+<i>191</i>&nbsp;
+<b class="nc"><i>192</i>&nbsp;        String email = null;</b>
+<b class="nc"><i>193</i>&nbsp;        if (getText(emailInput).length() != 0) {</b>
+<b class="nc"><i>194</i>&nbsp;            email = getText(emailInput).toString();</b>
+<i>195</i>&nbsp;        }
+<b class="nc"><i>196</i>&nbsp;        String password = getText(passwordInput).toString();</b>
+<b class="nc"><i>197</i>&nbsp;        String repeat = getText(passwordRepeatInput).toString();</b>
+<i>198</i>&nbsp;
+<b class="nc"><i>199</i>&nbsp;        createAccountClient.request(wiki, getText(usernameInput).toString(),</b>
+<i>200</i>&nbsp;                password, repeat, token, email,
+<b class="nc"><i>201</i>&nbsp;                captchaHandler.isActive() ? captchaHandler.captchaId() : &quot;null&quot;,</b>
+<b class="nc"><i>202</i>&nbsp;                captchaHandler.isActive() ? captchaHandler.captchaWord() : &quot;null&quot;,</b>
+<b class="nc"><i>203</i>&nbsp;                new CreateAccountClient.Callback() {</b>
+<i>204</i>&nbsp;                    @Override
+<i>205</i>&nbsp;                    public void success(@NonNull Call&lt;CreateAccountResponse&gt; call,
+<i>206</i>&nbsp;                                        @NonNull final CreateAccountSuccessResult result) {
+<b class="nc"><i>207</i>&nbsp;                        if (!progressDialog.isShowing()) {</b>
+<i>208</i>&nbsp;                            // no longer attached to activity!
+<i>209</i>&nbsp;                            return;
+<i>210</i>&nbsp;                        }
+<b class="nc"><i>211</i>&nbsp;                        finishWithUserResult(result);</b>
+<i>212</i>&nbsp;
+<i>213</i>&nbsp;                    }
+<i>214</i>&nbsp;
+<i>215</i>&nbsp;                    @Override
+<i>216</i>&nbsp;                    public void failure(@NonNull Call&lt;CreateAccountResponse&gt; call, @NonNull Throwable caught) {
+<b class="nc"><i>217</i>&nbsp;                        L.e(caught.toString());</b>
+<b class="nc"><i>218</i>&nbsp;                        if (!progressDialog.isShowing()) {</b>
+<i>219</i>&nbsp;                            // no longer attached to activity!
+<i>220</i>&nbsp;                            return;
+<i>221</i>&nbsp;                        }
+<b class="nc"><i>222</i>&nbsp;                        progressDialog.dismiss();</b>
+<b class="nc"><i>223</i>&nbsp;                        if (caught instanceof CreateAccountException) {</b>
+<b class="nc"><i>224</i>&nbsp;                            handleAccountCreationError(caught.getMessage());</b>
+<i>225</i>&nbsp;                        } else {
+<b class="nc"><i>226</i>&nbsp;                            showError(caught);</b>
+<i>227</i>&nbsp;                        }
+<i>228</i>&nbsp;                    }
+<i>229</i>&nbsp;                });
+<i>230</i>&nbsp;    }
+<i>231</i>&nbsp;
+<i>232</i>&nbsp;    @Override
+<i>233</i>&nbsp;    public void onBackPressed() {
+<b class="nc"><i>234</i>&nbsp;        if (captchaHandler.isActive()) {</b>
+<b class="nc"><i>235</i>&nbsp;            captchaHandler.cancelCaptcha();</b>
+<i>236</i>&nbsp;            return;
+<i>237</i>&nbsp;        }
+<b class="nc"><i>238</i>&nbsp;        hideSoftKeyboard(this);</b>
+<b class="nc"><i>239</i>&nbsp;        super.onBackPressed();</b>
+<i>240</i>&nbsp;    }
+<i>241</i>&nbsp;
+<i>242</i>&nbsp;    @Override
+<i>243</i>&nbsp;    public void onStop() {
+<b class="nc"><i>244</i>&nbsp;        if (progressDialog.isShowing()) {</b>
+<b class="nc"><i>245</i>&nbsp;            progressDialog.dismiss();</b>
+<i>246</i>&nbsp;        }
+<b class="nc"><i>247</i>&nbsp;        super.onStop();</b>
+<i>248</i>&nbsp;    }
+<i>249</i>&nbsp;
+<i>250</i>&nbsp;    @Override
+<i>251</i>&nbsp;    public void onDestroy() {
+<b class="nc"><i>252</i>&nbsp;        usernameInput.getEditText().removeTextChangedListener(userNameTextWatcher);</b>
+<b class="nc"><i>253</i>&nbsp;        super.onDestroy();</b>
+<i>254</i>&nbsp;    }
+<i>255</i>&nbsp;
+<i>256</i>&nbsp;    private void clearErrors() {
+<b class="nc"><i>257</i>&nbsp;        usernameInput.setErrorEnabled(false);</b>
+<b class="nc"><i>258</i>&nbsp;        passwordInput.setErrorEnabled(false);</b>
+<b class="nc"><i>259</i>&nbsp;        passwordRepeatInput.setErrorEnabled(false);</b>
+<b class="nc"><i>260</i>&nbsp;        emailInput.setErrorEnabled(false);</b>
+<i>261</i>&nbsp;    }
+<i>262</i>&nbsp;
+<i>263</i>&nbsp;    private void validateThenCreateAccount() {
+<b class="nc"><i>264</i>&nbsp;        clearErrors();</b>
+<b class="nc"><i>265</i>&nbsp;        ValidateResult result = validateInput(getText(usernameInput), getText(passwordInput),</b>
+<b class="nc"><i>266</i>&nbsp;                getText(passwordRepeatInput), getText(emailInput));</b>
+<i>267</i>&nbsp;
+<b class="nc"><i>268</i>&nbsp;        switch (result) {</b>
+<i>269</i>&nbsp;            case INVALID_USERNAME:
+<b class="nc"><i>270</i>&nbsp;                usernameInput.requestFocus();</b>
+<b class="nc"><i>271</i>&nbsp;                usernameInput.setError(getString(R.string.create_account_username_error));</b>
+<i>272</i>&nbsp;                return;
+<i>273</i>&nbsp;            case INVALID_PASSWORD:
+<b class="nc"><i>274</i>&nbsp;                passwordInput.requestFocus();</b>
+<b class="nc"><i>275</i>&nbsp;                passwordInput.setError(getString(R.string.create_account_password_error));</b>
+<i>276</i>&nbsp;                return;
+<i>277</i>&nbsp;            case PASSWORD_MISMATCH:
+<b class="nc"><i>278</i>&nbsp;                passwordRepeatInput.requestFocus();</b>
+<b class="nc"><i>279</i>&nbsp;                passwordRepeatInput.setError(getString(R.string.create_account_passwords_mismatch_error));</b>
+<i>280</i>&nbsp;                return;
+<i>281</i>&nbsp;            case INVALID_EMAIL:
+<b class="nc"><i>282</i>&nbsp;                emailInput.requestFocus();</b>
+<b class="nc"><i>283</i>&nbsp;                emailInput.setError(getString(R.string.create_account_email_error));</b>
+<i>284</i>&nbsp;                return;
+<i>285</i>&nbsp;            case SUCCESS:
+<i>286</i>&nbsp;            default:
+<i>287</i>&nbsp;                break;
+<i>288</i>&nbsp;        }
+<i>289</i>&nbsp;
+<b class="nc"><i>290</i>&nbsp;        if (captchaHandler.isActive() &amp;&amp; captchaHandler.token() != null) {</b>
+<b class="nc"><i>291</i>&nbsp;            doCreateAccount(captchaHandler.token());</b>
+<i>292</i>&nbsp;        } else {
+<b class="nc"><i>293</i>&nbsp;            getCreateAccountInfo();</b>
+<i>294</i>&nbsp;        }
+<i>295</i>&nbsp;    }
+<i>296</i>&nbsp;
+<i>297</i>&nbsp;    @VisibleForTesting
+<i>298</i>&nbsp;    static ValidateResult validateInput(@NonNull CharSequence username,
+<i>299</i>&nbsp;                                         @NonNull CharSequence password,
+<i>300</i>&nbsp;                                         @NonNull CharSequence passwordRepeat,
+<i>301</i>&nbsp;                                         @NonNull CharSequence email) {
+<b class="nc"><i>302</i>&nbsp;        if (!USERNAME_PATTERN.matcher(username).matches()) {</b>
+<b class="nc"><i>303</i>&nbsp;            return ValidateResult.INVALID_USERNAME;</b>
+<b class="nc"><i>304</i>&nbsp;        } else if (password.length() &lt; PASSWORD_MIN_LENGTH) {</b>
+<b class="nc"><i>305</i>&nbsp;            return ValidateResult.INVALID_PASSWORD;</b>
+<b class="nc"><i>306</i>&nbsp;        } else if (!passwordRepeat.toString().equals(password.toString())) {</b>
+<b class="nc"><i>307</i>&nbsp;            return ValidateResult.PASSWORD_MISMATCH;</b>
+<b class="nc"><i>308</i>&nbsp;        } else if (!TextUtils.isEmpty(email) &amp;&amp; !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {</b>
+<b class="nc"><i>309</i>&nbsp;            return ValidateResult.INVALID_EMAIL;</b>
+<i>310</i>&nbsp;        }
+<b class="nc"><i>311</i>&nbsp;        return ValidateResult.SUCCESS;</b>
+<i>312</i>&nbsp;    }
+<i>313</i>&nbsp;
+<i>314</i>&nbsp;    @NonNull private CharSequence getText(@NonNull TextInputLayout input) {
+<b class="nc"><i>315</i>&nbsp;        return input.getEditText() != null ? input.getEditText().getText() : &quot;&quot;;</b>
+<i>316</i>&nbsp;    }
+<i>317</i>&nbsp;
+<i>318</i>&nbsp;    private void finishWithUserResult(@NonNull CreateAccountSuccessResult result) {
+<b class="nc"><i>319</i>&nbsp;        Intent resultIntent = new Intent();</b>
+<b class="nc"><i>320</i>&nbsp;        resultIntent.putExtra(CREATE_ACCOUNT_RESULT_USERNAME, result.getUsername());</b>
+<b class="nc"><i>321</i>&nbsp;        resultIntent.putExtra(CREATE_ACCOUNT_RESULT_PASSWORD, getText(passwordInput).toString());</b>
+<b class="nc"><i>322</i>&nbsp;        setResult(RESULT_ACCOUNT_CREATED, resultIntent);</b>
+<i>323</i>&nbsp;
+<b class="nc"><i>324</i>&nbsp;        createAccountResult = result;</b>
+<b class="nc"><i>325</i>&nbsp;        progressDialog.dismiss();</b>
+<b class="nc"><i>326</i>&nbsp;        captchaHandler.cancelCaptcha();</b>
+<b class="nc"><i>327</i>&nbsp;        funnel.logSuccess();</b>
+<b class="nc"><i>328</i>&nbsp;        hideSoftKeyboard(CreateAccountActivity.this);</b>
+<b class="nc"><i>329</i>&nbsp;        finish();</b>
+<i>330</i>&nbsp;    }
+<i>331</i>&nbsp;
+<i>332</i>&nbsp;    private void showError(@NonNull Throwable caught) {
+<b class="nc"><i>333</i>&nbsp;        errorView.setError(caught);</b>
+<b class="nc"><i>334</i>&nbsp;        errorView.setVisibility(View.VISIBLE);</b>
+<i>335</i>&nbsp;    }
+<i>336</i>&nbsp;
+<b class="nc"><i>337</i>&nbsp;    private class UserNameTextWatcher implements TextWatcher {</b>
+<i>338</i>&nbsp;        @Override
+<i>339</i>&nbsp;        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+<i>340</i>&nbsp;        }
+<i>341</i>&nbsp;
+<i>342</i>&nbsp;        @Override
+<i>343</i>&nbsp;        public void onTextChanged(CharSequence text, int start, int before, int count) {
+<b class="nc"><i>344</i>&nbsp;            usernameInput.removeCallbacks(userNameVerifyRunnable);</b>
+<b class="nc"><i>345</i>&nbsp;            usernameInput.setErrorEnabled(false);</b>
+<b class="nc"><i>346</i>&nbsp;            if (TextUtils.isEmpty(text.toString())) {</b>
+<i>347</i>&nbsp;                return;
+<i>348</i>&nbsp;            }
+<b class="nc"><i>349</i>&nbsp;            userNameVerifyRunnable.setUserName(text.toString());</b>
+<b class="nc"><i>350</i>&nbsp;            usernameInput.postDelayed(userNameVerifyRunnable, TimeUnit.SECONDS.toMillis(1));</b>
+<i>351</i>&nbsp;        }
+<i>352</i>&nbsp;
+<i>353</i>&nbsp;        @Override
+<i>354</i>&nbsp;        public void afterTextChanged(Editable s) {
+<i>355</i>&nbsp;        }
+<i>356</i>&nbsp;    }
+<i>357</i>&nbsp;
+<b class="nc"><i>358</i>&nbsp;    private class UserNameVerifyRunnable implements Runnable {</b>
+<i>359</i>&nbsp;        private String userName;
+<i>360</i>&nbsp;
+<i>361</i>&nbsp;        public void setUserName(@NonNull String userName) {
+<b class="nc"><i>362</i>&nbsp;            this.userName = userName;</b>
+<i>363</i>&nbsp;        }
+<i>364</i>&nbsp;
+<i>365</i>&nbsp;        public void run() {
+<b class="nc"><i>366</i>&nbsp;            new UserExtendedInfoClient().request(wiki, userName, new UserExtendedInfoClient.Callback() {</b>
+<i>367</i>&nbsp;                @Override
+<i>368</i>&nbsp;                public void success(@NonNull Call&lt;MwQueryResponse&gt; call, int id,
+<i>369</i>&nbsp;                                    @NonNull UserExtendedInfoClient.ListUserResponse user) {
+<b class="nc"><i>370</i>&nbsp;                    if (isDestroyed()) {</b>
+<i>371</i>&nbsp;                        return;
+<i>372</i>&nbsp;                    }
+<b class="nc"><i>373</i>&nbsp;                    if (user.canCreate()) {</b>
+<b class="nc"><i>374</i>&nbsp;                        usernameInput.setErrorEnabled(false);</b>
+<i>375</i>&nbsp;                    } else {
+<b class="nc"><i>376</i>&nbsp;                        usernameInput.setError(getString(R.string.create_account_name_unavailable, userName));</b>
+<i>377</i>&nbsp;                    }
+<i>378</i>&nbsp;                }
+<i>379</i>&nbsp;
+<i>380</i>&nbsp;                @Override
+<i>381</i>&nbsp;                public void failure(@NonNull Call&lt;MwQueryResponse&gt; call, @NonNull Throwable caught) {
+<i>382</i>&nbsp;                    // silently ignore.
+<i>383</i>&nbsp;                }
+<i>384</i>&nbsp;            });
+<i>385</i>&nbsp;        }
+<i>386</i>&nbsp;    }
+<i>387</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

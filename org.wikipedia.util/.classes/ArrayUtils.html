@@ -1,0 +1,131 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ArrayUtils</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.util</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ArrayUtils (org.wikipedia.util)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ArrayUtils</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.util;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.Arrays;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import static org.apache.commons.lang3.ArrayUtils.INDEX_NOT_FOUND;
+<i>6</i>&nbsp;import static org.apache.commons.lang3.ArrayUtils.indexOf;
+<i>7</i>&nbsp;import static org.apache.commons.lang3.ArrayUtils.removeAll;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;// Some OEMs appear to have added a pre-v3.5, possibly re-v3.4, version of ArrayUtils to the system
+<i>10</i>&nbsp;// path which does not contain removeAllOccurences(). This class is a partial copy of Apache
+<i>11</i>&nbsp;// Commons&#39; ArrayUtils
+<i>12</i>&nbsp;// https://rink.hockeyapp.net/manage/apps/226650/app_versions/79/crash_reasons/156658637
+<i>13</i>&nbsp;public final class ArrayUtils {
+<i>14</i>&nbsp;    /**
+<i>15</i>&nbsp;     * Removes the occurrences of the specified element from the specified array.
+<i>16</i>&nbsp;     *
+<i>17</i>&nbsp;     * &lt;p&gt;
+<i>18</i>&nbsp;     * All subsequent elements are shifted to the left (subtracts one from their indices).
+<i>19</i>&nbsp;     * If the array doesn&#39;t contains such an element, no elements are removed from the array.
+<i>20</i>&nbsp;     * &lt;code&gt;null&lt;/code&gt; will be returned if the input array is &lt;code&gt;null&lt;/code&gt;.
+<i>21</i>&nbsp;     * &lt;/p&gt;
+<i>22</i>&nbsp;     *
+<i>23</i>&nbsp;     * @param &lt;T&gt; the type of object in the array
+<i>24</i>&nbsp;     * @param element the element to remove
+<i>25</i>&nbsp;     * @param array the input array
+<i>26</i>&nbsp;     *
+<i>27</i>&nbsp;     * @return A new array containing the existing elements except the occurrences of the specified element.
+<i>28</i>&nbsp;     * @since 3.5
+<i>29</i>&nbsp;     */
+<i>30</i>&nbsp;    public static &lt;T&gt; T[] removeAllOccurences(final T[] array, final T element) {
+<b class="nc"><i>31</i>&nbsp;        int index = indexOf(array, element);</b>
+<b class="nc"><i>32</i>&nbsp;        if (index == INDEX_NOT_FOUND) {</b>
+<b class="nc"><i>33</i>&nbsp;            return org.apache.commons.lang3.ArrayUtils.clone(array);</b>
+<i>34</i>&nbsp;        }
+<i>35</i>&nbsp;
+<b class="nc"><i>36</i>&nbsp;        int[] indices = new int[array.length - index];</b>
+<b class="nc"><i>37</i>&nbsp;        indices[0] = index;</b>
+<b class="nc"><i>38</i>&nbsp;        int count = 1;</b>
+<i>39</i>&nbsp;
+<b class="nc"><i>40</i>&nbsp;        while ((index = indexOf(array, element, indices[count - 1] + 1)) != INDEX_NOT_FOUND) {</b>
+<b class="nc"><i>41</i>&nbsp;            indices[count++] = index;</b>
+<i>42</i>&nbsp;        }
+<i>43</i>&nbsp;
+<b class="nc"><i>44</i>&nbsp;        return removeAll(array, Arrays.copyOf(indices, count));</b>
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;
+<b class="nc"><i>47</i>&nbsp;    private ArrayUtils() { }</b>
+<i>48</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SearchInvokeSource</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.search</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SearchInvokeSource (org.wikipedia.search)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SearchInvokeSource</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.search;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import org.wikipedia.model.EnumCode;
+<i>4</i>&nbsp;import org.wikipedia.model.EnumCodeMap;
+<i>5</i>&nbsp;
+<b class="nc"><i>6</i>&nbsp;public enum SearchInvokeSource implements EnumCode {</b>
+<b class="nc"><i>7</i>&nbsp;    TOOLBAR(0),</b>
+<b class="nc"><i>8</i>&nbsp;    WIDGET(1),</b>
+<b class="nc"><i>9</i>&nbsp;    INTENT_SHARE(2),</b>
+<b class="nc"><i>10</i>&nbsp;    INTENT_PROCESS_TEXT(3),</b>
+<b class="nc"><i>11</i>&nbsp;    FEED_BAR(4),</b>
+<b class="nc"><i>12</i>&nbsp;    VOICE(5),</b>
+<b class="nc"><i>13</i>&nbsp;    APP_SHORTCUTS(6);</b>
+<i>14</i>&nbsp;
+<b class="nc"><i>15</i>&nbsp;    private static final EnumCodeMap&lt;SearchInvokeSource&gt; MAP = new EnumCodeMap&lt;&gt;(SearchInvokeSource.class);</b>
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    private final int code;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    public static SearchInvokeSource of(int code) {
+<b class="nc"><i>20</i>&nbsp;        return MAP.get(code);</b>
+<i>21</i>&nbsp;    }
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    @Override public int code() {
+<b class="nc"><i>24</i>&nbsp;        return code;</b>
+<i>25</i>&nbsp;    }
+<i>26</i>&nbsp;
+<b class="nc"><i>27</i>&nbsp;    SearchInvokeSource(int code) {</b>
+<b class="nc"><i>28</i>&nbsp;        this.code = code;</b>
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    public boolean fromIntent() {
+<b class="nc"><i>32</i>&nbsp;        return code == WIDGET.code() || code == INTENT_SHARE.code()</b>
+<b class="nc"><i>33</i>&nbsp;                || code == INTENT_PROCESS_TEXT.code();</b>
+<i>34</i>&nbsp;    }
+<i>35</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,650 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GalleryItemFragment</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.gallery</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GalleryItemFragment (org.wikipedia.gallery)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GalleryItemFragment</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 123)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">GalleryItemFragment$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GalleryItemFragment$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GalleryItemFragment$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 25)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GalleryItemFragment$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GalleryItemFragment$5</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GalleryItemFragment$6</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 41)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 175)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.gallery;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.graphics.Bitmap;
+<i>4</i>&nbsp;import android.graphics.drawable.Animatable;
+<i>5</i>&nbsp;import android.net.Uri;
+<i>6</i>&nbsp;import android.os.Bundle;
+<i>7</i>&nbsp;import android.support.annotation.NonNull;
+<i>8</i>&nbsp;import android.support.annotation.Nullable;
+<i>9</i>&nbsp;import android.support.v4.app.Fragment;
+<i>10</i>&nbsp;import android.text.TextUtils;
+<i>11</i>&nbsp;import android.view.LayoutInflater;
+<i>12</i>&nbsp;import android.view.Menu;
+<i>13</i>&nbsp;import android.view.MenuItem;
+<i>14</i>&nbsp;import android.view.MotionEvent;
+<i>15</i>&nbsp;import android.view.View;
+<i>16</i>&nbsp;import android.view.ViewGroup;
+<i>17</i>&nbsp;import android.widget.MediaController;
+<i>18</i>&nbsp;import android.widget.ProgressBar;
+<i>19</i>&nbsp;import android.widget.VideoView;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;import com.facebook.drawee.backends.pipeline.Fresco;
+<i>22</i>&nbsp;import com.facebook.drawee.controller.BaseControllerListener;
+<i>23</i>&nbsp;import com.facebook.drawee.drawable.ScalingUtils;
+<i>24</i>&nbsp;import com.facebook.drawee.generic.GenericDraweeHierarchy;
+<i>25</i>&nbsp;import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+<i>26</i>&nbsp;import com.facebook.drawee.view.SimpleDraweeView;
+<i>27</i>&nbsp;import com.facebook.imagepipeline.image.ImageInfo;
+<i>28</i>&nbsp;import com.facebook.samples.zoomable.DoubleTapGestureListener;
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;import org.wikipedia.Constants;
+<i>31</i>&nbsp;import org.wikipedia.R;
+<i>32</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>33</i>&nbsp;import org.wikipedia.activity.FragmentUtil;
+<i>34</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>35</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwQueryResponse;
+<i>36</i>&nbsp;import org.wikipedia.page.PageTitle;
+<i>37</i>&nbsp;import org.wikipedia.util.FeedbackUtil;
+<i>38</i>&nbsp;import org.wikipedia.util.FileUtil;
+<i>39</i>&nbsp;import org.wikipedia.util.PermissionUtil;
+<i>40</i>&nbsp;import org.wikipedia.util.ShareUtil;
+<i>41</i>&nbsp;import org.wikipedia.util.log.L;
+<i>42</i>&nbsp;import org.wikipedia.views.ZoomableDraweeViewWithBackground;
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;import retrofit2.Call;
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;import static org.wikipedia.util.PermissionUtil.hasWriteExternalStoragePermission;
+<i>47</i>&nbsp;import static org.wikipedia.util.PermissionUtil.requestWriteStorageRuntimePermissions;
+<i>48</i>&nbsp;
+<b class="nc"><i>49</i>&nbsp;public class GalleryItemFragment extends Fragment {</b>
+<i>50</i>&nbsp;    public static final String ARG_PAGETITLE = &quot;pageTitle&quot;;
+<i>51</i>&nbsp;    public static final String ARG_MEDIATITLE = &quot;imageTitle&quot;;
+<i>52</i>&nbsp;    public static final String ARG_MIMETYPE = &quot;mimeType&quot;;
+<i>53</i>&nbsp;    public static final String ARG_FEED_FEATURED_IMAGE = &quot;feedFeaturedImage&quot;;
+<i>54</i>&nbsp;    public static final String ARG_AGE = &quot;age&quot;;
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    public interface Callback {
+<i>57</i>&nbsp;        void onDownload(@NonNull GalleryItem item);
+<i>58</i>&nbsp;        void onShare(@NonNull GalleryItem item, @Nullable Bitmap bitmap, @NonNull String subject, @NonNull PageTitle title);
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    private ProgressBar progressBar;
+<i>62</i>&nbsp;    private ZoomableDraweeViewWithBackground imageView;
+<i>63</i>&nbsp;    private View videoContainer;
+<i>64</i>&nbsp;    private VideoView videoView;
+<i>65</i>&nbsp;    private SimpleDraweeView videoThumbnail;
+<i>66</i>&nbsp;    private View videoPlayButton;
+<i>67</i>&nbsp;    private MediaController mediaController;
+<i>68</i>&nbsp;
+<b class="nc"><i>69</i>&nbsp;    @NonNull private WikipediaApp app = WikipediaApp.getInstance();</b>
+<i>70</i>&nbsp;    @Nullable private GalleryActivity parentActivity;
+<i>71</i>&nbsp;    @Nullable private PageTitle pageTitle;
+<i>72</i>&nbsp;    @SuppressWarnings(&quot;NullableProblems&quot;) @NonNull private PageTitle imageTitle;
+<i>73</i>&nbsp;    @Nullable private String mimeType;
+<i>74</i>&nbsp;    private int age;
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    @Nullable private GalleryItem galleryItem;
+<i>77</i>&nbsp;    @Nullable public GalleryItem getGalleryItem() {
+<b class="nc"><i>78</i>&nbsp;        return galleryItem;</b>
+<i>79</i>&nbsp;    }
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    public static GalleryItemFragment newInstance(@Nullable PageTitle pageTitle, @NonNull WikiSite wiki,
+<i>82</i>&nbsp;                                                  @NonNull GalleryItem galleryItemProto) {
+<b class="nc"><i>83</i>&nbsp;        GalleryItemFragment f = new GalleryItemFragment();</b>
+<b class="nc"><i>84</i>&nbsp;        Bundle args = new Bundle();</b>
+<b class="nc"><i>85</i>&nbsp;        args.putParcelable(ARG_PAGETITLE, pageTitle);</b>
+<b class="nc"><i>86</i>&nbsp;        args.putParcelable(ARG_MEDIATITLE, new PageTitle(galleryItemProto.getName(), wiki));</b>
+<b class="nc"><i>87</i>&nbsp;        args.putString(ARG_MIMETYPE, galleryItemProto.getMimeType());</b>
+<i>88</i>&nbsp;
+<b class="nc"><i>89</i>&nbsp;        if (galleryItemProto instanceof FeaturedImageGalleryItem) {</b>
+<b class="nc"><i>90</i>&nbsp;            args.putBoolean(ARG_FEED_FEATURED_IMAGE, true);</b>
+<b class="nc"><i>91</i>&nbsp;            args.putInt(ARG_AGE, ((FeaturedImageGalleryItem) galleryItemProto).getAge());</b>
+<i>92</i>&nbsp;        }
+<i>93</i>&nbsp;
+<b class="nc"><i>94</i>&nbsp;        f.setArguments(args);</b>
+<b class="nc"><i>95</i>&nbsp;        return f;</b>
+<i>96</i>&nbsp;    }
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;    @Override
+<i>99</i>&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>100</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>101</i>&nbsp;        pageTitle = getArguments().getParcelable(ARG_PAGETITLE);</b>
+<i>102</i>&nbsp;        //noinspection ConstantConditions
+<b class="nc"><i>103</i>&nbsp;        imageTitle = getArguments().getParcelable(ARG_MEDIATITLE);</b>
+<b class="nc"><i>104</i>&nbsp;        mimeType = getArguments().getString(ARG_MIMETYPE);</b>
+<i>105</i>&nbsp;
+<b class="nc"><i>106</i>&nbsp;        if (getArguments().getBoolean(ARG_FEED_FEATURED_IMAGE)) {</b>
+<b class="nc"><i>107</i>&nbsp;            age = getArguments().getInt(ARG_AGE);</b>
+<i>108</i>&nbsp;        }
+<i>109</i>&nbsp;    }
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;    @Override
+<i>112</i>&nbsp;    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+<b class="nc"><i>113</i>&nbsp;        View rootView = inflater.inflate(R.layout.fragment_gallery_item, container, false);</b>
+<b class="nc"><i>114</i>&nbsp;        progressBar = rootView.findViewById(R.id.gallery_item_progress_bar);</b>
+<b class="nc"><i>115</i>&nbsp;        videoContainer = rootView.findViewById(R.id.gallery_video_container);</b>
+<b class="nc"><i>116</i>&nbsp;        videoView = rootView.findViewById(R.id.gallery_video);</b>
+<b class="nc"><i>117</i>&nbsp;        videoThumbnail = rootView.findViewById(R.id.gallery_video_thumbnail);</b>
+<b class="nc"><i>118</i>&nbsp;        videoPlayButton = rootView.findViewById(R.id.gallery_video_play_button);</b>
+<b class="nc"><i>119</i>&nbsp;        imageView = rootView.findViewById(R.id.gallery_image);</b>
+<b class="nc"><i>120</i>&nbsp;        imageView.setTapListener(new DoubleTapGestureListener(imageView) {</b>
+<i>121</i>&nbsp;            @Override
+<i>122</i>&nbsp;            public boolean onSingleTapConfirmed(MotionEvent e) {
+<b class="nc"><i>123</i>&nbsp;                parentActivity.toggleControls();</b>
+<b class="nc"><i>124</i>&nbsp;                return true;</b>
+<i>125</i>&nbsp;            }
+<i>126</i>&nbsp;        });
+<b class="nc"><i>127</i>&nbsp;        GenericDraweeHierarchy hierarchy = new GenericDraweeHierarchyBuilder(getResources())</b>
+<b class="nc"><i>128</i>&nbsp;                .setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER)</b>
+<b class="nc"><i>129</i>&nbsp;                .build();</b>
+<b class="nc"><i>130</i>&nbsp;        imageView.setHierarchy(hierarchy);</b>
+<b class="nc"><i>131</i>&nbsp;        return rootView;</b>
+<i>132</i>&nbsp;    }
+<i>133</i>&nbsp;
+<i>134</i>&nbsp;    @Override
+<i>135</i>&nbsp;    public void onActivityCreated(Bundle savedInstanceState) {
+<b class="nc"><i>136</i>&nbsp;        super.onActivityCreated(savedInstanceState);</b>
+<b class="nc"><i>137</i>&nbsp;        setHasOptionsMenu(true);</b>
+<b class="nc"><i>138</i>&nbsp;        parentActivity = (GalleryActivity) getActivity();</b>
+<i>139</i>&nbsp;        // do we already have a prepopulated item in the gallery cache?
+<b class="nc"><i>140</i>&nbsp;        galleryItem = parentActivity.getGalleryCache().get(imageTitle);</b>
+<b class="nc"><i>141</i>&nbsp;        if (galleryItem == null) {</b>
+<b class="nc"><i>142</i>&nbsp;            loadGalleryItem();</b>
+<i>143</i>&nbsp;        } else {
+<b class="nc"><i>144</i>&nbsp;            loadMedia();</b>
+<i>145</i>&nbsp;        }
+<i>146</i>&nbsp;    }
+<i>147</i>&nbsp;
+<i>148</i>&nbsp;    @Override
+<i>149</i>&nbsp;    public void onDestroyView() {
+<b class="nc"><i>150</i>&nbsp;        super.onDestroyView();</b>
+<b class="nc"><i>151</i>&nbsp;        imageView.setController(null);</b>
+<b class="nc"><i>152</i>&nbsp;        imageView.setOnClickListener(null);</b>
+<b class="nc"><i>153</i>&nbsp;        videoThumbnail.setController(null);</b>
+<b class="nc"><i>154</i>&nbsp;        videoThumbnail.setOnClickListener(null);</b>
+<i>155</i>&nbsp;    }
+<i>156</i>&nbsp;
+<i>157</i>&nbsp;    private void updateProgressBar(boolean visible, boolean indeterminate, int value) {
+<b class="nc"><i>158</i>&nbsp;        progressBar.setIndeterminate(indeterminate);</b>
+<b class="nc"><i>159</i>&nbsp;        if (!indeterminate) {</b>
+<b class="nc"><i>160</i>&nbsp;            progressBar.setProgress(value);</b>
+<i>161</i>&nbsp;        }
+<b class="nc"><i>162</i>&nbsp;        progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);</b>
+<i>163</i>&nbsp;    }
+<i>164</i>&nbsp;
+<i>165</i>&nbsp;    @Override
+<i>166</i>&nbsp;    public void onDestroy() {
+<b class="nc"><i>167</i>&nbsp;        super.onDestroy();</b>
+<b class="nc"><i>168</i>&nbsp;        app.getRefWatcher().watch(this);</b>
+<i>169</i>&nbsp;    }
+<i>170</i>&nbsp;
+<i>171</i>&nbsp;    @Override
+<i>172</i>&nbsp;    public void onPrepareOptionsMenu(Menu menu) {
+<b class="nc"><i>173</i>&nbsp;        super.onPrepareOptionsMenu(menu);</b>
+<b class="nc"><i>174</i>&nbsp;        if (!isAdded()) {</b>
+<i>175</i>&nbsp;            return;
+<i>176</i>&nbsp;        }
+<b class="nc"><i>177</i>&nbsp;        menu.findItem(R.id.menu_gallery_visit_page).setEnabled(galleryItem != null);</b>
+<b class="nc"><i>178</i>&nbsp;        menu.findItem(R.id.menu_gallery_share).setEnabled(galleryItem != null</b>
+<b class="nc"><i>179</i>&nbsp;                &amp;&amp; !TextUtils.isEmpty(galleryItem.getUrl()) &amp;&amp; imageView.getDrawable() != null);</b>
+<b class="nc"><i>180</i>&nbsp;        menu.findItem(R.id.menu_gallery_save).setEnabled(galleryItem != null</b>
+<b class="nc"><i>181</i>&nbsp;                &amp;&amp; !TextUtils.isEmpty(galleryItem.getUrl()) &amp;&amp; imageView.getDrawable() != null);</b>
+<i>182</i>&nbsp;    }
+<i>183</i>&nbsp;
+<i>184</i>&nbsp;    @Override
+<i>185</i>&nbsp;    public boolean onOptionsItemSelected(MenuItem item) {
+<b class="nc"><i>186</i>&nbsp;        switch (item.getItemId()) {</b>
+<i>187</i>&nbsp;            case R.id.menu_gallery_visit_page:
+<b class="nc"><i>188</i>&nbsp;                if (galleryItem != null) {</b>
+<b class="nc"><i>189</i>&nbsp;                    parentActivity.finishWithPageResult(imageTitle);</b>
+<i>190</i>&nbsp;                }
+<b class="nc"><i>191</i>&nbsp;                return true;</b>
+<i>192</i>&nbsp;            case R.id.menu_gallery_save:
+<b class="nc"><i>193</i>&nbsp;                handleImageSaveRequest();</b>
+<b class="nc"><i>194</i>&nbsp;                return true;</b>
+<i>195</i>&nbsp;            case R.id.menu_gallery_share:
+<b class="nc"><i>196</i>&nbsp;                shareImage();</b>
+<b class="nc"><i>197</i>&nbsp;                return true;</b>
+<i>198</i>&nbsp;            default:
+<i>199</i>&nbsp;                break;
+<i>200</i>&nbsp;        }
+<b class="nc"><i>201</i>&nbsp;        return super.onOptionsItemSelected(item);</b>
+<i>202</i>&nbsp;    }
+<i>203</i>&nbsp;
+<i>204</i>&nbsp;    /**
+<i>205</i>&nbsp;     * Notifies this fragment that the current position of its containing ViewPager has changed.
+<i>206</i>&nbsp;     *
+<i>207</i>&nbsp;     * @param fragmentPosition This fragment&#39;s position in the ViewPager.
+<i>208</i>&nbsp;     * @param pagerPosition    The pager&#39;s current position that is displayed to the user.
+<i>209</i>&nbsp;     */
+<i>210</i>&nbsp;    public void onUpdatePosition(int fragmentPosition, int pagerPosition) {
+<b class="nc"><i>211</i>&nbsp;        if (fragmentPosition != pagerPosition) {</b>
+<i>212</i>&nbsp;            // update stuff if our position is not &quot;current&quot; within the ViewPager...
+<b class="nc"><i>213</i>&nbsp;            if (mediaController != null) {</b>
+<b class="nc"><i>214</i>&nbsp;                if (videoView.isPlaying()) {</b>
+<b class="nc"><i>215</i>&nbsp;                    videoView.pause();</b>
+<i>216</i>&nbsp;                }
+<b class="nc"><i>217</i>&nbsp;                mediaController.hide();</b>
+<i>218</i>&nbsp;            }
+<i>219</i>&nbsp;        } else {
+<i>220</i>&nbsp;            // update stuff if our position is &quot;current&quot;
+<b class="nc"><i>221</i>&nbsp;            if (mediaController != null) {</b>
+<b class="nc"><i>222</i>&nbsp;                if (!videoView.isPlaying()) {</b>
+<b class="nc"><i>223</i>&nbsp;                    videoView.start();</b>
+<i>224</i>&nbsp;                }
+<i>225</i>&nbsp;            }
+<i>226</i>&nbsp;        }
+<i>227</i>&nbsp;    }
+<i>228</i>&nbsp;
+<i>229</i>&nbsp;    private void handleImageSaveRequest() {
+<b class="nc"><i>230</i>&nbsp;        if (!(hasWriteExternalStoragePermission(this.getActivity()))) {</b>
+<b class="nc"><i>231</i>&nbsp;            requestWriteExternalStoragePermission();</b>
+<i>232</i>&nbsp;        } else {
+<b class="nc"><i>233</i>&nbsp;            saveImage();</b>
+<i>234</i>&nbsp;        }
+<i>235</i>&nbsp;    }
+<i>236</i>&nbsp;
+<i>237</i>&nbsp;    private void requestWriteExternalStoragePermission() {
+<b class="nc"><i>238</i>&nbsp;        requestWriteStorageRuntimePermissions(this,</b>
+<i>239</i>&nbsp;                Constants.ACTIVITY_REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION);
+<i>240</i>&nbsp;    }
+<i>241</i>&nbsp;
+<i>242</i>&nbsp;    /**
+<i>243</i>&nbsp;     * Perform a network request to load information and metadata for our gallery item.
+<i>244</i>&nbsp;     */
+<i>245</i>&nbsp;    private void loadGalleryItem() {
+<b class="nc"><i>246</i>&nbsp;        updateProgressBar(true, true, 0);</b>
+<b class="nc"><i>247</i>&nbsp;        new GalleryItemClient().request(imageTitle.getWikiSite(), imageTitle,</b>
+<b class="nc"><i>248</i>&nbsp;                new GalleryItemClient.Callback() {</b>
+<i>249</i>&nbsp;                    @Override
+<i>250</i>&nbsp;                    public void success(@NonNull Call&lt;MwQueryResponse&gt; call, @NonNull GalleryItem result) {
+<b class="nc"><i>251</i>&nbsp;                        if (!isAdded()) {</b>
+<i>252</i>&nbsp;                            return;
+<i>253</i>&nbsp;                        }
+<b class="nc"><i>254</i>&nbsp;                        galleryItem = result;</b>
+<b class="nc"><i>255</i>&nbsp;                        parentActivity.getGalleryCache().put(pageTitle, result);</b>
+<b class="nc"><i>256</i>&nbsp;                        loadMedia();</b>
+<i>257</i>&nbsp;                    }
+<i>258</i>&nbsp;
+<i>259</i>&nbsp;                    @Override
+<i>260</i>&nbsp;                    public void failure(@NonNull Call&lt;MwQueryResponse&gt; call, @NonNull Throwable caught) {
+<b class="nc"><i>261</i>&nbsp;                        if (!isAdded()) {</b>
+<i>262</i>&nbsp;                            return;
+<i>263</i>&nbsp;                        }
+<b class="nc"><i>264</i>&nbsp;                        updateProgressBar(false, true, 0);</b>
+<b class="nc"><i>265</i>&nbsp;                        parentActivity.showError(caught, true);</b>
+<b class="nc"><i>266</i>&nbsp;                        L.e(caught);</b>
+<i>267</i>&nbsp;                    }
+<b class="nc"><i>268</i>&nbsp;                }, FileUtil.isVideo(mimeType));</b>
+<i>269</i>&nbsp;    }
+<i>270</i>&nbsp;
+<i>271</i>&nbsp;    /**
+<i>272</i>&nbsp;     * Load the actual media associated with our gallery item into the UI.
+<i>273</i>&nbsp;     */
+<i>274</i>&nbsp;    private void loadMedia() {
+<b class="nc"><i>275</i>&nbsp;        if (FileUtil.isVideo(mimeType)) {</b>
+<b class="nc"><i>276</i>&nbsp;            loadVideo();</b>
+<i>277</i>&nbsp;        } else {
+<i>278</i>&nbsp;            // it&#39;s actually OK to use the thumbUrl in all cases, and here&#39;s why:
+<i>279</i>&nbsp;            // - in the case of a JPG or PNG image:
+<i>280</i>&nbsp;            //     - if the image is bigger than the requested thumbnail size, then the
+<i>281</i>&nbsp;            //       thumbnail will correctly be a scaled-down version of the image, so
+<i>282</i>&nbsp;            //       that it won&#39;t overload the device&#39;s bitmap buffer.
+<i>283</i>&nbsp;            //     - if the image is smaller than the requested thumbnail size, then the
+<i>284</i>&nbsp;            //       thumbnail url will be the same as the actual image url.
+<i>285</i>&nbsp;            // - in the case of an SVG file:
+<i>286</i>&nbsp;            //     - we need the thumbnail image anyway, since the ImageView can&#39;t
+<i>287</i>&nbsp;            //       display SVGs.
+<b class="nc"><i>288</i>&nbsp;            loadImage(galleryItem.getThumbUrl());</b>
+<i>289</i>&nbsp;        }
+<i>290</i>&nbsp;
+<b class="nc"><i>291</i>&nbsp;        parentActivity.supportInvalidateOptionsMenu();</b>
+<b class="nc"><i>292</i>&nbsp;        parentActivity.layOutGalleryDescription();</b>
+<i>293</i>&nbsp;    }
+<i>294</i>&nbsp;
+<b class="nc"><i>295</i>&nbsp;    private View.OnClickListener videoThumbnailClickListener = new View.OnClickListener() {</b>
+<b class="nc"><i>296</i>&nbsp;        private boolean loading = false;</b>
+<i>297</i>&nbsp;
+<i>298</i>&nbsp;        @Override
+<i>299</i>&nbsp;        public void onClick(View v) {
+<b class="nc"><i>300</i>&nbsp;            if (loading) {</b>
+<i>301</i>&nbsp;                return;
+<i>302</i>&nbsp;            }
+<b class="nc"><i>303</i>&nbsp;            loading = true;</b>
+<b class="nc"><i>304</i>&nbsp;            L.d(&quot;Loading video from url: &quot; + galleryItem.getUrl());</b>
+<b class="nc"><i>305</i>&nbsp;            videoView.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>306</i>&nbsp;            mediaController = new MediaController(parentActivity);</b>
+<b class="nc"><i>307</i>&nbsp;            updateProgressBar(true, true, 0);</b>
+<b class="nc"><i>308</i>&nbsp;            videoView.setMediaController(mediaController);</b>
+<b class="nc"><i>309</i>&nbsp;            videoView.setOnPreparedListener((mp) -&gt; {</b>
+<b class="nc"><i>310</i>&nbsp;                updateProgressBar(false, true, 0);</b>
+<i>311</i>&nbsp;                // ...update the parent activity, which will trigger us to start playing!
+<b class="nc"><i>312</i>&nbsp;                parentActivity.layOutGalleryDescription();</b>
+<i>313</i>&nbsp;                // hide the video thumbnail, since we&#39;re about to start playback
+<b class="nc"><i>314</i>&nbsp;                videoThumbnail.setVisibility(View.GONE);</b>
+<b class="nc"><i>315</i>&nbsp;                videoPlayButton.setVisibility(View.GONE);</b>
+<i>316</i>&nbsp;                // and start!
+<b class="nc"><i>317</i>&nbsp;                videoView.start();</b>
+<b class="nc"><i>318</i>&nbsp;                loading = false;</b>
+<i>319</i>&nbsp;            });
+<b class="nc"><i>320</i>&nbsp;            videoView.setOnErrorListener((mp, what, extra) -&gt; {</b>
+<b class="nc"><i>321</i>&nbsp;                updateProgressBar(false, true, 0);</b>
+<b class="nc"><i>322</i>&nbsp;                FeedbackUtil.showMessage(getActivity(),</b>
+<i>323</i>&nbsp;                        R.string.gallery_error_video_failed);
+<b class="nc"><i>324</i>&nbsp;                videoView.setVisibility(View.GONE);</b>
+<b class="nc"><i>325</i>&nbsp;                videoThumbnail.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>326</i>&nbsp;                videoPlayButton.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>327</i>&nbsp;                loading = false;</b>
+<b class="nc"><i>328</i>&nbsp;                return true;</b>
+<i>329</i>&nbsp;            });
+<b class="nc"><i>330</i>&nbsp;            videoView.setVideoURI(Uri.parse(galleryItem.getUrl()));</b>
+<i>331</i>&nbsp;        }
+<i>332</i>&nbsp;    };
+<i>333</i>&nbsp;
+<i>334</i>&nbsp;    private void loadVideo() {
+<b class="nc"><i>335</i>&nbsp;        videoContainer.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>336</i>&nbsp;        videoPlayButton.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>337</i>&nbsp;        videoView.setVisibility(View.GONE);</b>
+<b class="nc"><i>338</i>&nbsp;        if (TextUtils.isEmpty(galleryItem.getThumbUrl())) {</b>
+<b class="nc"><i>339</i>&nbsp;            videoThumbnail.setVisibility(View.GONE);</b>
+<i>340</i>&nbsp;        } else {
+<i>341</i>&nbsp;            // show the video thumbnail while the video loads...
+<b class="nc"><i>342</i>&nbsp;            videoThumbnail.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>343</i>&nbsp;            videoThumbnail.setController(Fresco.newDraweeControllerBuilder()</b>
+<b class="nc"><i>344</i>&nbsp;                    .setUri(galleryItem.getThumbUrl())</b>
+<b class="nc"><i>345</i>&nbsp;                    .setAutoPlayAnimations(true)</b>
+<b class="nc"><i>346</i>&nbsp;                    .setControllerListener(new BaseControllerListener&lt;ImageInfo&gt;() {</b>
+<i>347</i>&nbsp;                        @Override
+<i>348</i>&nbsp;                        public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+<b class="nc"><i>349</i>&nbsp;                            updateProgressBar(false, true, 0);</b>
+<i>350</i>&nbsp;                        }
+<i>351</i>&nbsp;
+<i>352</i>&nbsp;                        @Override
+<i>353</i>&nbsp;                        public void onFailure(String id, Throwable throwable) {
+<b class="nc"><i>354</i>&nbsp;                            updateProgressBar(false, true, 0);</b>
+<i>355</i>&nbsp;                        }
+<i>356</i>&nbsp;                    })
+<b class="nc"><i>357</i>&nbsp;                    .build());</b>
+<i>358</i>&nbsp;        }
+<b class="nc"><i>359</i>&nbsp;        videoThumbnail.setOnClickListener(videoThumbnailClickListener);</b>
+<i>360</i>&nbsp;    }
+<i>361</i>&nbsp;
+<i>362</i>&nbsp;    private void loadImage(String url) {
+<b class="nc"><i>363</i>&nbsp;        imageView.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>364</i>&nbsp;        L.v(&quot;Loading image from url: &quot; + url);</b>
+<i>365</i>&nbsp;
+<b class="nc"><i>366</i>&nbsp;        imageView.setDrawBackground(false);</b>
+<b class="nc"><i>367</i>&nbsp;        imageView.setController(Fresco.newDraweeControllerBuilder()</b>
+<b class="nc"><i>368</i>&nbsp;                .setUri(url)</b>
+<b class="nc"><i>369</i>&nbsp;                .setAutoPlayAnimations(true)</b>
+<b class="nc"><i>370</i>&nbsp;                .setControllerListener(new BaseControllerListener&lt;ImageInfo&gt;() {</b>
+<i>371</i>&nbsp;                    @Override
+<i>372</i>&nbsp;                    public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+<b class="nc"><i>373</i>&nbsp;                        if (!isAdded()) {</b>
+<i>374</i>&nbsp;                            return;
+<i>375</i>&nbsp;                        }
+<b class="nc"><i>376</i>&nbsp;                        imageView.setDrawBackground(true);</b>
+<b class="nc"><i>377</i>&nbsp;                        updateProgressBar(false, true, 0);</b>
+<b class="nc"><i>378</i>&nbsp;                        parentActivity.supportInvalidateOptionsMenu();</b>
+<i>379</i>&nbsp;                    }
+<i>380</i>&nbsp;
+<i>381</i>&nbsp;                    @Override
+<i>382</i>&nbsp;                    public void onFailure(String id, Throwable throwable) {
+<b class="nc"><i>383</i>&nbsp;                        if (!isAdded()) {</b>
+<i>384</i>&nbsp;                            return;
+<i>385</i>&nbsp;                        }
+<b class="nc"><i>386</i>&nbsp;                        updateProgressBar(false, true, 0);</b>
+<b class="nc"><i>387</i>&nbsp;                        FeedbackUtil.showMessage(getActivity(), R.string.gallery_error_draw_failed);</b>
+<i>388</i>&nbsp;                    }
+<i>389</i>&nbsp;                })
+<b class="nc"><i>390</i>&nbsp;                .build());</b>
+<i>391</i>&nbsp;    }
+<i>392</i>&nbsp;
+<i>393</i>&nbsp;    private void shareImage() {
+<b class="nc"><i>394</i>&nbsp;        if (galleryItem == null) {</b>
+<i>395</i>&nbsp;            return;
+<i>396</i>&nbsp;        }
+<b class="nc"><i>397</i>&nbsp;        new ImagePipelineBitmapGetter(galleryItem.getThumbUrl()){</b>
+<i>398</i>&nbsp;            @Override
+<i>399</i>&nbsp;            public void onSuccess(@Nullable Bitmap bitmap) {
+<b class="nc"><i>400</i>&nbsp;                if (!isAdded()) {</b>
+<i>401</i>&nbsp;                    return;
+<i>402</i>&nbsp;                }
+<b class="nc"><i>403</i>&nbsp;                if (callback() != null) {</b>
+<b class="nc"><i>404</i>&nbsp;                    callback().onShare(galleryItem, bitmap, getShareSubject(), imageTitle);</b>
+<i>405</i>&nbsp;                }
+<i>406</i>&nbsp;            }
+<b class="nc"><i>407</i>&nbsp;        }.get();</b>
+<i>408</i>&nbsp;    }
+<i>409</i>&nbsp;
+<i>410</i>&nbsp;    @Override
+<i>411</i>&nbsp;    public void onRequestPermissionsResult(int requestCode,
+<i>412</i>&nbsp;                                           @NonNull String[] permissions,
+<i>413</i>&nbsp;                                           @NonNull int[] grantResults) {
+<b class="nc"><i>414</i>&nbsp;        switch (requestCode) {</b>
+<i>415</i>&nbsp;            case Constants.ACTIVITY_REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION:
+<b class="nc"><i>416</i>&nbsp;                if (PermissionUtil.isPermitted(grantResults)) {</b>
+<b class="nc"><i>417</i>&nbsp;                    saveImage();</b>
+<i>418</i>&nbsp;                } else {
+<b class="nc"><i>419</i>&nbsp;                    L.e(&quot;Write permission was denied by user&quot;);</b>
+<b class="nc"><i>420</i>&nbsp;                    FeedbackUtil.showMessage(getActivity(),</b>
+<i>421</i>&nbsp;                            R.string.gallery_save_image_write_permission_rationale);
+<i>422</i>&nbsp;                }
+<b class="nc"><i>423</i>&nbsp;                break;</b>
+<i>424</i>&nbsp;            default:
+<b class="nc"><i>425</i>&nbsp;                throw new RuntimeException(&quot;unexpected permission request code &quot; + requestCode);</b>
+<i>426</i>&nbsp;        }
+<i>427</i>&nbsp;    }
+<i>428</i>&nbsp;
+<i>429</i>&nbsp;    @Nullable
+<i>430</i>&nbsp;    private String getShareSubject() {
+<b class="nc"><i>431</i>&nbsp;        if (getArguments().getBoolean(ARG_FEED_FEATURED_IMAGE)) {</b>
+<b class="nc"><i>432</i>&nbsp;            return ShareUtil.getFeaturedImageShareSubject(getContext(), age);</b>
+<i>433</i>&nbsp;        }
+<b class="nc"><i>434</i>&nbsp;        return pageTitle != null ? pageTitle.getDisplayText() : null;</b>
+<i>435</i>&nbsp;    }
+<i>436</i>&nbsp;
+<i>437</i>&nbsp;    private void saveImage() {
+<b class="nc"><i>438</i>&nbsp;        if (galleryItem != null &amp;&amp; callback() != null) {</b>
+<b class="nc"><i>439</i>&nbsp;            callback().onDownload(galleryItem);</b>
+<i>440</i>&nbsp;        }
+<i>441</i>&nbsp;    }
+<i>442</i>&nbsp;
+<i>443</i>&nbsp;    @Nullable private Callback callback() {
+<b class="nc"><i>444</i>&nbsp;        return FragmentUtil.getCallback(this, Callback.class);</b>
+<i>445</i>&nbsp;    }
+<i>446</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

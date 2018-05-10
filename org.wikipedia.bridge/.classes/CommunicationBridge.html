@@ -1,0 +1,310 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CommunicationBridge</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.bridge</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CommunicationBridge (org.wikipedia.bridge)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CommunicationBridge</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 31)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CommunicationBridge$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">CommunicationBridge$BridgeMarshaller</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">CommunicationBridge$CommunicatingChrome</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 65)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.bridge;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.annotation.SuppressLint;
+<i>4</i>&nbsp;import android.os.Handler;
+<i>5</i>&nbsp;import android.os.Looper;
+<i>6</i>&nbsp;import android.os.Message;
+<i>7</i>&nbsp;import android.support.annotation.NonNull;
+<i>8</i>&nbsp;import android.util.Log;
+<i>9</i>&nbsp;import android.webkit.ConsoleMessage;
+<i>10</i>&nbsp;import android.webkit.JavascriptInterface;
+<i>11</i>&nbsp;import android.webkit.JsPromptResult;
+<i>12</i>&nbsp;import android.webkit.WebChromeClient;
+<i>13</i>&nbsp;import android.webkit.WebView;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import org.json.JSONException;
+<i>16</i>&nbsp;import org.json.JSONObject;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;import java.util.ArrayList;
+<i>19</i>&nbsp;import java.util.HashMap;
+<i>20</i>&nbsp;import java.util.List;
+<i>21</i>&nbsp;import java.util.Map;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;import static org.wikipedia.util.UriUtil.decodeURL;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;/**
+<i>26</i>&nbsp; * Two way communications bridge between JS in a WebView and Java.
+<i>27</i>&nbsp; */
+<b class="nc"><i>28</i>&nbsp;public class CommunicationBridge {</b>
+<i>29</i>&nbsp;    private final WebView webView;
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    private final Map&lt;String, List&lt;JSEventListener&gt;&gt; eventListeners;
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    private final BridgeMarshaller marshaller;
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    private boolean isDOMReady;
+<b class="nc"><i>36</i>&nbsp;    private final List&lt;String&gt; pendingJSMessages = new ArrayList&lt;&gt;();</b>
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    public interface JSEventListener {
+<i>39</i>&nbsp;        void onMessage(String messageType, JSONObject messagePayload);
+<i>40</i>&nbsp;    }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    @SuppressLint({&quot;AddJavascriptInterface&quot;, &quot;SetJavaScriptEnabled&quot;})
+<b class="nc"><i>43</i>&nbsp;    public CommunicationBridge(final WebView webView, final String baseURL) {</b>
+<b class="nc"><i>44</i>&nbsp;        this.webView = webView;</b>
+<b class="nc"><i>45</i>&nbsp;        this.marshaller = new BridgeMarshaller();</b>
+<i>46</i>&nbsp;
+<b class="nc"><i>47</i>&nbsp;        webView.getSettings().setJavaScriptEnabled(true);</b>
+<b class="nc"><i>48</i>&nbsp;        webView.getSettings().setAllowUniversalAccessFromFileURLs(true);</b>
+<i>49</i>&nbsp;
+<b class="nc"><i>50</i>&nbsp;        webView.setWebChromeClient(new CommunicatingChrome());</b>
+<b class="nc"><i>51</i>&nbsp;        webView.addJavascriptInterface(marshaller, &quot;marshaller&quot;);</b>
+<i>52</i>&nbsp;
+<b class="nc"><i>53</i>&nbsp;        webView.loadUrl(baseURL); // TODO: remove once we finish the page load experiment</b>
+<i>54</i>&nbsp;
+<b class="nc"><i>55</i>&nbsp;        eventListeners = new HashMap&lt;&gt;();</b>
+<b class="nc"><i>56</i>&nbsp;        this.addListener(&quot;DOMLoaded&quot;, (messageType, messagePayload) -&gt; {</b>
+<b class="nc"><i>57</i>&nbsp;            isDOMReady = true;</b>
+<b class="nc"><i>58</i>&nbsp;            for (String jsString : pendingJSMessages) {</b>
+<b class="nc"><i>59</i>&nbsp;                CommunicationBridge.this.webView.loadUrl(jsString);</b>
+<b class="nc"><i>60</i>&nbsp;            }</b>
+<i>61</i>&nbsp;        });
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    public void cleanup() {
+<b class="nc"><i>65</i>&nbsp;        eventListeners.clear();</b>
+<b class="nc"><i>66</i>&nbsp;        if (incomingMessageHandler != null) {</b>
+<b class="nc"><i>67</i>&nbsp;            incomingMessageHandler.removeCallbacksAndMessages(null);</b>
+<b class="nc"><i>68</i>&nbsp;            incomingMessageHandler = null;</b>
+<i>69</i>&nbsp;        }
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    public void addListener(String type, JSEventListener listener) {
+<b class="nc"><i>73</i>&nbsp;        if (eventListeners.containsKey(type)) {</b>
+<b class="nc"><i>74</i>&nbsp;            eventListeners.get(type).add(listener);</b>
+<i>75</i>&nbsp;        } else {
+<b class="nc"><i>76</i>&nbsp;            List&lt;JSEventListener&gt; listeners = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>77</i>&nbsp;            listeners.add(listener);</b>
+<b class="nc"><i>78</i>&nbsp;            eventListeners.put(type, listeners);</b>
+<i>79</i>&nbsp;        }
+<i>80</i>&nbsp;    }
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    public void sendMessage(String messageName, JSONObject messageData) {
+<b class="nc"><i>83</i>&nbsp;        String messagePointer =  marshaller.putPayload(messageData.toString());</b>
+<i>84</i>&nbsp;
+<b class="nc"><i>85</i>&nbsp;        String jsString = &quot;javascript:handleMessage( \&quot;&quot; + messageName + &quot;\&quot;, \&quot;&quot; + messagePointer + &quot;\&quot; );&quot;;</b>
+<b class="nc"><i>86</i>&nbsp;        if (!isDOMReady) {</b>
+<b class="nc"><i>87</i>&nbsp;            pendingJSMessages.add(jsString);</b>
+<i>88</i>&nbsp;        } else {
+<b class="nc"><i>89</i>&nbsp;            webView.loadUrl(jsString);</b>
+<i>90</i>&nbsp;        }
+<i>91</i>&nbsp;    }
+<i>92</i>&nbsp;
+<i>93</i>&nbsp;    private static final int MESSAGE_HANDLE_MESSAGE_FROM_JS = 1;
+<b class="nc"><i>94</i>&nbsp;    private Handler incomingMessageHandler = new Handler(Looper.getMainLooper(), new Handler.Callback() {</b>
+<i>95</i>&nbsp;        @Override
+<i>96</i>&nbsp;        public boolean handleMessage(Message msg) {
+<b class="nc"><i>97</i>&nbsp;            JSONObject messagePack = (JSONObject) msg.obj;</b>
+<b class="nc"><i>98</i>&nbsp;            String type = messagePack.optString(&quot;type&quot;);</b>
+<b class="nc"><i>99</i>&nbsp;            if (!eventListeners.containsKey(type)) {</b>
+<b class="nc"><i>100</i>&nbsp;                throw new RuntimeException(&quot;No such message type registered: &quot; + type);</b>
+<i>101</i>&nbsp;            }
+<b class="nc"><i>102</i>&nbsp;            List&lt;JSEventListener&gt; listeners = eventListeners.get(type);</b>
+<b class="nc"><i>103</i>&nbsp;            for (JSEventListener listener : listeners) {</b>
+<b class="nc"><i>104</i>&nbsp;                listener.onMessage(type, messagePack.optJSONObject(&quot;payload&quot;));</b>
+<b class="nc"><i>105</i>&nbsp;            }</b>
+<b class="nc"><i>106</i>&nbsp;            return false;</b>
+<i>107</i>&nbsp;        }
+<i>108</i>&nbsp;    });
+<i>109</i>&nbsp;
+<b class="nc"><i>110</i>&nbsp;    private class CommunicatingChrome extends WebChromeClient {</b>
+<i>111</i>&nbsp;        @Override
+<i>112</i>&nbsp;        public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
+<i>113</i>&nbsp;            try {
+<i>114</i>&nbsp;                // If incomingMessageHandler is null, it means that we&#39;ve been cleaned up, but we&#39;re
+<i>115</i>&nbsp;                // still receiving some final messages from the WebView, so we&#39;ll just ignore them.
+<i>116</i>&nbsp;                // But we should still return true and &quot;confirm&quot; the JsPromptResult down below.
+<b class="nc"><i>117</i>&nbsp;                if (incomingMessageHandler != null) {</b>
+<b class="nc"><i>118</i>&nbsp;                    JSONObject messagePack = new JSONObject(decodeURL(message));</b>
+<b class="nc"><i>119</i>&nbsp;                    Message msg = Message.obtain(incomingMessageHandler, MESSAGE_HANDLE_MESSAGE_FROM_JS, messagePack);</b>
+<b class="nc"><i>120</i>&nbsp;                    incomingMessageHandler.sendMessage(msg);</b>
+<i>121</i>&nbsp;                }
+<b class="nc"><i>122</i>&nbsp;            } catch (JSONException e) {</b>
+<b class="nc"><i>123</i>&nbsp;                throw new RuntimeException(e);</b>
+<b class="nc"><i>124</i>&nbsp;            }</b>
+<b class="nc"><i>125</i>&nbsp;            result.confirm();</b>
+<b class="nc"><i>126</i>&nbsp;            return true;</b>
+<i>127</i>&nbsp;        }
+<i>128</i>&nbsp;
+<i>129</i>&nbsp;        @Override
+<i>130</i>&nbsp;        public boolean onConsoleMessage(@NonNull ConsoleMessage consoleMessage) {
+<b class="nc"><i>131</i>&nbsp;            Log.d(&quot;WikipediaWeb&quot;, consoleMessage.sourceId() + &quot;:&quot; + consoleMessage.lineNumber() + &quot; - &quot; + consoleMessage.message());</b>
+<b class="nc"><i>132</i>&nbsp;            return true;</b>
+<i>133</i>&nbsp;        }
+<i>134</i>&nbsp;    }
+<i>135</i>&nbsp;
+<b class="nc"><i>136</i>&nbsp;    private static class BridgeMarshaller {</b>
+<b class="nc"><i>137</i>&nbsp;        private Map&lt;String, String&gt; queueItems = new HashMap&lt;&gt;();</b>
+<b class="nc"><i>138</i>&nbsp;        private int counter = 0;</b>
+<i>139</i>&nbsp;
+<i>140</i>&nbsp;        /**
+<i>141</i>&nbsp;         * Called from the JS via the JSBridge to get actual payload from a messagePointer.
+<i>142</i>&nbsp;         *
+<i>143</i>&nbsp;         * Warning: This is going to be called on an indeterminable background thread, not main thread.
+<i>144</i>&nbsp;         *
+<i>145</i>&nbsp;         * @param pointer Key returned from #putPayload
+<i>146</i>&nbsp;         */
+<i>147</i>&nbsp;        @JavascriptInterface
+<i>148</i>&nbsp;        public String getPayload(String pointer) {
+<b class="nc"><i>149</i>&nbsp;            synchronized (this) {</b>
+<b class="nc"><i>150</i>&nbsp;                return queueItems.remove(pointer);</b>
+<b class="nc"><i>151</i>&nbsp;            }</b>
+<i>152</i>&nbsp;        }
+<i>153</i>&nbsp;
+<i>154</i>&nbsp;        public String putPayload(String payload) {
+<b class="nc"><i>155</i>&nbsp;            String key = &quot;pointerKey_&quot; + counter;</b>
+<b class="nc"><i>156</i>&nbsp;            counter++;</b>
+<b class="nc"><i>157</i>&nbsp;            synchronized (this) {</b>
+<b class="nc"><i>158</i>&nbsp;                queueItems.put(key, payload);</b>
+<b class="nc"><i>159</i>&nbsp;            }</b>
+<b class="nc"><i>160</i>&nbsp;            return key;</b>
+<i>161</i>&nbsp;        }
+<i>162</i>&nbsp;    }
+<i>163</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

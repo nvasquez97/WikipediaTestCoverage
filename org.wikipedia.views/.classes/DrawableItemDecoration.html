@@ -1,0 +1,150 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DrawableItemDecoration</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.views</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DrawableItemDecoration (org.wikipedia.views)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DrawableItemDecoration</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 26)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.views;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.graphics.Canvas;
+<i>5</i>&nbsp;import android.graphics.Rect;
+<i>6</i>&nbsp;import android.graphics.drawable.Drawable;
+<i>7</i>&nbsp;import android.support.annotation.AttrRes;
+<i>8</i>&nbsp;import android.support.annotation.NonNull;
+<i>9</i>&nbsp;import android.support.v4.content.ContextCompat;
+<i>10</i>&nbsp;import android.support.v7.widget.RecyclerView;
+<i>11</i>&nbsp;import android.view.View;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import org.wikipedia.util.ResourceUtil;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;// todo: replace with DividerItemDecoration once it supports headers and footers
+<i>16</i>&nbsp;public class DrawableItemDecoration extends RecyclerView.ItemDecoration {
+<i>17</i>&nbsp;    @NonNull private final Drawable drawable;
+<i>18</i>&nbsp;
+<b class="nc"><i>19</i>&nbsp;    public DrawableItemDecoration(@NonNull Context context, @AttrRes int id) {</b>
+<b class="nc"><i>20</i>&nbsp;        this.drawable = ContextCompat.getDrawable(context,</b>
+<b class="nc"><i>21</i>&nbsp;                ResourceUtil.getThemedAttributeId(context, id));</b>
+<i>22</i>&nbsp;    }
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
+<i>25</i>&nbsp;                                         RecyclerView.State state) {
+<b class="nc"><i>26</i>&nbsp;        super.getItemOffsets(outRect, view, parent, state);</b>
+<b class="nc"><i>27</i>&nbsp;        outRect.top = drawable.getIntrinsicHeight();</b>
+<b class="nc"><i>28</i>&nbsp;        if (parent.getChildAdapterPosition(view) == state.getItemCount() - 1) {</b>
+<b class="nc"><i>29</i>&nbsp;            outRect.bottom = drawable.getIntrinsicHeight();</b>
+<i>30</i>&nbsp;        }
+<i>31</i>&nbsp;    }
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    @Override public void onDraw(Canvas canvas, @NonNull RecyclerView parent,
+<i>34</i>&nbsp;                                 RecyclerView.State state) {
+<b class="nc"><i>35</i>&nbsp;        super.onDraw(canvas, parent, state);</b>
+<b class="nc"><i>36</i>&nbsp;        if (parent.getChildCount() == 0) {</b>
+<i>37</i>&nbsp;            return;
+<i>38</i>&nbsp;        }
+<i>39</i>&nbsp;
+<b class="nc"><i>40</i>&nbsp;        int end = parent.getChildCount() - 1;</b>
+<b class="nc"><i>41</i>&nbsp;        for (int i = 0; i &lt; end; ++i) {</b>
+<b class="nc"><i>42</i>&nbsp;            draw(canvas, bounds(parent, parent.getChildAt(i), true));</b>
+<i>43</i>&nbsp;        }
+<b class="nc"><i>44</i>&nbsp;        draw(canvas, bounds(parent, parent.getChildAt(end), true));</b>
+<b class="nc"><i>45</i>&nbsp;        draw(canvas, bounds(parent, parent.getChildAt(end), false));</b>
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    private Rect bounds(@NonNull RecyclerView parent, @NonNull View child, boolean top) {
+<b class="nc"><i>49</i>&nbsp;        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();</b>
+<i>50</i>&nbsp;
+<b class="nc"><i>51</i>&nbsp;        Rect bounds = new Rect();</b>
+<b class="nc"><i>52</i>&nbsp;        bounds.right = parent.getWidth() - parent.getPaddingRight();</b>
+<b class="nc"><i>53</i>&nbsp;        bounds.left = parent.getPaddingLeft();</b>
+<b class="nc"><i>54</i>&nbsp;        int height = drawable.getIntrinsicHeight();</b>
+<b class="nc"><i>55</i>&nbsp;        bounds.top = top</b>
+<b class="nc"><i>56</i>&nbsp;                ? layoutManager.getDecoratedTop(child)</b>
+<b class="nc"><i>57</i>&nbsp;                : layoutManager.getDecoratedBottom(child) - height;</b>
+<b class="nc"><i>58</i>&nbsp;        bounds.bottom = bounds.top + height;</b>
+<i>59</i>&nbsp;
+<b class="nc"><i>60</i>&nbsp;        return bounds;</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    private void draw(Canvas canvas, @NonNull Rect bounds) {
+<b class="nc"><i>64</i>&nbsp;        drawable.setBounds(bounds);</b>
+<b class="nc"><i>65</i>&nbsp;        drawable.draw(canvas);</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

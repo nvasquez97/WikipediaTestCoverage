@@ -1,0 +1,68 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Required</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.json.annotations</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Required (org.wikipedia.json.annotations)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">Required</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.json.annotations;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import java.lang.annotation.Documented;
+<i>5</i>&nbsp;import java.lang.annotation.Retention;
+<i>6</i>&nbsp;import java.lang.annotation.RetentionPolicy;
+<i>7</i>&nbsp;import java.lang.annotation.Target;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import static java.lang.annotation.ElementType.FIELD;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;/**
+<i>12</i>&nbsp; * Annotate fields in Retrofit POJO classes with this to enforce their presence in order to return
+<i>13</i>&nbsp; * an instantiated object.
+<i>14</i>&nbsp; *
+<i>15</i>&nbsp; * E.g.: @NonNull @Required private String title;
+<i>16</i>&nbsp; */
+<i>17</i>&nbsp;@Documented
+<i>18</i>&nbsp;@Retention(RetentionPolicy.RUNTIME)
+<i>19</i>&nbsp;@Target(FIELD)
+<i>20</i>&nbsp;public @interface Required {
+<i>21</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

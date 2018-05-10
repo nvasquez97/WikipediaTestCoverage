@@ -1,0 +1,652 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: MainFragment</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.main</a> ]
+</div>
+
+<h1>Coverage Summary for Class: MainFragment (org.wikipedia.main)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MainFragment</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 56)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 170)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">MainFragment$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MainFragment$MediaDownloadReceiverCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 60)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 178)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.main;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.annotation.SuppressLint;
+<i>4</i>&nbsp;import android.app.Activity;
+<i>5</i>&nbsp;import android.app.DownloadManager;
+<i>6</i>&nbsp;import android.content.ActivityNotFoundException;
+<i>7</i>&nbsp;import android.content.Intent;
+<i>8</i>&nbsp;import android.content.IntentFilter;
+<i>9</i>&nbsp;import android.graphics.Bitmap;
+<i>10</i>&nbsp;import android.location.Location;
+<i>11</i>&nbsp;import android.os.Build;
+<i>12</i>&nbsp;import android.os.Bundle;
+<i>13</i>&nbsp;import android.speech.RecognizerIntent;
+<i>14</i>&nbsp;import android.support.annotation.NonNull;
+<i>15</i>&nbsp;import android.support.annotation.Nullable;
+<i>16</i>&nbsp;import android.support.v4.app.ActivityOptionsCompat;
+<i>17</i>&nbsp;import android.support.v4.app.Fragment;
+<i>18</i>&nbsp;import android.support.v4.view.ViewPager;
+<i>19</i>&nbsp;import android.view.LayoutInflater;
+<i>20</i>&nbsp;import android.view.View;
+<i>21</i>&nbsp;import android.view.ViewGroup;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;import org.apache.commons.lang3.StringUtils;
+<i>24</i>&nbsp;import org.wikipedia.BackPressedHandler;
+<i>25</i>&nbsp;import org.wikipedia.Constants;
+<i>26</i>&nbsp;import org.wikipedia.R;
+<i>27</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>28</i>&nbsp;import org.wikipedia.activity.FragmentUtil;
+<i>29</i>&nbsp;import org.wikipedia.analytics.GalleryFunnel;
+<i>30</i>&nbsp;import org.wikipedia.analytics.IntentFunnel;
+<i>31</i>&nbsp;import org.wikipedia.analytics.LoginFunnel;
+<i>32</i>&nbsp;import org.wikipedia.feed.FeedFragment;
+<i>33</i>&nbsp;import org.wikipedia.feed.image.FeaturedImage;
+<i>34</i>&nbsp;import org.wikipedia.feed.image.FeaturedImageCard;
+<i>35</i>&nbsp;import org.wikipedia.feed.news.NewsActivity;
+<i>36</i>&nbsp;import org.wikipedia.feed.news.NewsItemCard;
+<i>37</i>&nbsp;import org.wikipedia.feed.view.HorizontalScrollingListCardItemView;
+<i>38</i>&nbsp;import org.wikipedia.gallery.GalleryActivity;
+<i>39</i>&nbsp;import org.wikipedia.gallery.ImagePipelineBitmapGetter;
+<i>40</i>&nbsp;import org.wikipedia.gallery.MediaDownloadReceiver;
+<i>41</i>&nbsp;import org.wikipedia.history.HistoryEntry;
+<i>42</i>&nbsp;import org.wikipedia.history.HistoryFragment;
+<i>43</i>&nbsp;import org.wikipedia.login.LoginActivity;
+<i>44</i>&nbsp;import org.wikipedia.navtab.NavTab;
+<i>45</i>&nbsp;import org.wikipedia.navtab.NavTabFragmentPagerAdapter;
+<i>46</i>&nbsp;import org.wikipedia.navtab.NavTabLayout;
+<i>47</i>&nbsp;import org.wikipedia.nearby.NearbyFragment;
+<i>48</i>&nbsp;import org.wikipedia.page.ExclusiveBottomSheetPresenter;
+<i>49</i>&nbsp;import org.wikipedia.page.PageActivity;
+<i>50</i>&nbsp;import org.wikipedia.page.PageTitle;
+<i>51</i>&nbsp;import org.wikipedia.page.linkpreview.LinkPreviewDialog;
+<i>52</i>&nbsp;import org.wikipedia.random.RandomActivity;
+<i>53</i>&nbsp;import org.wikipedia.readinglist.AddToReadingListDialog;
+<i>54</i>&nbsp;import org.wikipedia.search.SearchFragment;
+<i>55</i>&nbsp;import org.wikipedia.search.SearchInvokeSource;
+<i>56</i>&nbsp;import org.wikipedia.settings.Prefs;
+<i>57</i>&nbsp;import org.wikipedia.util.ClipboardUtil;
+<i>58</i>&nbsp;import org.wikipedia.util.FeedbackUtil;
+<i>59</i>&nbsp;import org.wikipedia.util.PermissionUtil;
+<i>60</i>&nbsp;import org.wikipedia.util.ShareUtil;
+<i>61</i>&nbsp;import org.wikipedia.util.log.L;
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;import java.io.File;
+<i>64</i>&nbsp;import java.util.concurrent.TimeUnit;
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;import butterknife.BindView;
+<i>67</i>&nbsp;import butterknife.ButterKnife;
+<i>68</i>&nbsp;import butterknife.OnPageChange;
+<i>69</i>&nbsp;import butterknife.Unbinder;
+<i>70</i>&nbsp;
+<b class="nc"><i>71</i>&nbsp;public class MainFragment extends Fragment implements BackPressedHandler, FeedFragment.Callback,</b>
+<i>72</i>&nbsp;        NearbyFragment.Callback, HistoryFragment.Callback, SearchFragment.Callback,
+<i>73</i>&nbsp;        LinkPreviewDialog.Callback {
+<i>74</i>&nbsp;    @BindView(R.id.fragment_main_view_pager) ViewPager viewPager;
+<i>75</i>&nbsp;    @BindView(R.id.fragment_main_nav_tab_layout) NavTabLayout tabLayout;
+<i>76</i>&nbsp;    private Unbinder unbinder;
+<b class="nc"><i>77</i>&nbsp;    private ExclusiveBottomSheetPresenter bottomSheetPresenter = new ExclusiveBottomSheetPresenter();</b>
+<b class="nc"><i>78</i>&nbsp;    private MediaDownloadReceiver downloadReceiver = new MediaDownloadReceiver();</b>
+<b class="nc"><i>79</i>&nbsp;    private MediaDownloadReceiverCallback downloadReceiverCallback = new MediaDownloadReceiverCallback();</b>
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    // The permissions request API doesn&#39;t take a callback, so in the event we have to
+<i>82</i>&nbsp;    // ask for permission to download a featured image from the feed, we&#39;ll have to hold
+<i>83</i>&nbsp;    // the image we&#39;re waiting for permission to download as a bit of state here. :(
+<i>84</i>&nbsp;    @Nullable private FeaturedImage pendingDownloadImage;
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;    public interface Callback {
+<i>87</i>&nbsp;        void onTabChanged(@NonNull NavTab tab);
+<i>88</i>&nbsp;        void onSearchOpen();
+<i>89</i>&nbsp;        void onSearchClose(boolean shouldFinishActivity);
+<i>90</i>&nbsp;        @Nullable View getOverflowMenuAnchor();
+<i>91</i>&nbsp;        void updateToolbarElevation(boolean elevate);
+<i>92</i>&nbsp;    }
+<i>93</i>&nbsp;
+<i>94</i>&nbsp;    public static MainFragment newInstance() {
+<b class="nc"><i>95</i>&nbsp;        MainFragment fragment = new MainFragment();</b>
+<b class="nc"><i>96</i>&nbsp;        fragment.setRetainInstance(true);</b>
+<b class="nc"><i>97</i>&nbsp;        return fragment;</b>
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    @Nullable @Override public View onCreateView(LayoutInflater inflater,
+<i>101</i>&nbsp;                                                 @Nullable ViewGroup container,
+<i>102</i>&nbsp;                                                 @Nullable Bundle savedInstanceState) {
+<b class="nc"><i>103</i>&nbsp;        super.onCreateView(inflater, container, savedInstanceState);</b>
+<b class="nc"><i>104</i>&nbsp;        View view = inflater.inflate(R.layout.fragment_main, container, false);</b>
+<b class="nc"><i>105</i>&nbsp;        unbinder = ButterKnife.bind(this, view);</b>
+<i>106</i>&nbsp;
+<b class="nc"><i>107</i>&nbsp;        viewPager.setAdapter(new NavTabFragmentPagerAdapter(getChildFragmentManager()));</b>
+<b class="nc"><i>108</i>&nbsp;        tabLayout.setOnNavigationItemSelectedListener(item -&gt; {</b>
+<b class="nc"><i>109</i>&nbsp;            Fragment fragment = ((NavTabFragmentPagerAdapter) viewPager.getAdapter()).getCurrentFragment();</b>
+<b class="nc"><i>110</i>&nbsp;            if (fragment instanceof FeedFragment &amp;&amp; item.getOrder() == 0) {</b>
+<b class="nc"><i>111</i>&nbsp;                ((FeedFragment) fragment).scrollToTop();</b>
+<i>112</i>&nbsp;            }
+<b class="nc"><i>113</i>&nbsp;            viewPager.setCurrentItem(item.getOrder());</b>
+<b class="nc"><i>114</i>&nbsp;            return true;</b>
+<i>115</i>&nbsp;        });
+<i>116</i>&nbsp;
+<b class="nc"><i>117</i>&nbsp;        if (savedInstanceState == null) {</b>
+<b class="nc"><i>118</i>&nbsp;            handleIntent(getActivity().getIntent());</b>
+<i>119</i>&nbsp;        }
+<b class="nc"><i>120</i>&nbsp;        return view;</b>
+<i>121</i>&nbsp;    }
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;    @Override
+<i>124</i>&nbsp;    public void onPause() {
+<b class="nc"><i>125</i>&nbsp;        super.onPause();</b>
+<b class="nc"><i>126</i>&nbsp;        downloadReceiver.setCallback(null);</b>
+<b class="nc"><i>127</i>&nbsp;        getContext().unregisterReceiver(downloadReceiver);</b>
+<i>128</i>&nbsp;    }
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;    @Override public void onResume() {
+<b class="nc"><i>131</i>&nbsp;        super.onResume();</b>
+<b class="nc"><i>132</i>&nbsp;        getContext().registerReceiver(downloadReceiver,</b>
+<i>133</i>&nbsp;                new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+<b class="nc"><i>134</i>&nbsp;        downloadReceiver.setCallback(downloadReceiverCallback);</b>
+<i>135</i>&nbsp;        // update toolbar, since Tab count might have changed
+<b class="nc"><i>136</i>&nbsp;        getActivity().invalidateOptionsMenu();</b>
+<i>137</i>&nbsp;        // reset the last-page-viewed timer
+<b class="nc"><i>138</i>&nbsp;        Prefs.pageLastShown(0);</b>
+<i>139</i>&nbsp;    }
+<i>140</i>&nbsp;
+<i>141</i>&nbsp;    @Override public void onDestroyView() {
+<b class="nc"><i>142</i>&nbsp;        unbinder.unbind();</b>
+<b class="nc"><i>143</i>&nbsp;        unbinder = null;</b>
+<b class="nc"><i>144</i>&nbsp;        super.onDestroyView();</b>
+<i>145</i>&nbsp;    }
+<i>146</i>&nbsp;
+<i>147</i>&nbsp;    @Override
+<i>148</i>&nbsp;    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
+<b class="nc"><i>149</i>&nbsp;        if (requestCode == Constants.ACTIVITY_REQUEST_VOICE_SEARCH</b>
+<i>150</i>&nbsp;                &amp;&amp; resultCode == Activity.RESULT_OK &amp;&amp; data != null
+<b class="nc"><i>151</i>&nbsp;                &amp;&amp; data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS) != null) {</b>
+<b class="nc"><i>152</i>&nbsp;            String searchQuery = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0);</b>
+<b class="nc"><i>153</i>&nbsp;            openSearchFragment(SearchInvokeSource.VOICE, searchQuery);</b>
+<b class="nc"><i>154</i>&nbsp;        } else if (requestCode == Constants.ACTIVITY_REQUEST_GALLERY</b>
+<i>155</i>&nbsp;                &amp;&amp; resultCode == GalleryActivity.ACTIVITY_RESULT_PAGE_SELECTED) {
+<b class="nc"><i>156</i>&nbsp;            startActivity(data);</b>
+<b class="nc"><i>157</i>&nbsp;        } else if (requestCode == Constants.ACTIVITY_REQUEST_LOGIN</b>
+<i>158</i>&nbsp;                &amp;&amp; resultCode == LoginActivity.RESULT_LOGIN_SUCCESS) {
+<b class="nc"><i>159</i>&nbsp;            FeedbackUtil.showMessage(this, R.string.login_success_toast);</b>
+<i>160</i>&nbsp;        } else {
+<b class="nc"><i>161</i>&nbsp;            super.onActivityResult(requestCode, resultCode, data);</b>
+<i>162</i>&nbsp;        }
+<i>163</i>&nbsp;    }
+<i>164</i>&nbsp;
+<i>165</i>&nbsp;    @Override
+<i>166</i>&nbsp;    public void onActivityCreated(Bundle savedInstanceState) {
+<b class="nc"><i>167</i>&nbsp;        super.onActivityCreated(savedInstanceState);</b>
+<b class="nc"><i>168</i>&nbsp;        setHasOptionsMenu(true);</b>
+<i>169</i>&nbsp;    }
+<i>170</i>&nbsp;
+<i>171</i>&nbsp;    @Override
+<i>172</i>&nbsp;    public void onRequestPermissionsResult(int requestCode,
+<i>173</i>&nbsp;                                           @NonNull String[] permissions,
+<i>174</i>&nbsp;                                           @NonNull int[] grantResults) {
+<b class="nc"><i>175</i>&nbsp;        switch (requestCode) {</b>
+<i>176</i>&nbsp;            case Constants.ACTIVITY_REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION:
+<b class="nc"><i>177</i>&nbsp;                if (PermissionUtil.isPermitted(grantResults)) {</b>
+<b class="nc"><i>178</i>&nbsp;                    if (pendingDownloadImage != null) {</b>
+<b class="nc"><i>179</i>&nbsp;                        download(pendingDownloadImage);</b>
+<i>180</i>&nbsp;                    }
+<i>181</i>&nbsp;                } else {
+<b class="nc"><i>182</i>&nbsp;                    setPendingDownload(null);</b>
+<b class="nc"><i>183</i>&nbsp;                    L.i(&quot;Write permission was denied by user&quot;);</b>
+<b class="nc"><i>184</i>&nbsp;                    FeedbackUtil.showMessage(this,</b>
+<i>185</i>&nbsp;                            R.string.gallery_save_image_write_permission_rationale);
+<i>186</i>&nbsp;                }
+<b class="nc"><i>187</i>&nbsp;                break;</b>
+<i>188</i>&nbsp;            default:
+<b class="nc"><i>189</i>&nbsp;                super.onRequestPermissionsResult(requestCode, permissions, grantResults);</b>
+<i>190</i>&nbsp;        }
+<i>191</i>&nbsp;    }
+<i>192</i>&nbsp;
+<i>193</i>&nbsp;    public void handleIntent(Intent intent) {
+<b class="nc"><i>194</i>&nbsp;        IntentFunnel funnel = new IntentFunnel(WikipediaApp.getInstance());</b>
+<b class="nc"><i>195</i>&nbsp;        if (intent.hasExtra(Constants.INTENT_APP_SHORTCUT_SEARCH)) {</b>
+<b class="nc"><i>196</i>&nbsp;            openSearchFragment(SearchInvokeSource.APP_SHORTCUTS, null);</b>
+<b class="nc"><i>197</i>&nbsp;        } else if (intent.hasExtra(Constants.INTENT_APP_SHORTCUT_RANDOM)) {</b>
+<b class="nc"><i>198</i>&nbsp;            startActivity(RandomActivity.newIntent(getActivity(), RandomActivity.INVOKE_SOURCE_SHORTCUT));</b>
+<b class="nc"><i>199</i>&nbsp;        } else if (Intent.ACTION_SEND.equals(intent.getAction())</b>
+<b class="nc"><i>200</i>&nbsp;                &amp;&amp; Constants.PLAIN_TEXT_MIME_TYPE.equals(intent.getType())) {</b>
+<b class="nc"><i>201</i>&nbsp;            funnel.logShareIntent();</b>
+<b class="nc"><i>202</i>&nbsp;            openSearchFragment(SearchInvokeSource.INTENT_SHARE,</b>
+<b class="nc"><i>203</i>&nbsp;                    intent.getStringExtra(Intent.EXTRA_TEXT));</b>
+<b class="nc"><i>204</i>&nbsp;        } else if (Intent.ACTION_PROCESS_TEXT.equals(intent.getAction())</b>
+<b class="nc"><i>205</i>&nbsp;                &amp;&amp; Constants.PLAIN_TEXT_MIME_TYPE.equals(intent.getType())</b>
+<i>206</i>&nbsp;                &amp;&amp; Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.M) {
+<b class="nc"><i>207</i>&nbsp;            funnel.logProcessTextIntent();</b>
+<b class="nc"><i>208</i>&nbsp;            openSearchFragment(SearchInvokeSource.INTENT_PROCESS_TEXT,</b>
+<b class="nc"><i>209</i>&nbsp;                    intent.getStringExtra(Intent.EXTRA_PROCESS_TEXT));</b>
+<b class="nc"><i>210</i>&nbsp;        } else if (intent.hasExtra(Constants.INTENT_SEARCH_FROM_WIDGET)) {</b>
+<b class="nc"><i>211</i>&nbsp;            funnel.logSearchWidgetTap();</b>
+<b class="nc"><i>212</i>&nbsp;            openSearchFragment(SearchInvokeSource.WIDGET, null);</b>
+<b class="nc"><i>213</i>&nbsp;        } else if (intent.hasExtra(Constants.INTENT_EXTRA_DELETE_READING_LIST)) {</b>
+<b class="nc"><i>214</i>&nbsp;            goToTab(NavTab.READING_LISTS);</b>
+<b class="nc"><i>215</i>&nbsp;        } else if (lastPageViewedWithin(1) &amp;&amp; !intent.hasExtra(Constants.INTENT_RETURN_TO_MAIN)) {</b>
+<b class="nc"><i>216</i>&nbsp;            startActivity(PageActivity.newIntent(getContext()));</b>
+<i>217</i>&nbsp;        }
+<i>218</i>&nbsp;    }
+<i>219</i>&nbsp;
+<i>220</i>&nbsp;    @Override
+<i>221</i>&nbsp;    public void onFeedTabListRequested() {
+<b class="nc"><i>222</i>&nbsp;        startActivity(PageActivity.newIntentForTabList(getContext()));</b>
+<i>223</i>&nbsp;    }
+<i>224</i>&nbsp;
+<i>225</i>&nbsp;    @Override public void onFeedSearchRequested() {
+<b class="nc"><i>226</i>&nbsp;        openSearchFragment(SearchInvokeSource.FEED_BAR, null);</b>
+<i>227</i>&nbsp;    }
+<i>228</i>&nbsp;
+<i>229</i>&nbsp;    @Override public void onFeedVoiceSearchRequested() {
+<b class="nc"><i>230</i>&nbsp;        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);</b>
+<i>231</i>&nbsp;        try {
+<b class="nc"><i>232</i>&nbsp;            startActivityForResult(intent, Constants.ACTIVITY_REQUEST_VOICE_SEARCH);</b>
+<b class="nc"><i>233</i>&nbsp;        } catch (ActivityNotFoundException a) {</b>
+<b class="nc"><i>234</i>&nbsp;            FeedbackUtil.showMessage(this, R.string.error_voice_search_not_available);</b>
+<b class="nc"><i>235</i>&nbsp;        }</b>
+<i>236</i>&nbsp;    }
+<i>237</i>&nbsp;
+<i>238</i>&nbsp;    @Override public void onFeedSelectPage(HistoryEntry entry) {
+<b class="nc"><i>239</i>&nbsp;        startActivity(PageActivity.newIntentForNewTab(getContext(), entry, entry.getTitle()));</b>
+<i>240</i>&nbsp;    }
+<i>241</i>&nbsp;
+<i>242</i>&nbsp;    @Override public void onFeedSelectPageFromExistingTab(HistoryEntry entry) {
+<b class="nc"><i>243</i>&nbsp;        startActivity(PageActivity.newIntentForExistingTab(getContext(), entry, entry.getTitle()));</b>
+<i>244</i>&nbsp;    }
+<i>245</i>&nbsp;
+<i>246</i>&nbsp;    @Override public void onFeedAddPageToList(HistoryEntry entry) {
+<b class="nc"><i>247</i>&nbsp;        bottomSheetPresenter.show(getChildFragmentManager(),</b>
+<b class="nc"><i>248</i>&nbsp;                AddToReadingListDialog.newInstance(entry.getTitle(),</b>
+<i>249</i>&nbsp;                        AddToReadingListDialog.InvokeSource.FEED));
+<i>250</i>&nbsp;    }
+<i>251</i>&nbsp;
+<i>252</i>&nbsp;    @Override
+<i>253</i>&nbsp;    public void onFeedRemovePageFromList(@NonNull HistoryEntry entry) {
+<b class="nc"><i>254</i>&nbsp;        FeedbackUtil.showMessage(getActivity(),</b>
+<b class="nc"><i>255</i>&nbsp;                getString(R.string.reading_list_item_deleted, entry.getTitle().getDisplayText()));</b>
+<i>256</i>&nbsp;    }
+<i>257</i>&nbsp;
+<i>258</i>&nbsp;    @Override public void onFeedSharePage(HistoryEntry entry) {
+<b class="nc"><i>259</i>&nbsp;        ShareUtil.shareText(getContext(), entry.getTitle());</b>
+<i>260</i>&nbsp;    }
+<i>261</i>&nbsp;
+<i>262</i>&nbsp;    @Override public void onFeedNewsItemSelected(@NonNull NewsItemCard card, @NonNull HorizontalScrollingListCardItemView view) {
+<b class="nc"><i>263</i>&nbsp;        ActivityOptionsCompat options = ActivityOptionsCompat.</b>
+<b class="nc"><i>264</i>&nbsp;                makeSceneTransitionAnimation(getActivity(), view.getImageView(), getString(R.string.transition_news_item));</b>
+<b class="nc"><i>265</i>&nbsp;        startActivity(NewsActivity.newIntent(getActivity(), card.item(), card.wikiSite()), options.toBundle());</b>
+<i>266</i>&nbsp;    }
+<i>267</i>&nbsp;
+<i>268</i>&nbsp;    @Override public void onFeedShareImage(final FeaturedImageCard card) {
+<b class="nc"><i>269</i>&nbsp;        final String thumbUrl = card.baseImage().thumbnail().source().toString();</b>
+<b class="nc"><i>270</i>&nbsp;        final String fullSizeUrl = card.baseImage().image().source().toString();</b>
+<b class="nc"><i>271</i>&nbsp;        new ImagePipelineBitmapGetter(thumbUrl) {</b>
+<i>272</i>&nbsp;            @Override
+<i>273</i>&nbsp;            public void onSuccess(@Nullable Bitmap bitmap) {
+<b class="nc"><i>274</i>&nbsp;                if (bitmap != null) {</b>
+<b class="nc"><i>275</i>&nbsp;                    ShareUtil.shareImage(getContext(),</b>
+<i>276</i>&nbsp;                            bitmap,
+<b class="nc"><i>277</i>&nbsp;                            new File(thumbUrl).getName(),</b>
+<b class="nc"><i>278</i>&nbsp;                            ShareUtil.getFeaturedImageShareSubject(getContext(), card.age()),</b>
+<i>279</i>&nbsp;                            fullSizeUrl);
+<i>280</i>&nbsp;                } else {
+<b class="nc"><i>281</i>&nbsp;                    FeedbackUtil.showMessage(MainFragment.this, getString(R.string.gallery_share_error, card.baseImage().title()));</b>
+<i>282</i>&nbsp;                }
+<i>283</i>&nbsp;            }
+<b class="nc"><i>284</i>&nbsp;        }.get();</b>
+<i>285</i>&nbsp;    }
+<i>286</i>&nbsp;
+<i>287</i>&nbsp;    @Override public void onFeedDownloadImage(FeaturedImage image) {
+<b class="nc"><i>288</i>&nbsp;        if (!(PermissionUtil.hasWriteExternalStoragePermission(getContext()))) {</b>
+<b class="nc"><i>289</i>&nbsp;            setPendingDownload(image);</b>
+<b class="nc"><i>290</i>&nbsp;            requestWriteExternalStoragePermission();</b>
+<i>291</i>&nbsp;        } else {
+<b class="nc"><i>292</i>&nbsp;            download(image);</b>
+<i>293</i>&nbsp;        }
+<i>294</i>&nbsp;    }
+<i>295</i>&nbsp;
+<i>296</i>&nbsp;    @Override public void onFeaturedImageSelected(FeaturedImageCard card) {
+<b class="nc"><i>297</i>&nbsp;        startActivityForResult(GalleryActivity.newIntent(getActivity(), card.age(),</b>
+<b class="nc"><i>298</i>&nbsp;                card.filename(), card.baseImage(), card.wikiSite(),</b>
+<i>299</i>&nbsp;                GalleryFunnel.SOURCE_FEED_FEATURED_IMAGE), Constants.ACTIVITY_REQUEST_GALLERY);
+<i>300</i>&nbsp;    }
+<i>301</i>&nbsp;
+<i>302</i>&nbsp;    @Override
+<i>303</i>&nbsp;    public void onLoginRequested() {
+<b class="nc"><i>304</i>&nbsp;        startActivityForResult(LoginActivity.newIntent(getContext(), LoginFunnel.SOURCE_NAV),</b>
+<i>305</i>&nbsp;                Constants.ACTIVITY_REQUEST_LOGIN);
+<i>306</i>&nbsp;    }
+<i>307</i>&nbsp;
+<i>308</i>&nbsp;    @NonNull
+<i>309</i>&nbsp;    @Override
+<i>310</i>&nbsp;    public View getOverflowMenuAnchor() {
+<b class="nc"><i>311</i>&nbsp;        Callback callback = callback();</b>
+<b class="nc"><i>312</i>&nbsp;        return callback == null ? viewPager : callback.getOverflowMenuAnchor();</b>
+<i>313</i>&nbsp;    }
+<i>314</i>&nbsp;
+<i>315</i>&nbsp;    @Override
+<i>316</i>&nbsp;    public void updateToolbarElevation(boolean elevate) {
+<b class="nc"><i>317</i>&nbsp;        if (callback() != null) {</b>
+<b class="nc"><i>318</i>&nbsp;            callback().updateToolbarElevation(elevate);</b>
+<i>319</i>&nbsp;        }
+<i>320</i>&nbsp;    }
+<i>321</i>&nbsp;
+<i>322</i>&nbsp;    public void requestUpdateToolbarElevation() {
+<b class="nc"><i>323</i>&nbsp;        Fragment fragment = ((NavTabFragmentPagerAdapter) viewPager.getAdapter()).getCurrentFragment();</b>
+<b class="nc"><i>324</i>&nbsp;        updateToolbarElevation(!(fragment instanceof FeedFragment) || ((FeedFragment) fragment).shouldElevateToolbar());</b>
+<i>325</i>&nbsp;    }
+<i>326</i>&nbsp;
+<i>327</i>&nbsp;    @Override public void onLoading() {
+<i>328</i>&nbsp;        // todo: [overhaul] update loading indicator.
+<i>329</i>&nbsp;    }
+<i>330</i>&nbsp;
+<i>331</i>&nbsp;    @Override public void onLoaded() {
+<i>332</i>&nbsp;        // todo: [overhaul] update loading indicator.
+<i>333</i>&nbsp;    }
+<i>334</i>&nbsp;
+<i>335</i>&nbsp;    @Override public void onLoadPage(PageTitle title, int entrySource, @Nullable Location location) {
+<b class="nc"><i>336</i>&nbsp;        showLinkPreview(title, entrySource, location);</b>
+<i>337</i>&nbsp;    }
+<i>338</i>&nbsp;
+<i>339</i>&nbsp;    @Override public void onLoadPage(PageTitle title, HistoryEntry entry) {
+<b class="nc"><i>340</i>&nbsp;        startActivity(PageActivity.newIntentForNewTab(getContext(), entry, entry.getTitle()));</b>
+<i>341</i>&nbsp;    }
+<i>342</i>&nbsp;
+<i>343</i>&nbsp;    @Override public void onClearHistory() {
+<i>344</i>&nbsp;        // todo: [overhaul] clear history.
+<i>345</i>&nbsp;    }
+<i>346</i>&nbsp;
+<i>347</i>&nbsp;    @Override
+<i>348</i>&nbsp;    public void onSearchResultCopyLink(@NonNull PageTitle title) {
+<b class="nc"><i>349</i>&nbsp;        copyLink(title.getCanonicalUri());</b>
+<i>350</i>&nbsp;    }
+<i>351</i>&nbsp;
+<i>352</i>&nbsp;    @Override
+<i>353</i>&nbsp;    public void onSearchResultAddToList(@NonNull PageTitle title,
+<i>354</i>&nbsp;                                        @NonNull AddToReadingListDialog.InvokeSource source) {
+<b class="nc"><i>355</i>&nbsp;        bottomSheetPresenter.show(getChildFragmentManager(),</b>
+<b class="nc"><i>356</i>&nbsp;                AddToReadingListDialog.newInstance(title, source));</b>
+<i>357</i>&nbsp;    }
+<i>358</i>&nbsp;
+<i>359</i>&nbsp;    @Override
+<i>360</i>&nbsp;    public void onSearchResultShareLink(@NonNull PageTitle title) {
+<b class="nc"><i>361</i>&nbsp;        ShareUtil.shareText(getContext(), title);</b>
+<i>362</i>&nbsp;    }
+<i>363</i>&nbsp;
+<i>364</i>&nbsp;    @Override
+<i>365</i>&nbsp;    public void onSearchSelectPage(@NonNull HistoryEntry entry, boolean inNewTab) {
+<b class="nc"><i>366</i>&nbsp;        startActivity(PageActivity.newIntentForNewTab(getContext(), entry, entry.getTitle()));</b>
+<i>367</i>&nbsp;    }
+<i>368</i>&nbsp;
+<i>369</i>&nbsp;    @Override
+<i>370</i>&nbsp;    public void onSearchOpen() {
+<b class="nc"><i>371</i>&nbsp;        Callback callback = callback();</b>
+<b class="nc"><i>372</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>373</i>&nbsp;            callback.onSearchOpen();</b>
+<i>374</i>&nbsp;        }
+<i>375</i>&nbsp;    }
+<i>376</i>&nbsp;
+<i>377</i>&nbsp;    @Override
+<i>378</i>&nbsp;    public void onSearchClose(boolean launchedFromIntent) {
+<b class="nc"><i>379</i>&nbsp;        SearchFragment fragment = searchFragment();</b>
+<b class="nc"><i>380</i>&nbsp;        if (fragment != null) {</b>
+<b class="nc"><i>381</i>&nbsp;            closeSearchFragment(fragment);</b>
+<i>382</i>&nbsp;        }
+<i>383</i>&nbsp;
+<b class="nc"><i>384</i>&nbsp;        Callback callback = callback();</b>
+<b class="nc"><i>385</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>386</i>&nbsp;            callback.onSearchClose(launchedFromIntent);</b>
+<i>387</i>&nbsp;        }
+<i>388</i>&nbsp;    }
+<i>389</i>&nbsp;
+<i>390</i>&nbsp;    @Override
+<i>391</i>&nbsp;    public void onLinkPreviewLoadPage(@NonNull PageTitle title, @NonNull HistoryEntry entry, boolean inNewTab) {
+<b class="nc"><i>392</i>&nbsp;        startActivity(PageActivity.newIntentForNewTab(getContext(), entry, entry.getTitle()));</b>
+<i>393</i>&nbsp;    }
+<i>394</i>&nbsp;
+<i>395</i>&nbsp;    @Override
+<i>396</i>&nbsp;    public void onLinkPreviewCopyLink(@NonNull PageTitle title) {
+<b class="nc"><i>397</i>&nbsp;        copyLink(title.getCanonicalUri());</b>
+<i>398</i>&nbsp;    }
+<i>399</i>&nbsp;
+<i>400</i>&nbsp;    @Override
+<i>401</i>&nbsp;    public void onLinkPreviewAddToList(@NonNull PageTitle title) {
+<b class="nc"><i>402</i>&nbsp;        bottomSheetPresenter.show(getChildFragmentManager(),</b>
+<b class="nc"><i>403</i>&nbsp;                AddToReadingListDialog.newInstance(title,</b>
+<i>404</i>&nbsp;                        AddToReadingListDialog.InvokeSource.LINK_PREVIEW_MENU));
+<i>405</i>&nbsp;    }
+<i>406</i>&nbsp;
+<i>407</i>&nbsp;    @Override
+<i>408</i>&nbsp;    public void onLinkPreviewShareLink(@NonNull PageTitle title) {
+<b class="nc"><i>409</i>&nbsp;        ShareUtil.shareText(getContext(), title);</b>
+<i>410</i>&nbsp;    }
+<i>411</i>&nbsp;
+<i>412</i>&nbsp;    @Override
+<i>413</i>&nbsp;    public boolean onBackPressed() {
+<b class="nc"><i>414</i>&nbsp;        SearchFragment searchFragment = searchFragment();</b>
+<b class="nc"><i>415</i>&nbsp;        if (searchFragment != null &amp;&amp; searchFragment.onBackPressed()) {</b>
+<b class="nc"><i>416</i>&nbsp;            return true;</b>
+<i>417</i>&nbsp;        }
+<i>418</i>&nbsp;
+<b class="nc"><i>419</i>&nbsp;        Fragment fragment = ((NavTabFragmentPagerAdapter) viewPager.getAdapter()).getCurrentFragment();</b>
+<b class="nc"><i>420</i>&nbsp;        if (fragment instanceof BackPressedHandler &amp;&amp; ((BackPressedHandler) fragment).onBackPressed()) {</b>
+<b class="nc"><i>421</i>&nbsp;            return true;</b>
+<i>422</i>&nbsp;        }
+<i>423</i>&nbsp;
+<b class="nc"><i>424</i>&nbsp;        return false;</b>
+<i>425</i>&nbsp;    }
+<i>426</i>&nbsp;
+<i>427</i>&nbsp;    public void setBottomNavVisible(boolean visible) {
+<b class="nc"><i>428</i>&nbsp;        tabLayout.setVisibility(visible ? View.VISIBLE : View.GONE);</b>
+<i>429</i>&nbsp;    }
+<i>430</i>&nbsp;
+<i>431</i>&nbsp;    public void onGoOffline() {
+<b class="nc"><i>432</i>&nbsp;        Fragment fragment = ((NavTabFragmentPagerAdapter) viewPager.getAdapter()).getCurrentFragment();</b>
+<b class="nc"><i>433</i>&nbsp;        if (fragment instanceof FeedFragment) {</b>
+<b class="nc"><i>434</i>&nbsp;            ((FeedFragment) fragment).onGoOffline();</b>
+<i>435</i>&nbsp;        }
+<i>436</i>&nbsp;    }
+<i>437</i>&nbsp;
+<i>438</i>&nbsp;    public void onGoOnline() {
+<b class="nc"><i>439</i>&nbsp;        Fragment fragment = ((NavTabFragmentPagerAdapter) viewPager.getAdapter()).getCurrentFragment();</b>
+<b class="nc"><i>440</i>&nbsp;        if (fragment instanceof FeedFragment) {</b>
+<b class="nc"><i>441</i>&nbsp;            ((FeedFragment) fragment).onGoOnline();</b>
+<i>442</i>&nbsp;        }
+<i>443</i>&nbsp;    }
+<i>444</i>&nbsp;
+<i>445</i>&nbsp;    @OnPageChange(R.id.fragment_main_view_pager) void onTabChanged(int position) {
+<b class="nc"><i>446</i>&nbsp;        Callback callback = callback();</b>
+<b class="nc"><i>447</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>448</i>&nbsp;            NavTab tab = NavTab.of(position);</b>
+<b class="nc"><i>449</i>&nbsp;            callback.onTabChanged(tab);</b>
+<i>450</i>&nbsp;        }
+<i>451</i>&nbsp;    }
+<i>452</i>&nbsp;
+<i>453</i>&nbsp;    private void showLinkPreview(PageTitle title, int entrySource, @Nullable Location location) {
+<b class="nc"><i>454</i>&nbsp;        bottomSheetPresenter.show(getChildFragmentManager(), LinkPreviewDialog.newInstance(title, entrySource, location));</b>
+<i>455</i>&nbsp;    }
+<i>456</i>&nbsp;
+<i>457</i>&nbsp;    private void copyLink(@NonNull String url) {
+<b class="nc"><i>458</i>&nbsp;        ClipboardUtil.setPlainText(getContext(), null, url);</b>
+<b class="nc"><i>459</i>&nbsp;        FeedbackUtil.showMessage(this, R.string.address_copied);</b>
+<i>460</i>&nbsp;    }
+<i>461</i>&nbsp;
+<i>462</i>&nbsp;    private boolean lastPageViewedWithin(int days) {
+<b class="nc"><i>463</i>&nbsp;        return TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - Prefs.pageLastShown()) &lt; days;</b>
+<i>464</i>&nbsp;    }
+<i>465</i>&nbsp;
+<i>466</i>&nbsp;    private void download(@NonNull FeaturedImage image) {
+<b class="nc"><i>467</i>&nbsp;        setPendingDownload(null);</b>
+<b class="nc"><i>468</i>&nbsp;        downloadReceiver.download(getContext(), image);</b>
+<b class="nc"><i>469</i>&nbsp;        FeedbackUtil.showMessage(this, R.string.gallery_save_progress);</b>
+<i>470</i>&nbsp;    }
+<i>471</i>&nbsp;
+<i>472</i>&nbsp;    private void setPendingDownload(@Nullable FeaturedImage image) {
+<b class="nc"><i>473</i>&nbsp;        pendingDownloadImage = image;</b>
+<i>474</i>&nbsp;    }
+<i>475</i>&nbsp;
+<i>476</i>&nbsp;    private void requestWriteExternalStoragePermission() {
+<b class="nc"><i>477</i>&nbsp;        PermissionUtil.requestWriteStorageRuntimePermissions(this,</b>
+<i>478</i>&nbsp;                Constants.ACTIVITY_REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION);
+<i>479</i>&nbsp;    }
+<i>480</i>&nbsp;
+<i>481</i>&nbsp;    @SuppressLint(&quot;CommitTransaction&quot;)
+<i>482</i>&nbsp;    private void openSearchFragment(@NonNull SearchInvokeSource source, @Nullable String query) {
+<b class="nc"><i>483</i>&nbsp;        Fragment fragment = searchFragment();</b>
+<b class="nc"><i>484</i>&nbsp;        if (fragment == null) {</b>
+<b class="nc"><i>485</i>&nbsp;            fragment = SearchFragment.newInstance(source, StringUtils.trim(query));</b>
+<b class="nc"><i>486</i>&nbsp;            getChildFragmentManager()</b>
+<b class="nc"><i>487</i>&nbsp;                    .beginTransaction()</b>
+<b class="nc"><i>488</i>&nbsp;                    .add(R.id.fragment_main_container, fragment)</b>
+<b class="nc"><i>489</i>&nbsp;                    .commitNowAllowingStateLoss();</b>
+<i>490</i>&nbsp;        }
+<i>491</i>&nbsp;    }
+<i>492</i>&nbsp;
+<i>493</i>&nbsp;    @SuppressLint(&quot;CommitTransaction&quot;)
+<i>494</i>&nbsp;    private void closeSearchFragment(@NonNull SearchFragment fragment) {
+<b class="nc"><i>495</i>&nbsp;        getChildFragmentManager().beginTransaction().remove(fragment).commitNowAllowingStateLoss();</b>
+<i>496</i>&nbsp;    }
+<i>497</i>&nbsp;
+<i>498</i>&nbsp;    @Nullable private SearchFragment searchFragment() {
+<b class="nc"><i>499</i>&nbsp;        return (SearchFragment) getChildFragmentManager().findFragmentById(R.id.fragment_main_container);</b>
+<i>500</i>&nbsp;    }
+<i>501</i>&nbsp;
+<i>502</i>&nbsp;    private void cancelSearch() {
+<b class="nc"><i>503</i>&nbsp;        SearchFragment fragment = searchFragment();</b>
+<b class="nc"><i>504</i>&nbsp;        if (fragment != null) {</b>
+<b class="nc"><i>505</i>&nbsp;            fragment.closeSearch();</b>
+<i>506</i>&nbsp;        }
+<i>507</i>&nbsp;    }
+<i>508</i>&nbsp;
+<i>509</i>&nbsp;    private void goToTab(@NonNull NavTab tab) {
+<b class="nc"><i>510</i>&nbsp;        tabLayout.setSelectedItemId(tab.code());</b>
+<b class="nc"><i>511</i>&nbsp;        cancelSearch();</b>
+<i>512</i>&nbsp;    }
+<i>513</i>&nbsp;
+<b class="nc"><i>514</i>&nbsp;    private class MediaDownloadReceiverCallback implements MediaDownloadReceiver.Callback {</b>
+<i>515</i>&nbsp;        @Override
+<i>516</i>&nbsp;        public void onSuccess() {
+<b class="nc"><i>517</i>&nbsp;            FeedbackUtil.showMessage(getActivity(), R.string.gallery_save_success);</b>
+<i>518</i>&nbsp;        }
+<i>519</i>&nbsp;    }
+<i>520</i>&nbsp;
+<i>521</i>&nbsp;    @Nullable private Callback callback() {
+<b class="nc"><i>522</i>&nbsp;        return FragmentUtil.getCallback(this, Callback.class);</b>
+<i>523</i>&nbsp;    }
+<i>524</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

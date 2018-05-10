@@ -1,0 +1,922 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Prefs</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.settings</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Prefs (org.wikipedia.settings)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Prefs</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 143)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 196)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Prefs$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Prefs$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Prefs$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Prefs$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Prefs$5</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Prefs$6</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 149)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 202)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.settings;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.net.Uri;
+<i>4</i>&nbsp;import android.support.annotation.IntRange;
+<i>5</i>&nbsp;import android.support.annotation.NonNull;
+<i>6</i>&nbsp;import android.support.annotation.Nullable;
+<i>7</i>&nbsp;import android.text.TextUtils;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import com.google.gson.reflect.TypeToken;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import org.wikipedia.Constants;
+<i>12</i>&nbsp;import org.wikipedia.R;
+<i>13</i>&nbsp;import org.wikipedia.analytics.SessionData;
+<i>14</i>&nbsp;import org.wikipedia.analytics.SessionFunnel;
+<i>15</i>&nbsp;import org.wikipedia.dataclient.SharedPreferenceCookieManager;
+<i>16</i>&nbsp;import org.wikipedia.json.GsonMarshaller;
+<i>17</i>&nbsp;import org.wikipedia.json.GsonUnmarshaller;
+<i>18</i>&nbsp;import org.wikipedia.json.SessionUnmarshaller;
+<i>19</i>&nbsp;import org.wikipedia.json.TabUnmarshaller;
+<i>20</i>&nbsp;import org.wikipedia.offline.Compilation;
+<i>21</i>&nbsp;import org.wikipedia.page.tabs.Tab;
+<i>22</i>&nbsp;import org.wikipedia.theme.Theme;
+<i>23</i>&nbsp;import org.wikipedia.util.ReleaseUtil;
+<i>24</i>&nbsp;import org.wikipedia.util.StringUtil;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;import java.util.ArrayList;
+<i>27</i>&nbsp;import java.util.Collections;
+<i>28</i>&nbsp;import java.util.HashMap;
+<i>29</i>&nbsp;import java.util.HashSet;
+<i>30</i>&nbsp;import java.util.LinkedHashSet;
+<i>31</i>&nbsp;import java.util.List;
+<i>32</i>&nbsp;import java.util.Map;
+<i>33</i>&nbsp;import java.util.Set;
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;import okhttp3.logging.HttpLoggingInterceptor.Level;
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;import static org.apache.commons.lang3.StringUtils.defaultIfBlank;
+<i>38</i>&nbsp;import static org.wikipedia.settings.PrefsIoUtil.contains;
+<i>39</i>&nbsp;import static org.wikipedia.settings.PrefsIoUtil.getBoolean;
+<i>40</i>&nbsp;import static org.wikipedia.settings.PrefsIoUtil.getInt;
+<i>41</i>&nbsp;import static org.wikipedia.settings.PrefsIoUtil.getKey;
+<i>42</i>&nbsp;import static org.wikipedia.settings.PrefsIoUtil.getLong;
+<i>43</i>&nbsp;import static org.wikipedia.settings.PrefsIoUtil.getString;
+<i>44</i>&nbsp;import static org.wikipedia.settings.PrefsIoUtil.getStringSet;
+<i>45</i>&nbsp;import static org.wikipedia.settings.PrefsIoUtil.remove;
+<i>46</i>&nbsp;import static org.wikipedia.settings.PrefsIoUtil.setBoolean;
+<i>47</i>&nbsp;import static org.wikipedia.settings.PrefsIoUtil.setInt;
+<i>48</i>&nbsp;import static org.wikipedia.settings.PrefsIoUtil.setLong;
+<i>49</i>&nbsp;import static org.wikipedia.settings.PrefsIoUtil.setString;
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;/** Shared preferences utility for convenient POJO access. */
+<i>52</i>&nbsp;public final class Prefs {
+<i>53</i>&nbsp;    @Nullable
+<i>54</i>&nbsp;    public static String getAppChannel() {
+<b class="nc"><i>55</i>&nbsp;        return getString(R.string.preference_key_app_channel, null);</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    public static void setAppChannel(@Nullable String channel) {
+<b class="nc"><i>59</i>&nbsp;        setString(R.string.preference_key_app_channel, channel);</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    @NonNull
+<i>63</i>&nbsp;    public static String getAppChannelKey() {
+<b class="nc"><i>64</i>&nbsp;        return getKey(R.string.preference_key_app_channel);</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    @Nullable
+<i>68</i>&nbsp;    public static String getAppInstallId() {
+<b class="nc"><i>69</i>&nbsp;        return getString(R.string.preference_key_reading_app_install_id, null);</b>
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    public static void setAppInstallId(@Nullable String id) {
+<i>73</i>&nbsp;        // The app install ID uses readingAppInstallID for backwards compatibility with analytics.
+<b class="nc"><i>74</i>&nbsp;        setString(R.string.preference_key_reading_app_install_id, id);</b>
+<i>75</i>&nbsp;    }
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    @Nullable
+<i>78</i>&nbsp;    public static String getAppLanguageCode() {
+<b class="nc"><i>79</i>&nbsp;        return getString(R.string.preference_key_language, null);</b>
+<i>80</i>&nbsp;    }
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    public static void setAppLanguageCode(@Nullable String code) {
+<b class="nc"><i>83</i>&nbsp;        setString(R.string.preference_key_language, code);</b>
+<i>84</i>&nbsp;    }
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;    public static int getThemeId() {
+<b class="nc"><i>87</i>&nbsp;        return getInt(R.string.preference_key_color_theme, Theme.getFallback().getMarshallingId());</b>
+<i>88</i>&nbsp;    }
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;    public static void setThemeId(int theme) {
+<b class="nc"><i>91</i>&nbsp;        setInt(R.string.preference_key_color_theme, theme);</b>
+<i>92</i>&nbsp;    }
+<i>93</i>&nbsp;
+<i>94</i>&nbsp;    @NonNull
+<i>95</i>&nbsp;    public static String getCookieDomains() {
+<b class="nc"><i>96</i>&nbsp;        return getString(R.string.preference_key_cookie_domains, &quot;&quot;);</b>
+<i>97</i>&nbsp;    }
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;    @NonNull
+<i>100</i>&nbsp;    public static List&lt;String&gt; getCookieDomainsAsList() {
+<b class="nc"><i>101</i>&nbsp;        return SharedPreferenceCookieManager.makeList(getCookieDomains());</b>
+<i>102</i>&nbsp;    }
+<i>103</i>&nbsp;
+<i>104</i>&nbsp;    public static void setCookieDomains(@Nullable String domains) {
+<b class="nc"><i>105</i>&nbsp;        setString(R.string.preference_key_cookie_domains, domains);</b>
+<i>106</i>&nbsp;    }
+<i>107</i>&nbsp;
+<i>108</i>&nbsp;    @NonNull
+<i>109</i>&nbsp;    public static String getCookiesForDomain(@NonNull String domain) {
+<b class="nc"><i>110</i>&nbsp;        return getString(getCookiesForDomainKey(domain), &quot;&quot;);</b>
+<i>111</i>&nbsp;    }
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;    public static void setCookiesForDomain(@NonNull String domain, @Nullable String cookies) {
+<b class="nc"><i>114</i>&nbsp;        setString(getCookiesForDomainKey(domain), cookies);</b>
+<i>115</i>&nbsp;    }
+<i>116</i>&nbsp;
+<i>117</i>&nbsp;    public static void removeCookiesForDomain(@NonNull String domain) {
+<b class="nc"><i>118</i>&nbsp;        remove(getCookiesForDomainKey(domain));</b>
+<i>119</i>&nbsp;    }
+<i>120</i>&nbsp;
+<i>121</i>&nbsp;    public static boolean crashedBeforeActivityCreated() {
+<b class="nc"><i>122</i>&nbsp;        return getBoolean(R.string.preference_key_crashed_before_activity_created, true);</b>
+<i>123</i>&nbsp;    }
+<i>124</i>&nbsp;
+<i>125</i>&nbsp;    public static void crashedBeforeActivityCreated(boolean crashed) {
+<b class="nc"><i>126</i>&nbsp;        setBoolean(R.string.preference_key_crashed_before_activity_created, crashed);</b>
+<i>127</i>&nbsp;    }
+<i>128</i>&nbsp;
+<i>129</i>&nbsp;    public static boolean isCrashReportAutoUploadEnabled() {
+<b class="nc"><i>130</i>&nbsp;        return getBoolean(R.string.preference_key_auto_upload_crash_reports, true);</b>
+<i>131</i>&nbsp;    }
+<i>132</i>&nbsp;
+<i>133</i>&nbsp;    public static boolean isShowDeveloperSettingsEnabled() {
+<b class="nc"><i>134</i>&nbsp;        return getBoolean(R.string.preference_key_show_developer_settings, ReleaseUtil.isDevRelease());</b>
+<i>135</i>&nbsp;    }
+<i>136</i>&nbsp;
+<i>137</i>&nbsp;    public static void setShowDeveloperSettingsEnabled(boolean enabled) {
+<b class="nc"><i>138</i>&nbsp;        setBoolean(R.string.preference_key_show_developer_settings, enabled);</b>
+<i>139</i>&nbsp;    }
+<i>140</i>&nbsp;
+<i>141</i>&nbsp;    public static void removeLoginUsername() {
+<b class="nc"><i>142</i>&nbsp;        remove(R.string.preference_key_login_username);</b>
+<i>143</i>&nbsp;    }
+<i>144</i>&nbsp;
+<i>145</i>&nbsp;    @Nullable
+<i>146</i>&nbsp;    public static String getLoginPassword() {
+<b class="nc"><i>147</i>&nbsp;        return getString(R.string.preference_key_login_password, null);</b>
+<i>148</i>&nbsp;    }
+<i>149</i>&nbsp;
+<i>150</i>&nbsp;    public static boolean hasLoginPassword() {
+<b class="nc"><i>151</i>&nbsp;        return contains(R.string.preference_key_login_password);</b>
+<i>152</i>&nbsp;    }
+<i>153</i>&nbsp;
+<i>154</i>&nbsp;    public static void removeLoginPassword() {
+<b class="nc"><i>155</i>&nbsp;        remove(R.string.preference_key_login_password);</b>
+<i>156</i>&nbsp;    }
+<i>157</i>&nbsp;
+<i>158</i>&nbsp;    @NonNull
+<i>159</i>&nbsp;    public static Map&lt;String, Integer&gt; getLoginUserIds() {
+<b class="nc"><i>160</i>&nbsp;        TypeToken&lt;HashMap&lt;String, Integer&gt;&gt; type = new TypeToken&lt;HashMap&lt;String, Integer&gt;&gt;(){};</b>
+<b class="nc"><i>161</i>&nbsp;        return GsonUnmarshaller.unmarshal(type, getString(R.string.preference_key_login_user_id_map, &quot;{}&quot;));</b>
+<i>162</i>&nbsp;    }
+<i>163</i>&nbsp;
+<i>164</i>&nbsp;    public static void removeLoginUserIds() {
+<b class="nc"><i>165</i>&nbsp;        remove(R.string.preference_key_login_user_id_map);</b>
+<i>166</i>&nbsp;    }
+<i>167</i>&nbsp;
+<i>168</i>&nbsp;    @Nullable
+<i>169</i>&nbsp;    public static String getLoginUsername() {
+<b class="nc"><i>170</i>&nbsp;        return getString(R.string.preference_key_login_username, null);</b>
+<i>171</i>&nbsp;    }
+<i>172</i>&nbsp;
+<i>173</i>&nbsp;    public static boolean hasLoginUsername() {
+<b class="nc"><i>174</i>&nbsp;        return contains(R.string.preference_key_login_username);</b>
+<i>175</i>&nbsp;    }
+<i>176</i>&nbsp;
+<i>177</i>&nbsp;    @Nullable
+<i>178</i>&nbsp;    public static Set&lt;String&gt; getLoginGroups() {
+<b class="nc"><i>179</i>&nbsp;        return getStringSet(R.string.preference_key_login_groups, null);</b>
+<i>180</i>&nbsp;    }
+<i>181</i>&nbsp;
+<i>182</i>&nbsp;    public static void removeLoginGroups() {
+<b class="nc"><i>183</i>&nbsp;        remove(R.string.preference_key_login_groups);</b>
+<i>184</i>&nbsp;    }
+<i>185</i>&nbsp;
+<i>186</i>&nbsp;    @Nullable
+<i>187</i>&nbsp;    public static String getMruLanguageCodeCsv() {
+<b class="nc"><i>188</i>&nbsp;        return getString(R.string.preference_key_language_mru, null);</b>
+<i>189</i>&nbsp;    }
+<i>190</i>&nbsp;
+<i>191</i>&nbsp;    public static void setMruLanguageCodeCsv(@Nullable String csv) {
+<b class="nc"><i>192</i>&nbsp;        setString(R.string.preference_key_language_mru, csv);</b>
+<i>193</i>&nbsp;    }
+<i>194</i>&nbsp;
+<i>195</i>&nbsp;    @NonNull
+<i>196</i>&nbsp;    public static String getRemoteConfigJson() {
+<b class="nc"><i>197</i>&nbsp;        return getString(R.string.preference_key_remote_config, &quot;{}&quot;);</b>
+<i>198</i>&nbsp;    }
+<i>199</i>&nbsp;
+<i>200</i>&nbsp;    public static void setRemoteConfigJson(@Nullable String json) {
+<b class="nc"><i>201</i>&nbsp;        setString(R.string.preference_key_remote_config, json);</b>
+<i>202</i>&nbsp;    }
+<i>203</i>&nbsp;
+<i>204</i>&nbsp;    public static void setTabs(@NonNull List&lt;Tab&gt; tabs) {
+<b class="nc"><i>205</i>&nbsp;        setString(R.string.preference_key_tabs, GsonMarshaller.marshal(tabs));</b>
+<i>206</i>&nbsp;    }
+<i>207</i>&nbsp;
+<i>208</i>&nbsp;    @NonNull
+<i>209</i>&nbsp;    public static List&lt;Tab&gt; getTabs() {
+<b class="nc"><i>210</i>&nbsp;        return hasTabs()</b>
+<b class="nc"><i>211</i>&nbsp;                ? TabUnmarshaller.unmarshal(getString(R.string.preference_key_tabs, null))</b>
+<b class="nc"><i>212</i>&nbsp;                : Collections.&lt;Tab&gt;emptyList();</b>
+<i>213</i>&nbsp;    }
+<i>214</i>&nbsp;
+<i>215</i>&nbsp;    public static boolean hasTabs() {
+<b class="nc"><i>216</i>&nbsp;        return contains(R.string.preference_key_tabs);</b>
+<i>217</i>&nbsp;    }
+<i>218</i>&nbsp;
+<i>219</i>&nbsp;    public static void clearTabs() {
+<b class="nc"><i>220</i>&nbsp;        remove(R.string.preference_key_tabs);</b>
+<i>221</i>&nbsp;    }
+<i>222</i>&nbsp;
+<i>223</i>&nbsp;    @NonNull public static Set&lt;String&gt; getHiddenCards() {
+<b class="nc"><i>224</i>&nbsp;        Set&lt;String&gt; emptySet = new LinkedHashSet&lt;&gt;();</b>
+<b class="nc"><i>225</i>&nbsp;        if (!hasHiddenCards()) {</b>
+<b class="nc"><i>226</i>&nbsp;            return emptySet;</b>
+<i>227</i>&nbsp;        }
+<i>228</i>&nbsp;        //noinspection unchecked
+<b class="nc"><i>229</i>&nbsp;        Set&lt;String&gt; cards = GsonUnmarshaller.unmarshal(emptySet.getClass(),</b>
+<b class="nc"><i>230</i>&nbsp;                getString(R.string.preference_key_feed_hidden_cards, null));</b>
+<b class="nc"><i>231</i>&nbsp;        return cards != null ? cards : emptySet;</b>
+<i>232</i>&nbsp;    }
+<i>233</i>&nbsp;
+<i>234</i>&nbsp;    public static void setHiddenCards(@NonNull Set&lt;String&gt; cards) {
+<b class="nc"><i>235</i>&nbsp;        setString(R.string.preference_key_feed_hidden_cards, GsonMarshaller.marshal(cards));</b>
+<i>236</i>&nbsp;    }
+<i>237</i>&nbsp;
+<i>238</i>&nbsp;    public static boolean hasHiddenCards() {
+<b class="nc"><i>239</i>&nbsp;        return contains(R.string.preference_key_feed_hidden_cards);</b>
+<i>240</i>&nbsp;    }
+<i>241</i>&nbsp;
+<i>242</i>&nbsp;    public static int getTabCount() {
+<b class="nc"><i>243</i>&nbsp;        List&lt;Tab&gt; tabs = getTabs();</b>
+<i>244</i>&nbsp;        // handle the case where we have a single tab with an empty backstack,
+<i>245</i>&nbsp;        // which shouldn&#39;t count as a valid tab:
+<b class="nc"><i>246</i>&nbsp;        return tabs.isEmpty() ? 0 : tabs.get(0).getBackStack().isEmpty() ? 0 : tabs.size();</b>
+<i>247</i>&nbsp;    }
+<i>248</i>&nbsp;
+<i>249</i>&nbsp;    public static void setSessionData(@NonNull SessionData data) {
+<b class="nc"><i>250</i>&nbsp;        setString(R.string.preference_key_session_data, GsonMarshaller.marshal(data));</b>
+<i>251</i>&nbsp;    }
+<i>252</i>&nbsp;
+<i>253</i>&nbsp;    @NonNull
+<i>254</i>&nbsp;    public static SessionData getSessionData() {
+<b class="nc"><i>255</i>&nbsp;        return hasSessionData()</b>
+<b class="nc"><i>256</i>&nbsp;                ? SessionUnmarshaller.unmarshal(getString(R.string.preference_key_session_data, null))</b>
+<i>257</i>&nbsp;                : new SessionData();
+<i>258</i>&nbsp;    }
+<i>259</i>&nbsp;
+<i>260</i>&nbsp;    public static boolean hasSessionData() {
+<b class="nc"><i>261</i>&nbsp;        return contains(R.string.preference_key_session_data);</b>
+<i>262</i>&nbsp;    }
+<i>263</i>&nbsp;
+<i>264</i>&nbsp;    public static int getSessionTimeout() {
+<i>265</i>&nbsp;        // return the timeout, but don&#39;t let it be less than the minimum
+<b class="nc"><i>266</i>&nbsp;        return Math.max(getInt(R.string.preference_key_session_timeout, SessionFunnel.DEFAULT_SESSION_TIMEOUT), SessionFunnel.MIN_SESSION_TIMEOUT);</b>
+<i>267</i>&nbsp;    }
+<i>268</i>&nbsp;
+<i>269</i>&nbsp;    public static int getTextSizeMultiplier() {
+<b class="nc"><i>270</i>&nbsp;        return getInt(R.string.preference_key_text_size_multiplier, 0);</b>
+<i>271</i>&nbsp;    }
+<i>272</i>&nbsp;
+<i>273</i>&nbsp;    public static void setTextSizeMultiplier(int multiplier) {
+<b class="nc"><i>274</i>&nbsp;        setInt(R.string.preference_key_text_size_multiplier, multiplier);</b>
+<i>275</i>&nbsp;    }
+<i>276</i>&nbsp;
+<i>277</i>&nbsp;    public static boolean isEventLoggingEnabled() {
+<b class="nc"><i>278</i>&nbsp;        return getBoolean(R.string.preference_key_eventlogging_opt_in, true);</b>
+<i>279</i>&nbsp;    }
+<i>280</i>&nbsp;
+<i>281</i>&nbsp;    public static void setEventLoggingEnabled(boolean enabled) {
+<b class="nc"><i>282</i>&nbsp;        setBoolean(R.string.preference_key_eventlogging_opt_in, enabled);</b>
+<i>283</i>&nbsp;    }
+<i>284</i>&nbsp;
+<i>285</i>&nbsp;    public static boolean useRestBaseSetManually() {
+<b class="nc"><i>286</i>&nbsp;        return getBoolean(R.string.preference_key_use_restbase_manual, false);</b>
+<i>287</i>&nbsp;    }
+<i>288</i>&nbsp;
+<i>289</i>&nbsp;    public static boolean useRestBase() {
+<b class="nc"><i>290</i>&nbsp;        return getBoolean(R.string.preference_key_use_restbase, true);</b>
+<i>291</i>&nbsp;    }
+<i>292</i>&nbsp;
+<i>293</i>&nbsp;    public static void setUseRestBase(boolean enabled) {
+<b class="nc"><i>294</i>&nbsp;        setBoolean(R.string.preference_key_use_restbase, enabled);</b>
+<i>295</i>&nbsp;    }
+<i>296</i>&nbsp;
+<i>297</i>&nbsp;    public static int getRbTicket(int defaultValue) {
+<b class="nc"><i>298</i>&nbsp;        return getInt(R.string.preference_key_restbase_ticket, defaultValue);</b>
+<i>299</i>&nbsp;    }
+<i>300</i>&nbsp;
+<i>301</i>&nbsp;    public static void setRbTicket(int rbTicket) {
+<b class="nc"><i>302</i>&nbsp;        setInt(R.string.preference_key_restbase_ticket, rbTicket);</b>
+<i>303</i>&nbsp;    }
+<i>304</i>&nbsp;
+<i>305</i>&nbsp;    @IntRange(from = RbSwitch.FAILED) public static int getRequestSuccessCounter(int defaultValue) {
+<b class="nc"><i>306</i>&nbsp;        return getInt(R.string.preference_key_request_successes, defaultValue);</b>
+<i>307</i>&nbsp;    }
+<i>308</i>&nbsp;
+<i>309</i>&nbsp;    public static void setRequestSuccessCounter(@IntRange(from = RbSwitch.FAILED) int successes) {
+<b class="nc"><i>310</i>&nbsp;        setInt(R.string.preference_key_request_successes, successes);</b>
+<i>311</i>&nbsp;    }
+<i>312</i>&nbsp;
+<i>313</i>&nbsp;    public static Level getRetrofitLogLevel() {
+<b class="nc"><i>314</i>&nbsp;        String prefValue = getString(R.string.preference_key_retrofit_log_level, null);</b>
+<b class="nc"><i>315</i>&nbsp;        if (prefValue == null) {</b>
+<b class="nc"><i>316</i>&nbsp;            return ReleaseUtil.isDevRelease() ? Level.BASIC : Level.NONE;</b>
+<i>317</i>&nbsp;        }
+<b class="nc"><i>318</i>&nbsp;        switch (prefValue) {</b>
+<i>319</i>&nbsp;            case &quot;BASIC&quot;:
+<b class="nc"><i>320</i>&nbsp;                return Level.BASIC;</b>
+<i>321</i>&nbsp;            case &quot;HEADERS&quot;:
+<b class="nc"><i>322</i>&nbsp;                return Level.HEADERS;</b>
+<i>323</i>&nbsp;            case &quot;BODY&quot;:
+<b class="nc"><i>324</i>&nbsp;                return Level.BODY;</b>
+<i>325</i>&nbsp;            case &quot;NONE&quot;:
+<i>326</i>&nbsp;            default:
+<b class="nc"><i>327</i>&nbsp;                return Level.NONE;</b>
+<i>328</i>&nbsp;        }
+<i>329</i>&nbsp;    }
+<i>330</i>&nbsp;
+<i>331</i>&nbsp;    @NonNull
+<i>332</i>&nbsp;    public static String getRestbaseUriFormat() {
+<b class="nc"><i>333</i>&nbsp;        return defaultIfBlank(getString(R.string.preference_key_restbase_uri_format, null),</b>
+<i>334</i>&nbsp;                &quot;%1$s://%2$s/api/rest_v1/&quot;);
+<i>335</i>&nbsp;    }
+<i>336</i>&nbsp;
+<i>337</i>&nbsp;    @NonNull
+<i>338</i>&nbsp;    public static Uri getMediaWikiBaseUri() {
+<b class="nc"><i>339</i>&nbsp;        return Uri.parse(defaultIfBlank(getString(R.string.preference_key_mediawiki_base_uri, null),</b>
+<i>340</i>&nbsp;                Constants.WIKIPEDIA_URL));
+<i>341</i>&nbsp;    }
+<i>342</i>&nbsp;
+<i>343</i>&nbsp;    public static boolean getMediaWikiBaseUriSupportsLangCode() {
+<b class="nc"><i>344</i>&nbsp;        return getBoolean(R.string.preference_key_mediawiki_base_uri_supports_lang_code, true);</b>
+<i>345</i>&nbsp;    }
+<i>346</i>&nbsp;
+<i>347</i>&nbsp;    public static long getLastRunTime(@NonNull String task) {
+<b class="nc"><i>348</i>&nbsp;        return getLong(getLastRunTimeKey(task), 0);</b>
+<i>349</i>&nbsp;    }
+<i>350</i>&nbsp;
+<i>351</i>&nbsp;    public static void setLastRunTime(@NonNull String task, long time) {
+<b class="nc"><i>352</i>&nbsp;        setLong(getLastRunTimeKey(task), time);</b>
+<i>353</i>&nbsp;    }
+<i>354</i>&nbsp;
+<i>355</i>&nbsp;    public static long pageLastShown() {
+<b class="nc"><i>356</i>&nbsp;        return getLong(R.string.preference_key_page_last_shown, 0);</b>
+<i>357</i>&nbsp;    }
+<i>358</i>&nbsp;
+<i>359</i>&nbsp;    public static void pageLastShown(long time) {
+<b class="nc"><i>360</i>&nbsp;        setLong(R.string.preference_key_page_last_shown, time);</b>
+<i>361</i>&nbsp;    }
+<i>362</i>&nbsp;
+<i>363</i>&nbsp;    public static boolean isShowZeroInterstitialEnabled() {
+<b class="nc"><i>364</i>&nbsp;        return getBoolean(R.string.preference_key_zero_interstitial, true);</b>
+<i>365</i>&nbsp;    }
+<i>366</i>&nbsp;
+<i>367</i>&nbsp;    public static int zeroConfigHashCode() {
+<b class="nc"><i>368</i>&nbsp;        return getInt(R.string.preference_key_zero_config_hash, 0);</b>
+<i>369</i>&nbsp;    }
+<i>370</i>&nbsp;
+<i>371</i>&nbsp;    public static void zeroConfigHashCode(int hashCode) {
+<b class="nc"><i>372</i>&nbsp;        setInt(R.string.preference_key_zero_config_hash, hashCode);</b>
+<i>373</i>&nbsp;    }
+<i>374</i>&nbsp;
+<i>375</i>&nbsp;    public static boolean isSelectTextTutorialEnabled() {
+<b class="nc"><i>376</i>&nbsp;        return getBoolean(R.string.preference_key_select_text_tutorial_enabled, true);</b>
+<i>377</i>&nbsp;    }
+<i>378</i>&nbsp;
+<i>379</i>&nbsp;    public static void setSelectTextTutorialEnabled(boolean enabled) {
+<b class="nc"><i>380</i>&nbsp;        setBoolean(R.string.preference_key_select_text_tutorial_enabled, enabled);</b>
+<i>381</i>&nbsp;    }
+<i>382</i>&nbsp;
+<i>383</i>&nbsp;    public static boolean isShareTutorialEnabled() {
+<b class="nc"><i>384</i>&nbsp;        return getBoolean(R.string.preference_key_share_tutorial_enabled, true);</b>
+<i>385</i>&nbsp;    }
+<i>386</i>&nbsp;
+<i>387</i>&nbsp;    public static void setShareTutorialEnabled(boolean enabled) {
+<b class="nc"><i>388</i>&nbsp;        setBoolean(R.string.preference_key_share_tutorial_enabled, enabled);</b>
+<i>389</i>&nbsp;    }
+<i>390</i>&nbsp;
+<i>391</i>&nbsp;    public static boolean isReadingListTutorialEnabled() {
+<b class="nc"><i>392</i>&nbsp;        return getBoolean(R.string.preference_key_reading_list_tutorial_enabled, true);</b>
+<i>393</i>&nbsp;    }
+<i>394</i>&nbsp;
+<i>395</i>&nbsp;    public static void setReadingListTutorialEnabled(boolean enabled) {
+<b class="nc"><i>396</i>&nbsp;        setBoolean(R.string.preference_key_reading_list_tutorial_enabled, enabled);</b>
+<i>397</i>&nbsp;    }
+<i>398</i>&nbsp;
+<i>399</i>&nbsp;    public static boolean isTocTutorialEnabled() {
+<b class="nc"><i>400</i>&nbsp;        return getBoolean(R.string.preference_key_toc_tutorial_enabled, true);</b>
+<i>401</i>&nbsp;    }
+<i>402</i>&nbsp;
+<i>403</i>&nbsp;    public static void setTocTutorialEnabled(boolean enabled) {
+<b class="nc"><i>404</i>&nbsp;        setBoolean(R.string.preference_key_toc_tutorial_enabled, enabled);</b>
+<i>405</i>&nbsp;    }
+<i>406</i>&nbsp;
+<i>407</i>&nbsp;    public static boolean isZeroTutorialEnabled() {
+<b class="nc"><i>408</i>&nbsp;        return getBoolean(R.string.preference_key_zero_tutorial_enabled, true);</b>
+<i>409</i>&nbsp;    }
+<i>410</i>&nbsp;
+<i>411</i>&nbsp;    public static void setZeroTutorialEnabled(boolean enabled) {
+<b class="nc"><i>412</i>&nbsp;        setBoolean(R.string.preference_key_zero_tutorial_enabled, enabled);</b>
+<i>413</i>&nbsp;    }
+<i>414</i>&nbsp;
+<i>415</i>&nbsp;    public static boolean isImageDownloadEnabled() {
+<b class="nc"><i>416</i>&nbsp;        return getBoolean(R.string.preference_key_show_images, true);</b>
+<i>417</i>&nbsp;    }
+<i>418</i>&nbsp;
+<i>419</i>&nbsp;    public static String getCookiesForDomainKey(@NonNull String domain) {
+<b class="nc"><i>420</i>&nbsp;        return getKey(R.string.preference_key_cookies_for_domain_format, domain);</b>
+<i>421</i>&nbsp;    }
+<i>422</i>&nbsp;
+<i>423</i>&nbsp;    private static String getLastRunTimeKey(@NonNull String task) {
+<b class="nc"><i>424</i>&nbsp;        return getKey(R.string.preference_key_last_run_time_format, task);</b>
+<i>425</i>&nbsp;    }
+<i>426</i>&nbsp;
+<i>427</i>&nbsp;    public static boolean isLinkPreviewEnabled() {
+<b class="nc"><i>428</i>&nbsp;        return getBoolean(R.string.preference_key_show_link_previews, true);</b>
+<i>429</i>&nbsp;    }
+<i>430</i>&nbsp;
+<i>431</i>&nbsp;    public static int getReadingListSortMode(int defaultValue) {
+<b class="nc"><i>432</i>&nbsp;        return getInt(R.string.preference_key_reading_list_sort_mode, defaultValue);</b>
+<i>433</i>&nbsp;    }
+<i>434</i>&nbsp;
+<i>435</i>&nbsp;    public static void setReadingListSortMode(int sortMode) {
+<b class="nc"><i>436</i>&nbsp;        setInt(R.string.preference_key_reading_list_sort_mode, sortMode);</b>
+<i>437</i>&nbsp;    }
+<i>438</i>&nbsp;
+<i>439</i>&nbsp;    public static int getReadingListPageSortMode(int defaultValue) {
+<b class="nc"><i>440</i>&nbsp;        return getInt(R.string.preference_key_reading_list_page_sort_mode, defaultValue);</b>
+<i>441</i>&nbsp;    }
+<i>442</i>&nbsp;
+<i>443</i>&nbsp;    public static void setReadingListPageSortMode(int sortMode) {
+<b class="nc"><i>444</i>&nbsp;        setInt(R.string.preference_key_reading_list_page_sort_mode, sortMode);</b>
+<i>445</i>&nbsp;    }
+<i>446</i>&nbsp;
+<i>447</i>&nbsp;    public static boolean isMemoryLeakTestEnabled() {
+<b class="nc"><i>448</i>&nbsp;        return getBoolean(R.string.preference_key_memory_leak_test, false);</b>
+<i>449</i>&nbsp;    }
+<i>450</i>&nbsp;
+<i>451</i>&nbsp;    public static boolean isDescriptionEditTutorialEnabled() {
+<b class="nc"><i>452</i>&nbsp;        return getBoolean(R.string.preference_key_description_edit_tutorial_enabled, true);</b>
+<i>453</i>&nbsp;    }
+<i>454</i>&nbsp;
+<i>455</i>&nbsp;    public static void setDescriptionEditTutorialEnabled(boolean enabled) {
+<b class="nc"><i>456</i>&nbsp;        setBoolean(R.string.preference_key_description_edit_tutorial_enabled, enabled);</b>
+<i>457</i>&nbsp;    }
+<i>458</i>&nbsp;
+<i>459</i>&nbsp;    public static long getLastDescriptionEditTime() {
+<b class="nc"><i>460</i>&nbsp;        return getLong(R.string.preference_key_last_description_edit_time, 0);</b>
+<i>461</i>&nbsp;    }
+<i>462</i>&nbsp;
+<i>463</i>&nbsp;    public static void setLastDescriptionEditTime(long time) {
+<b class="nc"><i>464</i>&nbsp;        setLong(R.string.preference_key_last_description_edit_time, time);</b>
+<i>465</i>&nbsp;    }
+<i>466</i>&nbsp;
+<i>467</i>&nbsp;    public static long getReadingListSyncRev() {
+<b class="nc"><i>468</i>&nbsp;        return getLong(R.string.preference_key_reading_list_sync_rev, 0);</b>
+<i>469</i>&nbsp;    }
+<i>470</i>&nbsp;
+<i>471</i>&nbsp;    public static void setReadingListSyncRev(long rev) {
+<b class="nc"><i>472</i>&nbsp;        setLong(R.string.preference_key_reading_list_sync_rev, rev);</b>
+<i>473</i>&nbsp;    }
+<i>474</i>&nbsp;
+<i>475</i>&nbsp;    public static int getTotalAnonDescriptionsEdited() {
+<b class="nc"><i>476</i>&nbsp;        return getInt(R.string.preference_key_total_anon_descriptions_edited, 0);</b>
+<i>477</i>&nbsp;    }
+<i>478</i>&nbsp;
+<i>479</i>&nbsp;    public static void incrementTotalAnonDescriptionsEdited() {
+<b class="nc"><i>480</i>&nbsp;        setInt(R.string.preference_key_total_anon_descriptions_edited, getTotalAnonDescriptionsEdited() + 1);</b>
+<i>481</i>&nbsp;    }
+<i>482</i>&nbsp;
+<i>483</i>&nbsp;    public static boolean isReadingListSyncEnabled() {
+<b class="nc"><i>484</i>&nbsp;        return getBoolean(R.string.preference_key_sync_reading_lists, false);</b>
+<i>485</i>&nbsp;    }
+<i>486</i>&nbsp;
+<i>487</i>&nbsp;    public static void setReadingListSyncEnabled(boolean enabled) {
+<b class="nc"><i>488</i>&nbsp;        setBoolean(R.string.preference_key_sync_reading_lists, enabled);</b>
+<i>489</i>&nbsp;    }
+<i>490</i>&nbsp;
+<i>491</i>&nbsp;    public static boolean isReadingListSyncReminderEnabled() {
+<b class="nc"><i>492</i>&nbsp;        return getBoolean(R.string.preference_key_reading_list_sync_reminder_enabled, true);</b>
+<i>493</i>&nbsp;    }
+<i>494</i>&nbsp;
+<i>495</i>&nbsp;    public static void setReadingListSyncReminderEnabled(boolean enabled) {
+<b class="nc"><i>496</i>&nbsp;        setBoolean(R.string.preference_key_reading_list_sync_reminder_enabled, enabled);</b>
+<i>497</i>&nbsp;    }
+<i>498</i>&nbsp;
+<i>499</i>&nbsp;    public static boolean isReadingListLoginReminderEnabled() {
+<b class="nc"><i>500</i>&nbsp;        return getBoolean(R.string.preference_key_reading_list_login_reminder_enabled, true);</b>
+<i>501</i>&nbsp;    }
+<i>502</i>&nbsp;
+<i>503</i>&nbsp;    public static void setReadingListLoginReminderEnabled(boolean enabled) {
+<b class="nc"><i>504</i>&nbsp;        setBoolean(R.string.preference_key_reading_list_login_reminder_enabled, enabled);</b>
+<i>505</i>&nbsp;    }
+<i>506</i>&nbsp;
+<i>507</i>&nbsp;    public static boolean isReadingListsRemoteDeletePending() {
+<b class="nc"><i>508</i>&nbsp;        return getBoolean(R.string.preference_key_reading_lists_remote_delete_pending, false);</b>
+<i>509</i>&nbsp;    }
+<i>510</i>&nbsp;
+<i>511</i>&nbsp;    public static void setReadingListsRemoteDeletePending(boolean pending) {
+<b class="nc"><i>512</i>&nbsp;        setBoolean(R.string.preference_key_reading_lists_remote_delete_pending, pending);</b>
+<i>513</i>&nbsp;    }
+<i>514</i>&nbsp;
+<i>515</i>&nbsp;    public static boolean isReadingListsRemoteSetupPending() {
+<b class="nc"><i>516</i>&nbsp;        return getBoolean(R.string.preference_key_reading_lists_remote_setup_pending, false);</b>
+<i>517</i>&nbsp;    }
+<i>518</i>&nbsp;
+<i>519</i>&nbsp;    public static void setReadingListsRemoteSetupPending(boolean pending) {
+<b class="nc"><i>520</i>&nbsp;        setBoolean(R.string.preference_key_reading_lists_remote_setup_pending, pending);</b>
+<i>521</i>&nbsp;    }
+<i>522</i>&nbsp;
+<i>523</i>&nbsp;    public static boolean isInitialOnboardingEnabled() {
+<b class="nc"><i>524</i>&nbsp;        return getBoolean(R.string.preference_key_initial_onboarding_enabled, true);</b>
+<i>525</i>&nbsp;    }
+<i>526</i>&nbsp;
+<i>527</i>&nbsp;    public static void setInitialOnboardingEnabled(boolean enabled) {
+<b class="nc"><i>528</i>&nbsp;        setBoolean(R.string.preference_key_initial_onboarding_enabled, enabled);</b>
+<i>529</i>&nbsp;    }
+<i>530</i>&nbsp;
+<i>531</i>&nbsp;    public static boolean askedForPermissionOnce(@NonNull String permission) {
+<b class="nc"><i>532</i>&nbsp;        return getBoolean(R.string.preference_key_permission_asked + permission, false);</b>
+<i>533</i>&nbsp;    }
+<i>534</i>&nbsp;
+<i>535</i>&nbsp;    public static void setAskedForPermissionOnce(@NonNull String permission) {
+<b class="nc"><i>536</i>&nbsp;        setBoolean(R.string.preference_key_permission_asked + permission, true);</b>
+<i>537</i>&nbsp;    }
+<i>538</i>&nbsp;
+<i>539</i>&nbsp;    public static void setReadingListsCurrentUser(@Nullable String userName) {
+<b class="nc"><i>540</i>&nbsp;        setString(R.string.preference_key_reading_lists_current_user_hash,</b>
+<b class="nc"><i>541</i>&nbsp;                TextUtils.isEmpty(userName) ? &quot;&quot; : StringUtil.md5string(userName));</b>
+<i>542</i>&nbsp;    }
+<i>543</i>&nbsp;
+<i>544</i>&nbsp;    public static boolean hasReadingListsCurrentUser() {
+<b class="nc"><i>545</i>&nbsp;        return !TextUtils.isEmpty(getString(R.string.preference_key_reading_lists_current_user_hash, &quot;&quot;));</b>
+<i>546</i>&nbsp;    }
+<i>547</i>&nbsp;
+<i>548</i>&nbsp;    public static boolean isReadingListsCurrentUser(@Nullable String userName) {
+<b class="nc"><i>549</i>&nbsp;        return !TextUtils.isEmpty(userName)</b>
+<b class="nc"><i>550</i>&nbsp;                &amp;&amp; getString(R.string.preference_key_reading_lists_current_user_hash, &quot;&quot;)</b>
+<b class="nc"><i>551</i>&nbsp;                .equals(StringUtil.md5string(userName));</b>
+<i>552</i>&nbsp;    }
+<i>553</i>&nbsp;
+<i>554</i>&nbsp;    public static List&lt;Compilation&gt; getCompilationCache() {
+<b class="nc"><i>555</i>&nbsp;        List&lt;Compilation&gt; compilations = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>556</i>&nbsp;        return contains(R.string.preference_key_compilation_cache)</b>
+<b class="nc"><i>557</i>&nbsp;                ? GsonUnmarshaller.unmarshal(new TypeToken&lt;List&lt;Compilation&gt;&gt;() { },</b>
+<b class="nc"><i>558</i>&nbsp;                getString(R.string.preference_key_compilation_cache, null)) : compilations;</b>
+<i>559</i>&nbsp;    }
+<i>560</i>&nbsp;
+<i>561</i>&nbsp;    public static void setCompilationCache(@NonNull List&lt;Compilation&gt; compilations) {
+<b class="nc"><i>562</i>&nbsp;        setString(R.string.preference_key_compilation_cache, GsonMarshaller.marshal(compilations));</b>
+<i>563</i>&nbsp;    }
+<i>564</i>&nbsp;
+<i>565</i>&nbsp;    public static void setOfflineTutorialCardEnabled(boolean enabled) {
+<b class="nc"><i>566</i>&nbsp;        setBoolean(R.string.preference_key_offline_onboarding_card_enabled, enabled);</b>
+<i>567</i>&nbsp;    }
+<i>568</i>&nbsp;
+<i>569</i>&nbsp;    public static boolean isOfflineTutorialEnabled() {
+<b class="nc"><i>570</i>&nbsp;        return getBoolean(R.string.preference_key_offline_onboarding_enabled, false);</b>
+<i>571</i>&nbsp;    }
+<i>572</i>&nbsp;
+<i>573</i>&nbsp;    public static void setOfflineTutorialEnabled(boolean enabled) {
+<b class="nc"><i>574</i>&nbsp;        setBoolean(R.string.preference_key_offline_onboarding_enabled, enabled);</b>
+<i>575</i>&nbsp;    }
+<i>576</i>&nbsp;
+<i>577</i>&nbsp;    public static boolean shouldDimDarkModeImages() {
+<b class="nc"><i>578</i>&nbsp;        return getBoolean(R.string.preference_key_dim_dark_mode_images, true);</b>
+<i>579</i>&nbsp;    }
+<i>580</i>&nbsp;
+<i>581</i>&nbsp;    public static void setDimDarkModeImages(boolean enabled) {
+<b class="nc"><i>582</i>&nbsp;        setBoolean(R.string.preference_key_dim_dark_mode_images, enabled);</b>
+<i>583</i>&nbsp;    }
+<i>584</i>&nbsp;
+<i>585</i>&nbsp;    public static boolean suppressNotificationPolling() {
+<b class="nc"><i>586</i>&nbsp;        return getBoolean(R.string.preference_key_suppress_notification_polling, false);</b>
+<i>587</i>&nbsp;    }
+<i>588</i>&nbsp;
+<i>589</i>&nbsp;    public static boolean preferOfflineContent() {
+<b class="nc"><i>590</i>&nbsp;        return getBoolean(R.string.preference_key_prefer_offline_content, false);</b>
+<i>591</i>&nbsp;    }
+<i>592</i>&nbsp;
+<i>593</i>&nbsp;    public static boolean offlineLibraryEnabled() {
+<b class="nc"><i>594</i>&nbsp;        return getBoolean(R.string.preference_key_enable_offline_library, false);</b>
+<i>595</i>&nbsp;    }
+<i>596</i>&nbsp;
+<i>597</i>&nbsp;    @NonNull public static List&lt;Boolean&gt; getFeedCardsEnabled() {
+<b class="nc"><i>598</i>&nbsp;        if (!contains(R.string.preference_key_feed_cards_enabled)) {</b>
+<b class="nc"><i>599</i>&nbsp;            return Collections.emptyList();</b>
+<i>600</i>&nbsp;        }
+<i>601</i>&nbsp;        //noinspection unchecked
+<b class="nc"><i>602</i>&nbsp;        List&lt;Boolean&gt; enabledList = GsonUnmarshaller.unmarshal(new TypeToken&lt;ArrayList&lt;Boolean&gt;&gt;(){},</b>
+<b class="nc"><i>603</i>&nbsp;                getString(R.string.preference_key_feed_cards_enabled, null));</b>
+<b class="nc"><i>604</i>&nbsp;        return enabledList != null ? enabledList : Collections.emptyList();</b>
+<i>605</i>&nbsp;    }
+<i>606</i>&nbsp;
+<i>607</i>&nbsp;    public static void setFeedCardsEnabled(@NonNull List&lt;Boolean&gt; enabledList) {
+<b class="nc"><i>608</i>&nbsp;        setString(R.string.preference_key_feed_cards_enabled, GsonMarshaller.marshal(enabledList));</b>
+<i>609</i>&nbsp;    }
+<i>610</i>&nbsp;
+<i>611</i>&nbsp;    @NonNull public static List&lt;Integer&gt; getFeedCardsOrder() {
+<b class="nc"><i>612</i>&nbsp;        if (!contains(R.string.preference_key_feed_cards_order)) {</b>
+<b class="nc"><i>613</i>&nbsp;            return Collections.emptyList();</b>
+<i>614</i>&nbsp;        }
+<i>615</i>&nbsp;        //noinspection unchecked
+<b class="nc"><i>616</i>&nbsp;        List&lt;Integer&gt; orderList = GsonUnmarshaller.unmarshal(new TypeToken&lt;ArrayList&lt;Integer&gt;&gt;(){},</b>
+<b class="nc"><i>617</i>&nbsp;                getString(R.string.preference_key_feed_cards_order, null));</b>
+<b class="nc"><i>618</i>&nbsp;        return orderList != null ? orderList : Collections.emptyList();</b>
+<i>619</i>&nbsp;    }
+<i>620</i>&nbsp;
+<i>621</i>&nbsp;    public static void setFeedCardsOrder(@NonNull List&lt;Integer&gt; orderList) {
+<b class="nc"><i>622</i>&nbsp;        setString(R.string.preference_key_feed_cards_order, GsonMarshaller.marshal(orderList));</b>
+<i>623</i>&nbsp;    }
+<i>624</i>&nbsp;
+<i>625</i>&nbsp;    public static void resetFeedCustomizations() {
+<b class="nc"><i>626</i>&nbsp;        remove(R.string.preference_key_feed_hidden_cards);</b>
+<b class="nc"><i>627</i>&nbsp;        remove(R.string.preference_key_feed_cards_enabled);</b>
+<b class="nc"><i>628</i>&nbsp;        remove(R.string.preference_key_feed_cards_order);</b>
+<i>629</i>&nbsp;    }
+<i>630</i>&nbsp;
+<i>631</i>&nbsp;    public static void setFeedCustomizeTutorialCardEnabled(boolean enabled) {
+<b class="nc"><i>632</i>&nbsp;        setBoolean(R.string.preference_key_feed_customize_onboarding_card_enabled, enabled);</b>
+<i>633</i>&nbsp;    }
+<i>634</i>&nbsp;
+<i>635</i>&nbsp;    public static String getReadingListsLastSyncTime() {
+<b class="nc"><i>636</i>&nbsp;        return getString(R.string.preference_key_reading_lists_last_sync_time, &quot;&quot;);</b>
+<i>637</i>&nbsp;    }
+<i>638</i>&nbsp;
+<i>639</i>&nbsp;    public static void setReadingListsLastSyncTime(@Nullable String timeStr) {
+<b class="nc"><i>640</i>&nbsp;        setString(R.string.preference_key_reading_lists_last_sync_time, timeStr);</b>
+<i>641</i>&nbsp;    }
+<i>642</i>&nbsp;
+<i>643</i>&nbsp;    @NonNull public static Set&lt;Long&gt; getReadingListsDeletedIds() {
+<b class="nc"><i>644</i>&nbsp;        Set&lt;Long&gt; set = new HashSet&lt;&gt;();</b>
+<b class="nc"><i>645</i>&nbsp;        if (!contains(R.string.preference_key_reading_lists_deleted_ids)) {</b>
+<b class="nc"><i>646</i>&nbsp;            return set;</b>
+<i>647</i>&nbsp;        }
+<i>648</i>&nbsp;        //noinspection unchecked
+<b class="nc"><i>649</i>&nbsp;        Set&lt;Long&gt; tempSet = GsonUnmarshaller.unmarshal(new TypeToken&lt;Set&lt;Long&gt;&gt;(){},</b>
+<b class="nc"><i>650</i>&nbsp;                getString(R.string.preference_key_reading_lists_deleted_ids, null));</b>
+<b class="nc"><i>651</i>&nbsp;        if (tempSet != null) {</b>
+<b class="nc"><i>652</i>&nbsp;            set.addAll(tempSet);</b>
+<i>653</i>&nbsp;        }
+<b class="nc"><i>654</i>&nbsp;        return set;</b>
+<i>655</i>&nbsp;    }
+<i>656</i>&nbsp;
+<i>657</i>&nbsp;    public static void addReadingListsDeletedIds(@NonNull Set&lt;Long&gt; set) {
+<b class="nc"><i>658</i>&nbsp;        final int maxStoredIds = 256;</b>
+<b class="nc"><i>659</i>&nbsp;        Set&lt;Long&gt; currentSet = getReadingListsDeletedIds();</b>
+<b class="nc"><i>660</i>&nbsp;        currentSet.addAll(set);</b>
+<b class="nc"><i>661</i>&nbsp;        setReadingListsDeletedIds(currentSet.size() &lt; maxStoredIds ? currentSet : set);</b>
+<i>662</i>&nbsp;    }
+<i>663</i>&nbsp;
+<i>664</i>&nbsp;    public static void setReadingListsDeletedIds(@NonNull Set&lt;Long&gt; set) {
+<b class="nc"><i>665</i>&nbsp;        setString(R.string.preference_key_reading_lists_deleted_ids, GsonMarshaller.marshal(set));</b>
+<i>666</i>&nbsp;    }
+<i>667</i>&nbsp;
+<i>668</i>&nbsp;    @NonNull public static Set&lt;String&gt; getReadingListPagesDeletedIds() {
+<b class="nc"><i>669</i>&nbsp;        Set&lt;String&gt; set = new HashSet&lt;&gt;();</b>
+<b class="nc"><i>670</i>&nbsp;        if (!contains(R.string.preference_key_reading_lists_deleted_ids)) {</b>
+<b class="nc"><i>671</i>&nbsp;            return set;</b>
+<i>672</i>&nbsp;        }
+<i>673</i>&nbsp;        //noinspection unchecked
+<b class="nc"><i>674</i>&nbsp;        Set&lt;String&gt; tempSet = GsonUnmarshaller.unmarshal(new TypeToken&lt;Set&lt;String&gt;&gt;(){},</b>
+<b class="nc"><i>675</i>&nbsp;                getString(R.string.preference_key_reading_list_pages_deleted_ids, null));</b>
+<b class="nc"><i>676</i>&nbsp;        if (tempSet != null) {</b>
+<b class="nc"><i>677</i>&nbsp;            set.addAll(tempSet);</b>
+<i>678</i>&nbsp;        }
+<b class="nc"><i>679</i>&nbsp;        return set;</b>
+<i>680</i>&nbsp;    }
+<i>681</i>&nbsp;
+<i>682</i>&nbsp;    public static void addReadingListPagesDeletedIds(@NonNull Set&lt;String&gt; set) {
+<b class="nc"><i>683</i>&nbsp;        final int maxStoredIds = 256;</b>
+<b class="nc"><i>684</i>&nbsp;        Set&lt;String&gt; currentSet = getReadingListPagesDeletedIds();</b>
+<b class="nc"><i>685</i>&nbsp;        currentSet.addAll(set);</b>
+<b class="nc"><i>686</i>&nbsp;        setReadingListPagesDeletedIds(currentSet.size() &lt; maxStoredIds ? currentSet : set);</b>
+<i>687</i>&nbsp;    }
+<i>688</i>&nbsp;
+<i>689</i>&nbsp;    public static void setReadingListPagesDeletedIds(@NonNull Set&lt;String&gt; set) {
+<b class="nc"><i>690</i>&nbsp;        setString(R.string.preference_key_reading_list_pages_deleted_ids, GsonMarshaller.marshal(set));</b>
+<i>691</i>&nbsp;    }
+<i>692</i>&nbsp;
+<i>693</i>&nbsp;    public static boolean shouldShowReadingListSyncEnablePrompt() {
+<b class="nc"><i>694</i>&nbsp;        return getBoolean(R.string.preference_key_show_reading_lists_sync_prompt, true);</b>
+<i>695</i>&nbsp;    }
+<i>696</i>&nbsp;
+<i>697</i>&nbsp;    public static void shouldShowReadingListSyncEnablePrompt(boolean enabled) {
+<b class="nc"><i>698</i>&nbsp;        setBoolean(R.string.preference_key_show_reading_lists_sync_prompt, enabled);</b>
+<i>699</i>&nbsp;    }
+<i>700</i>&nbsp;
+<i>701</i>&nbsp;    public static boolean shouldShowReadingListSyncMergePrompt() {
+<b class="nc"><i>702</i>&nbsp;        return getBoolean(R.string.preference_key_show_reading_lists_merge_prompt, true);</b>
+<i>703</i>&nbsp;    }
+<i>704</i>&nbsp;
+<i>705</i>&nbsp;    public static void shouldShowReadingListSyncMergePrompt(boolean enabled) {
+<b class="nc"><i>706</i>&nbsp;        setBoolean(R.string.preference_key_show_reading_lists_merge_prompt, enabled);</b>
+<i>707</i>&nbsp;    }
+<i>708</i>&nbsp;
+<i>709</i>&nbsp;    public static boolean isReadingListsFirstTimeSync() {
+<b class="nc"><i>710</i>&nbsp;        return getBoolean(R.string.preference_key_reading_lists_first_time_sync, true);</b>
+<i>711</i>&nbsp;    }
+<i>712</i>&nbsp;
+<i>713</i>&nbsp;    public static void setReadingListsFirstTimeSync(boolean value) {
+<b class="nc"><i>714</i>&nbsp;        setBoolean(R.string.preference_key_reading_lists_first_time_sync, value);</b>
+<i>715</i>&nbsp;    }
+<i>716</i>&nbsp;
+<b class="nc"><i>717</i>&nbsp;    private Prefs() { }</b>
+<i>718</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

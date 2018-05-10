@@ -1,0 +1,219 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: FullTextSearchClient</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.search</a> ]
+</div>
+
+<h1>Coverage Summary for Class: FullTextSearchClient (org.wikipedia.search)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FullTextSearchClient</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">FullTextSearchClient$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">FullTextSearchClient$Callback</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 20)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.search;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.annotation.Nullable;
+<i>5</i>&nbsp;import android.support.annotation.VisibleForTesting;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.wikipedia.Constants;
+<i>8</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>9</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwException;
+<i>10</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwQueryResponse;
+<i>11</i>&nbsp;import org.wikipedia.dataclient.retrofit.MwCachedService;
+<i>12</i>&nbsp;import org.wikipedia.dataclient.retrofit.WikiCachedService;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import retrofit2.Call;
+<i>15</i>&nbsp;import retrofit2.Response;
+<i>16</i>&nbsp;import retrofit2.http.GET;
+<i>17</i>&nbsp;import retrofit2.http.Query;
+<i>18</i>&nbsp;
+<b class="nc"><i>19</i>&nbsp;public class FullTextSearchClient {</b>
+<i>20</i>&nbsp;    public interface Callback {
+<i>21</i>&nbsp;        void success(@NonNull Call&lt;MwQueryResponse&gt; call, @NonNull SearchResults results);
+<i>22</i>&nbsp;        void failure(@NonNull Call&lt;MwQueryResponse&gt; call, @NonNull Throwable caught);
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<b class="nc"><i>25</i>&nbsp;    @NonNull private final WikiCachedService&lt;Service&gt; cachedService = new MwCachedService&lt;&gt;(Service.class);</b>
+<i>26</i>&nbsp;    @Nullable private Call&lt;MwQueryResponse&gt; call;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    public Call&lt;MwQueryResponse&gt; request(@NonNull WikiSite wiki, @NonNull String searchTerm,
+<i>29</i>&nbsp;                                         @Nullable String cont, @Nullable String gsrOffset,
+<i>30</i>&nbsp;                                         int limit, @NonNull Callback cb) {
+<b class="nc"><i>31</i>&nbsp;        return request(cachedService.service(wiki), wiki, searchTerm, cont, gsrOffset, limit, cb);</b>
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    public Call&lt;MwQueryResponse&gt; requestMoreLike(@NonNull WikiSite wiki, @NonNull String searchTerm,
+<i>35</i>&nbsp;                                                 @Nullable String cont, @Nullable String gsrOffset,
+<i>36</i>&nbsp;                                                 int limit, @NonNull Callback cb) {
+<b class="nc"><i>37</i>&nbsp;        return request(cachedService.service(wiki), wiki, moreLike(searchTerm), cont, gsrOffset, limit, cb);</b>
+<i>38</i>&nbsp;    }
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    @VisibleForTesting Call&lt;MwQueryResponse&gt; request(@NonNull Service service,
+<i>41</i>&nbsp;                                                     @NonNull final WikiSite wiki,
+<i>42</i>&nbsp;                                                     @NonNull String searchTerm,
+<i>43</i>&nbsp;                                                     @Nullable String cont,
+<i>44</i>&nbsp;                                                     @Nullable String gsrOffset,
+<i>45</i>&nbsp;                                                     int limit, @NonNull final Callback cb) {
+<b class="nc"><i>46</i>&nbsp;        call = service.request(searchTerm, limit, cont, gsrOffset);</b>
+<b class="nc"><i>47</i>&nbsp;        call.enqueue(new retrofit2.Callback&lt;MwQueryResponse&gt;() {</b>
+<i>48</i>&nbsp;            @Override
+<i>49</i>&nbsp;            public void onResponse(@NonNull Call&lt;MwQueryResponse&gt; call,
+<i>50</i>&nbsp;                                   @NonNull Response&lt;MwQueryResponse&gt; response) {
+<b class="nc"><i>51</i>&nbsp;                if (response.body().success()) {</b>
+<i>52</i>&nbsp;                    // noinspection ConstantConditions
+<b class="nc"><i>53</i>&nbsp;                    cb.success(call, new SearchResults(response.body().query().pages(), wiki,</b>
+<b class="nc"><i>54</i>&nbsp;                            response.body().continuation(), null));</b>
+<b class="nc"><i>55</i>&nbsp;                } else if (response.body().hasError()) {</b>
+<i>56</i>&nbsp;                    // noinspection ConstantConditions
+<b class="nc"><i>57</i>&nbsp;                    cb.failure(call, new MwException(response.body().getError()));</b>
+<i>58</i>&nbsp;                } else {
+<i>59</i>&nbsp;                    // A &#39;morelike&#39; search query with no results will just return an API warning:
+<i>60</i>&nbsp;                    //
+<i>61</i>&nbsp;                    // {
+<i>62</i>&nbsp;                    //   &quot;batchcomplete&quot;: true,
+<i>63</i>&nbsp;                    //   &quot;warnings&quot;: {
+<i>64</i>&nbsp;                    //      &quot;search&quot;: {
+<i>65</i>&nbsp;                    //        &quot;warnings&quot;: &quot;No valid titles provided to &#39;morelike&#39;.&quot;
+<i>66</i>&nbsp;                    //      }
+<i>67</i>&nbsp;                    //   }
+<i>68</i>&nbsp;                    // }
+<i>69</i>&nbsp;                    //
+<i>70</i>&nbsp;                    // Just return an empty SearchResults() in this case.
+<b class="nc"><i>71</i>&nbsp;                    cb.success(call, new SearchResults());</b>
+<i>72</i>&nbsp;                }
+<i>73</i>&nbsp;            }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;            @Override
+<i>76</i>&nbsp;            public void onFailure(@NonNull Call&lt;MwQueryResponse&gt; call, @NonNull Throwable caught) {
+<b class="nc"><i>77</i>&nbsp;                cb.failure(call, caught);</b>
+<i>78</i>&nbsp;            }
+<i>79</i>&nbsp;        });
+<b class="nc"><i>80</i>&nbsp;        return call;</b>
+<i>81</i>&nbsp;    }
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;    void cancel() {
+<b class="nc"><i>84</i>&nbsp;        if (call != null) {</b>
+<b class="nc"><i>85</i>&nbsp;            call.cancel();</b>
+<b class="nc"><i>86</i>&nbsp;            call = null;</b>
+<i>87</i>&nbsp;        }
+<b class="nc"><i>88</i>&nbsp;    }</b>
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;    protected interface Service {
+<i>91</i>&nbsp;        String QUERY_PREFIX = &quot;w/api.php?action=query&amp;format=json&amp;formatversion=2&amp;converttitles=&quot;
+<i>92</i>&nbsp;                + &quot;&amp;prop=pageterms|pageimages|pageprops&amp;ppprop=mainpage|disambiguation&quot;
+<i>93</i>&nbsp;                + &quot;&amp;wbptterms=description&amp;generator=search&amp;gsrnamespace=0&amp;gsrwhat=text&quot;
+<i>94</i>&nbsp;                + &quot;&amp;gsrinfo=&amp;gsrprop=redirecttitle&amp;piprop=thumbnail&amp;pilicense=any&amp;pithumbsize=&quot;
+<i>95</i>&nbsp;                + Constants.PREFERRED_THUMB_SIZE;
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;        @GET(QUERY_PREFIX)
+<i>98</i>&nbsp;        @NonNull Call&lt;MwQueryResponse&gt; request(@Query(&quot;gsrsearch&quot;) String searchTerm,
+<i>99</i>&nbsp;                                               @Query(&quot;gsrlimit&quot;) int gsrLimit,
+<i>100</i>&nbsp;                                               @Query(&quot;continue&quot;) String cont,
+<i>101</i>&nbsp;                                               @Query(&quot;gsroffset&quot;) String gsrOffset);
+<i>102</i>&nbsp;    }
+<i>103</i>&nbsp;
+<i>104</i>&nbsp;    @NonNull private String moreLike(@Nullable String searchTerm) {
+<b class="nc"><i>105</i>&nbsp;        return &quot;morelike:&quot; + searchTerm;</b>
+<i>106</i>&nbsp;    }
+<i>107</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

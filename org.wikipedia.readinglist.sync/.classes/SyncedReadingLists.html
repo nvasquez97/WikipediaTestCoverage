@@ -1,0 +1,337 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SyncedReadingLists</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.readinglist.sync</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SyncedReadingLists (org.wikipedia.readinglist.sync)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SyncedReadingLists</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SyncedReadingLists$RemoteIdResponse</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SyncedReadingLists$RemoteIdResponseBatch</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SyncedReadingLists$RemoteReadingList</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SyncedReadingLists$RemoteReadingListEntry</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SyncedReadingLists$RemoteReadingListEntryBatch</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 28)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 35)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.readinglist.sync;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.annotation.Nullable;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import com.google.gson.annotations.SerializedName;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import org.apache.commons.lang3.StringUtils;
+<i>9</i>&nbsp;import org.wikipedia.dataclient.restbase.page.RbPageSummary;
+<i>10</i>&nbsp;import org.wikipedia.json.annotations.Required;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import java.text.Normalizer;
+<i>13</i>&nbsp;import java.util.List;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;public class SyncedReadingLists {
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    @SuppressWarnings(&quot;unused,NullableProblems&quot;) @Nullable private List&lt;RemoteReadingList&gt; lists;
+<i>18</i>&nbsp;    @SuppressWarnings(&quot;unused,NullableProblems&quot;) @Nullable private List&lt;RemoteReadingListEntry&gt; entries;
+<i>19</i>&nbsp;    @SuppressWarnings(&quot;unused,NullableProblems&quot;) @Nullable private String next;
+<i>20</i>&nbsp;
+<b class="nc"><i>21</i>&nbsp;    public SyncedReadingLists() { }</b>
+<i>22</i>&nbsp;
+<b class="nc"><i>23</i>&nbsp;    public SyncedReadingLists(@NonNull List&lt;RemoteReadingList&gt; lists, @NonNull List&lt;RemoteReadingListEntry&gt; entries) {</b>
+<b class="nc"><i>24</i>&nbsp;        this.lists = lists;</b>
+<b class="nc"><i>25</i>&nbsp;        this.entries = entries;</b>
+<i>26</i>&nbsp;    }
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    @Nullable public List&lt;RemoteReadingList&gt; getLists() {
+<b class="nc"><i>29</i>&nbsp;        return lists;</b>
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    @Nullable public List&lt;RemoteReadingListEntry&gt; getEntries() {
+<b class="nc"><i>33</i>&nbsp;        return entries;</b>
+<i>34</i>&nbsp;    }
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    @Nullable public String getContinueStr() {
+<b class="nc"><i>37</i>&nbsp;        return next;</b>
+<i>38</i>&nbsp;    }
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    public static class RemoteReadingList {
+<i>41</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) @Required private long id;
+<i>42</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) @SerializedName(&quot;default&quot;) private boolean isDefault;
+<i>43</i>&nbsp;        @SuppressWarnings(&quot;unused,NullableProblems&quot;) @Required @NonNull private String name;
+<i>44</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) @Nullable private String description;
+<i>45</i>&nbsp;        @SuppressWarnings(&quot;unused,NullableProblems&quot;) @Required @NonNull private String created;
+<i>46</i>&nbsp;        @SuppressWarnings(&quot;unused,NullableProblems&quot;) @Required @NonNull private String updated;
+<i>47</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) private boolean deleted;
+<i>48</i>&nbsp;
+<b class="nc"><i>49</i>&nbsp;        public RemoteReadingList() { }</b>
+<i>50</i>&nbsp;
+<b class="nc"><i>51</i>&nbsp;        public RemoteReadingList(@NonNull String name, @Nullable String description) {</b>
+<b class="nc"><i>52</i>&nbsp;            this.name = Normalizer.normalize(name, Normalizer.Form.NFC);</b>
+<b class="nc"><i>53</i>&nbsp;            this.description = Normalizer.normalize(StringUtils.defaultString(description), Normalizer.Form.NFC);</b>
+<i>54</i>&nbsp;        }
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;        public long id() {
+<b class="nc"><i>57</i>&nbsp;            return id;</b>
+<i>58</i>&nbsp;        }
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;        @NonNull public String name() {
+<b class="nc"><i>61</i>&nbsp;            return Normalizer.normalize(name, Normalizer.Form.NFC);</b>
+<i>62</i>&nbsp;        }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;        @NonNull public String description() {
+<b class="nc"><i>65</i>&nbsp;            return Normalizer.normalize(StringUtils.defaultString(description), Normalizer.Form.NFC);</b>
+<i>66</i>&nbsp;        }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;        public boolean isDefault() {
+<b class="nc"><i>69</i>&nbsp;            return isDefault;</b>
+<i>70</i>&nbsp;        }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;        public boolean isDeleted() {
+<b class="nc"><i>73</i>&nbsp;            return deleted;</b>
+<i>74</i>&nbsp;        }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;        @NonNull public String updatedDate() {
+<b class="nc"><i>77</i>&nbsp;            return updated;</b>
+<i>78</i>&nbsp;        }
+<i>79</i>&nbsp;    }
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    public static class RemoteReadingListEntry {
+<i>82</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) private long id;
+<i>83</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) private long listId;
+<i>84</i>&nbsp;        @SuppressWarnings(&quot;unused,NullableProblems&quot;) @Required @NonNull private String project;
+<i>85</i>&nbsp;        @SuppressWarnings(&quot;unused,NullableProblems&quot;) @Required @NonNull private String title;
+<i>86</i>&nbsp;        @SuppressWarnings(&quot;unused,NullableProblems&quot;) @Required @NonNull private String created;
+<i>87</i>&nbsp;        @SuppressWarnings(&quot;unused,NullableProblems&quot;) @Required @NonNull private String updated;
+<i>88</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) @Nullable private RbPageSummary summary;
+<i>89</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) private boolean deleted;
+<i>90</i>&nbsp;
+<b class="nc"><i>91</i>&nbsp;        public RemoteReadingListEntry() { }</b>
+<i>92</i>&nbsp;
+<b class="nc"><i>93</i>&nbsp;        public RemoteReadingListEntry(@NonNull String project, @NonNull String title) {</b>
+<b class="nc"><i>94</i>&nbsp;            this.project = Normalizer.normalize(project, Normalizer.Form.NFC);</b>
+<b class="nc"><i>95</i>&nbsp;            this.title = Normalizer.normalize(title, Normalizer.Form.NFC);</b>
+<i>96</i>&nbsp;        }
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;        public long id() {
+<b class="nc"><i>99</i>&nbsp;            return id;</b>
+<i>100</i>&nbsp;        }
+<i>101</i>&nbsp;
+<i>102</i>&nbsp;        public long listId() {
+<b class="nc"><i>103</i>&nbsp;            return listId;</b>
+<i>104</i>&nbsp;        }
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;        @NonNull public String project() {
+<b class="nc"><i>107</i>&nbsp;            return Normalizer.normalize(project, Normalizer.Form.NFC);</b>
+<i>108</i>&nbsp;        }
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;        @NonNull public String title() {
+<b class="nc"><i>111</i>&nbsp;            return Normalizer.normalize(title, Normalizer.Form.NFC);</b>
+<i>112</i>&nbsp;        }
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;        @NonNull public String updatedDate() {
+<b class="nc"><i>115</i>&nbsp;            return updated;</b>
+<i>116</i>&nbsp;        }
+<i>117</i>&nbsp;
+<i>118</i>&nbsp;        @Nullable public RbPageSummary summary() {
+<b class="nc"><i>119</i>&nbsp;            return summary;</b>
+<i>120</i>&nbsp;        }
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;        public boolean isDeleted() {
+<b class="nc"><i>123</i>&nbsp;            return deleted;</b>
+<i>124</i>&nbsp;        }
+<i>125</i>&nbsp;    }
+<i>126</i>&nbsp;
+<i>127</i>&nbsp;    public static class RemoteReadingListEntryBatch {
+<i>128</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) private RemoteReadingListEntry[] batch;
+<i>129</i>&nbsp;
+<b class="nc"><i>130</i>&nbsp;        public RemoteReadingListEntryBatch() { }</b>
+<i>131</i>&nbsp;
+<b class="nc"><i>132</i>&nbsp;        public RemoteReadingListEntryBatch(@NonNull List&lt;RemoteReadingListEntry&gt; entries) {</b>
+<b class="nc"><i>133</i>&nbsp;            this.batch = entries.toArray(new RemoteReadingListEntry[]{});</b>
+<i>134</i>&nbsp;        }
+<i>135</i>&nbsp;    }
+<i>136</i>&nbsp;
+<b class="nc"><i>137</i>&nbsp;    public class RemoteIdResponse {</b>
+<i>138</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) @Required private long id;
+<i>139</i>&nbsp;
+<i>140</i>&nbsp;        public long id() {
+<b class="nc"><i>141</i>&nbsp;            return id;</b>
+<i>142</i>&nbsp;        }
+<i>143</i>&nbsp;    }
+<i>144</i>&nbsp;
+<b class="nc"><i>145</i>&nbsp;    public class RemoteIdResponseBatch {</b>
+<i>146</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) @Required private RemoteIdResponse[] batch;
+<i>147</i>&nbsp;
+<i>148</i>&nbsp;        public RemoteIdResponse[] batch() {
+<b class="nc"><i>149</i>&nbsp;            return batch;</b>
+<i>150</i>&nbsp;        }
+<i>151</i>&nbsp;    }
+<i>152</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,170 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ImagePipelineBitmapGetter</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.gallery</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ImagePipelineBitmapGetter (org.wikipedia.gallery)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ImagePipelineBitmapGetter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ImagePipelineBitmapGetter$BitmapDataSubscriber</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 17)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.gallery;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.graphics.Bitmap;
+<i>4</i>&nbsp;import android.graphics.Canvas;
+<i>5</i>&nbsp;import android.graphics.Paint;
+<i>6</i>&nbsp;import android.net.Uri;
+<i>7</i>&nbsp;import android.support.annotation.Nullable;
+<i>8</i>&nbsp;import android.widget.Toast;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import com.facebook.common.executors.UiThreadImmediateExecutorService;
+<i>11</i>&nbsp;import com.facebook.common.references.CloseableReference;
+<i>12</i>&nbsp;import com.facebook.datasource.DataSource;
+<i>13</i>&nbsp;import com.facebook.drawee.backends.pipeline.Fresco;
+<i>14</i>&nbsp;import com.facebook.imagepipeline.core.ImagePipeline;
+<i>15</i>&nbsp;import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
+<i>16</i>&nbsp;import com.facebook.imagepipeline.image.CloseableImage;
+<i>17</i>&nbsp;import com.facebook.imagepipeline.request.ImageRequest;
+<i>18</i>&nbsp;import com.facebook.imagepipeline.request.ImageRequestBuilder;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;public abstract class ImagePipelineBitmapGetter {
+<i>23</i>&nbsp;    private String imageUrl;
+<i>24</i>&nbsp;
+<b class="nc"><i>25</i>&nbsp;    public ImagePipelineBitmapGetter(String imageUrl) {</b>
+<b class="nc"><i>26</i>&nbsp;        this.imageUrl = imageUrl;</b>
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    public abstract void onSuccess(@Nullable Bitmap bitmap);
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    public void onError(Throwable t) {
+<b class="nc"><i>32</i>&nbsp;        Toast.makeText(WikipediaApp.getInstance(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();</b>
+<i>33</i>&nbsp;    }
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    public void get() {
+<b class="nc"><i>36</i>&nbsp;        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(imageUrl))</b>
+<b class="nc"><i>37</i>&nbsp;                .build();</b>
+<b class="nc"><i>38</i>&nbsp;        ImagePipeline imagePipeline = Fresco.getImagePipeline();</b>
+<b class="nc"><i>39</i>&nbsp;        DataSource&lt;CloseableReference&lt;CloseableImage&gt;&gt; dataSource</b>
+<b class="nc"><i>40</i>&nbsp;                = imagePipeline.fetchDecodedImage(request, WikipediaApp.getInstance());</b>
+<b class="nc"><i>41</i>&nbsp;        dataSource.subscribe(new BitmapDataSubscriber(), UiThreadImmediateExecutorService.getInstance());</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<b class="nc"><i>44</i>&nbsp;    private class BitmapDataSubscriber extends BaseBitmapDataSubscriber {</b>
+<i>45</i>&nbsp;        @Override
+<i>46</i>&nbsp;        protected void onNewResultImpl(@Nullable Bitmap tempBitmap) {
+<b class="nc"><i>47</i>&nbsp;            Bitmap bitmap = null;</b>
+<b class="nc"><i>48</i>&nbsp;            if (tempBitmap != null) {</b>
+<b class="nc"><i>49</i>&nbsp;                bitmap = Bitmap.createBitmap(tempBitmap.getWidth(), tempBitmap.getHeight(), Bitmap.Config.ARGB_8888);</b>
+<b class="nc"><i>50</i>&nbsp;                Canvas canvas = new Canvas(bitmap);</b>
+<b class="nc"><i>51</i>&nbsp;                canvas.drawBitmap(tempBitmap, 0f, 0f, new Paint());</b>
+<i>52</i>&nbsp;            }
+<b class="nc"><i>53</i>&nbsp;            onSuccess(bitmap);</b>
+<i>54</i>&nbsp;        }
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;        @Override
+<i>57</i>&nbsp;        protected void onFailureImpl(DataSource&lt;CloseableReference&lt;CloseableImage&gt;&gt; dataSource) {
+<b class="nc"><i>58</i>&nbsp;            onError(dataSource.getFailureCause());</b>
+<i>59</i>&nbsp;        }
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,182 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: OnThisDayPagesViewHolder</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.onthisday</a> ]
+</div>
+
+<h1>Coverage Summary for Class: OnThisDayPagesViewHolder (org.wikipedia.feed.onthisday)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">OnThisDayPagesViewHolder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 27)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.feed.onthisday;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.content.Intent;
+<i>5</i>&nbsp;import android.net.Uri;
+<i>6</i>&nbsp;import android.support.annotation.NonNull;
+<i>7</i>&nbsp;import android.support.annotation.Nullable;
+<i>8</i>&nbsp;import android.support.v7.widget.CardView;
+<i>9</i>&nbsp;import android.support.v7.widget.RecyclerView;
+<i>10</i>&nbsp;import android.text.TextUtils;
+<i>11</i>&nbsp;import android.view.View;
+<i>12</i>&nbsp;import android.widget.TextView;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import org.apache.commons.lang3.StringUtils;
+<i>15</i>&nbsp;import org.wikipedia.R;
+<i>16</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>17</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>18</i>&nbsp;import org.wikipedia.dataclient.restbase.page.RbPageSummary;
+<i>19</i>&nbsp;import org.wikipedia.history.HistoryEntry;
+<i>20</i>&nbsp;import org.wikipedia.page.PageActivity;
+<i>21</i>&nbsp;import org.wikipedia.page.PageTitle;
+<i>22</i>&nbsp;import org.wikipedia.util.ResourceUtil;
+<i>23</i>&nbsp;import org.wikipedia.util.StringUtil;
+<i>24</i>&nbsp;import org.wikipedia.views.FaceAndColorDetectImageView;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;import butterknife.BindView;
+<i>27</i>&nbsp;import butterknife.ButterKnife;
+<i>28</i>&nbsp;import butterknife.OnClick;
+<i>29</i>&nbsp;import butterknife.OnLongClick;
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;import static org.wikipedia.page.PageActivity.ACTION_LOAD_IN_NEW_TAB;
+<i>32</i>&nbsp;import static org.wikipedia.page.PageActivity.EXTRA_HISTORYENTRY;
+<i>33</i>&nbsp;import static org.wikipedia.page.PageActivity.EXTRA_PAGETITLE;
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;public class OnThisDayPagesViewHolder extends RecyclerView.ViewHolder {
+<i>36</i>&nbsp;    public interface ItemCallBack {
+<i>37</i>&nbsp;        void onActionLongClick(@NonNull HistoryEntry entry);
+<i>38</i>&nbsp;    }
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    @BindView(R.id.page_list_item_title) TextView pageItemTitleTextView;
+<i>41</i>&nbsp;    @BindView(R.id.page_list_item_description) TextView pageItemDescTextView;
+<i>42</i>&nbsp;    @BindView(R.id.page_list_item_image) FaceAndColorDetectImageView pageItemImageView;
+<i>43</i>&nbsp;    @BindView(R.id.parent) View parent;
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    @Nullable private ItemCallBack itemCallback;
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    private WikiSite wiki;
+<i>48</i>&nbsp;    private RbPageSummary selectedPage;
+<i>49</i>&nbsp;    private final boolean isSingleCard;
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    OnThisDayPagesViewHolder(@NonNull CardView v, @NonNull WikiSite wiki, boolean isSingleCard) {
+<b class="nc"><i>52</i>&nbsp;        super(v);</b>
+<b class="nc"><i>53</i>&nbsp;        ButterKnife.bind(this, v);</b>
+<b class="nc"><i>54</i>&nbsp;        v.setCardBackgroundColor(ResourceUtil.getThemedColor(v.getContext(), R.attr.paper_color));</b>
+<b class="nc"><i>55</i>&nbsp;        this.wiki = wiki;</b>
+<b class="nc"><i>56</i>&nbsp;        this.isSingleCard = isSingleCard;</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    public void setFields(@NonNull RbPageSummary page) {
+<b class="nc"><i>60</i>&nbsp;        selectedPage = page;</b>
+<b class="nc"><i>61</i>&nbsp;        pageItemDescTextView.setText(StringUtils.capitalize(page.getDescription()));</b>
+<b class="nc"><i>62</i>&nbsp;        pageItemDescTextView.setVisibility(TextUtils.isEmpty(page.getDescription()) ? View.GONE : View.VISIBLE);</b>
+<b class="nc"><i>63</i>&nbsp;        pageItemTitleTextView.setMaxLines(TextUtils.isEmpty(page.getDescription()) ? 2 : 1);</b>
+<b class="nc"><i>64</i>&nbsp;        pageItemTitleTextView.setText(StringUtil.fromHtml(StringUtils.defaultString(page.getNormalizedTitle())));</b>
+<b class="nc"><i>65</i>&nbsp;        setImage(page.getThumbnailUrl());</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    private void setImage(@Nullable String url) {
+<b class="nc"><i>69</i>&nbsp;        pageItemImageView.loadImage(url == null ? null : Uri.parse(url));</b>
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    @NonNull public OnThisDayPagesViewHolder setCallback(@Nullable ItemCallBack itemCallback) {
+<b class="nc"><i>73</i>&nbsp;        this.itemCallback = itemCallback;</b>
+<b class="nc"><i>74</i>&nbsp;        return this;</b>
+<i>75</i>&nbsp;    }
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    @OnClick(R.id.parent) void onBaseViewClicked() {
+<b class="nc"><i>78</i>&nbsp;        Context context = WikipediaApp.getInstance().getApplicationContext();</b>
+<b class="nc"><i>79</i>&nbsp;        PageTitle pageTitle = new PageTitle(selectedPage.getTitle(), wiki);</b>
+<b class="nc"><i>80</i>&nbsp;        HistoryEntry entry = new HistoryEntry(pageTitle,</b>
+<i>81</i>&nbsp;                isSingleCard ? HistoryEntry.SOURCE_ON_THIS_DAY_CARD : HistoryEntry.SOURCE_ON_THIS_DAY_ACTIVITY);
+<b class="nc"><i>82</i>&nbsp;        Intent intent = new Intent(ACTION_LOAD_IN_NEW_TAB)</b>
+<b class="nc"><i>83</i>&nbsp;                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)</b>
+<b class="nc"><i>84</i>&nbsp;                .setClass(context, PageActivity.class)</b>
+<b class="nc"><i>85</i>&nbsp;                .putExtra(EXTRA_HISTORYENTRY, entry)</b>
+<b class="nc"><i>86</i>&nbsp;                .putExtra(EXTRA_PAGETITLE, pageTitle);</b>
+<b class="nc"><i>87</i>&nbsp;        context.startActivity(intent);</b>
+<i>88</i>&nbsp;    }
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;    @OnLongClick(R.id.parent) boolean showOverflowMenu(View anchorView) {
+<b class="nc"><i>91</i>&nbsp;        PageTitle pageTitle = new PageTitle(selectedPage.getTitle(), wiki);</b>
+<b class="nc"><i>92</i>&nbsp;        HistoryEntry entry = new HistoryEntry(pageTitle,</b>
+<i>93</i>&nbsp;                isSingleCard ? HistoryEntry.SOURCE_ON_THIS_DAY_CARD : HistoryEntry.SOURCE_ON_THIS_DAY_ACTIVITY);
+<i>94</i>&nbsp;
+<b class="nc"><i>95</i>&nbsp;        itemCallback.onActionLongClick(entry);</b>
+<i>96</i>&nbsp;
+<b class="nc"><i>97</i>&nbsp;        return true;</b>
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

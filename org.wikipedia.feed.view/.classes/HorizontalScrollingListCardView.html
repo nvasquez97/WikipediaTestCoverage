@@ -1,0 +1,174 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: HorizontalScrollingListCardView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.view</a> ]
+</div>
+
+<h1>Coverage Summary for Class: HorizontalScrollingListCardView (org.wikipedia.feed.view)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HorizontalScrollingListCardView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">HorizontalScrollingListCardView$RecyclerAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 17)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.feed.view;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;import android.support.annotation.Nullable;
+<i>6</i>&nbsp;import android.support.v7.widget.LinearLayoutManager;
+<i>7</i>&nbsp;import android.support.v7.widget.RecyclerView;
+<i>8</i>&nbsp;import android.view.ViewGroup;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import org.wikipedia.R;
+<i>11</i>&nbsp;import org.wikipedia.feed.model.Card;
+<i>12</i>&nbsp;import org.wikipedia.util.DimenUtil;
+<i>13</i>&nbsp;import org.wikipedia.views.DefaultRecyclerAdapter;
+<i>14</i>&nbsp;import org.wikipedia.views.DefaultViewHolder;
+<i>15</i>&nbsp;import org.wikipedia.views.DontInterceptTouchListener;
+<i>16</i>&nbsp;import org.wikipedia.views.MarginItemDecoration;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;import java.util.List;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;public abstract class HorizontalScrollingListCardView&lt;T extends Card&gt; extends ListCardView&lt;T&gt; {
+<i>21</i>&nbsp;    public HorizontalScrollingListCardView(@NonNull Context context) {
+<b class="nc"><i>22</i>&nbsp;        super(context);</b>
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    @Override protected void initRecycler(@NonNull RecyclerView recyclerView) {
+<b class="nc"><i>26</i>&nbsp;        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));</b>
+<b class="nc"><i>27</i>&nbsp;        recyclerView.addItemDecoration(new MarginItemDecoration(getContext(),</b>
+<i>28</i>&nbsp;                R.dimen.view_horizontal_scrolling_list_card_item_margin_horizontal,
+<i>29</i>&nbsp;                R.dimen.view_horizontal_scrolling_list_card_item_margin_vertical,
+<i>30</i>&nbsp;                R.dimen.view_horizontal_scrolling_list_card_item_margin_horizontal,
+<i>31</i>&nbsp;                R.dimen.view_horizontal_scrolling_list_card_item_margin_vertical));
+<b class="nc"><i>32</i>&nbsp;        recyclerView.addOnItemTouchListener(new DontInterceptTouchListener());</b>
+<b class="nc"><i>33</i>&nbsp;        recyclerView.setNestedScrollingEnabled(false);</b>
+<b class="nc"><i>34</i>&nbsp;        recyclerView.setClipToPadding(false);</b>
+<b class="nc"><i>35</i>&nbsp;        MarginLayoutParams params = (MarginLayoutParams) recyclerView.getLayoutParams();</b>
+<b class="nc"><i>36</i>&nbsp;        final int height = DimenUtil.roundedDpToPx(228);</b>
+<b class="nc"><i>37</i>&nbsp;        params.height = height;</b>
+<b class="nc"><i>38</i>&nbsp;        final int padding = DimenUtil.roundedDpToPx(12);</b>
+<b class="nc"><i>39</i>&nbsp;        recyclerView.setPadding(padding, 0, padding, 0);</b>
+<i>40</i>&nbsp;    }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    protected abstract static class RecyclerAdapter&lt;T&gt;
+<i>43</i>&nbsp;            extends DefaultRecyclerAdapter&lt;T, HorizontalScrollingListCardItemView&gt; {
+<i>44</i>&nbsp;        protected RecyclerAdapter(@NonNull List&lt;T&gt; items) {
+<b class="nc"><i>45</i>&nbsp;            super(items);</b>
+<i>46</i>&nbsp;        }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;        @Nullable protected abstract FeedAdapter.Callback callback();
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;        @Override public DefaultViewHolder&lt;HorizontalScrollingListCardItemView&gt; onCreateViewHolder(ViewGroup parent,
+<i>51</i>&nbsp;                                                                                         int viewType) {
+<b class="nc"><i>52</i>&nbsp;            return new DefaultViewHolder&lt;&gt;(new HorizontalScrollingListCardItemView(parent.getContext()));</b>
+<i>53</i>&nbsp;        }
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;        @Override public void onViewAttachedToWindow(DefaultViewHolder&lt;HorizontalScrollingListCardItemView&gt; holder) {
+<b class="nc"><i>56</i>&nbsp;            super.onViewAttachedToWindow(holder);</b>
+<b class="nc"><i>57</i>&nbsp;            holder.getView().setCallback(callback());</b>
+<i>58</i>&nbsp;        }
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;        @Override public void onViewDetachedFromWindow(DefaultViewHolder&lt;HorizontalScrollingListCardItemView&gt; holder) {
+<b class="nc"><i>61</i>&nbsp;            holder.getView().setCallback(null);</b>
+<b class="nc"><i>62</i>&nbsp;            super.onViewDetachedFromWindow(holder);</b>
+<i>63</i>&nbsp;        }
+<i>64</i>&nbsp;    }
+<i>65</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

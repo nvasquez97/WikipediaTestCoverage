@@ -1,0 +1,140 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SiteInfo</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.settings</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SiteInfo (org.wikipedia.settings)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SiteInfo</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SiteInfo$ReadingListsConfig</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.settings;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.Nullable;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import com.google.gson.annotations.SerializedName;
+<i>6</i>&nbsp;
+<b class="nc"><i>7</i>&nbsp;public class SiteInfo {</b>
+<i>8</i>&nbsp;    @SuppressWarnings(&quot;unused&quot;) @Nullable private String mainpage;
+<i>9</i>&nbsp;    @SuppressWarnings(&quot;unused&quot;) @Nullable private String sitename;
+<i>10</i>&nbsp;    @SuppressWarnings(&quot;unused&quot;) @Nullable private String lang;
+<i>11</i>&nbsp;    @SuppressWarnings(&quot;unused&quot;) @SerializedName(&quot;readinglists-config&quot;)
+<i>12</i>&nbsp;    @Nullable private ReadingListsConfig readingListsConfig;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    @Nullable public String mainPage() {
+<b class="nc"><i>15</i>&nbsp;        return mainpage;</b>
+<i>16</i>&nbsp;    }
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    @Nullable public ReadingListsConfig readingListsConfig() {
+<b class="nc"><i>19</i>&nbsp;        return readingListsConfig;</b>
+<i>20</i>&nbsp;    }
+<i>21</i>&nbsp;
+<b class="nc"><i>22</i>&nbsp;    public static class ReadingListsConfig {</b>
+<i>23</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) private int maxListsPerUser;
+<i>24</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) private int maxEntriesPerList;
+<i>25</i>&nbsp;        @SuppressWarnings(&quot;unused&quot;) private int deletedRetentionDays;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;        public int maxEntriesPerList() {
+<b class="nc"><i>28</i>&nbsp;            return maxEntriesPerList;</b>
+<i>29</i>&nbsp;        }
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

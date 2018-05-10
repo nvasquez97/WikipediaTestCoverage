@@ -1,0 +1,354 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LanguagePreferenceDialog</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.settings</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LanguagePreferenceDialog (org.wikipedia.settings)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LanguagePreferenceDialog</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 40)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">LanguagePreferenceDialog$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LanguagePreferenceDialog$LanguagesAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 29)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LanguagePreferenceDialog$SiteMatrixCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 79)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.settings;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.os.Bundle;
+<i>5</i>&nbsp;import android.support.annotation.NonNull;
+<i>6</i>&nbsp;import android.support.annotation.Nullable;
+<i>7</i>&nbsp;import android.support.v7.app.AppCompatDialog;
+<i>8</i>&nbsp;import android.text.Editable;
+<i>9</i>&nbsp;import android.text.TextUtils;
+<i>10</i>&nbsp;import android.text.TextWatcher;
+<i>11</i>&nbsp;import android.view.LayoutInflater;
+<i>12</i>&nbsp;import android.view.View;
+<i>13</i>&nbsp;import android.view.ViewGroup;
+<i>14</i>&nbsp;import android.widget.BaseAdapter;
+<i>15</i>&nbsp;import android.widget.EditText;
+<i>16</i>&nbsp;import android.widget.ListView;
+<i>17</i>&nbsp;import android.widget.ProgressBar;
+<i>18</i>&nbsp;import android.widget.TextView;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;import org.apache.commons.lang3.StringUtils;
+<i>21</i>&nbsp;import org.wikipedia.R;
+<i>22</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>23</i>&nbsp;import org.wikipedia.analytics.AppLanguageSelectFunnel;
+<i>24</i>&nbsp;import org.wikipedia.language.SiteMatrixClient;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;import java.util.ArrayList;
+<i>27</i>&nbsp;import java.util.List;
+<i>28</i>&nbsp;import java.util.Locale;
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;import retrofit2.Call;
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;import static org.apache.commons.lang3.StringUtils.defaultString;
+<i>33</i>&nbsp;
+<b class="nc"><i>34</i>&nbsp;public class LanguagePreferenceDialog extends AppCompatDialog {</b>
+<i>35</i>&nbsp;    private ListView languagesList;
+<i>36</i>&nbsp;    private ProgressBar progressBar;
+<i>37</i>&nbsp;    @NonNull private final List&lt;String&gt; languageCodes;
+<i>38</i>&nbsp;    @NonNull private final WikipediaApp app;
+<i>39</i>&nbsp;    @NonNull private final AppLanguageSelectFunnel funnel;
+<i>40</i>&nbsp;    private LanguagesAdapter adapter;
+<i>41</i>&nbsp;
+<b class="nc"><i>42</i>&nbsp;    private final SiteMatrixCallback siteMatrixCallback = new SiteMatrixCallback();</b>
+<i>43</i>&nbsp;    @Nullable private List&lt;SiteMatrixClient.SiteInfo&gt; siteInfoList;
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    public LanguagePreferenceDialog(Context context, boolean initiatedFromSearchBar) {
+<b class="nc"><i>46</i>&nbsp;        super(context);</b>
+<b class="nc"><i>47</i>&nbsp;        setContentView(R.layout.dialog_preference_languages);</b>
+<i>48</i>&nbsp;
+<b class="nc"><i>49</i>&nbsp;        app = WikipediaApp.getInstance();</b>
+<b class="nc"><i>50</i>&nbsp;        languageCodes = app.getAppMruLanguageCodes();</b>
+<b class="nc"><i>51</i>&nbsp;        funnel = new AppLanguageSelectFunnel(initiatedFromSearchBar);</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    @Override
+<i>55</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>56</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<i>57</i>&nbsp;
+<b class="nc"><i>58</i>&nbsp;        TextView textView = findViewById(android.R.id.title);</b>
+<b class="nc"><i>59</i>&nbsp;        if (textView != null) {</b>
+<b class="nc"><i>60</i>&nbsp;            textView.setSingleLine(false);</b>
+<i>61</i>&nbsp;        }
+<i>62</i>&nbsp;
+<b class="nc"><i>63</i>&nbsp;        languagesList = findViewById(R.id.preference_languages_list);</b>
+<b class="nc"><i>64</i>&nbsp;        EditText languagesFilter = findViewById(R.id.preference_languages_filter);</b>
+<b class="nc"><i>65</i>&nbsp;        progressBar = findViewById(R.id.preference_languages_progress_bar);</b>
+<i>66</i>&nbsp;
+<b class="nc"><i>67</i>&nbsp;        languagesList.setOnItemClickListener((adapterView, view, i, l) -&gt; {</b>
+<b class="nc"><i>68</i>&nbsp;            String lang = (String) languagesList.getAdapter().getItem(i);</b>
+<b class="nc"><i>69</i>&nbsp;            if (!lang.equals(app.getAppOrSystemLanguageCode())) {</b>
+<b class="nc"><i>70</i>&nbsp;                app.setAppLanguageCode(lang);</b>
+<b class="nc"><i>71</i>&nbsp;                app.setMruLanguageCode(lang);</b>
+<b class="nc"><i>72</i>&nbsp;                funnel.logSelect();</b>
+<i>73</i>&nbsp;            }
+<b class="nc"><i>74</i>&nbsp;            dismiss();</b>
+<i>75</i>&nbsp;        });
+<i>76</i>&nbsp;
+<b class="nc"><i>77</i>&nbsp;        adapter = new LanguagesAdapter(languageCodes);</b>
+<b class="nc"><i>78</i>&nbsp;        languagesList.setAdapter(adapter);</b>
+<i>79</i>&nbsp;
+<b class="nc"><i>80</i>&nbsp;        int selectedLanguageIndex = languageCodes.indexOf(app.getAppLanguageCode());</b>
+<b class="nc"><i>81</i>&nbsp;        languagesList.setItemChecked(selectedLanguageIndex, true);</b>
+<i>82</i>&nbsp;
+<b class="nc"><i>83</i>&nbsp;        languagesFilter.addTextChangedListener(new TextWatcher() {</b>
+<i>84</i>&nbsp;            @Override
+<i>85</i>&nbsp;            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+<i>86</i>&nbsp;            }
+<i>87</i>&nbsp;
+<i>88</i>&nbsp;            @Override
+<i>89</i>&nbsp;            public void onTextChanged(CharSequence s, int start, int before, int count) {
+<i>90</i>&nbsp;            }
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;            @Override
+<i>93</i>&nbsp;            public void afterTextChanged(Editable s) {
+<b class="nc"><i>94</i>&nbsp;                ((LanguagesAdapter) languagesList.getAdapter()).setFilterText(s.toString());</b>
+<i>95</i>&nbsp;            }
+<i>96</i>&nbsp;        });
+<i>97</i>&nbsp;
+<b class="nc"><i>98</i>&nbsp;        progressBar.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>99</i>&nbsp;        new SiteMatrixClient().request(app.getWikiSite(), siteMatrixCallback);</b>
+<i>100</i>&nbsp;
+<b class="nc"><i>101</i>&nbsp;        funnel.logStart();</b>
+<i>102</i>&nbsp;    }
+<i>103</i>&nbsp;
+<i>104</i>&nbsp;    @Override
+<i>105</i>&nbsp;    public void cancel() {
+<b class="nc"><i>106</i>&nbsp;        funnel.logCancel();</b>
+<b class="nc"><i>107</i>&nbsp;        super.cancel();</b>
+<i>108</i>&nbsp;    }
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;    @Nullable private String getCanonicalName(@NonNull String code) {
+<b class="nc"><i>111</i>&nbsp;        String canonicalName = null;</b>
+<b class="nc"><i>112</i>&nbsp;        if (siteInfoList != null) {</b>
+<b class="nc"><i>113</i>&nbsp;            for (SiteMatrixClient.SiteInfo info : siteInfoList) {</b>
+<b class="nc"><i>114</i>&nbsp;                if (code.equals(info.code())) {</b>
+<b class="nc"><i>115</i>&nbsp;                    canonicalName = info.localName();</b>
+<i>116</i>&nbsp;                }
+<b class="nc"><i>117</i>&nbsp;            }</b>
+<i>118</i>&nbsp;        }
+<b class="nc"><i>119</i>&nbsp;        if (TextUtils.isEmpty(canonicalName)) {</b>
+<b class="nc"><i>120</i>&nbsp;            canonicalName = app.getAppLanguageCanonicalName(code);</b>
+<i>121</i>&nbsp;        }
+<b class="nc"><i>122</i>&nbsp;        return canonicalName;</b>
+<i>123</i>&nbsp;    }
+<i>124</i>&nbsp;
+<b class="nc"><i>125</i>&nbsp;    private final class LanguagesAdapter extends BaseAdapter {</b>
+<i>126</i>&nbsp;        @NonNull private final List&lt;String&gt; originalLanguageCodes;
+<i>127</i>&nbsp;        @NonNull private final List&lt;String&gt; languageCodes;
+<i>128</i>&nbsp;
+<b class="nc"><i>129</i>&nbsp;        private LanguagesAdapter(@NonNull List&lt;String&gt; languageCodes) {</b>
+<b class="nc"><i>130</i>&nbsp;            originalLanguageCodes = languageCodes;</b>
+<b class="nc"><i>131</i>&nbsp;            this.languageCodes = new ArrayList&lt;&gt;(originalLanguageCodes);</b>
+<i>132</i>&nbsp;        }
+<i>133</i>&nbsp;
+<i>134</i>&nbsp;        void setFilterText(String filter) {
+<b class="nc"><i>135</i>&nbsp;            this.languageCodes.clear();</b>
+<b class="nc"><i>136</i>&nbsp;            filter = StringUtils.stripAccents(filter).toLowerCase(Locale.getDefault());</b>
+<b class="nc"><i>137</i>&nbsp;            for (String code : originalLanguageCodes) {</b>
+<b class="nc"><i>138</i>&nbsp;                String localizedName = StringUtils.stripAccents(defaultString(app.getAppLanguageLocalizedName(code)));</b>
+<b class="nc"><i>139</i>&nbsp;                String canonicalName = StringUtils.stripAccents(defaultString(getCanonicalName(code)));</b>
+<b class="nc"><i>140</i>&nbsp;                if (code.contains(filter)</b>
+<b class="nc"><i>141</i>&nbsp;                        || localizedName.toLowerCase(Locale.getDefault()).contains(filter)</b>
+<b class="nc"><i>142</i>&nbsp;                        || canonicalName.toLowerCase(Locale.getDefault()).contains(filter)) {</b>
+<b class="nc"><i>143</i>&nbsp;                    this.languageCodes.add(code);</b>
+<i>144</i>&nbsp;                }
+<b class="nc"><i>145</i>&nbsp;            }</b>
+<b class="nc"><i>146</i>&nbsp;            notifyDataSetInvalidated();</b>
+<i>147</i>&nbsp;        }
+<i>148</i>&nbsp;
+<i>149</i>&nbsp;        @Override
+<i>150</i>&nbsp;        public int getCount() {
+<b class="nc"><i>151</i>&nbsp;            return languageCodes.size();</b>
+<i>152</i>&nbsp;        }
+<i>153</i>&nbsp;
+<i>154</i>&nbsp;        @Override
+<i>155</i>&nbsp;        public String getItem(int position) {
+<b class="nc"><i>156</i>&nbsp;            return languageCodes.get(position);</b>
+<i>157</i>&nbsp;        }
+<i>158</i>&nbsp;
+<i>159</i>&nbsp;        @Override
+<i>160</i>&nbsp;        public long getItemId(int position) {
+<b class="nc"><i>161</i>&nbsp;            return position;</b>
+<i>162</i>&nbsp;        }
+<i>163</i>&nbsp;
+<i>164</i>&nbsp;        @Override
+<i>165</i>&nbsp;        public View getView(int position, View convertView, ViewGroup parent) {
+<b class="nc"><i>166</i>&nbsp;            if (convertView == null) {</b>
+<b class="nc"><i>167</i>&nbsp;                convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_language_list_entry, parent, false);</b>
+<i>168</i>&nbsp;            }
+<i>169</i>&nbsp;
+<b class="nc"><i>170</i>&nbsp;            TextView localizedNameTextView = convertView.findViewById(R.id.localized_language_name);</b>
+<b class="nc"><i>171</i>&nbsp;            TextView canonicalNameTextView = convertView.findViewById(R.id.language_subtitle);</b>
+<i>172</i>&nbsp;
+<b class="nc"><i>173</i>&nbsp;            String languageCode = getItem(position);</b>
+<i>174</i>&nbsp;
+<b class="nc"><i>175</i>&nbsp;            localizedNameTextView.setText(app.getAppLanguageLocalizedName(languageCode));</b>
+<i>176</i>&nbsp;
+<b class="nc"><i>177</i>&nbsp;            String canonicalName = getCanonicalName(languageCode);</b>
+<b class="nc"><i>178</i>&nbsp;            if (progressBar.getVisibility() != View.VISIBLE) {</b>
+<b class="nc"><i>179</i>&nbsp;                canonicalNameTextView.setText(TextUtils.isEmpty(canonicalName)</b>
+<b class="nc"><i>180</i>&nbsp;                        ? app.getAppLanguageCanonicalName(languageCode) : canonicalName);</b>
+<i>181</i>&nbsp;            }
+<i>182</i>&nbsp;
+<b class="nc"><i>183</i>&nbsp;            return convertView;</b>
+<i>184</i>&nbsp;        }
+<i>185</i>&nbsp;    }
+<i>186</i>&nbsp;
+<b class="nc"><i>187</i>&nbsp;    private class SiteMatrixCallback implements SiteMatrixClient.Callback {</b>
+<i>188</i>&nbsp;        @Override
+<i>189</i>&nbsp;        public void success(@NonNull Call&lt;SiteMatrixClient.SiteMatrix&gt; call, @NonNull List&lt;SiteMatrixClient.SiteInfo&gt; sites) {
+<b class="nc"><i>190</i>&nbsp;            if (!isShowing()) {</b>
+<i>191</i>&nbsp;                return;
+<i>192</i>&nbsp;            }
+<b class="nc"><i>193</i>&nbsp;            progressBar.setVisibility(View.INVISIBLE);</b>
+<b class="nc"><i>194</i>&nbsp;            siteInfoList = sites;</b>
+<b class="nc"><i>195</i>&nbsp;            adapter.notifyDataSetInvalidated();</b>
+<i>196</i>&nbsp;        }
+<i>197</i>&nbsp;
+<i>198</i>&nbsp;        @Override
+<i>199</i>&nbsp;        public void failure(@NonNull Call&lt;SiteMatrixClient.SiteMatrix&gt; call, @NonNull Throwable caught) {
+<b class="nc"><i>200</i>&nbsp;            if (!isShowing()) {</b>
+<i>201</i>&nbsp;                return;
+<i>202</i>&nbsp;            }
+<b class="nc"><i>203</i>&nbsp;            progressBar.setVisibility(View.INVISIBLE);</b>
+<b class="nc"><i>204</i>&nbsp;            adapter.notifyDataSetInvalidated();</b>
+<i>205</i>&nbsp;        }
+<i>206</i>&nbsp;    }
+<i>207</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

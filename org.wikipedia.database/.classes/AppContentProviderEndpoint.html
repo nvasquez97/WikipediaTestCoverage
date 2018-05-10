@@ -1,0 +1,175 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: AppContentProviderEndpoint</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.database</a> ]
+</div>
+
+<h1>Coverage Summary for Class: AppContentProviderEndpoint (org.wikipedia.database)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AppContentProviderEndpoint</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 29)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.database;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.ContentValues;
+<i>4</i>&nbsp;import android.content.UriMatcher;
+<i>5</i>&nbsp;import android.net.Uri;
+<i>6</i>&nbsp;import android.support.annotation.NonNull;
+<i>7</i>&nbsp;import android.support.annotation.Nullable;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import org.wikipedia.database.contract.AppContentProviderContract;
+<i>10</i>&nbsp;import org.wikipedia.database.contract.EditHistoryContract;
+<i>11</i>&nbsp;import org.wikipedia.database.contract.PageHistoryContract;
+<i>12</i>&nbsp;import org.wikipedia.database.contract.PageImageHistoryContract;
+<i>13</i>&nbsp;import org.wikipedia.database.contract.SearchHistoryContract;
+<i>14</i>&nbsp;import org.wikipedia.model.EnumCode;
+<i>15</i>&nbsp;import org.wikipedia.model.EnumCodeMap;
+<i>16</i>&nbsp;
+<b class="nc"><i>17</i>&nbsp;public enum AppContentProviderEndpoint implements EnumCode {</b>
+<b class="nc"><i>18</i>&nbsp;    HISTORY_PAGE(100, PageHistoryContract.Page.PATH, PageHistoryContract.Page.TABLES,</b>
+<i>19</i>&nbsp;            PageHistoryContract.Page.PROJECTION),
+<b class="nc"><i>20</i>&nbsp;    HISTORY_PAGE_IMAGE(101, PageImageHistoryContract.Image.PATH,</b>
+<i>21</i>&nbsp;            PageImageHistoryContract.Image.TABLES, PageImageHistoryContract.Image.PROJECTION),
+<b class="nc"><i>22</i>&nbsp;    HISTORY_PAGE_WITH_IMAGE(102, PageHistoryContract.PageWithImage.PATH,</b>
+<i>23</i>&nbsp;            PageHistoryContract.PageWithImage.TABLES, PageHistoryContract.PageWithImage.PROJECTION),
+<b class="nc"><i>24</i>&nbsp;    HISTORY_EDIT_SUMMARY(103, EditHistoryContract.Summary.PATH, EditHistoryContract.Summary.TABLES,</b>
+<i>25</i>&nbsp;            EditHistoryContract.Summary.PROJECTION),
+<b class="nc"><i>26</i>&nbsp;    HISTORY_SEARCH_QUERY(104, SearchHistoryContract.Query.PATH, SearchHistoryContract.Query.TABLES,</b>
+<i>27</i>&nbsp;            SearchHistoryContract.Query.PROJECTION);
+<i>28</i>&nbsp;
+<b class="nc"><i>29</i>&nbsp;    private static final EnumCodeMap&lt;AppContentProviderEndpoint&gt; CODE_TO_ENUM = new EnumCodeMap&lt;&gt;(AppContentProviderEndpoint.class);</b>
+<b class="nc"><i>30</i>&nbsp;    private static final UriMatcher URI_TO_CODE = newUriToCode();</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    private final int code;
+<i>33</i>&nbsp;    @NonNull private final String authority;
+<i>34</i>&nbsp;    @NonNull private final String path;
+<i>35</i>&nbsp;    @NonNull private final String tables;
+<i>36</i>&nbsp;    @Nullable private final String[] projection;
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    @NonNull public static AppContentProviderEndpoint of(@NonNull Uri uri) {
+<b class="nc"><i>39</i>&nbsp;        int code = URI_TO_CODE.match(uri);</b>
+<b class="nc"><i>40</i>&nbsp;        if (code == UriMatcher.NO_MATCH) {</b>
+<b class="nc"><i>41</i>&nbsp;            throw new IllegalArgumentException(&quot;uri=&quot; + uri);</b>
+<i>42</i>&nbsp;        }
+<i>43</i>&nbsp;
+<b class="nc"><i>44</i>&nbsp;        return of(code);</b>
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    @Override public int code() {
+<b class="nc"><i>48</i>&nbsp;        return code;</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    @NonNull public String tables() {
+<b class="nc"><i>52</i>&nbsp;        return tables;</b>
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    @Nullable public String[] projection() {
+<b class="nc"><i>56</i>&nbsp;        return projection;</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    @Nullable public String type() {
+<b class="nc"><i>60</i>&nbsp;        return null;</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    @Nullable public Uri itemUri(@NonNull ContentValues values) {
+<b class="nc"><i>64</i>&nbsp;        return null;</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    AppContentProviderEndpoint(int code, @NonNull String path, @NonNull String tables,
+<i>68</i>&nbsp;                               @Nullable String[] projection) {
+<b class="nc"><i>69</i>&nbsp;        this(code, AppContentProviderContract.AUTHORITY, path, tables, projection);</b>
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    AppContentProviderEndpoint(int code, @NonNull String authority, @NonNull String path,
+<b class="nc"><i>73</i>&nbsp;                               @NonNull String tables, @Nullable String[] projection) {</b>
+<b class="nc"><i>74</i>&nbsp;        this.code = code;</b>
+<b class="nc"><i>75</i>&nbsp;        this.authority = authority;</b>
+<b class="nc"><i>76</i>&nbsp;        this.path = path;</b>
+<b class="nc"><i>77</i>&nbsp;        this.tables = tables;</b>
+<b class="nc"><i>78</i>&nbsp;        this.projection = projection;</b>
+<i>79</i>&nbsp;    }
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    @NonNull private static AppContentProviderEndpoint of(int code) {
+<b class="nc"><i>82</i>&nbsp;        return CODE_TO_ENUM.get(code);</b>
+<i>83</i>&nbsp;    }
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    private static UriMatcher newUriToCode() {
+<b class="nc"><i>86</i>&nbsp;        UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);</b>
+<b class="nc"><i>87</i>&nbsp;        for (AppContentProviderEndpoint value : AppContentProviderEndpoint.values()) {</b>
+<b class="nc"><i>88</i>&nbsp;            matcher.addURI(value.authority, value.path, value.code);</b>
+<i>89</i>&nbsp;        }
+<b class="nc"><i>90</i>&nbsp;        return matcher;</b>
+<i>91</i>&nbsp;    }
+<i>92</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

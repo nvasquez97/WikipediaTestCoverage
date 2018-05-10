@@ -1,0 +1,237 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: FlowLayout</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.views</a> ]
+</div>
+
+<h1>Coverage Summary for Class: FlowLayout (org.wikipedia.views)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FlowLayout</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 76)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.views;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.content.res.Resources;
+<i>5</i>&nbsp;import android.support.v4.view.ViewCompat;
+<i>6</i>&nbsp;import android.util.AttributeSet;
+<i>7</i>&nbsp;import android.view.View;
+<i>8</i>&nbsp;import android.view.ViewGroup;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import org.wikipedia.BuildConfig;
+<i>11</i>&nbsp;import org.wikipedia.util.DimenUtil;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import java.util.ArrayList;
+<i>14</i>&nbsp;import java.util.List;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;/**
+<i>17</i>&nbsp; * Implements a &quot;Flow&quot; layout, where child Views are arranged horizontally, and allowed
+<i>18</i>&nbsp; * to overflow onto multiple &quot;lines&quot;.
+<i>19</i>&nbsp; */
+<i>20</i>&nbsp;public class FlowLayout extends ViewGroup {
+<i>21</i>&nbsp;    private static final int HORIZONTAL_SPACING = 8;
+<i>22</i>&nbsp;    private static final int VERTICAL_SPACING = 8;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    private Resources resources;
+<b class="nc"><i>25</i>&nbsp;    private List&lt;Integer&gt; lineHeights = new ArrayList&lt;&gt;();</b>
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    public FlowLayout(Context context) {
+<b class="nc"><i>28</i>&nbsp;        super(context);</b>
+<b class="nc"><i>29</i>&nbsp;        resources = context.getResources();</b>
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    public FlowLayout(Context context, AttributeSet attrs) {
+<b class="nc"><i>33</i>&nbsp;        super(context, attrs);</b>
+<b class="nc"><i>34</i>&nbsp;        resources = context.getResources();</b>
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    @Override
+<i>38</i>&nbsp;    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+<b class="nc"><i>39</i>&nbsp;        if (BuildConfig.DEBUG &amp;&amp; MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.UNSPECIFIED) {</b>
+<b class="nc"><i>40</i>&nbsp;            throw new AssertionError();</b>
+<i>41</i>&nbsp;        }
+<i>42</i>&nbsp;
+<b class="nc"><i>43</i>&nbsp;        int width = MeasureSpec.getSize(widthMeasureSpec) - getPaddingLeft() - getPaddingRight();</b>
+<b class="nc"><i>44</i>&nbsp;        int height = MeasureSpec.getSize(heightMeasureSpec) - getPaddingTop() - getPaddingBottom();</b>
+<b class="nc"><i>45</i>&nbsp;        int count = getChildCount();</b>
+<b class="nc"><i>46</i>&nbsp;        int lineHeight = 0;</b>
+<i>47</i>&nbsp;
+<b class="nc"><i>48</i>&nbsp;        int xpos = getPaddingLeft();</b>
+<b class="nc"><i>49</i>&nbsp;        int ypos = getPaddingTop();</b>
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;        int childHeightMeasureSpec;
+<b class="nc"><i>52</i>&nbsp;        if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.AT_MOST) {</b>
+<b class="nc"><i>53</i>&nbsp;            childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST);</b>
+<i>54</i>&nbsp;        } else {
+<b class="nc"><i>55</i>&nbsp;            childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);</b>
+<i>56</i>&nbsp;        }
+<i>57</i>&nbsp;
+<b class="nc"><i>58</i>&nbsp;        lineHeights.clear();</b>
+<b class="nc"><i>59</i>&nbsp;        boolean overflowed = false;</b>
+<b class="nc"><i>60</i>&nbsp;        for (int i = 0; i &lt; count; i++) {</b>
+<b class="nc"><i>61</i>&nbsp;            View child = getChildAt(i);</b>
+<b class="nc"><i>62</i>&nbsp;            if (child.getVisibility() != GONE) {</b>
+<b class="nc"><i>63</i>&nbsp;                child.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST), childHeightMeasureSpec);</b>
+<b class="nc"><i>64</i>&nbsp;                int childWidth = child.getMeasuredWidth() + (int) DimenUtil.dpToPx(HORIZONTAL_SPACING);</b>
+<b class="nc"><i>65</i>&nbsp;                lineHeight = Math.max(lineHeight, child.getMeasuredHeight());</b>
+<i>66</i>&nbsp;
+<b class="nc"><i>67</i>&nbsp;                if (xpos + childWidth &gt; width) {</b>
+<b class="nc"><i>68</i>&nbsp;                    xpos = getPaddingLeft();</b>
+<b class="nc"><i>69</i>&nbsp;                    lineHeight += (int) DimenUtil.dpToPx(VERTICAL_SPACING);</b>
+<b class="nc"><i>70</i>&nbsp;                    lineHeights.add(lineHeight);</b>
+<b class="nc"><i>71</i>&nbsp;                    ypos += lineHeight;</b>
+<b class="nc"><i>72</i>&nbsp;                    lineHeight = 0;</b>
+<b class="nc"><i>73</i>&nbsp;                    overflowed = true;</b>
+<i>74</i>&nbsp;                }
+<b class="nc"><i>75</i>&nbsp;                xpos += childWidth;</b>
+<i>76</i>&nbsp;            }
+<i>77</i>&nbsp;        }
+<b class="nc"><i>78</i>&nbsp;        if (overflowed) {</b>
+<b class="nc"><i>79</i>&nbsp;            if (lineHeight &gt; 0) {</b>
+<b class="nc"><i>80</i>&nbsp;                lineHeights.add(lineHeight);</b>
+<i>81</i>&nbsp;            } else {
+<b class="nc"><i>82</i>&nbsp;                if (getChildCount() &gt; 0) {</b>
+<b class="nc"><i>83</i>&nbsp;                    lineHeights.add(getChildAt(getChildCount() - 1).getMeasuredHeight() + (int) DimenUtil.dpToPx(VERTICAL_SPACING));</b>
+<i>84</i>&nbsp;                }
+<i>85</i>&nbsp;            }
+<i>86</i>&nbsp;        } else {
+<b class="nc"><i>87</i>&nbsp;            if (lineHeight &gt; 0) {</b>
+<b class="nc"><i>88</i>&nbsp;                lineHeights.add(lineHeight);</b>
+<i>89</i>&nbsp;            }
+<i>90</i>&nbsp;        }
+<i>91</i>&nbsp;
+<b class="nc"><i>92</i>&nbsp;        int totalHeight = 0;</b>
+<b class="nc"><i>93</i>&nbsp;        for (int i : lineHeights) {</b>
+<b class="nc"><i>94</i>&nbsp;            totalHeight += i;</b>
+<b class="nc"><i>95</i>&nbsp;        }</b>
+<b class="nc"><i>96</i>&nbsp;        if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.UNSPECIFIED) {</b>
+<b class="nc"><i>97</i>&nbsp;            height = totalHeight;</b>
+<b class="nc"><i>98</i>&nbsp;        } else if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.AT_MOST) {</b>
+<b class="nc"><i>99</i>&nbsp;            if (totalHeight &lt; height) {</b>
+<b class="nc"><i>100</i>&nbsp;                height = totalHeight;</b>
+<i>101</i>&nbsp;            }
+<i>102</i>&nbsp;        }
+<b class="nc"><i>103</i>&nbsp;        setMeasuredDimension(width, height);</b>
+<i>104</i>&nbsp;    }
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;    @Override
+<i>107</i>&nbsp;    protected ViewGroup.LayoutParams generateDefaultLayoutParams() {
+<b class="nc"><i>108</i>&nbsp;        return new LayoutParams(0, 0);</b>
+<i>109</i>&nbsp;    }
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;    @Override
+<i>112</i>&nbsp;    protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
+<b class="nc"><i>113</i>&nbsp;        return p != null;</b>
+<i>114</i>&nbsp;    }
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;    @Override
+<i>117</i>&nbsp;    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+<b class="nc"><i>118</i>&nbsp;        int count = getChildCount();</b>
+<b class="nc"><i>119</i>&nbsp;        int width = r - l;</b>
+<i>120</i>&nbsp;
+<b class="nc"><i>121</i>&nbsp;        boolean isRtl = ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL;</b>
+<b class="nc"><i>122</i>&nbsp;        int xpos = isRtl ? width - getPaddingRight() : getPaddingLeft();</b>
+<b class="nc"><i>123</i>&nbsp;        int ypos = getPaddingTop();</b>
+<b class="nc"><i>124</i>&nbsp;        int curLine = 0;</b>
+<i>125</i>&nbsp;
+<b class="nc"><i>126</i>&nbsp;        for (int i = 0; i &lt; count; i++) {</b>
+<b class="nc"><i>127</i>&nbsp;            View child = getChildAt(i);</b>
+<b class="nc"><i>128</i>&nbsp;            if (child.getVisibility() != GONE) {</b>
+<b class="nc"><i>129</i>&nbsp;                int childw = child.getMeasuredWidth();</b>
+<b class="nc"><i>130</i>&nbsp;                int childh = child.getMeasuredHeight();</b>
+<b class="nc"><i>131</i>&nbsp;                if (isRtl) {</b>
+<b class="nc"><i>132</i>&nbsp;                    if (xpos - childw &lt; 0) {</b>
+<b class="nc"><i>133</i>&nbsp;                        xpos = width - getPaddingRight();</b>
+<b class="nc"><i>134</i>&nbsp;                        if (lineHeights.size() &gt; curLine) {</b>
+<b class="nc"><i>135</i>&nbsp;                            ypos += lineHeights.get(curLine++);</b>
+<i>136</i>&nbsp;                        }
+<i>137</i>&nbsp;                    }
+<b class="nc"><i>138</i>&nbsp;                    child.layout(xpos - getChildAt(i).getMeasuredWidth(), ypos,</b>
+<b class="nc"><i>139</i>&nbsp;                            xpos - getChildAt(i).getMeasuredWidth() + childw, ypos + childh);</b>
+<b class="nc"><i>140</i>&nbsp;                    xpos -= childw + (int) DimenUtil.dpToPx(HORIZONTAL_SPACING);</b>
+<i>141</i>&nbsp;                } else {
+<b class="nc"><i>142</i>&nbsp;                    if (xpos + childw &gt; width) {</b>
+<b class="nc"><i>143</i>&nbsp;                        xpos = getPaddingLeft();</b>
+<b class="nc"><i>144</i>&nbsp;                        if (lineHeights.size() &gt; curLine) {</b>
+<b class="nc"><i>145</i>&nbsp;                            ypos += lineHeights.get(curLine++);</b>
+<i>146</i>&nbsp;                        }
+<i>147</i>&nbsp;                    }
+<b class="nc"><i>148</i>&nbsp;                    child.layout(xpos, ypos, xpos + childw, ypos + childh);</b>
+<b class="nc"><i>149</i>&nbsp;                    xpos += childw + (int) DimenUtil.dpToPx(HORIZONTAL_SPACING);</b>
+<i>150</i>&nbsp;                }
+<i>151</i>&nbsp;            }
+<i>152</i>&nbsp;        }
+<i>153</i>&nbsp;    }
+<i>154</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PageClient</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.dataclient.page</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PageClient (org.wikipedia.dataclient.page)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">PageClient</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.dataclient.page;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.annotation.Nullable;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import okhttp3.CacheControl;
+<i>7</i>&nbsp;import retrofit2.Call;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;/**
+<i>10</i>&nbsp; * Generic interface for Page content service.
+<i>11</i>&nbsp; * Usually we would use direct Retrofit Callbacks here but since we have two ways of
+<i>12</i>&nbsp; * getting to the data (MW API and RESTBase) we add this layer of indirection -- until we drop one.
+<i>13</i>&nbsp; */
+<i>14</i>&nbsp;public interface PageClient {
+<i>15</i>&nbsp;    /**
+<i>16</i>&nbsp;     * Gets a page summary for a given title -- for link previews
+<i>17</i>&nbsp;     *
+<i>18</i>&nbsp;     * @param title the page title to be used including prefix
+<i>19</i>&nbsp;     */
+<i>20</i>&nbsp;    @NonNull &lt;T extends PageSummary&gt; Call&lt;T&gt; summary(@NonNull String title);
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     * Gets the lead section and initial metadata of a given title.
+<i>24</i>&nbsp;     *
+<i>25</i>&nbsp;     * @param title the page title with prefix if necessary
+<i>26</i>&nbsp;     * @param leadThumbnailWidth one of the bucket widths for the lead image
+<i>27</i>&nbsp;     */
+<i>28</i>&nbsp;    @NonNull &lt;T extends PageLead&gt; Call&lt;T&gt; lead(@Nullable CacheControl cacheControl,
+<i>29</i>&nbsp;                                               @Nullable String saveOfflineHeader,
+<i>30</i>&nbsp;                                               @NonNull String title,
+<i>31</i>&nbsp;                                               int leadThumbnailWidth);
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    /**
+<i>34</i>&nbsp;     * Gets the remaining sections of a given title.
+<i>35</i>&nbsp;     *
+<i>36</i>&nbsp;     * @param title the page title to be used including prefix
+<i>37</i>&nbsp;     */
+<i>38</i>&nbsp;    @NonNull &lt;T extends PageRemaining&gt; Call&lt;T&gt; sections(@Nullable CacheControl cacheControl,
+<i>39</i>&nbsp;                                                        @Nullable String saveOfflineHeader,
+<i>40</i>&nbsp;                                                        @NonNull String title);
+<i>41</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

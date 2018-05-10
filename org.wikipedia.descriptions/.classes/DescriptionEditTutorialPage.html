@@ -1,0 +1,121 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DescriptionEditTutorialPage</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.descriptions</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DescriptionEditTutorialPage (org.wikipedia.descriptions)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DescriptionEditTutorialPage</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.descriptions;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.LayoutRes;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import org.wikipedia.R;
+<i>7</i>&nbsp;import org.wikipedia.model.EnumCode;
+<i>8</i>&nbsp;import org.wikipedia.model.EnumCodeMap;
+<i>9</i>&nbsp;
+<b class="nc"><i>10</i>&nbsp;enum DescriptionEditTutorialPage implements EnumCode {</b>
+<b class="nc"><i>11</i>&nbsp;    PAGE_ONE(R.layout.inflate_description_edit_tutorial_page_one),</b>
+<b class="nc"><i>12</i>&nbsp;    PAGE_TWO(R.layout.inflate_description_edit_tutorial_page_two);</b>
+<i>13</i>&nbsp;
+<b class="nc"><i>14</i>&nbsp;    private static EnumCodeMap&lt;DescriptionEditTutorialPage&gt; MAP</b>
+<i>15</i>&nbsp;            = new EnumCodeMap&lt;&gt;(DescriptionEditTutorialPage.class);
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    @LayoutRes private final int layout;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    int getLayout() {
+<b class="nc"><i>20</i>&nbsp;        return layout;</b>
+<i>21</i>&nbsp;    }
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    @NonNull public static DescriptionEditTutorialPage of(int code) {
+<b class="nc"><i>24</i>&nbsp;        return MAP.get(code);</b>
+<i>25</i>&nbsp;    }
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    public static int size() {
+<b class="nc"><i>28</i>&nbsp;        return MAP.size();</b>
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    @Override public int code() {
+<b class="nc"><i>32</i>&nbsp;        return ordinal();</b>
+<i>33</i>&nbsp;    }
+<i>34</i>&nbsp;
+<b class="nc"><i>35</i>&nbsp;    DescriptionEditTutorialPage(@LayoutRes int layout) {</b>
+<b class="nc"><i>36</i>&nbsp;        this.layout = layout;</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

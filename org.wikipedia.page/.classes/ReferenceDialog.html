@@ -1,0 +1,113 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ReferenceDialog</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.page</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ReferenceDialog (org.wikipedia.page)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ReferenceDialog</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.page;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;import android.support.design.widget.BottomSheetDialog;
+<i>6</i>&nbsp;import android.view.LayoutInflater;
+<i>7</i>&nbsp;import android.view.View;
+<i>8</i>&nbsp;import android.widget.TextView;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import org.wikipedia.R;
+<i>11</i>&nbsp;import org.wikipedia.util.StringUtil;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;/**
+<i>14</i>&nbsp; * A dialog that displays the currently clicked reference.
+<i>15</i>&nbsp; */
+<i>16</i>&nbsp;public class ReferenceDialog extends BottomSheetDialog {
+<i>17</i>&nbsp;    public ReferenceDialog(@NonNull Context context, @NonNull LinkHandler linkHandler,
+<i>18</i>&nbsp;                           @NonNull String html, @NonNull String linkText) {
+<b class="nc"><i>19</i>&nbsp;        super(context);</b>
+<b class="nc"><i>20</i>&nbsp;        View rootView = LayoutInflater.from(context).inflate(R.layout.dialog_reference, null);</b>
+<b class="nc"><i>21</i>&nbsp;        setContentView(rootView);</b>
+<i>22</i>&nbsp;
+<b class="nc"><i>23</i>&nbsp;        TextView referenceText = rootView.findViewById(R.id.reference_text);</b>
+<b class="nc"><i>24</i>&nbsp;        referenceText.setText(StringUtil.fromHtml(html));</b>
+<b class="nc"><i>25</i>&nbsp;        referenceText.setMovementMethod(new LinkMovementMethodExt(linkHandler));</b>
+<i>26</i>&nbsp;
+<b class="nc"><i>27</i>&nbsp;        TextView titleText = rootView.findViewById(R.id.reference_title_text);</b>
+<b class="nc"><i>28</i>&nbsp;        titleText.setText(getContext().getString(R.string.reference_title, linkText));</b>
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

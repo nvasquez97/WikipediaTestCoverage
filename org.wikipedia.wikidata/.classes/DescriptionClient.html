@@ -1,0 +1,178 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DescriptionClient</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.wikidata</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DescriptionClient (org.wikipedia.wikidata)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DescriptionClient</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DescriptionClient$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">DescriptionClient$Callback</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.wikidata;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.annotation.VisibleForTesting;
+<i>5</i>&nbsp;import android.text.TextUtils;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>8</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwException;
+<i>9</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwQueryPage;
+<i>10</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwQueryResponse;
+<i>11</i>&nbsp;import org.wikipedia.dataclient.retrofit.MwCachedService;
+<i>12</i>&nbsp;import org.wikipedia.page.PageTitle;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import java.io.IOException;
+<i>15</i>&nbsp;import java.util.List;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;import retrofit2.Call;
+<i>18</i>&nbsp;import retrofit2.Response;
+<i>19</i>&nbsp;import retrofit2.http.GET;
+<i>20</i>&nbsp;import retrofit2.http.Query;
+<i>21</i>&nbsp;
+<b class="nc"><i>22</i>&nbsp;public class DescriptionClient {</b>
+<b class="nc"><i>23</i>&nbsp;    @NonNull private MwCachedService&lt;Service&gt; cachedService = new MwCachedService&lt;&gt;(Service.class);</b>
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    public interface Callback {
+<i>26</i>&nbsp;        void success(@NonNull Call&lt;MwQueryResponse&gt; call, @NonNull List&lt;MwQueryPage&gt; results);
+<i>27</i>&nbsp;        void failure(@NonNull Call&lt;MwQueryResponse&gt; call, @NonNull Throwable caught);
+<i>28</i>&nbsp;    }
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    public Call&lt;MwQueryResponse&gt; request(@NonNull WikiSite wiki, @NonNull List&lt;PageTitle&gt; titles,
+<i>31</i>&nbsp;                                         @NonNull Callback cb) {
+<b class="nc"><i>32</i>&nbsp;        return request(cachedService.service(wiki), titles, cb);</b>
+<i>33</i>&nbsp;    }
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    @VisibleForTesting
+<i>36</i>&nbsp;    Call&lt;MwQueryResponse&gt; request(@NonNull Service service, @NonNull final List&lt;PageTitle&gt; titles,
+<i>37</i>&nbsp;                                  @NonNull final Callback cb) {
+<b class="nc"><i>38</i>&nbsp;        Call&lt;MwQueryResponse&gt; call = service.request(TextUtils.join(&quot;|&quot;, titles));</b>
+<i>39</i>&nbsp;
+<b class="nc"><i>40</i>&nbsp;        call.enqueue(new retrofit2.Callback&lt;MwQueryResponse&gt;() {</b>
+<i>41</i>&nbsp;            @Override public void onResponse(Call&lt;MwQueryResponse&gt; call,
+<i>42</i>&nbsp;                                             Response&lt;MwQueryResponse&gt; response) {
+<b class="nc"><i>43</i>&nbsp;                if (response.body().success()) {</b>
+<i>44</i>&nbsp;                    // noinspection ConstantConditions
+<b class="nc"><i>45</i>&nbsp;                    cb.success(call, response.body().query().pages());</b>
+<b class="nc"><i>46</i>&nbsp;                } else if (response.body().hasError()) {</b>
+<i>47</i>&nbsp;                    // noinspection ConstantConditions
+<b class="nc"><i>48</i>&nbsp;                    cb.failure(call, new MwException(response.body().getError()));</b>
+<i>49</i>&nbsp;                } else {
+<b class="nc"><i>50</i>&nbsp;                    cb.failure(call, new IOException(&quot;An unknown error occurred.&quot;));</b>
+<i>51</i>&nbsp;                }
+<i>52</i>&nbsp;            }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;            @Override
+<i>55</i>&nbsp;            public void onFailure(Call&lt;MwQueryResponse&gt; call, Throwable t) {
+<b class="nc"><i>56</i>&nbsp;                cb.failure(call, t);</b>
+<i>57</i>&nbsp;            }
+<i>58</i>&nbsp;        });
+<b class="nc"><i>59</i>&nbsp;        return call;</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    @VisibleForTesting interface Service {
+<i>63</i>&nbsp;        @GET(&quot;w/api.php?action=query&amp;format=json&amp;formatversion=2&amp;prop=pageterms&amp;wbptterms=description&quot;)
+<i>64</i>&nbsp;        Call&lt;MwQueryResponse&gt; request(@NonNull @Query(&quot;titles&quot;) String titles);
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,158 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CaptchaResult</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.captcha</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CaptchaResult (org.wikipedia.captcha)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CaptchaResult</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CaptchaResult$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.captcha;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.os.Parcel;
+<i>4</i>&nbsp;import android.os.Parcelable;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>7</i>&nbsp;import org.wikipedia.edit.EditResult;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;// Handles only Image Captchas
+<i>10</i>&nbsp;public class CaptchaResult extends EditResult {
+<i>11</i>&nbsp;    private final String captchaId;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    public CaptchaResult(String captchaId) {
+<b class="nc"><i>14</i>&nbsp;        super(&quot;Failure&quot;);</b>
+<b class="nc"><i>15</i>&nbsp;        this.captchaId = captchaId;</b>
+<b class="nc"><i>16</i>&nbsp;    }</b>
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    protected CaptchaResult(Parcel in) {
+<b class="nc"><i>19</i>&nbsp;        super(in);</b>
+<b class="nc"><i>20</i>&nbsp;        captchaId = in.readString();</b>
+<b class="nc"><i>21</i>&nbsp;    }</b>
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    public String getCaptchaId() {
+<b class="nc"><i>24</i>&nbsp;        return captchaId;</b>
+<i>25</i>&nbsp;    }
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    public String getCaptchaUrl(WikiSite wiki) {
+<b class="nc"><i>28</i>&nbsp;        return wiki.url(&quot;index.php&quot;) + &quot;?title=Special:Captcha/image&amp;wpCaptchaId=&quot; + captchaId;</b>
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    @Override
+<i>32</i>&nbsp;    public void writeToParcel(Parcel dest, int flags) {
+<b class="nc"><i>33</i>&nbsp;        super.writeToParcel(dest, flags);</b>
+<b class="nc"><i>34</i>&nbsp;        dest.writeString(captchaId);</b>
+<b class="nc"><i>35</i>&nbsp;    }</b>
+<i>36</i>&nbsp;
+<b class="nc"><i>37</i>&nbsp;    public static final Parcelable.Creator&lt;CaptchaResult&gt; CREATOR</b>
+<b class="nc"><i>38</i>&nbsp;            = new Parcelable.Creator&lt;CaptchaResult&gt;() {</b>
+<i>39</i>&nbsp;        @Override
+<i>40</i>&nbsp;        public CaptchaResult createFromParcel(Parcel in) {
+<b class="nc"><i>41</i>&nbsp;            return new CaptchaResult(in);</b>
+<i>42</i>&nbsp;        }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;        @Override
+<i>45</i>&nbsp;        public CaptchaResult[] newArray(int size) {
+<b class="nc"><i>46</i>&nbsp;            return new CaptchaResult[size];</b>
+<i>47</i>&nbsp;        }
+<i>48</i>&nbsp;    };
+<i>49</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

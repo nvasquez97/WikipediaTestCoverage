@@ -1,0 +1,136 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DailyStatsFunnel</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.analytics</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DailyStatsFunnel (org.wikipedia.analytics)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DailyStatsFunnel</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.analytics;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.content.pm.PackageManager;
+<i>5</i>&nbsp;import android.support.annotation.NonNull;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.json.JSONObject;
+<i>8</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import java.util.concurrent.TimeUnit;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;// https://meta.wikimedia.org/wiki/Schema:MobileWikiAppDailyStats
+<i>13</i>&nbsp;public class DailyStatsFunnel extends Funnel {
+<i>14</i>&nbsp;    private static final String SCHEMA_NAME = &quot;MobileWikiAppDailyStats&quot;;
+<i>15</i>&nbsp;    private static final int SCHEMA_REVISION = 17836915;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    public DailyStatsFunnel(WikipediaApp app) {
+<b class="nc"><i>18</i>&nbsp;        super(app, SCHEMA_NAME, SCHEMA_REVISION, Funnel.SAMPLE_LOG_100);</b>
+<i>19</i>&nbsp;    }
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    public void log(Context context) {
+<b class="nc"><i>22</i>&nbsp;        log(getInstallAgeDays(context));</b>
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    public void log(long appInstallAgeDays) {
+<b class="nc"><i>26</i>&nbsp;        log(&quot;appInstallAgeDays&quot;, appInstallAgeDays);</b>
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    @Override protected void preprocessSessionToken(@NonNull JSONObject eventData) { }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    private long getInstallAgeDays(Context context) {
+<b class="nc"><i>32</i>&nbsp;        return TimeUnit.MILLISECONDS.toDays(getInstallAge(context));</b>
+<i>33</i>&nbsp;    }
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    private long getInstallAge(Context context) {
+<b class="nc"><i>36</i>&nbsp;        return getAbsoluteTime() - getInstallTime(context);</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    /** @return The absolute time since initial app install in milliseconds. */
+<i>40</i>&nbsp;    private long getInstallTime(Context context) {
+<i>41</i>&nbsp;        try {
+<b class="nc"><i>42</i>&nbsp;            return context.getPackageManager()</b>
+<b class="nc"><i>43</i>&nbsp;                    .getPackageInfo(context.getPackageName(), 0)</b>
+<i>44</i>&nbsp;                    .firstInstallTime;
+<b class="nc"><i>45</i>&nbsp;        } catch (PackageManager.NameNotFoundException e) {</b>
+<b class="nc"><i>46</i>&nbsp;            throw new RuntimeException(e);</b>
+<i>47</i>&nbsp;        }
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    private long getAbsoluteTime() {
+<b class="nc"><i>51</i>&nbsp;        return System.currentTimeMillis();</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

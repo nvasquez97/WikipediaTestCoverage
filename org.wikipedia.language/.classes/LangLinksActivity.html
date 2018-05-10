@@ -1,0 +1,452 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LangLinksActivity</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.language</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LangLinksActivity (org.wikipedia.language)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LangLinksActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 49)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">LangLinksActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LangLinksActivity$ClientCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 34)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LangLinksActivity$LangLinksAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 29)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 118)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.language;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Intent;
+<i>4</i>&nbsp;import android.os.Bundle;
+<i>5</i>&nbsp;import android.os.Parcelable;
+<i>6</i>&nbsp;import android.support.annotation.NonNull;
+<i>7</i>&nbsp;import android.support.annotation.VisibleForTesting;
+<i>8</i>&nbsp;import android.text.Editable;
+<i>9</i>&nbsp;import android.text.TextWatcher;
+<i>10</i>&nbsp;import android.view.LayoutInflater;
+<i>11</i>&nbsp;import android.view.View;
+<i>12</i>&nbsp;import android.view.ViewGroup;
+<i>13</i>&nbsp;import android.widget.BaseAdapter;
+<i>14</i>&nbsp;import android.widget.EditText;
+<i>15</i>&nbsp;import android.widget.ListView;
+<i>16</i>&nbsp;import android.widget.TextView;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;import org.wikipedia.R;
+<i>19</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>20</i>&nbsp;import org.wikipedia.activity.BaseActivity;
+<i>21</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>22</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwQueryResponse;
+<i>23</i>&nbsp;import org.wikipedia.history.HistoryEntry;
+<i>24</i>&nbsp;import org.wikipedia.page.PageActivity;
+<i>25</i>&nbsp;import org.wikipedia.page.PageTitle;
+<i>26</i>&nbsp;import org.wikipedia.settings.SiteInfoClient;
+<i>27</i>&nbsp;import org.wikipedia.util.ResourceUtil;
+<i>28</i>&nbsp;import org.wikipedia.views.ViewAnimations;
+<i>29</i>&nbsp;import org.wikipedia.views.WikiErrorView;
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;import java.util.ArrayList;
+<i>32</i>&nbsp;import java.util.Arrays;
+<i>33</i>&nbsp;import java.util.List;
+<i>34</i>&nbsp;import java.util.ListIterator;
+<i>35</i>&nbsp;import java.util.Locale;
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;import retrofit2.Call;
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;import static org.apache.commons.lang3.StringUtils.defaultString;
+<i>40</i>&nbsp;import static org.wikipedia.util.DeviceUtil.hideSoftKeyboard;
+<i>41</i>&nbsp;
+<b class="nc"><i>42</i>&nbsp;public class LangLinksActivity extends BaseActivity {</b>
+<i>43</i>&nbsp;    public static final int ACTIVITY_RESULT_LANGLINK_SELECT = 1;
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    public static final String ACTION_LANGLINKS_FOR_TITLE = &quot;org.wikipedia.langlinks_for_title&quot;;
+<i>46</i>&nbsp;    public static final String EXTRA_PAGETITLE = &quot;org.wikipedia.pagetitle&quot;;
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    private static final String LANGUAGE_ENTRIES_BUNDLE_KEY = &quot;languageEntries&quot;;
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    private static final String GOTHIC_LANGUAGE_CODE = &quot;got&quot;;
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    private List&lt;PageTitle&gt; languageEntries;
+<i>53</i>&nbsp;    private PageTitle title;
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    private WikipediaApp app;
+<i>56</i>&nbsp;    private LangLinksClient client;
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    private ListView langLinksList;
+<i>59</i>&nbsp;    private View langLinksProgress;
+<i>60</i>&nbsp;    private View langLinksContainer;
+<i>61</i>&nbsp;    private View langLinksEmpty;
+<i>62</i>&nbsp;    private View langLinksNoMatch;
+<i>63</i>&nbsp;    private WikiErrorView langLinksError;
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    @Override
+<i>66</i>&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>67</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>68</i>&nbsp;        app = WikipediaApp.getInstance();</b>
+<b class="nc"><i>69</i>&nbsp;        setStatusBarColor(ResourceUtil.getThemedAttributeId(this, R.attr.page_status_bar_color));</b>
+<i>70</i>&nbsp;
+<b class="nc"><i>71</i>&nbsp;        setContentView(R.layout.activity_langlinks);</b>
+<i>72</i>&nbsp;
+<b class="nc"><i>73</i>&nbsp;        if (!getIntent().getAction().equals(ACTION_LANGLINKS_FOR_TITLE)) {</b>
+<b class="nc"><i>74</i>&nbsp;            throw new RuntimeException(&quot;Only ACTION_LANGLINKS_FOR_TITLE is supported&quot;);</b>
+<i>75</i>&nbsp;        }
+<i>76</i>&nbsp;
+<b class="nc"><i>77</i>&nbsp;        langLinksList = findViewById(R.id.langlinks_list);</b>
+<b class="nc"><i>78</i>&nbsp;        langLinksProgress = findViewById(R.id.langlinks_load_progress);</b>
+<b class="nc"><i>79</i>&nbsp;        langLinksContainer = findViewById(R.id.langlinks_list_container);</b>
+<b class="nc"><i>80</i>&nbsp;        langLinksEmpty = findViewById(R.id.langlinks_empty);</b>
+<b class="nc"><i>81</i>&nbsp;        langLinksNoMatch = findViewById(R.id.langlinks_no_match);</b>
+<b class="nc"><i>82</i>&nbsp;        langLinksError = findViewById(R.id.langlinks_error);</b>
+<b class="nc"><i>83</i>&nbsp;        EditText langLinksFilter = findViewById(R.id.langlinks_filter);</b>
+<i>84</i>&nbsp;
+<b class="nc"><i>85</i>&nbsp;        title = getIntent().getParcelableExtra(EXTRA_PAGETITLE);</b>
+<i>86</i>&nbsp;
+<b class="nc"><i>87</i>&nbsp;        if (savedInstanceState != null &amp;&amp; savedInstanceState.containsKey(LANGUAGE_ENTRIES_BUNDLE_KEY)) {</b>
+<b class="nc"><i>88</i>&nbsp;            languageEntries = savedInstanceState.getParcelableArrayList(LANGUAGE_ENTRIES_BUNDLE_KEY);</b>
+<i>89</i>&nbsp;        }
+<i>90</i>&nbsp;
+<b class="nc"><i>91</i>&nbsp;        client = new LangLinksClient();</b>
+<b class="nc"><i>92</i>&nbsp;        fetchLangLinks();</b>
+<i>93</i>&nbsp;
+<b class="nc"><i>94</i>&nbsp;        langLinksError.setRetryClickListener((v) -&gt; {</b>
+<b class="nc"><i>95</i>&nbsp;            ViewAnimations.crossFade(langLinksError, langLinksProgress);</b>
+<b class="nc"><i>96</i>&nbsp;            fetchLangLinks();</b>
+<i>97</i>&nbsp;        });
+<i>98</i>&nbsp;
+<b class="nc"><i>99</i>&nbsp;        langLinksList.setOnItemClickListener((parent, view, position, id) -&gt; {</b>
+<b class="nc"><i>100</i>&nbsp;            PageTitle langLink = (PageTitle) parent.getAdapter().getItem(position);</b>
+<b class="nc"><i>101</i>&nbsp;            app.setMruLanguageCode(langLink.getWikiSite().languageCode());</b>
+<b class="nc"><i>102</i>&nbsp;            HistoryEntry historyEntry = new HistoryEntry(langLink, HistoryEntry.SOURCE_LANGUAGE_LINK);</b>
+<b class="nc"><i>103</i>&nbsp;            Intent intent = PageActivity.newIntentForCurrentTab(LangLinksActivity.this, historyEntry, langLink);</b>
+<b class="nc"><i>104</i>&nbsp;            setResult(ACTIVITY_RESULT_LANGLINK_SELECT, intent);</b>
+<b class="nc"><i>105</i>&nbsp;            hideSoftKeyboard(LangLinksActivity.this);</b>
+<b class="nc"><i>106</i>&nbsp;            finish();</b>
+<i>107</i>&nbsp;        });
+<i>108</i>&nbsp;
+<b class="nc"><i>109</i>&nbsp;        langLinksFilter.addTextChangedListener(new TextWatcher() {</b>
+<i>110</i>&nbsp;            @Override
+<i>111</i>&nbsp;            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+<i>112</i>&nbsp;            }
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;            @Override
+<i>115</i>&nbsp;            public void onTextChanged(CharSequence s, int start, int before, int count) {
+<i>116</i>&nbsp;            }
+<i>117</i>&nbsp;
+<i>118</i>&nbsp;            @Override
+<i>119</i>&nbsp;            public void afterTextChanged(Editable s) {
+<i>120</i>&nbsp;                // the languages might not be loaded yet...
+<b class="nc"><i>121</i>&nbsp;                if (langLinksList.getAdapter() == null) {</b>
+<i>122</i>&nbsp;                    return;
+<i>123</i>&nbsp;                }
+<b class="nc"><i>124</i>&nbsp;                ((LangLinksAdapter) langLinksList.getAdapter()).setFilterText(s.toString());</b>
+<i>125</i>&nbsp;
+<i>126</i>&nbsp;                //Check if there are no languages that match the filter
+<b class="nc"><i>127</i>&nbsp;                if (langLinksList.getAdapter().getCount() == 0) {</b>
+<b class="nc"><i>128</i>&nbsp;                    langLinksNoMatch.setVisibility(View.VISIBLE);</b>
+<i>129</i>&nbsp;                } else {
+<b class="nc"><i>130</i>&nbsp;                    langLinksNoMatch.setVisibility(View.GONE);</b>
+<i>131</i>&nbsp;                }
+<i>132</i>&nbsp;            }
+<i>133</i>&nbsp;        });
+<i>134</i>&nbsp;    }
+<i>135</i>&nbsp;
+<i>136</i>&nbsp;    @Override
+<i>137</i>&nbsp;    public void onBackPressed() {
+<b class="nc"><i>138</i>&nbsp;        hideSoftKeyboard(this);</b>
+<b class="nc"><i>139</i>&nbsp;        super.onBackPressed();</b>
+<i>140</i>&nbsp;    }
+<i>141</i>&nbsp;
+<i>142</i>&nbsp;    @Override
+<i>143</i>&nbsp;    protected void onSaveInstanceState(Bundle outState) {
+<b class="nc"><i>144</i>&nbsp;        super.onSaveInstanceState(outState);</b>
+<b class="nc"><i>145</i>&nbsp;        if (languageEntries != null) {</b>
+<b class="nc"><i>146</i>&nbsp;           outState.putParcelableArrayList(LANGUAGE_ENTRIES_BUNDLE_KEY, new ArrayList&lt;Parcelable&gt;(languageEntries));</b>
+<i>147</i>&nbsp;        }
+<i>148</i>&nbsp;    }
+<i>149</i>&nbsp;
+<i>150</i>&nbsp;    private void displayLangLinks() {
+<b class="nc"><i>151</i>&nbsp;        if (languageEntries.size() == 0) {</b>
+<b class="nc"><i>152</i>&nbsp;            ViewAnimations.crossFade(langLinksProgress, langLinksEmpty);</b>
+<i>153</i>&nbsp;        } else {
+<b class="nc"><i>154</i>&nbsp;            langLinksList.setAdapter(new LangLinksAdapter(languageEntries, app));</b>
+<b class="nc"><i>155</i>&nbsp;            ViewAnimations.crossFade(langLinksProgress, langLinksContainer);</b>
+<i>156</i>&nbsp;        }
+<i>157</i>&nbsp;    }
+<i>158</i>&nbsp;
+<i>159</i>&nbsp;    private void fetchLangLinks() {
+<b class="nc"><i>160</i>&nbsp;        if (languageEntries == null) {</b>
+<b class="nc"><i>161</i>&nbsp;            client.request(title.getWikiSite(), title, new ClientCallback());</b>
+<i>162</i>&nbsp;        } else {
+<b class="nc"><i>163</i>&nbsp;            displayLangLinks();</b>
+<i>164</i>&nbsp;        }
+<i>165</i>&nbsp;    }
+<i>166</i>&nbsp;
+<b class="nc"><i>167</i>&nbsp;    private class ClientCallback implements LangLinksClient.Callback {</b>
+<i>168</i>&nbsp;        @Override public void success(@NonNull Call&lt;MwQueryResponse&gt; call,
+<i>169</i>&nbsp;                                      @NonNull List&lt;PageTitle&gt; links) {
+<b class="nc"><i>170</i>&nbsp;            languageEntries = links;</b>
+<b class="nc"><i>171</i>&nbsp;            updateLanguageEntriesSupported(languageEntries);</b>
+<b class="nc"><i>172</i>&nbsp;            sortLanguageEntriesByMru(languageEntries);</b>
+<b class="nc"><i>173</i>&nbsp;            displayLangLinks();</b>
+<i>174</i>&nbsp;        }
+<i>175</i>&nbsp;
+<i>176</i>&nbsp;        @Override public void failure(@NonNull Call&lt;MwQueryResponse&gt; call,
+<i>177</i>&nbsp;                                      @NonNull Throwable caught) {
+<b class="nc"><i>178</i>&nbsp;            ViewAnimations.crossFade(langLinksProgress, langLinksError);</b>
+<b class="nc"><i>179</i>&nbsp;            langLinksError.setError(caught);</b>
+<i>180</i>&nbsp;        }
+<i>181</i>&nbsp;
+<i>182</i>&nbsp;        private void updateLanguageEntriesSupported(List&lt;PageTitle&gt; languageEntries) {
+<b class="nc"><i>183</i>&nbsp;            boolean haveChineseEntry = false;</b>
+<b class="nc"><i>184</i>&nbsp;            for (ListIterator&lt;PageTitle&gt; it = languageEntries.listIterator(); it.hasNext();) {</b>
+<b class="nc"><i>185</i>&nbsp;                PageTitle link = it.next();</b>
+<b class="nc"><i>186</i>&nbsp;                String languageCode = link.getWikiSite().languageCode();</b>
+<i>187</i>&nbsp;
+<b class="nc"><i>188</i>&nbsp;                if (GOTHIC_LANGUAGE_CODE.equals(languageCode)) {</b>
+<i>189</i>&nbsp;                    // Remove Gothic since it causes Android to segfault.
+<b class="nc"><i>190</i>&nbsp;                    it.remove();</b>
+<b class="nc"><i>191</i>&nbsp;                } else if (&quot;be-x-old&quot;.equals(languageCode)) {</b>
+<i>192</i>&nbsp;                    // Replace legacy name of ??????????? language with the correct name.
+<i>193</i>&nbsp;                    // TODO: Can probably be removed when T111853 is resolved.
+<b class="nc"><i>194</i>&nbsp;                    it.remove();</b>
+<b class="nc"><i>195</i>&nbsp;                    it.add(new PageTitle(link.getText(), WikiSite.forLanguageCode(&quot;be-tarask&quot;)));</b>
+<b class="nc"><i>196</i>&nbsp;                } else if (AppLanguageLookUpTable.CHINESE_LANGUAGE_CODE.equals(languageCode)) {</b>
+<i>197</i>&nbsp;                    // Replace Chinese with Simplified and Traditional dialects.
+<b class="nc"><i>198</i>&nbsp;                    haveChineseEntry = true;</b>
+<b class="nc"><i>199</i>&nbsp;                    it.remove();</b>
+<b class="nc"><i>200</i>&nbsp;                    for (String dialect : Arrays.asList(AppLanguageLookUpTable.SIMPLIFIED_CHINESE_LANGUAGE_CODE,</b>
+<i>201</i>&nbsp;                            AppLanguageLookUpTable.TRADITIONAL_CHINESE_LANGUAGE_CODE)) {
+<i>202</i>&nbsp;
+<b class="nc"><i>203</i>&nbsp;                        it.add(new PageTitle((title.isMainPage()) ? SiteInfoClient.getMainPageForLang(dialect) : link.getPrefixedText(),</b>
+<b class="nc"><i>204</i>&nbsp;                                WikiSite.forLanguageCode(dialect)));</b>
+<b class="nc"><i>205</i>&nbsp;                    }</b>
+<i>206</i>&nbsp;                }
+<b class="nc"><i>207</i>&nbsp;            }</b>
+<i>208</i>&nbsp;
+<b class="nc"><i>209</i>&nbsp;            if (!haveChineseEntry) {</b>
+<b class="nc"><i>210</i>&nbsp;                addChineseEntriesIfNeeded(title, languageEntries);</b>
+<i>211</i>&nbsp;            }
+<i>212</i>&nbsp;        }
+<i>213</i>&nbsp;
+<i>214</i>&nbsp;        private void sortLanguageEntriesByMru(List&lt;PageTitle&gt; entries) {
+<b class="nc"><i>215</i>&nbsp;            int addIndex = 0;</b>
+<b class="nc"><i>216</i>&nbsp;            for (String language : app.getMruLanguageCodes()) {</b>
+<b class="nc"><i>217</i>&nbsp;                for (int i = 0; i &lt; entries.size(); i++) {</b>
+<b class="nc"><i>218</i>&nbsp;                    if (entries.get(i).getWikiSite().languageCode().equals(language)) {</b>
+<b class="nc"><i>219</i>&nbsp;                        PageTitle entry = entries.remove(i);</b>
+<b class="nc"><i>220</i>&nbsp;                        entries.add(addIndex++, entry);</b>
+<b class="nc"><i>221</i>&nbsp;                        break;</b>
+<i>222</i>&nbsp;                    }
+<i>223</i>&nbsp;                }
+<b class="nc"><i>224</i>&nbsp;            }</b>
+<i>225</i>&nbsp;        }
+<i>226</i>&nbsp;    }
+<i>227</i>&nbsp;
+<i>228</i>&nbsp;    @VisibleForTesting
+<i>229</i>&nbsp;    public static void addChineseEntriesIfNeeded(@NonNull PageTitle title,
+<i>230</i>&nbsp;                                                 @NonNull List&lt;PageTitle&gt; languageEntries) {
+<i>231</i>&nbsp;
+<i>232</i>&nbsp;        // TODO: setup PageTitle in correct variant
+<b class="nc"><i>233</i>&nbsp;        if (title.getWikiSite().languageCode().startsWith(AppLanguageLookUpTable.CHINESE_LANGUAGE_CODE)) {</b>
+<b class="nc"><i>234</i>&nbsp;            String[] chineseLanguageCodes = {AppLanguageLookUpTable.SIMPLIFIED_CHINESE_LANGUAGE_CODE, AppLanguageLookUpTable.TRADITIONAL_CHINESE_LANGUAGE_CODE};</b>
+<i>235</i>&nbsp;
+<b class="nc"><i>236</i>&nbsp;            for (String languageCode : chineseLanguageCodes) {</b>
+<b class="nc"><i>237</i>&nbsp;                if (!title.getWikiSite().languageCode().contains(languageCode)) {</b>
+<b class="nc"><i>238</i>&nbsp;                    languageEntries.add(new PageTitle((title.isMainPage()) ? SiteInfoClient.getMainPageForLang(languageCode) : title.getPrefixedText(),</b>
+<b class="nc"><i>239</i>&nbsp;                            WikiSite.forLanguageCode(languageCode)));</b>
+<i>240</i>&nbsp;                }
+<i>241</i>&nbsp;            }
+<i>242</i>&nbsp;        }
+<i>243</i>&nbsp;    }
+<i>244</i>&nbsp;
+<b class="nc"><i>245</i>&nbsp;    private static final class LangLinksAdapter extends BaseAdapter {</b>
+<i>246</i>&nbsp;        private final List&lt;PageTitle&gt; originalLanguageEntries;
+<i>247</i>&nbsp;        private final List&lt;PageTitle&gt; languageEntries;
+<i>248</i>&nbsp;        private final WikipediaApp app;
+<i>249</i>&nbsp;
+<b class="nc"><i>250</i>&nbsp;        private LangLinksAdapter(List&lt;PageTitle&gt; languageEntries, WikipediaApp app) {</b>
+<b class="nc"><i>251</i>&nbsp;            this.originalLanguageEntries = languageEntries;</b>
+<b class="nc"><i>252</i>&nbsp;            this.languageEntries = new ArrayList&lt;&gt;(originalLanguageEntries);</b>
+<b class="nc"><i>253</i>&nbsp;            this.app = app;</b>
+<i>254</i>&nbsp;        }
+<i>255</i>&nbsp;
+<i>256</i>&nbsp;        public void setFilterText(String filter) {
+<b class="nc"><i>257</i>&nbsp;            languageEntries.clear();</b>
+<b class="nc"><i>258</i>&nbsp;            filter = filter.toLowerCase(Locale.getDefault());</b>
+<b class="nc"><i>259</i>&nbsp;            for (PageTitle entry : originalLanguageEntries) {</b>
+<b class="nc"><i>260</i>&nbsp;                String languageCode = entry.getWikiSite().languageCode();</b>
+<b class="nc"><i>261</i>&nbsp;                String canonicalName = defaultString(app.getAppLanguageCanonicalName(languageCode));</b>
+<b class="nc"><i>262</i>&nbsp;                String localizedName = defaultString(app.getAppLanguageLocalizedName(languageCode));</b>
+<b class="nc"><i>263</i>&nbsp;                if (canonicalName.toLowerCase(Locale.getDefault()).contains(filter)</b>
+<b class="nc"><i>264</i>&nbsp;                        || localizedName.toLowerCase(Locale.getDefault()).contains(filter)) {</b>
+<b class="nc"><i>265</i>&nbsp;                    languageEntries.add(entry);</b>
+<i>266</i>&nbsp;                }
+<b class="nc"><i>267</i>&nbsp;            }</b>
+<b class="nc"><i>268</i>&nbsp;            notifyDataSetInvalidated();</b>
+<i>269</i>&nbsp;        }
+<i>270</i>&nbsp;
+<i>271</i>&nbsp;        @Override
+<i>272</i>&nbsp;        public int getCount() {
+<b class="nc"><i>273</i>&nbsp;            return languageEntries.size();</b>
+<i>274</i>&nbsp;        }
+<i>275</i>&nbsp;
+<i>276</i>&nbsp;        @Override
+<i>277</i>&nbsp;        public PageTitle getItem(int position) {
+<b class="nc"><i>278</i>&nbsp;            return languageEntries.get(position);</b>
+<i>279</i>&nbsp;        }
+<i>280</i>&nbsp;
+<i>281</i>&nbsp;        @Override
+<i>282</i>&nbsp;        public long getItemId(int position) {
+<b class="nc"><i>283</i>&nbsp;            return position;</b>
+<i>284</i>&nbsp;        }
+<i>285</i>&nbsp;
+<i>286</i>&nbsp;        @Override
+<i>287</i>&nbsp;        public View getView(int position, View convertView, ViewGroup parent) {
+<b class="nc"><i>288</i>&nbsp;            if (convertView == null) {</b>
+<b class="nc"><i>289</i>&nbsp;                convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_language_list_entry, parent, false);</b>
+<i>290</i>&nbsp;            }
+<i>291</i>&nbsp;
+<b class="nc"><i>292</i>&nbsp;            PageTitle item = getItem(position);</b>
+<b class="nc"><i>293</i>&nbsp;            String languageCode = item.getWikiSite().languageCode();</b>
+<b class="nc"><i>294</i>&nbsp;            String localizedLanguageName = app.getAppLanguageLocalizedName(languageCode);</b>
+<i>295</i>&nbsp;
+<b class="nc"><i>296</i>&nbsp;            TextView localizedLanguageNameTextView = convertView.findViewById(R.id.localized_language_name);</b>
+<b class="nc"><i>297</i>&nbsp;            TextView articleTitleTextView = convertView.findViewById(R.id.language_subtitle);</b>
+<i>298</i>&nbsp;
+<b class="nc"><i>299</i>&nbsp;            localizedLanguageNameTextView.setText(localizedLanguageName);</b>
+<b class="nc"><i>300</i>&nbsp;            articleTitleTextView.setText(item.getDisplayText());</b>
+<i>301</i>&nbsp;
+<b class="nc"><i>302</i>&nbsp;            return convertView;</b>
+<i>303</i>&nbsp;        }
+<i>304</i>&nbsp;    }
+<i>305</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

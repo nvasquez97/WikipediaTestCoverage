@@ -1,0 +1,138 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: TabFunnel</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.analytics</a> ]
+</div>
+
+<h1>Coverage Summary for Class: TabFunnel (org.wikipedia.analytics)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TabFunnel</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 14)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.analytics;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.Nullable;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;import java.util.List;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;public class TabFunnel extends Funnel {
+<i>11</i>&nbsp;    private static final String SCHEMA_NAME = &quot;MobileWikiAppTabs&quot;;
+<i>12</i>&nbsp;    private static final int SCHEMA_REVISION = 17837025;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    public TabFunnel() {
+<b class="nc"><i>15</i>&nbsp;        super(WikipediaApp.getInstance(), SCHEMA_NAME, SCHEMA_REVISION, Funnel.SAMPLE_LOG_100);</b>
+<i>16</i>&nbsp;    }
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    public void logOpenInNew(int size) {
+<b class="nc"><i>19</i>&nbsp;        log(&quot;openInNew&quot;, size);</b>
+<i>20</i>&nbsp;    }
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    public void logEnterList(int size) {
+<b class="nc"><i>23</i>&nbsp;        log(&quot;enterList&quot;, size);</b>
+<i>24</i>&nbsp;    }
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    public void logCreateNew(int size) {
+<b class="nc"><i>27</i>&nbsp;        log(&quot;createNew&quot;, size);</b>
+<i>28</i>&nbsp;    }
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    public void logClose(int size, int index) {
+<b class="nc"><i>31</i>&nbsp;        log(&quot;close&quot;, size, index);</b>
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    public void logSelect(int size, int index) {
+<b class="nc"><i>35</i>&nbsp;        log(&quot;select&quot;, size, index);</b>
+<i>36</i>&nbsp;    }
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    public void logCancel(int size) {
+<b class="nc"><i>39</i>&nbsp;        log(&quot;cancel&quot;, size);</b>
+<i>40</i>&nbsp;    }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    private void log(String action, int size) {
+<b class="nc"><i>43</i>&nbsp;        log(action, size, null);</b>
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    private void log(String action, int size, @Nullable Integer index) {
+<b class="nc"><i>47</i>&nbsp;        List&lt;Object&gt; params = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>48</i>&nbsp;        params.add(&quot;action&quot;); params.add(action);</b>
+<b class="nc"><i>49</i>&nbsp;        params.add(&quot;tabCount&quot;); params.add(size);</b>
+<b class="nc"><i>50</i>&nbsp;        if (index != null) {</b>
+<b class="nc"><i>51</i>&nbsp;            params.add(&quot;tabIndex&quot;); params.add(index);</b>
+<i>52</i>&nbsp;        }
+<b class="nc"><i>53</i>&nbsp;        log(params.toArray());</b>
+<i>54</i>&nbsp;    }
+<i>55</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

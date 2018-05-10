@@ -1,0 +1,88 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: AvPlayer</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.media</a> ]
+</div>
+
+<h1>Coverage Summary for Class: AvPlayer (org.wikipedia.media)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">AvPlayer$Callback</td>
+  </tr>
+  <tr>
+    <td class="name">AvPlayer$Callback$$EnhancerByMockitoWithCGLIB$$efcb3786</td>
+  </tr>
+  <tr>
+    <td class="name">AvPlayer$ErrorCallback</td>
+  </tr>
+  <tr>
+    <td class="name">AvPlayer$ErrorCallback$$EnhancerByMockitoWithCGLIB$$e023ac38</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.media;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;public interface AvPlayer {
+<i>6</i>&nbsp;    interface Callback {
+<i>7</i>&nbsp;        void onSuccess();
+<i>8</i>&nbsp;    }
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;    interface ErrorCallback {
+<i>11</i>&nbsp;        void onError();
+<i>12</i>&nbsp;    }
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    void deinit();
+<i>15</i>&nbsp;    void init();
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    void load(@NonNull String path,
+<i>18</i>&nbsp;              @NonNull Callback callback,
+<i>19</i>&nbsp;              @NonNull ErrorCallback errorCallback);
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    void stop();
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    void play(@NonNull Callback callback, @NonNull ErrorCallback errorCallback);
+<i>24</i>&nbsp;    void play(@NonNull String path,
+<i>25</i>&nbsp;              @NonNull Callback callback,
+<i>26</i>&nbsp;              @NonNull ErrorCallback errorCallback);
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    void pause();
+<i>29</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

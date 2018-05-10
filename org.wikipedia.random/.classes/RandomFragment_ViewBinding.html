@@ -1,0 +1,226 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: RandomFragment_ViewBinding</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.random</a> ]
+</div>
+
+<h1>Coverage Summary for Class: RandomFragment_ViewBinding (org.wikipedia.random)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RandomFragment_ViewBinding</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 28)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">RandomFragment_ViewBinding$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">RandomFragment_ViewBinding$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">RandomFragment_ViewBinding$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 34)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;// Generated code from Butter Knife. Do not modify!
+<i>2</i>&nbsp;package org.wikipedia.random;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import android.support.annotation.CallSuper;
+<i>5</i>&nbsp;import android.support.annotation.UiThread;
+<i>6</i>&nbsp;import android.support.design.widget.FloatingActionButton;
+<i>7</i>&nbsp;import android.support.v4.view.ViewPager;
+<i>8</i>&nbsp;import android.view.View;
+<i>9</i>&nbsp;import android.widget.ImageView;
+<i>10</i>&nbsp;import butterknife.Unbinder;
+<i>11</i>&nbsp;import butterknife.internal.DebouncingOnClickListener;
+<i>12</i>&nbsp;import java.lang.IllegalStateException;
+<i>13</i>&nbsp;import java.lang.Override;
+<i>14</i>&nbsp;import org.wikipedia.R;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;public class RandomFragment_ViewBinding implements Unbinder {
+<i>17</i>&nbsp;  private RandomFragment target;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;  private View view2131296778;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;  private View view2131296779;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;  private View view2131296772;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;  @UiThread
+<b class="nc"><i>26</i>&nbsp;  public RandomFragment_ViewBinding(final RandomFragment target, View source) {</b>
+<b class="nc"><i>27</i>&nbsp;    this.target = target;</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    View view;
+<b class="nc"><i>30</i>&nbsp;    target.randomPager = (ViewPager) source.findViewById(R.id.random_item_pager);</b>
+<b class="nc"><i>31</i>&nbsp;    view = source.findViewById(R.id.random_next_button);</b>
+<b class="nc"><i>32</i>&nbsp;    target.nextButton = (FloatingActionButton) view;</b>
+<b class="nc"><i>33</i>&nbsp;    view2131296778 = view;</b>
+<b class="nc"><i>34</i>&nbsp;    view.setOnClickListener(new DebouncingOnClickListener() {</b>
+<i>35</i>&nbsp;      @Override
+<i>36</i>&nbsp;      public void doClick(View p0) {
+<b class="nc"><i>37</i>&nbsp;        target.onNextClick();</b>
+<i>38</i>&nbsp;      }
+<i>39</i>&nbsp;    });
+<b class="nc"><i>40</i>&nbsp;    view = source.findViewById(R.id.random_save_button);</b>
+<b class="nc"><i>41</i>&nbsp;    target.saveButton = (ImageView) view;</b>
+<b class="nc"><i>42</i>&nbsp;    view2131296779 = view;</b>
+<b class="nc"><i>43</i>&nbsp;    view.setOnClickListener(new DebouncingOnClickListener() {</b>
+<i>44</i>&nbsp;      @Override
+<i>45</i>&nbsp;      public void doClick(View p0) {
+<b class="nc"><i>46</i>&nbsp;        target.onSaveShareClick();</b>
+<i>47</i>&nbsp;      }
+<i>48</i>&nbsp;    });
+<b class="nc"><i>49</i>&nbsp;    view = source.findViewById(R.id.random_back_button);</b>
+<b class="nc"><i>50</i>&nbsp;    target.backButton = view;</b>
+<b class="nc"><i>51</i>&nbsp;    view2131296772 = view;</b>
+<b class="nc"><i>52</i>&nbsp;    view.setOnClickListener(new DebouncingOnClickListener() {</b>
+<i>53</i>&nbsp;      @Override
+<i>54</i>&nbsp;      public void doClick(View p0) {
+<b class="nc"><i>55</i>&nbsp;        target.onBackClick();</b>
+<i>56</i>&nbsp;      }
+<i>57</i>&nbsp;    });
+<i>58</i>&nbsp;  }
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;  @Override
+<i>61</i>&nbsp;  @CallSuper
+<i>62</i>&nbsp;  public void unbind() {
+<b class="nc"><i>63</i>&nbsp;    RandomFragment target = this.target;</b>
+<b class="nc"><i>64</i>&nbsp;    if (target == null) throw new IllegalStateException(&quot;Bindings already cleared.&quot;);</b>
+<b class="nc"><i>65</i>&nbsp;    this.target = null;</b>
+<i>66</i>&nbsp;
+<b class="nc"><i>67</i>&nbsp;    target.randomPager = null;</b>
+<b class="nc"><i>68</i>&nbsp;    target.nextButton = null;</b>
+<b class="nc"><i>69</i>&nbsp;    target.saveButton = null;</b>
+<b class="nc"><i>70</i>&nbsp;    target.backButton = null;</b>
+<i>71</i>&nbsp;
+<b class="nc"><i>72</i>&nbsp;    view2131296778.setOnClickListener(null);</b>
+<b class="nc"><i>73</i>&nbsp;    view2131296778 = null;</b>
+<b class="nc"><i>74</i>&nbsp;    view2131296779.setOnClickListener(null);</b>
+<b class="nc"><i>75</i>&nbsp;    view2131296779 = null;</b>
+<b class="nc"><i>76</i>&nbsp;    view2131296772.setOnClickListener(null);</b>
+<b class="nc"><i>77</i>&nbsp;    view2131296772 = null;</b>
+<i>78</i>&nbsp;  }
+<i>79</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

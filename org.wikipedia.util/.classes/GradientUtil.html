@@ -1,0 +1,201 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GradientUtil</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.util</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GradientUtil (org.wikipedia.util)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GradientUtil</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 33)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">GradientUtil$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 35)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.util;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.graphics.Color;
+<i>4</i>&nbsp;import android.graphics.LinearGradient;
+<i>5</i>&nbsp;import android.graphics.Shader;
+<i>6</i>&nbsp;import android.graphics.drawable.Drawable;
+<i>7</i>&nbsp;import android.graphics.drawable.PaintDrawable;
+<i>8</i>&nbsp;import android.graphics.drawable.ShapeDrawable;
+<i>9</i>&nbsp;import android.graphics.drawable.shapes.RectShape;
+<i>10</i>&nbsp;import android.support.annotation.ColorInt;
+<i>11</i>&nbsp;import android.support.annotation.ColorRes;
+<i>12</i>&nbsp;import android.support.annotation.NonNull;
+<i>13</i>&nbsp;import android.support.v4.content.ContextCompat;
+<i>14</i>&nbsp;import android.view.Gravity;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;public final class GradientUtil {
+<i>19</i>&nbsp;    private static final int GRADIENT_NUM_STOPS = 8;
+<i>20</i>&nbsp;    private static final int GRADIENT_POWER = 3;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    public static Drawable getPowerGradient(@ColorRes int baseColor, int gravity) {
+<b class="nc"><i>23</i>&nbsp;        PaintDrawable drawable = new PaintDrawable();</b>
+<b class="nc"><i>24</i>&nbsp;        drawable.setShape(new RectShape());</b>
+<b class="nc"><i>25</i>&nbsp;        setPowerGradient(drawable, ContextCompat.getColor(WikipediaApp.getInstance(), baseColor), gravity);</b>
+<b class="nc"><i>26</i>&nbsp;        return drawable;</b>
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    /**
+<i>30</i>&nbsp;     * Create a power gradient by using a compound gradient composed of a series of linear
+<i>31</i>&nbsp;     * gradients with intermediate color values.
+<i>32</i>&nbsp;     * adapted from: https://github.com/romannurik/muzei/blob/master/main/src/main/java/com/google/android/apps/muzei/util/ScrimUtil.java
+<i>33</i>&nbsp;     * @param baseColor The color from which the gradient starts (the ending color is transparent).
+<i>34</i>&nbsp;     * @param gravity Where the gradient should start from. Note: when making horizontal gradients,
+<i>35</i>&nbsp;     *                remember to use START/END, instead of LEFT/RIGHT.
+<i>36</i>&nbsp;     */
+<i>37</i>&nbsp;    private static void setPowerGradient(@NonNull PaintDrawable drawable, @ColorInt int baseColor, int gravity) {
+<b class="nc"><i>38</i>&nbsp;        final int[] stopColors = new int[GRADIENT_NUM_STOPS];</b>
+<i>39</i>&nbsp;
+<b class="nc"><i>40</i>&nbsp;        int red = Color.red(baseColor);</b>
+<b class="nc"><i>41</i>&nbsp;        int green = Color.green(baseColor);</b>
+<b class="nc"><i>42</i>&nbsp;        int blue = Color.blue(baseColor);</b>
+<b class="nc"><i>43</i>&nbsp;        int alpha = Color.alpha(baseColor);</b>
+<i>44</i>&nbsp;
+<b class="nc"><i>45</i>&nbsp;        for (int i = 0; i &lt; GRADIENT_NUM_STOPS; i++) {</b>
+<b class="nc"><i>46</i>&nbsp;            float x = i * 1f / (GRADIENT_NUM_STOPS - 1);</b>
+<b class="nc"><i>47</i>&nbsp;            float opacity = MathUtil.constrain((float) Math.pow(x, GRADIENT_POWER), 0.0f, 1.0f);</b>
+<b class="nc"><i>48</i>&nbsp;            stopColors[i] = Color.argb((int) (alpha * opacity), red, green, blue);</b>
+<i>49</i>&nbsp;        }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;        final float x0, x1, y0, y1;
+<b class="nc"><i>52</i>&nbsp;        switch (gravity &amp; Gravity.HORIZONTAL_GRAVITY_MASK) {</b>
+<i>53</i>&nbsp;            case Gravity.START:
+<b class="nc"><i>54</i>&nbsp;                x0 = 1;</b>
+<b class="nc"><i>55</i>&nbsp;                x1 = 0;</b>
+<b class="nc"><i>56</i>&nbsp;                break;</b>
+<i>57</i>&nbsp;            case Gravity.END:
+<b class="nc"><i>58</i>&nbsp;                x0 = 0;</b>
+<b class="nc"><i>59</i>&nbsp;                x1 = 1;</b>
+<b class="nc"><i>60</i>&nbsp;                break;</b>
+<i>61</i>&nbsp;            default:
+<b class="nc"><i>62</i>&nbsp;                x0 = 0;</b>
+<b class="nc"><i>63</i>&nbsp;                x1 = 0;</b>
+<i>64</i>&nbsp;                break;
+<i>65</i>&nbsp;        }
+<b class="nc"><i>66</i>&nbsp;        switch (gravity &amp; Gravity.VERTICAL_GRAVITY_MASK) {</b>
+<i>67</i>&nbsp;            case Gravity.TOP:
+<b class="nc"><i>68</i>&nbsp;                y0 = 1;</b>
+<b class="nc"><i>69</i>&nbsp;                y1 = 0;</b>
+<b class="nc"><i>70</i>&nbsp;                break;</b>
+<i>71</i>&nbsp;            case Gravity.BOTTOM:
+<b class="nc"><i>72</i>&nbsp;                y0 = 0;</b>
+<b class="nc"><i>73</i>&nbsp;                y1 = 1;</b>
+<b class="nc"><i>74</i>&nbsp;                break;</b>
+<i>75</i>&nbsp;            default:
+<b class="nc"><i>76</i>&nbsp;                y0 = 0;</b>
+<b class="nc"><i>77</i>&nbsp;                y1 = 0;</b>
+<i>78</i>&nbsp;                break;
+<i>79</i>&nbsp;        }
+<i>80</i>&nbsp;
+<b class="nc"><i>81</i>&nbsp;        drawable.setShaderFactory(new ShapeDrawable.ShaderFactory() {</b>
+<i>82</i>&nbsp;            @Override
+<i>83</i>&nbsp;            public Shader resize(int width, int height) {
+<b class="nc"><i>84</i>&nbsp;                return new LinearGradient(width * x0, height * y0, width * x1, height * y1,</b>
+<i>85</i>&nbsp;                                          stopColors, null, Shader.TileMode.CLAMP);
+<i>86</i>&nbsp;            }
+<i>87</i>&nbsp;        });
+<i>88</i>&nbsp;    }
+<i>89</i>&nbsp;
+<b class="nc"><i>90</i>&nbsp;    private GradientUtil() {</b>
+<i>91</i>&nbsp;    }
+<i>92</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

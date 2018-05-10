@@ -1,0 +1,163 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ListCardView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.view</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ListCardView (org.wikipedia.feed.view)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ListCardView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.feed.view;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;import android.support.annotation.Nullable;
+<i>6</i>&nbsp;import android.support.v7.widget.LinearLayoutManager;
+<i>7</i>&nbsp;import android.support.v7.widget.RecyclerView;
+<i>8</i>&nbsp;import android.text.TextUtils;
+<i>9</i>&nbsp;import android.view.View;
+<i>10</i>&nbsp;import android.widget.TextView;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import org.wikipedia.R;
+<i>13</i>&nbsp;import org.wikipedia.feed.model.Card;
+<i>14</i>&nbsp;import org.wikipedia.views.DrawableItemDecoration;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;import butterknife.BindView;
+<i>17</i>&nbsp;import butterknife.ButterKnife;
+<i>18</i>&nbsp;import butterknife.OnClick;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;public abstract class ListCardView&lt;T extends Card&gt; extends DefaultFeedCardView&lt;T&gt; {
+<i>21</i>&nbsp;    public interface Callback {
+<i>22</i>&nbsp;        void onMoreContentSelected(@NonNull Card card);
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    @BindView(R.id.view_list_card_header) CardHeaderView headerView;
+<i>26</i>&nbsp;    @BindView(R.id.view_list_card_large_header) CardLargeHeaderView largeHeaderView;
+<i>27</i>&nbsp;    @BindView(R.id.view_list_card_list) RecyclerView recyclerView;
+<i>28</i>&nbsp;    @BindView(R.id.view_list_card_more_container) View moreContentContainer;
+<i>29</i>&nbsp;    @BindView(R.id.view_list_card_more_text) TextView moreContentTextView;
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    public ListCardView(Context context) {
+<b class="nc"><i>32</i>&nbsp;        super(context);</b>
+<i>33</i>&nbsp;
+<b class="nc"><i>34</i>&nbsp;        inflate(getContext(), R.layout.view_list_card, this);</b>
+<b class="nc"><i>35</i>&nbsp;        ButterKnife.bind(this);</b>
+<b class="nc"><i>36</i>&nbsp;        initRecycler(recyclerView);</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    @Override public void setCallback(@Nullable FeedAdapter.Callback callback) {
+<b class="nc"><i>40</i>&nbsp;        super.setCallback(callback);</b>
+<b class="nc"><i>41</i>&nbsp;        headerView.setCallback(callback);</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    protected void set(@Nullable RecyclerView.Adapter&lt;?&gt; adapter) {
+<b class="nc"><i>45</i>&nbsp;        recyclerView.setAdapter(adapter);</b>
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    protected void update() {
+<b class="nc"><i>49</i>&nbsp;        if (recyclerView.getAdapter() != null) {</b>
+<b class="nc"><i>50</i>&nbsp;            recyclerView.getAdapter().notifyDataSetChanged();</b>
+<i>51</i>&nbsp;        }
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    protected CardHeaderView headerView() {
+<b class="nc"><i>55</i>&nbsp;        return headerView;</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    protected CardLargeHeaderView largeHeaderView() {
+<b class="nc"><i>59</i>&nbsp;        return largeHeaderView;</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    /** Called by the constructor. Override to provide custom behavior but otherwise do not call
+<i>63</i>&nbsp;        directly. */
+<i>64</i>&nbsp;    protected void initRecycler(@NonNull RecyclerView recyclerView) {
+<b class="nc"><i>65</i>&nbsp;        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));</b>
+<b class="nc"><i>66</i>&nbsp;        recyclerView.addItemDecoration(new DrawableItemDecoration(getContext(), R.attr.list_separator_drawable));</b>
+<b class="nc"><i>67</i>&nbsp;        recyclerView.setNestedScrollingEnabled(false);</b>
+<i>68</i>&nbsp;    }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;    protected void setMoreContentTextView(@NonNull String text) {
+<b class="nc"><i>71</i>&nbsp;        moreContentContainer.setVisibility(TextUtils.isEmpty(text) ? GONE : VISIBLE);</b>
+<b class="nc"><i>72</i>&nbsp;        moreContentTextView.setText(text);</b>
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    @OnClick(R.id.view_list_card_more_container) void moreContentClicked() {
+<b class="nc"><i>76</i>&nbsp;        if (getCallback() != null &amp;&amp; getCard() != null) {</b>
+<b class="nc"><i>77</i>&nbsp;            getCallback().onMoreContentSelected(getCard());</b>
+<i>78</i>&nbsp;        }
+<i>79</i>&nbsp;    }
+<i>80</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

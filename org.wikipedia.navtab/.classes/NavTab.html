@@ -1,0 +1,237 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: NavTab</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.navtab</a> ]
+</div>
+
+<h1>Coverage Summary for Class: NavTab (org.wikipedia.navtab)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NavTab</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 14)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NavTab$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NavTab$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NavTab$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NavTab$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 22)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.navtab;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.DrawableRes;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;import android.support.annotation.StringRes;
+<i>6</i>&nbsp;import android.support.v4.app.Fragment;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import org.wikipedia.R;
+<i>9</i>&nbsp;import org.wikipedia.feed.FeedFragment;
+<i>10</i>&nbsp;import org.wikipedia.history.HistoryFragment;
+<i>11</i>&nbsp;import org.wikipedia.model.EnumCode;
+<i>12</i>&nbsp;import org.wikipedia.model.EnumCodeMap;
+<i>13</i>&nbsp;import org.wikipedia.nearby.NearbyLazyLoadFragment;
+<i>14</i>&nbsp;import org.wikipedia.readinglist.ReadingListsFragment;
+<i>15</i>&nbsp;
+<b class="nc"><i>16</i>&nbsp;public enum NavTab implements EnumCode {</b>
+<b class="nc"><i>17</i>&nbsp;    EXPLORE(R.string.nav_item_feed, R.drawable.ic_globe) {</b>
+<i>18</i>&nbsp;        @NonNull @Override public Fragment newInstance() {
+<b class="nc"><i>19</i>&nbsp;            return FeedFragment.newInstance();</b>
+<i>20</i>&nbsp;        }
+<i>21</i>&nbsp;    },
+<b class="nc"><i>22</i>&nbsp;    READING_LISTS(R.string.nav_item_reading_lists, R.drawable.ic_bookmark_white_24dp) {</b>
+<i>23</i>&nbsp;        @NonNull @Override public Fragment newInstance() {
+<b class="nc"><i>24</i>&nbsp;            return ReadingListsFragment.newInstance();</b>
+<i>25</i>&nbsp;        }
+<i>26</i>&nbsp;    },
+<b class="nc"><i>27</i>&nbsp;    HISTORY(R.string.nav_item_history, R.drawable.ic_restore_black_24dp) {</b>
+<i>28</i>&nbsp;        @NonNull @Override public Fragment newInstance() {
+<b class="nc"><i>29</i>&nbsp;            return HistoryFragment.newInstance();</b>
+<i>30</i>&nbsp;        }
+<i>31</i>&nbsp;    },
+<b class="nc"><i>32</i>&nbsp;    NEARBY(R.string.nav_item_nearby, R.drawable.ic_explore_black_24dp) {</b>
+<i>33</i>&nbsp;        @NonNull @Override public Fragment newInstance() {
+<b class="nc"><i>34</i>&nbsp;            return NearbyLazyLoadFragment.newInstance();</b>
+<i>35</i>&nbsp;        }
+<i>36</i>&nbsp;    };
+<i>37</i>&nbsp;
+<b class="nc"><i>38</i>&nbsp;    private static final EnumCodeMap&lt;NavTab&gt; MAP = new EnumCodeMap&lt;&gt;(NavTab.class);</b>
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    @StringRes private final int text;
+<i>41</i>&nbsp;    @DrawableRes private final int icon;
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    @NonNull public static NavTab of(int code) {
+<b class="nc"><i>44</i>&nbsp;        return MAP.get(code);</b>
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    public static int size() {
+<b class="nc"><i>48</i>&nbsp;        return MAP.size();</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    @StringRes public int text() {
+<b class="nc"><i>52</i>&nbsp;        return text;</b>
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    @DrawableRes public int icon() {
+<b class="nc"><i>56</i>&nbsp;        return icon;</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    @NonNull public abstract Fragment newInstance();
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    @Override public int code() {
+<i>62</i>&nbsp;        // This enumeration is not marshalled so tying declaration order to presentation order is
+<i>63</i>&nbsp;        // convenient and consistent.
+<b class="nc"><i>64</i>&nbsp;        return ordinal();</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<b class="nc"><i>67</i>&nbsp;    NavTab(@StringRes int text, @DrawableRes int icon) {</b>
+<b class="nc"><i>68</i>&nbsp;        this.text = text;</b>
+<b class="nc"><i>69</i>&nbsp;        this.icon = icon;</b>
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

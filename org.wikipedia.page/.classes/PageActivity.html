@@ -1,0 +1,1074 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PageActivity</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.page</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PageActivity (org.wikipedia.page)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PageActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 99)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 319)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">PageActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">PageActivity$EventBusMethods</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 104)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 328)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.page;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.annotation.SuppressLint;
+<i>4</i>&nbsp;import android.app.SearchManager;
+<i>5</i>&nbsp;import android.appwidget.AppWidgetManager;
+<i>6</i>&nbsp;import android.content.ComponentName;
+<i>7</i>&nbsp;import android.content.Context;
+<i>8</i>&nbsp;import android.content.DialogInterface;
+<i>9</i>&nbsp;import android.content.Intent;
+<i>10</i>&nbsp;import android.location.Location;
+<i>11</i>&nbsp;import android.net.Uri;
+<i>12</i>&nbsp;import android.os.Build;
+<i>13</i>&nbsp;import android.os.Bundle;
+<i>14</i>&nbsp;import android.os.Handler;
+<i>15</i>&nbsp;import android.os.Looper;
+<i>16</i>&nbsp;import android.support.annotation.NonNull;
+<i>17</i>&nbsp;import android.support.annotation.Nullable;
+<i>18</i>&nbsp;import android.support.design.widget.BottomSheetDialog;
+<i>19</i>&nbsp;import android.support.design.widget.BottomSheetDialogFragment;
+<i>20</i>&nbsp;import android.support.design.widget.TabLayout;
+<i>21</i>&nbsp;import android.support.v4.app.Fragment;
+<i>22</i>&nbsp;import android.support.v4.content.ContextCompat;
+<i>23</i>&nbsp;import android.support.v7.app.AlertDialog;
+<i>24</i>&nbsp;import android.support.v7.preference.PreferenceManager;
+<i>25</i>&nbsp;import android.support.v7.widget.Toolbar;
+<i>26</i>&nbsp;import android.text.format.DateUtils;
+<i>27</i>&nbsp;import android.view.ActionMode;
+<i>28</i>&nbsp;import android.view.KeyEvent;
+<i>29</i>&nbsp;import android.view.Menu;
+<i>30</i>&nbsp;import android.view.MenuItem;
+<i>31</i>&nbsp;import android.view.View;
+<i>32</i>&nbsp;import android.widget.ImageView;
+<i>33</i>&nbsp;import android.widget.ProgressBar;
+<i>34</i>&nbsp;import android.widget.Toast;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;import com.squareup.otto.Bus;
+<i>37</i>&nbsp;import com.squareup.otto.Subscribe;
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;import net.hockeyapp.android.metrics.MetricsManager;
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;import org.apache.commons.lang3.StringUtils;
+<i>42</i>&nbsp;import org.wikipedia.Constants;
+<i>43</i>&nbsp;import org.wikipedia.R;
+<i>44</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>45</i>&nbsp;import org.wikipedia.activity.BaseActivity;
+<i>46</i>&nbsp;import org.wikipedia.analytics.IntentFunnel;
+<i>47</i>&nbsp;import org.wikipedia.analytics.LinkPreviewFunnel;
+<i>48</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>49</i>&nbsp;import org.wikipedia.descriptions.DescriptionEditRevertHelpView;
+<i>50</i>&nbsp;import org.wikipedia.events.ArticleSavedOrDeletedEvent;
+<i>51</i>&nbsp;import org.wikipedia.events.ChangeTextSizeEvent;
+<i>52</i>&nbsp;import org.wikipedia.feed.mainpage.MainPageClient;
+<i>53</i>&nbsp;import org.wikipedia.gallery.GalleryActivity;
+<i>54</i>&nbsp;import org.wikipedia.history.HistoryEntry;
+<i>55</i>&nbsp;import org.wikipedia.language.LangLinksActivity;
+<i>56</i>&nbsp;import org.wikipedia.page.linkpreview.LinkPreviewDialog;
+<i>57</i>&nbsp;import org.wikipedia.page.tabs.TabsProvider;
+<i>58</i>&nbsp;import org.wikipedia.page.tabs.TabsProvider.TabPosition;
+<i>59</i>&nbsp;import org.wikipedia.readinglist.AddToReadingListDialog;
+<i>60</i>&nbsp;import org.wikipedia.readinglist.database.ReadingListPage;
+<i>61</i>&nbsp;import org.wikipedia.search.SearchFragment;
+<i>62</i>&nbsp;import org.wikipedia.search.SearchInvokeSource;
+<i>63</i>&nbsp;import org.wikipedia.settings.SettingsActivity;
+<i>64</i>&nbsp;import org.wikipedia.theme.ThemeChooserDialog;
+<i>65</i>&nbsp;import org.wikipedia.util.ClipboardUtil;
+<i>66</i>&nbsp;import org.wikipedia.util.DeviceUtil;
+<i>67</i>&nbsp;import org.wikipedia.util.DimenUtil;
+<i>68</i>&nbsp;import org.wikipedia.util.FeedbackUtil;
+<i>69</i>&nbsp;import org.wikipedia.util.ResourceUtil;
+<i>70</i>&nbsp;import org.wikipedia.util.ShareUtil;
+<i>71</i>&nbsp;import org.wikipedia.util.ThrowableUtil;
+<i>72</i>&nbsp;import org.wikipedia.util.log.L;
+<i>73</i>&nbsp;import org.wikipedia.views.ObservableWebView;
+<i>74</i>&nbsp;import org.wikipedia.views.ViewUtil;
+<i>75</i>&nbsp;import org.wikipedia.widgets.WidgetProviderFeaturedPage;
+<i>76</i>&nbsp;import org.wikipedia.wiktionary.WiktionaryDialog;
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;import butterknife.BindView;
+<i>79</i>&nbsp;import butterknife.ButterKnife;
+<i>80</i>&nbsp;import butterknife.OnClick;
+<i>81</i>&nbsp;import butterknife.Unbinder;
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;import static org.wikipedia.settings.Prefs.isLinkPreviewEnabled;
+<i>84</i>&nbsp;import static org.wikipedia.util.UriUtil.visitInExternalBrowser;
+<i>85</i>&nbsp;
+<b class="nc"><i>86</i>&nbsp;public class PageActivity extends BaseActivity implements PageFragment.Callback,</b>
+<i>87</i>&nbsp;        LinkPreviewDialog.Callback, SearchFragment.Callback, ThemeChooserDialog.Callback,
+<i>88</i>&nbsp;        WiktionaryDialog.Callback {
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;    public static final String ACTION_LOAD_IN_NEW_TAB = &quot;org.wikipedia.load_in_new_tab&quot;;
+<i>91</i>&nbsp;    public static final String ACTION_LOAD_IN_CURRENT_TAB = &quot;org.wikipedia.load_in_current_tab&quot;;
+<i>92</i>&nbsp;    public static final String ACTION_LOAD_FROM_EXISTING_TAB = &quot;org.wikipedia.load_from_existing_tab&quot;;
+<i>93</i>&nbsp;    public static final String ACTION_SHOW_TAB_LIST = &quot;org.wikipedia.show_tab_list&quot;;
+<i>94</i>&nbsp;    public static final String ACTION_RESUME_READING = &quot;org.wikipedia.resume_reading&quot;;
+<i>95</i>&nbsp;    public static final String EXTRA_PAGETITLE = &quot;org.wikipedia.pagetitle&quot;;
+<i>96</i>&nbsp;    public static final String EXTRA_HISTORYENTRY  = &quot;org.wikipedia.history.historyentry&quot;;
+<i>97</i>&nbsp;    public static final String ACTION_APP_SHORTCUT = &quot;org.wikipedia.app_shortcut&quot;;
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;    private static final String LANGUAGE_CODE_BUNDLE_KEY = &quot;language&quot;;
+<i>100</i>&nbsp;
+<i>101</i>&nbsp;    @BindView(R.id.tabs_container) View tabsContainerView;
+<i>102</i>&nbsp;    @BindView(R.id.page_progress_bar) ProgressBar progressBar;
+<i>103</i>&nbsp;    @BindView(R.id.page_toolbar_container) View toolbarContainerView;
+<i>104</i>&nbsp;    @BindView(R.id.page_toolbar) Toolbar toolbar;
+<i>105</i>&nbsp;    @BindView(R.id.page_toolbar_button_search) ImageView searchButton;
+<i>106</i>&nbsp;    @BindView(R.id.page_toolbar_button_show_tabs) ImageView tabsButton;
+<i>107</i>&nbsp;    @Nullable private Unbinder unbinder;
+<i>108</i>&nbsp;
+<i>109</i>&nbsp;    private PageFragment pageFragment;
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;    private WikipediaApp app;
+<i>112</i>&nbsp;    @Nullable private Bus bus;
+<i>113</i>&nbsp;    private EventBusMethods busMethods;
+<i>114</i>&nbsp;    private ActionMode currentActionMode;
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;    private PageToolbarHideHandler toolbarHideHandler;
+<i>117</i>&nbsp;
+<b class="nc"><i>118</i>&nbsp;    private ExclusiveBottomSheetPresenter bottomSheetPresenter = new ExclusiveBottomSheetPresenter();</b>
+<i>119</i>&nbsp;
+<b class="nc"><i>120</i>&nbsp;    private DialogInterface.OnDismissListener listDialogDismissListener = new DialogInterface.OnDismissListener() {</b>
+<i>121</i>&nbsp;        @Override
+<i>122</i>&nbsp;        public void onDismiss(DialogInterface dialogInterface) {
+<b class="nc"><i>123</i>&nbsp;            pageFragment.updateBookmarkAndMenuOptionsFromDao();</b>
+<i>124</i>&nbsp;        }
+<i>125</i>&nbsp;    };
+<i>126</i>&nbsp;
+<i>127</i>&nbsp;    @Override
+<i>128</i>&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>129</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>130</i>&nbsp;        app = (WikipediaApp) getApplicationContext();</b>
+<b class="nc"><i>131</i>&nbsp;        MetricsManager.register(app);</b>
+<b class="nc"><i>132</i>&nbsp;        app.checkCrashes(this);</b>
+<i>133</i>&nbsp;
+<b class="nc"><i>134</i>&nbsp;        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);</b>
+<i>135</i>&nbsp;
+<i>136</i>&nbsp;        try {
+<b class="nc"><i>137</i>&nbsp;            setContentView(R.layout.activity_page);</b>
+<b class="nc"><i>138</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i>139</i>&nbsp;            if (e.getMessage().contains(&quot;WebView&quot;)</b>
+<b class="nc"><i>140</i>&nbsp;                    || ThrowableUtil.getInnermostThrowable(e).getMessage().contains(&quot;WebView&quot;)) {</b>
+<i>141</i>&nbsp;                // If the system failed to inflate our activity because of the WebView (which could
+<i>142</i>&nbsp;                // be one of several types of exceptions), it likely means that the system WebView
+<i>143</i>&nbsp;                // is in the process of being updated. In this case, show the user a message and
+<i>144</i>&nbsp;                // bail immediately.
+<b class="nc"><i>145</i>&nbsp;                Toast.makeText(app, R.string.error_webview_updating, Toast.LENGTH_LONG).show();</b>
+<b class="nc"><i>146</i>&nbsp;                finish();</b>
+<i>147</i>&nbsp;                return;
+<i>148</i>&nbsp;            }
+<b class="nc"><i>149</i>&nbsp;            throw e;</b>
+<b class="nc"><i>150</i>&nbsp;        }</b>
+<i>151</i>&nbsp;
+<b class="nc"><i>152</i>&nbsp;        unbinder = ButterKnife.bind(this);</b>
+<i>153</i>&nbsp;
+<b class="nc"><i>154</i>&nbsp;        busMethods = new EventBusMethods();</b>
+<b class="nc"><i>155</i>&nbsp;        registerBus();</b>
+<i>156</i>&nbsp;
+<b class="nc"><i>157</i>&nbsp;        updateProgressBar(false, true, 0);</b>
+<i>158</i>&nbsp;
+<b class="nc"><i>159</i>&nbsp;        pageFragment = (PageFragment) getSupportFragmentManager().findFragmentById(R.id.page_fragment);</b>
+<i>160</i>&nbsp;
+<b class="nc"><i>161</i>&nbsp;        setStatusBarColor(ResourceUtil.getThemedAttributeId(this, R.attr.page_status_bar_color));</b>
+<b class="nc"><i>162</i>&nbsp;        setSupportActionBar(toolbar);</b>
+<b class="nc"><i>163</i>&nbsp;        clearActionBarTitle();</b>
+<b class="nc"><i>164</i>&nbsp;        getSupportActionBar().setDisplayHomeAsUpEnabled(true);</b>
+<i>165</i>&nbsp;
+<b class="nc"><i>166</i>&nbsp;        FeedbackUtil.setToolbarButtonLongPressToast(searchButton, tabsButton);</b>
+<b class="nc"><i>167</i>&nbsp;        tabsButton.setImageDrawable(ContextCompat.getDrawable(pageFragment.getContext(),</b>
+<b class="nc"><i>168</i>&nbsp;                ResourceUtil.getTabListIcon(pageFragment.getTabCount())));</b>
+<i>169</i>&nbsp;
+<b class="nc"><i>170</i>&nbsp;        toolbarHideHandler = new PageToolbarHideHandler(pageFragment, toolbarContainerView, toolbar, tabsButton);</b>
+<i>171</i>&nbsp;
+<b class="nc"><i>172</i>&nbsp;        boolean languageChanged = false;</b>
+<b class="nc"><i>173</i>&nbsp;        if (savedInstanceState != null) {</b>
+<b class="nc"><i>174</i>&nbsp;            if (savedInstanceState.getBoolean(&quot;isSearching&quot;)) {</b>
+<b class="nc"><i>175</i>&nbsp;                openSearchFragment(SearchInvokeSource.TOOLBAR, null);</b>
+<i>176</i>&nbsp;            }
+<b class="nc"><i>177</i>&nbsp;            String language = savedInstanceState.getString(LANGUAGE_CODE_BUNDLE_KEY);</b>
+<b class="nc"><i>178</i>&nbsp;            languageChanged = !app.getAppOrSystemLanguageCode().equals(language);</b>
+<i>179</i>&nbsp;
+<i>180</i>&nbsp;            // Note: when system language is enabled, and the system language is changed outside of
+<i>181</i>&nbsp;            // the app, MRU languages are not updated. There&#39;s no harm in doing that here but since
+<i>182</i>&nbsp;            // the user didn&#39;t choose that language in app, it may be unexpected.
+<i>183</i>&nbsp;        }
+<i>184</i>&nbsp;
+<b class="nc"><i>185</i>&nbsp;        if (languageChanged) {</b>
+<b class="nc"><i>186</i>&nbsp;            app.resetWikiSite();</b>
+<b class="nc"><i>187</i>&nbsp;            loadMainPageInForegroundTab();</b>
+<i>188</i>&nbsp;        }
+<i>189</i>&nbsp;
+<b class="nc"><i>190</i>&nbsp;        if (savedInstanceState == null) {</b>
+<i>191</i>&nbsp;            // if there&#39;s no savedInstanceState, and we&#39;re not coming back from a Theme change,
+<i>192</i>&nbsp;            // then we must have been launched with an Intent, so... handle it!
+<b class="nc"><i>193</i>&nbsp;            handleIntent(getIntent());</b>
+<i>194</i>&nbsp;        }
+<i>195</i>&nbsp;    }
+<i>196</i>&nbsp;
+<i>197</i>&nbsp;    @Override
+<i>198</i>&nbsp;    public boolean onCreateOptionsMenu(Menu menu) {
+<b class="nc"><i>199</i>&nbsp;        if (!isSearching()) {</b>
+<b class="nc"><i>200</i>&nbsp;            getMenuInflater().inflate(R.menu.menu_page_actions, menu);</b>
+<b class="nc"><i>201</i>&nbsp;            return true;</b>
+<i>202</i>&nbsp;        }
+<b class="nc"><i>203</i>&nbsp;        return false;</b>
+<i>204</i>&nbsp;    }
+<i>205</i>&nbsp;
+<i>206</i>&nbsp;    @Override
+<i>207</i>&nbsp;    public boolean onPrepareOptionsMenu(Menu menu) {
+<b class="nc"><i>208</i>&nbsp;        super.onPrepareOptionsMenu(menu);</b>
+<b class="nc"><i>209</i>&nbsp;        if (isSearching()) {</b>
+<b class="nc"><i>210</i>&nbsp;            return false;</b>
+<i>211</i>&nbsp;        }
+<i>212</i>&nbsp;
+<b class="nc"><i>213</i>&nbsp;        MenuItem otherLangItem = menu.findItem(R.id.menu_page_other_languages);</b>
+<b class="nc"><i>214</i>&nbsp;        MenuItem shareItem = menu.findItem(R.id.menu_page_share);</b>
+<b class="nc"><i>215</i>&nbsp;        MenuItem addToListItem = menu.findItem(R.id.menu_page_add_to_list);</b>
+<b class="nc"><i>216</i>&nbsp;        MenuItem removeFromListsItem = menu.findItem(R.id.menu_page_remove_from_list);</b>
+<b class="nc"><i>217</i>&nbsp;        MenuItem findInPageItem = menu.findItem(R.id.menu_page_find_in_page);</b>
+<b class="nc"><i>218</i>&nbsp;        MenuItem contentIssues = menu.findItem(R.id.menu_page_content_issues);</b>
+<b class="nc"><i>219</i>&nbsp;        MenuItem similarTitles = menu.findItem(R.id.menu_page_similar_titles);</b>
+<b class="nc"><i>220</i>&nbsp;        MenuItem themeChooserItem = menu.findItem(R.id.menu_page_font_and_theme);</b>
+<i>221</i>&nbsp;
+<b class="nc"><i>222</i>&nbsp;        if (pageFragment.isLoading() || pageFragment.getErrorState()) {</b>
+<b class="nc"><i>223</i>&nbsp;            otherLangItem.setEnabled(false);</b>
+<b class="nc"><i>224</i>&nbsp;            shareItem.setEnabled(false);</b>
+<b class="nc"><i>225</i>&nbsp;            addToListItem.setEnabled(false);</b>
+<b class="nc"><i>226</i>&nbsp;            findInPageItem.setEnabled(false);</b>
+<b class="nc"><i>227</i>&nbsp;            contentIssues.setEnabled(false);</b>
+<b class="nc"><i>228</i>&nbsp;            similarTitles.setEnabled(false);</b>
+<b class="nc"><i>229</i>&nbsp;            themeChooserItem.setEnabled(false);</b>
+<b class="nc"><i>230</i>&nbsp;            removeFromListsItem.setEnabled(false);</b>
+<i>231</i>&nbsp;        } else {
+<i>232</i>&nbsp;            // Only display &quot;Read in other languages&quot; if the article is in other languages
+<b class="nc"><i>233</i>&nbsp;            otherLangItem.setVisible(pageFragment.getPage() != null &amp;&amp; pageFragment.getPage().getPageProperties().getLanguageCount() != 0);</b>
+<b class="nc"><i>234</i>&nbsp;            otherLangItem.setEnabled(true);</b>
+<b class="nc"><i>235</i>&nbsp;            shareItem.setEnabled(pageFragment.getPage() != null &amp;&amp; pageFragment.getPage().isArticle());</b>
+<b class="nc"><i>236</i>&nbsp;            addToListItem.setEnabled(pageFragment.getPage() != null &amp;&amp; pageFragment.getPage().isArticle());</b>
+<b class="nc"><i>237</i>&nbsp;            removeFromListsItem.setVisible(pageFragment.isPresentInOfflineLists());</b>
+<b class="nc"><i>238</i>&nbsp;            removeFromListsItem.setEnabled(pageFragment.isPresentInOfflineLists());</b>
+<b class="nc"><i>239</i>&nbsp;            findInPageItem.setEnabled(true);</b>
+<b class="nc"><i>240</i>&nbsp;            themeChooserItem.setEnabled(true);</b>
+<b class="nc"><i>241</i>&nbsp;            updateMenuPageInfo(menu);</b>
+<i>242</i>&nbsp;        }
+<b class="nc"><i>243</i>&nbsp;        return true;</b>
+<i>244</i>&nbsp;    }
+<i>245</i>&nbsp;
+<i>246</i>&nbsp;    @OnClick(R.id.page_toolbar_button_search)
+<i>247</i>&nbsp;    public void onSearchButtonClicked() {
+<b class="nc"><i>248</i>&nbsp;        openSearchFragment(SearchInvokeSource.TOOLBAR, null);</b>
+<i>249</i>&nbsp;    }
+<i>250</i>&nbsp;
+<i>251</i>&nbsp;    @OnClick(R.id.page_toolbar_button_show_tabs)
+<i>252</i>&nbsp;    public void onShowTabsButtonClicked() {
+<b class="nc"><i>253</i>&nbsp;        pageFragment.enterTabMode(false);</b>
+<i>254</i>&nbsp;    }
+<i>255</i>&nbsp;
+<i>256</i>&nbsp;    private void finishActionMode() {
+<b class="nc"><i>257</i>&nbsp;        currentActionMode.finish();</b>
+<i>258</i>&nbsp;    }
+<i>259</i>&nbsp;
+<i>260</i>&nbsp;    public void hideSoftKeyboard() {
+<b class="nc"><i>261</i>&nbsp;        DeviceUtil.hideSoftKeyboard(this);</b>
+<i>262</i>&nbsp;    }
+<i>263</i>&nbsp;
+<i>264</i>&nbsp;    @Override
+<i>265</i>&nbsp;    public boolean onOptionsItemSelected(MenuItem item) {
+<b class="nc"><i>266</i>&nbsp;        switch (item.getItemId()) {</b>
+<i>267</i>&nbsp;            case android.R.id.home:
+<b class="nc"><i>268</i>&nbsp;                if (shouldRecreateMainActivity()) {</b>
+<b class="nc"><i>269</i>&nbsp;                    startActivity(getSupportParentActivityIntent()</b>
+<b class="nc"><i>270</i>&nbsp;                            .putExtra(Constants.INTENT_RETURN_TO_MAIN, true));</b>
+<i>271</i>&nbsp;                }
+<b class="nc"><i>272</i>&nbsp;                finish();</b>
+<b class="nc"><i>273</i>&nbsp;                return true;</b>
+<i>274</i>&nbsp;            default:
+<b class="nc"><i>275</i>&nbsp;                return super.onOptionsItemSelected(item);</b>
+<i>276</i>&nbsp;        }
+<i>277</i>&nbsp;    }
+<i>278</i>&nbsp;
+<i>279</i>&nbsp;    @Override
+<i>280</i>&nbsp;    public boolean onSearchRequested() {
+<b class="nc"><i>281</i>&nbsp;        showToolbar();</b>
+<b class="nc"><i>282</i>&nbsp;        openSearchFragment(SearchInvokeSource.TOOLBAR, null);</b>
+<b class="nc"><i>283</i>&nbsp;        return true;</b>
+<i>284</i>&nbsp;    }
+<i>285</i>&nbsp;
+<i>286</i>&nbsp;    public void showToolbar() {
+<i>287</i>&nbsp;        // TODO: make toolbar visible, via CoordinatorLayout
+<i>288</i>&nbsp;    }
+<i>289</i>&nbsp;
+<i>290</i>&nbsp;    /** @return True if the contextual action bar is open. */
+<i>291</i>&nbsp;    public boolean isCabOpen() {
+<b class="nc"><i>292</i>&nbsp;        return currentActionMode != null;</b>
+<i>293</i>&nbsp;    }
+<i>294</i>&nbsp;
+<i>295</i>&nbsp;    @NonNull
+<i>296</i>&nbsp;    public static Intent newIntent(@NonNull Context context) {
+<b class="nc"><i>297</i>&nbsp;        return new Intent(ACTION_RESUME_READING).setClass(context, PageActivity.class);</b>
+<i>298</i>&nbsp;    }
+<i>299</i>&nbsp;
+<i>300</i>&nbsp;    @NonNull
+<i>301</i>&nbsp;    public static Intent newIntent(@NonNull Context context, @NonNull String title) {
+<b class="nc"><i>302</i>&nbsp;        PageTitle pageTitle = new PageTitle(title, WikipediaApp.getInstance().getWikiSite());</b>
+<b class="nc"><i>303</i>&nbsp;        return newIntentForNewTab(context, new HistoryEntry(pageTitle, HistoryEntry.SOURCE_INTERNAL_LINK), pageTitle);</b>
+<i>304</i>&nbsp;    }
+<i>305</i>&nbsp;
+<i>306</i>&nbsp;    @NonNull
+<i>307</i>&nbsp;    public static Intent newIntentForNewTab(@NonNull Context context,
+<i>308</i>&nbsp;                                            @NonNull HistoryEntry entry,
+<i>309</i>&nbsp;                                            @NonNull PageTitle title) {
+<b class="nc"><i>310</i>&nbsp;        return new Intent(ACTION_LOAD_IN_NEW_TAB)</b>
+<b class="nc"><i>311</i>&nbsp;                .setClass(context, PageActivity.class)</b>
+<b class="nc"><i>312</i>&nbsp;                .putExtra(EXTRA_HISTORYENTRY, entry)</b>
+<b class="nc"><i>313</i>&nbsp;                .putExtra(EXTRA_PAGETITLE, title);</b>
+<i>314</i>&nbsp;    }
+<i>315</i>&nbsp;
+<i>316</i>&nbsp;    public static Intent newIntentForCurrentTab(@NonNull Context context,
+<i>317</i>&nbsp;                                                @NonNull HistoryEntry entry,
+<i>318</i>&nbsp;                                                @NonNull PageTitle title) {
+<b class="nc"><i>319</i>&nbsp;        return new Intent(ACTION_LOAD_IN_CURRENT_TAB)</b>
+<b class="nc"><i>320</i>&nbsp;                .setClass(context, PageActivity.class)</b>
+<b class="nc"><i>321</i>&nbsp;                .putExtra(EXTRA_HISTORYENTRY, entry)</b>
+<b class="nc"><i>322</i>&nbsp;                .putExtra(EXTRA_PAGETITLE, title);</b>
+<i>323</i>&nbsp;    }
+<i>324</i>&nbsp;
+<i>325</i>&nbsp;    public static Intent newIntentForExistingTab(@NonNull Context context,
+<i>326</i>&nbsp;                                                 @NonNull HistoryEntry entry,
+<i>327</i>&nbsp;                                                 @NonNull PageTitle title) {
+<b class="nc"><i>328</i>&nbsp;        return new Intent(ACTION_LOAD_FROM_EXISTING_TAB)</b>
+<b class="nc"><i>329</i>&nbsp;                .setClass(context, PageActivity.class)</b>
+<b class="nc"><i>330</i>&nbsp;                .putExtra(EXTRA_HISTORYENTRY, entry)</b>
+<b class="nc"><i>331</i>&nbsp;                .putExtra(EXTRA_PAGETITLE, title);</b>
+<i>332</i>&nbsp;    }
+<i>333</i>&nbsp;
+<i>334</i>&nbsp;    @NonNull
+<i>335</i>&nbsp;    public static Intent newIntentForTabList(@NonNull Context context) {
+<b class="nc"><i>336</i>&nbsp;        return new Intent(ACTION_SHOW_TAB_LIST).setClass(context, PageActivity.class);</b>
+<i>337</i>&nbsp;    }
+<i>338</i>&nbsp;
+<i>339</i>&nbsp;    @Override
+<i>340</i>&nbsp;    protected void onNewIntent(Intent intent) {
+<b class="nc"><i>341</i>&nbsp;        super.onNewIntent(intent);</b>
+<b class="nc"><i>342</i>&nbsp;        setIntent(intent);</b>
+<b class="nc"><i>343</i>&nbsp;        handleIntent(intent);</b>
+<i>344</i>&nbsp;    }
+<i>345</i>&nbsp;
+<i>346</i>&nbsp;    private void handleIntent(@NonNull Intent intent) {
+<b class="nc"><i>347</i>&nbsp;        if (Intent.ACTION_VIEW.equals(intent.getAction()) &amp;&amp; intent.getData() != null) {</b>
+<b class="nc"><i>348</i>&nbsp;            WikiSite wiki = new WikiSite(intent.getData());</b>
+<b class="nc"><i>349</i>&nbsp;            PageTitle title = wiki.titleForUri(intent.getData());</b>
+<b class="nc"><i>350</i>&nbsp;            HistoryEntry historyEntry = new HistoryEntry(title, HistoryEntry.SOURCE_EXTERNAL_LINK);</b>
+<b class="nc"><i>351</i>&nbsp;            loadPageInForegroundTab(title, historyEntry);</b>
+<b class="nc"><i>352</i>&nbsp;        } else if (ACTION_LOAD_IN_NEW_TAB.equals(intent.getAction())</b>
+<b class="nc"><i>353</i>&nbsp;                || ACTION_LOAD_IN_CURRENT_TAB.equals(intent.getAction())) {</b>
+<b class="nc"><i>354</i>&nbsp;            PageTitle title = intent.getParcelableExtra(EXTRA_PAGETITLE);</b>
+<b class="nc"><i>355</i>&nbsp;            HistoryEntry historyEntry = intent.getParcelableExtra(EXTRA_HISTORYENTRY);</b>
+<b class="nc"><i>356</i>&nbsp;            if (ACTION_LOAD_IN_NEW_TAB.equals(intent.getAction())) {</b>
+<b class="nc"><i>357</i>&nbsp;                loadPageInForegroundTab(title, historyEntry);</b>
+<b class="nc"><i>358</i>&nbsp;            } else if (ACTION_LOAD_IN_CURRENT_TAB.equals(intent.getAction())) {</b>
+<b class="nc"><i>359</i>&nbsp;                loadPage(title, historyEntry, TabPosition.CURRENT_TAB);</b>
+<i>360</i>&nbsp;            }
+<b class="nc"><i>361</i>&nbsp;            if (intent.hasExtra(Constants.INTENT_EXTRA_REVERT_QNUMBER)) {</b>
+<b class="nc"><i>362</i>&nbsp;                showDescriptionEditRevertDialog(intent.getStringExtra(Constants.INTENT_EXTRA_REVERT_QNUMBER));</b>
+<i>363</i>&nbsp;            }
+<b class="nc"><i>364</i>&nbsp;        } else if (ACTION_LOAD_FROM_EXISTING_TAB.equals(intent.getAction())) {</b>
+<b class="nc"><i>365</i>&nbsp;            PageTitle title = intent.getParcelableExtra(EXTRA_PAGETITLE);</b>
+<b class="nc"><i>366</i>&nbsp;            HistoryEntry historyEntry = intent.getParcelableExtra(EXTRA_HISTORYENTRY);</b>
+<b class="nc"><i>367</i>&nbsp;            loadPage(title, historyEntry, TabPosition.EXISTING_TAB);</b>
+<b class="nc"><i>368</i>&nbsp;        } else if (ACTION_SHOW_TAB_LIST.equals(intent.getAction())</b>
+<b class="nc"><i>369</i>&nbsp;                || ACTION_RESUME_READING.equals(intent.getAction())</b>
+<b class="nc"><i>370</i>&nbsp;                || intent.hasExtra(Constants.INTENT_APP_SHORTCUT_CONTINUE_READING)) {</b>
+<i>371</i>&nbsp;            // do nothing, since this will be handled indirectly by PageFragment.
+<b class="nc"><i>372</i>&nbsp;        } else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {</b>
+<b class="nc"><i>373</i>&nbsp;            String query = intent.getStringExtra(SearchManager.QUERY);</b>
+<b class="nc"><i>374</i>&nbsp;            PageTitle title = new PageTitle(query, app.getWikiSite());</b>
+<b class="nc"><i>375</i>&nbsp;            HistoryEntry historyEntry = new HistoryEntry(title, HistoryEntry.SOURCE_SEARCH);</b>
+<b class="nc"><i>376</i>&nbsp;            loadPageInForegroundTab(title, historyEntry);</b>
+<b class="nc"><i>377</i>&nbsp;        } else if (intent.hasExtra(Constants.INTENT_FEATURED_ARTICLE_FROM_WIDGET)) {</b>
+<b class="nc"><i>378</i>&nbsp;            new IntentFunnel(app).logFeaturedArticleWidgetTap();</b>
+<b class="nc"><i>379</i>&nbsp;            loadMainPageInForegroundTab();</b>
+<i>380</i>&nbsp;        } else {
+<b class="nc"><i>381</i>&nbsp;            loadMainPageInCurrentTab();</b>
+<i>382</i>&nbsp;        }
+<i>383</i>&nbsp;    }
+<i>384</i>&nbsp;
+<i>385</i>&nbsp;    /**
+<i>386</i>&nbsp;     * Update the state of the main progress bar that is shown inside the ActionBar of the activity.
+<i>387</i>&nbsp;     * @param visible Whether the progress bar is visible.
+<i>388</i>&nbsp;     * @param indeterminate Whether the progress bar is indeterminate.
+<i>389</i>&nbsp;     * @param value Value of the progress bar (may be between 0 and 10000). Ignored if the
+<i>390</i>&nbsp;     *              progress bar is indeterminate.
+<i>391</i>&nbsp;     */
+<i>392</i>&nbsp;    public void updateProgressBar(boolean visible, boolean indeterminate, int value) {
+<b class="nc"><i>393</i>&nbsp;        progressBar.setIndeterminate(indeterminate);</b>
+<b class="nc"><i>394</i>&nbsp;        if (!indeterminate) {</b>
+<b class="nc"><i>395</i>&nbsp;            progressBar.setProgress(value);</b>
+<i>396</i>&nbsp;        }
+<b class="nc"><i>397</i>&nbsp;        progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);</b>
+<i>398</i>&nbsp;    }
+<i>399</i>&nbsp;
+<i>400</i>&nbsp;    /**
+<i>401</i>&nbsp;     * Returns whether we&#39;re currently in a &quot;searching&quot; state (i.e. the search fragment is shown).
+<i>402</i>&nbsp;     * @return True if currently searching, false otherwise.
+<i>403</i>&nbsp;     */
+<i>404</i>&nbsp;    public boolean isSearching() {
+<b class="nc"><i>405</i>&nbsp;        SearchFragment searchFragment = searchFragment();</b>
+<b class="nc"><i>406</i>&nbsp;        return searchFragment != null &amp;&amp; searchFragment.isSearchActive();</b>
+<i>407</i>&nbsp;    }
+<i>408</i>&nbsp;
+<i>409</i>&nbsp;    /**
+<i>410</i>&nbsp;     * Load a new page, and put it on top of the backstack.
+<i>411</i>&nbsp;     * @param title Title of the page to load.
+<i>412</i>&nbsp;     * @param entry HistoryEntry associated with this page.
+<i>413</i>&nbsp;     */
+<i>414</i>&nbsp;    public void loadPage(@NonNull PageTitle title, @NonNull HistoryEntry entry) {
+<b class="nc"><i>415</i>&nbsp;        loadPage(title, entry, TabPosition.CURRENT_TAB);</b>
+<i>416</i>&nbsp;    }
+<i>417</i>&nbsp;
+<i>418</i>&nbsp;    /**
+<i>419</i>&nbsp;     * Load a new page, and put it on top of the backstack, optionally allowing state loss of the
+<i>420</i>&nbsp;     * fragment manager. Useful for when this function is called from an AsyncTask result.
+<i>421</i>&nbsp;     * @param title Title of the page to load.
+<i>422</i>&nbsp;     * @param entry HistoryEntry associated with this page.
+<i>423</i>&nbsp;     * @param position Whether to open this page in the current tab, a new background tab, or new
+<i>424</i>&nbsp;     *                 foreground tab.
+<i>425</i>&nbsp;     */
+<i>426</i>&nbsp;    public void loadPage(@NonNull final PageTitle title,
+<i>427</i>&nbsp;                         @NonNull final HistoryEntry entry,
+<i>428</i>&nbsp;                         @NonNull final TabPosition position) {
+<b class="nc"><i>429</i>&nbsp;        if (isDestroyed()) {</b>
+<i>430</i>&nbsp;            return;
+<i>431</i>&nbsp;        }
+<i>432</i>&nbsp;
+<b class="nc"><i>433</i>&nbsp;        if (entry.getSource() != HistoryEntry.SOURCE_INTERNAL_LINK || !isLinkPreviewEnabled()) {</b>
+<b class="nc"><i>434</i>&nbsp;            new LinkPreviewFunnel(app, entry.getSource()).logNavigate();</b>
+<i>435</i>&nbsp;        }
+<i>436</i>&nbsp;
+<b class="nc"><i>437</i>&nbsp;        app.putCrashReportProperty(&quot;api&quot;, title.getWikiSite().authority());</b>
+<b class="nc"><i>438</i>&nbsp;        app.putCrashReportProperty(&quot;title&quot;, title.toString());</b>
+<i>439</i>&nbsp;
+<b class="nc"><i>440</i>&nbsp;        if (title.isSpecial()) {</b>
+<b class="nc"><i>441</i>&nbsp;            visitInExternalBrowser(this, Uri.parse(title.getMobileUri()));</b>
+<i>442</i>&nbsp;            return;
+<i>443</i>&nbsp;        }
+<i>444</i>&nbsp;
+<b class="nc"><i>445</i>&nbsp;        tabsContainerView.post(() -&gt; {</b>
+<b class="nc"><i>446</i>&nbsp;            if (!pageFragment.isAdded()) {</b>
+<i>447</i>&nbsp;                return;
+<i>448</i>&nbsp;            }
+<i>449</i>&nbsp;            // Close the link preview, if one is open.
+<b class="nc"><i>450</i>&nbsp;            hideLinkPreview();</b>
+<i>451</i>&nbsp;
+<b class="nc"><i>452</i>&nbsp;            pageFragment.closeFindInPage();</b>
+<b class="nc"><i>453</i>&nbsp;            if (position == TabPosition.CURRENT_TAB) {</b>
+<b class="nc"><i>454</i>&nbsp;                pageFragment.loadPage(title, entry, true);</b>
+<b class="nc"><i>455</i>&nbsp;            } else if (position == TabPosition.NEW_TAB_BACKGROUND) {</b>
+<b class="nc"><i>456</i>&nbsp;                pageFragment.openInNewBackgroundTabFromMenu(title, entry);</b>
+<b class="nc"><i>457</i>&nbsp;            } else if (position == TabPosition.EXISTING_TAB) {</b>
+<b class="nc"><i>458</i>&nbsp;                pageFragment.openFromExistingTab(title, entry);</b>
+<i>459</i>&nbsp;            } else {
+<b class="nc"><i>460</i>&nbsp;                pageFragment.openInNewForegroundTabFromMenu(title, entry);</b>
+<i>461</i>&nbsp;            }
+<b class="nc"><i>462</i>&nbsp;            app.getSessionFunnel().pageViewed(entry);</b>
+<i>463</i>&nbsp;        });
+<i>464</i>&nbsp;    }
+<i>465</i>&nbsp;
+<i>466</i>&nbsp;    public void loadPageInForegroundTab(@NonNull PageTitle title, @NonNull HistoryEntry entry) {
+<b class="nc"><i>467</i>&nbsp;        loadPage(title, entry, TabPosition.NEW_TAB_FOREGROUND);</b>
+<i>468</i>&nbsp;    }
+<i>469</i>&nbsp;
+<i>470</i>&nbsp;    public void loadMainPageInForegroundTab() {
+<b class="nc"><i>471</i>&nbsp;        loadMainPage(TabPosition.NEW_TAB_FOREGROUND);</b>
+<i>472</i>&nbsp;    }
+<i>473</i>&nbsp;
+<i>474</i>&nbsp;    private void loadMainPageInCurrentTab() {
+<b class="nc"><i>475</i>&nbsp;        loadMainPage(TabPosition.CURRENT_TAB);</b>
+<i>476</i>&nbsp;    }
+<i>477</i>&nbsp;
+<i>478</i>&nbsp;    /**
+<i>479</i>&nbsp;     * Go directly to the Main Page of the current Wiki, optionally allowing state loss of the
+<i>480</i>&nbsp;     * fragment manager. Useful for when this function is called from an AsyncTask result.
+<i>481</i>&nbsp;     */
+<i>482</i>&nbsp;    public void loadMainPage(TabPosition position) {
+<b class="nc"><i>483</i>&nbsp;        PageTitle title = MainPageClient.getMainPageTitle();</b>
+<b class="nc"><i>484</i>&nbsp;        HistoryEntry historyEntry = new HistoryEntry(title, HistoryEntry.SOURCE_MAIN_PAGE);</b>
+<b class="nc"><i>485</i>&nbsp;        loadPage(title, historyEntry, position);</b>
+<i>486</i>&nbsp;    }
+<i>487</i>&nbsp;
+<i>488</i>&nbsp;    public void showLinkPreview(@NonNull PageTitle title, int entrySource) {
+<b class="nc"><i>489</i>&nbsp;        showLinkPreview(title, entrySource, null);</b>
+<i>490</i>&nbsp;    }
+<i>491</i>&nbsp;
+<i>492</i>&nbsp;    public void showLinkPreview(@NonNull PageTitle title, int entrySource, @Nullable Location location) {
+<b class="nc"><i>493</i>&nbsp;        bottomSheetPresenter.show(getSupportFragmentManager(),</b>
+<b class="nc"><i>494</i>&nbsp;                LinkPreviewDialog.newInstance(title, entrySource, location));</b>
+<i>495</i>&nbsp;    }
+<i>496</i>&nbsp;
+<i>497</i>&nbsp;    private void hideLinkPreview() {
+<b class="nc"><i>498</i>&nbsp;        bottomSheetPresenter.dismiss(getSupportFragmentManager());</b>
+<i>499</i>&nbsp;    }
+<i>500</i>&nbsp;
+<i>501</i>&nbsp;    public void showAddToListDialog(@NonNull PageTitle title, @NonNull AddToReadingListDialog.InvokeSource source) {
+<b class="nc"><i>502</i>&nbsp;        bottomSheetPresenter.showAddToListDialog(getSupportFragmentManager(), title, source, listDialogDismissListener);</b>
+<i>503</i>&nbsp;    }
+<i>504</i>&nbsp;
+<i>505</i>&nbsp;    // Note: back button first handled in {@link #onOptionsItemSelected()};
+<i>506</i>&nbsp;    @Override
+<i>507</i>&nbsp;    public void onBackPressed() {
+<b class="nc"><i>508</i>&nbsp;        if (isCabOpen()) {</b>
+<b class="nc"><i>509</i>&nbsp;            finishActionMode();</b>
+<i>510</i>&nbsp;            return;
+<i>511</i>&nbsp;        }
+<i>512</i>&nbsp;
+<b class="nc"><i>513</i>&nbsp;        SearchFragment searchFragment = searchFragment();</b>
+<b class="nc"><i>514</i>&nbsp;        if (searchFragment != null &amp;&amp; searchFragment.onBackPressed()) {</b>
+<b class="nc"><i>515</i>&nbsp;            if (searchFragment.isLaunchedFromIntent()) {</b>
+<b class="nc"><i>516</i>&nbsp;                finish();</b>
+<i>517</i>&nbsp;            }
+<i>518</i>&nbsp;            return;
+<i>519</i>&nbsp;        }
+<b class="nc"><i>520</i>&nbsp;        app.getSessionFunnel().backPressed();</b>
+<b class="nc"><i>521</i>&nbsp;        if (pageFragment.onBackPressed()) {</b>
+<i>522</i>&nbsp;            return;
+<i>523</i>&nbsp;        }
+<b class="nc"><i>524</i>&nbsp;        finish();</b>
+<i>525</i>&nbsp;    }
+<i>526</i>&nbsp;
+<i>527</i>&nbsp;    @Override
+<i>528</i>&nbsp;    public void onPageShowBottomSheet(@NonNull BottomSheetDialog dialog) {
+<b class="nc"><i>529</i>&nbsp;        bottomSheetPresenter.show(getSupportFragmentManager(), dialog);</b>
+<i>530</i>&nbsp;    }
+<i>531</i>&nbsp;
+<i>532</i>&nbsp;    @Override
+<i>533</i>&nbsp;    public void onPageShowBottomSheet(@NonNull BottomSheetDialogFragment dialog) {
+<b class="nc"><i>534</i>&nbsp;        bottomSheetPresenter.show(getSupportFragmentManager(), dialog);</b>
+<i>535</i>&nbsp;    }
+<i>536</i>&nbsp;
+<i>537</i>&nbsp;    @Override
+<i>538</i>&nbsp;    public void onPageDismissBottomSheet() {
+<b class="nc"><i>539</i>&nbsp;        bottomSheetPresenter.dismiss(getSupportFragmentManager());</b>
+<i>540</i>&nbsp;    }
+<i>541</i>&nbsp;
+<i>542</i>&nbsp;    @Override
+<i>543</i>&nbsp;    public void onPageInitWebView(@NonNull ObservableWebView webView) {
+<b class="nc"><i>544</i>&nbsp;        toolbarHideHandler.setScrollView(webView);</b>
+<i>545</i>&nbsp;    }
+<i>546</i>&nbsp;
+<i>547</i>&nbsp;    @Override
+<i>548</i>&nbsp;    public void onPageLoadPage(@NonNull PageTitle title, @NonNull HistoryEntry entry) {
+<b class="nc"><i>549</i>&nbsp;        loadPage(title, entry);</b>
+<i>550</i>&nbsp;    }
+<i>551</i>&nbsp;
+<i>552</i>&nbsp;    @Override
+<i>553</i>&nbsp;    public void onPageShowLinkPreview(@NonNull PageTitle title, int source) {
+<b class="nc"><i>554</i>&nbsp;        showLinkPreview(title, source);</b>
+<i>555</i>&nbsp;    }
+<i>556</i>&nbsp;
+<i>557</i>&nbsp;    @Override
+<i>558</i>&nbsp;    public void onPageLoadMainPageInForegroundTab() {
+<b class="nc"><i>559</i>&nbsp;        loadMainPageInForegroundTab();</b>
+<i>560</i>&nbsp;    }
+<i>561</i>&nbsp;
+<i>562</i>&nbsp;    @Override
+<i>563</i>&nbsp;    public void onPageUpdateProgressBar(boolean visible, boolean indeterminate, int value) {
+<b class="nc"><i>564</i>&nbsp;        updateProgressBar(visible, indeterminate, value);</b>
+<i>565</i>&nbsp;    }
+<i>566</i>&nbsp;
+<i>567</i>&nbsp;    @Override
+<i>568</i>&nbsp;    public void onPageShowThemeChooser() {
+<b class="nc"><i>569</i>&nbsp;        bottomSheetPresenter.show(getSupportFragmentManager(), new ThemeChooserDialog());</b>
+<i>570</i>&nbsp;    }
+<i>571</i>&nbsp;
+<i>572</i>&nbsp;    @Nullable
+<i>573</i>&nbsp;    @Override
+<i>574</i>&nbsp;    public void onPageStartSupportActionMode(@NonNull ActionMode.Callback callback) {
+<b class="nc"><i>575</i>&nbsp;        startActionMode(callback);</b>
+<i>576</i>&nbsp;    }
+<i>577</i>&nbsp;
+<i>578</i>&nbsp;    @Override
+<i>579</i>&nbsp;    public void onPageShowToolbar() {
+<b class="nc"><i>580</i>&nbsp;        showToolbar();</b>
+<i>581</i>&nbsp;    }
+<i>582</i>&nbsp;
+<i>583</i>&nbsp;    @Override
+<i>584</i>&nbsp;    public void onPageHideSoftKeyboard() {
+<b class="nc"><i>585</i>&nbsp;        hideSoftKeyboard();</b>
+<i>586</i>&nbsp;    }
+<i>587</i>&nbsp;
+<i>588</i>&nbsp;    @Override
+<i>589</i>&nbsp;    public void onPageAddToReadingList(@NonNull PageTitle title,
+<i>590</i>&nbsp;                                       @NonNull AddToReadingListDialog.InvokeSource source) {
+<b class="nc"><i>591</i>&nbsp;        showAddToListDialog(title, source);</b>
+<i>592</i>&nbsp;    }
+<i>593</i>&nbsp;
+<i>594</i>&nbsp;    @Override
+<i>595</i>&nbsp;    public void onPageRemoveFromReadingLists(@NonNull PageTitle title) {
+<b class="nc"><i>596</i>&nbsp;        if (!pageFragment.isAdded()) {</b>
+<i>597</i>&nbsp;            return;
+<i>598</i>&nbsp;        }
+<b class="nc"><i>599</i>&nbsp;        FeedbackUtil.showMessage(this,</b>
+<b class="nc"><i>600</i>&nbsp;                getString(R.string.reading_list_item_deleted, title.getDisplayText()));</b>
+<b class="nc"><i>601</i>&nbsp;        pageFragment.updateBookmarkAndMenuOptionsFromDao();</b>
+<i>602</i>&nbsp;    }
+<i>603</i>&nbsp;
+<i>604</i>&nbsp;    @Override
+<i>605</i>&nbsp;    public void onPagePopFragment() {
+<b class="nc"><i>606</i>&nbsp;        finish();</b>
+<i>607</i>&nbsp;    }
+<i>608</i>&nbsp;
+<i>609</i>&nbsp;    @Override
+<i>610</i>&nbsp;    public void onPageInvalidateOptionsMenu() {
+<b class="nc"><i>611</i>&nbsp;        supportInvalidateOptionsMenu();</b>
+<i>612</i>&nbsp;    }
+<i>613</i>&nbsp;
+<i>614</i>&nbsp;    @Override
+<i>615</i>&nbsp;    public void onPageLoadError(@NonNull PageTitle title) {
+<b class="nc"><i>616</i>&nbsp;        getSupportActionBar().setTitle(title.getDisplayText());</b>
+<i>617</i>&nbsp;    }
+<i>618</i>&nbsp;
+<i>619</i>&nbsp;    @Override
+<i>620</i>&nbsp;    public void onPageLoadErrorBackPressed() {
+<b class="nc"><i>621</i>&nbsp;        finish();</b>
+<i>622</i>&nbsp;    }
+<i>623</i>&nbsp;
+<i>624</i>&nbsp;    @Override
+<i>625</i>&nbsp;    public void onSearchSelectPage(@NonNull HistoryEntry entry, boolean inNewTab) {
+<b class="nc"><i>626</i>&nbsp;        loadPage(entry.getTitle(), entry, inNewTab ? TabsProvider.TabPosition.NEW_TAB_BACKGROUND</b>
+<i>627</i>&nbsp;                : TabsProvider.TabPosition.CURRENT_TAB);
+<i>628</i>&nbsp;    }
+<i>629</i>&nbsp;
+<i>630</i>&nbsp;    @Override
+<i>631</i>&nbsp;    public void onPageHideAllContent() {
+<b class="nc"><i>632</i>&nbsp;        toolbarHideHandler.setFadeEnabled(false);</b>
+<i>633</i>&nbsp;    }
+<i>634</i>&nbsp;
+<i>635</i>&nbsp;    @Override
+<i>636</i>&nbsp;    public void onPageSetToolbarFadeEnabled(boolean enabled) {
+<b class="nc"><i>637</i>&nbsp;        toolbarHideHandler.setFadeEnabled(enabled);</b>
+<i>638</i>&nbsp;    }
+<i>639</i>&nbsp;
+<i>640</i>&nbsp;    @Override
+<i>641</i>&nbsp;    public void onPageSetToolbarForceNoFace(boolean force) {
+<b class="nc"><i>642</i>&nbsp;        toolbarHideHandler.setForceNoFade(force);</b>
+<i>643</i>&nbsp;    }
+<i>644</i>&nbsp;
+<i>645</i>&nbsp;    @Override
+<i>646</i>&nbsp;    public void onPageSetToolbarElevationEnabled(boolean enabled) {
+<b class="nc"><i>647</i>&nbsp;        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) {</b>
+<b class="nc"><i>648</i>&nbsp;            toolbarContainerView.setElevation(DimenUtil</b>
+<b class="nc"><i>649</i>&nbsp;                    .dpToPx(enabled ? DimenUtil.getDimension(R.dimen.toolbar_default_elevation) : 0));</b>
+<i>650</i>&nbsp;        }
+<i>651</i>&nbsp;    }
+<i>652</i>&nbsp;
+<i>653</i>&nbsp;    @Override
+<i>654</i>&nbsp;    public void onSearchOpen() {
+<b class="nc"><i>655</i>&nbsp;        toolbarContainerView.setVisibility(View.GONE);</b>
+<i>656</i>&nbsp;    }
+<i>657</i>&nbsp;
+<i>658</i>&nbsp;    @Override
+<i>659</i>&nbsp;    public void onSearchClose(boolean launchedFromIntent) {
+<b class="nc"><i>660</i>&nbsp;        SearchFragment fragment = searchFragment();</b>
+<b class="nc"><i>661</i>&nbsp;        if (fragment != null) {</b>
+<b class="nc"><i>662</i>&nbsp;            closeSearchFragment(fragment);</b>
+<i>663</i>&nbsp;        }
+<b class="nc"><i>664</i>&nbsp;        toolbarContainerView.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>665</i>&nbsp;        hideSoftKeyboard();</b>
+<i>666</i>&nbsp;    }
+<i>667</i>&nbsp;
+<i>668</i>&nbsp;    @Override
+<i>669</i>&nbsp;    public void onSearchResultAddToList(@NonNull PageTitle title, @NonNull AddToReadingListDialog.InvokeSource source) {
+<b class="nc"><i>670</i>&nbsp;        showAddToListDialog(title, source);</b>
+<i>671</i>&nbsp;    }
+<i>672</i>&nbsp;
+<i>673</i>&nbsp;    @Override
+<i>674</i>&nbsp;    public void onSearchResultShareLink(@NonNull PageTitle title) {
+<b class="nc"><i>675</i>&nbsp;        ShareUtil.shareText(this, title);</b>
+<i>676</i>&nbsp;    }
+<i>677</i>&nbsp;
+<i>678</i>&nbsp;    @Override
+<i>679</i>&nbsp;    public void onLinkPreviewLoadPage(@NonNull PageTitle title, @NonNull HistoryEntry entry, boolean inNewTab) {
+<b class="nc"><i>680</i>&nbsp;        loadPage(title, entry, inNewTab ? TabPosition.NEW_TAB_BACKGROUND : TabPosition.CURRENT_TAB);</b>
+<i>681</i>&nbsp;    }
+<i>682</i>&nbsp;
+<i>683</i>&nbsp;    @Override
+<i>684</i>&nbsp;    public void onLinkPreviewCopyLink(@NonNull PageTitle title) {
+<b class="nc"><i>685</i>&nbsp;        copyLink(title.getCanonicalUri());</b>
+<b class="nc"><i>686</i>&nbsp;        showCopySuccessMessage();</b>
+<i>687</i>&nbsp;    }
+<i>688</i>&nbsp;
+<i>689</i>&nbsp;    @Override
+<i>690</i>&nbsp;    public void onLinkPreviewAddToList(@NonNull PageTitle title) {
+<b class="nc"><i>691</i>&nbsp;        showAddToListDialog(title, AddToReadingListDialog.InvokeSource.LINK_PREVIEW_MENU);</b>
+<i>692</i>&nbsp;    }
+<i>693</i>&nbsp;
+<i>694</i>&nbsp;    @Override
+<i>695</i>&nbsp;    public void onLinkPreviewShareLink(@NonNull PageTitle title) {
+<b class="nc"><i>696</i>&nbsp;        ShareUtil.shareText(this, title);</b>
+<i>697</i>&nbsp;    }
+<i>698</i>&nbsp;
+<i>699</i>&nbsp;    @Override
+<i>700</i>&nbsp;    public void onSearchResultCopyLink(@NonNull PageTitle title) {
+<b class="nc"><i>701</i>&nbsp;        copyLink(title.getCanonicalUri());</b>
+<b class="nc"><i>702</i>&nbsp;        showCopySuccessMessage();</b>
+<i>703</i>&nbsp;    }
+<i>704</i>&nbsp;
+<i>705</i>&nbsp;    @Override
+<i>706</i>&nbsp;    public void wiktionaryShowDialogForTerm(@NonNull String term) {
+<b class="nc"><i>707</i>&nbsp;        pageFragment.getShareHandler().showWiktionaryDefinition(term);</b>
+<i>708</i>&nbsp;    }
+<i>709</i>&nbsp;
+<i>710</i>&nbsp;    @Override
+<i>711</i>&nbsp;    public void onToggleDimImages() {
+<b class="nc"><i>712</i>&nbsp;        recreate();</b>
+<i>713</i>&nbsp;    }
+<i>714</i>&nbsp;
+<i>715</i>&nbsp;    @Override
+<i>716</i>&nbsp;    public void onCancel() { }
+<i>717</i>&nbsp;
+<i>718</i>&nbsp;    private void copyLink(@NonNull String url) {
+<b class="nc"><i>719</i>&nbsp;        ClipboardUtil.setPlainText(this, null, url);</b>
+<i>720</i>&nbsp;    }
+<i>721</i>&nbsp;
+<i>722</i>&nbsp;    private void showCopySuccessMessage() {
+<b class="nc"><i>723</i>&nbsp;        FeedbackUtil.showMessage(this, R.string.address_copied);</b>
+<i>724</i>&nbsp;    }
+<i>725</i>&nbsp;
+<i>726</i>&nbsp;    private boolean shouldRecreateMainActivity() {
+<b class="nc"><i>727</i>&nbsp;        return getIntent().getAction() == null</b>
+<b class="nc"><i>728</i>&nbsp;                || getIntent().getAction().equals(Intent.ACTION_VIEW);</b>
+<i>729</i>&nbsp;    }
+<i>730</i>&nbsp;
+<i>731</i>&nbsp;    @Override
+<i>732</i>&nbsp;    protected void onResume() {
+<b class="nc"><i>733</i>&nbsp;        super.onResume();</b>
+<b class="nc"><i>734</i>&nbsp;        app.resetWikiSite();</b>
+<b class="nc"><i>735</i>&nbsp;        app.getSessionFunnel().touchSession();</b>
+<i>736</i>&nbsp;    }
+<i>737</i>&nbsp;
+<i>738</i>&nbsp;    @Override
+<i>739</i>&nbsp;    public void onPause() {
+<b class="nc"><i>740</i>&nbsp;        if (isCabOpen()) {</b>
+<i>741</i>&nbsp;            // Explicitly close any current ActionMode (see T147191)
+<b class="nc"><i>742</i>&nbsp;            finishActionMode();</b>
+<i>743</i>&nbsp;        }
+<b class="nc"><i>744</i>&nbsp;        super.onPause();</b>
+<i>745</i>&nbsp;    }
+<i>746</i>&nbsp;
+<i>747</i>&nbsp;    @Override
+<i>748</i>&nbsp;    public void onSaveInstanceState(Bundle outState) {
+<b class="nc"><i>749</i>&nbsp;        super.onSaveInstanceState(outState);</b>
+<b class="nc"><i>750</i>&nbsp;        saveState(outState);</b>
+<i>751</i>&nbsp;    }
+<i>752</i>&nbsp;
+<i>753</i>&nbsp;    private void saveState(@NonNull Bundle outState) {
+<b class="nc"><i>754</i>&nbsp;        outState.putBoolean(&quot;isSearching&quot;, isSearching());</b>
+<b class="nc"><i>755</i>&nbsp;        outState.putString(LANGUAGE_CODE_BUNDLE_KEY, app.getAppOrSystemLanguageCode());</b>
+<i>756</i>&nbsp;    }
+<i>757</i>&nbsp;
+<i>758</i>&nbsp;    @Override
+<i>759</i>&nbsp;    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
+<b class="nc"><i>760</i>&nbsp;        if (settingsActivityRequested(requestCode)) {</b>
+<b class="nc"><i>761</i>&nbsp;            handleSettingsActivityResult(resultCode);</b>
+<b class="nc"><i>762</i>&nbsp;        } else if (newArticleLanguageSelected(requestCode, resultCode) || galleryPageSelected(requestCode, resultCode)) {</b>
+<b class="nc"><i>763</i>&nbsp;            handleLangLinkOrPageResult(data);</b>
+<i>764</i>&nbsp;        } else {
+<b class="nc"><i>765</i>&nbsp;            super.onActivityResult(requestCode, resultCode, data);</b>
+<i>766</i>&nbsp;        }
+<i>767</i>&nbsp;    }
+<i>768</i>&nbsp;
+<i>769</i>&nbsp;    private void handleLangLinkOrPageResult(final Intent data) {
+<b class="nc"><i>770</i>&nbsp;        tabsContainerView.post(() -&gt; handleIntent(data));</b>
+<i>771</i>&nbsp;    }
+<i>772</i>&nbsp;
+<i>773</i>&nbsp;    @Override
+<i>774</i>&nbsp;    protected void onStop() {
+<b class="nc"><i>775</i>&nbsp;        app.getSessionFunnel().persistSession();</b>
+<b class="nc"><i>776</i>&nbsp;        super.onStop();</b>
+<i>777</i>&nbsp;    }
+<i>778</i>&nbsp;
+<i>779</i>&nbsp;    @Override
+<i>780</i>&nbsp;    public void onDestroy() {
+<b class="nc"><i>781</i>&nbsp;        if (unbinder != null) {</b>
+<b class="nc"><i>782</i>&nbsp;            unbinder.unbind();</b>
+<i>783</i>&nbsp;        }
+<b class="nc"><i>784</i>&nbsp;        unregisterBus();</b>
+<b class="nc"><i>785</i>&nbsp;        super.onDestroy();</b>
+<i>786</i>&nbsp;    }
+<i>787</i>&nbsp;
+<i>788</i>&nbsp;    @Override
+<i>789</i>&nbsp;    public void onActionModeStarted(ActionMode mode) {
+<b class="nc"><i>790</i>&nbsp;        super.onActionModeStarted(mode);</b>
+<b class="nc"><i>791</i>&nbsp;        if (!isSearching() &amp;&amp; !isCabOpen() &amp;&amp; mode.getTag() == null) {</b>
+<b class="nc"><i>792</i>&nbsp;            Menu menu = mode.getMenu();</b>
+<b class="nc"><i>793</i>&nbsp;            menu.clear();</b>
+<b class="nc"><i>794</i>&nbsp;            mode.getMenuInflater().inflate(R.menu.menu_text_select, menu);</b>
+<b class="nc"><i>795</i>&nbsp;            ViewUtil.setCloseButtonInActionMode(pageFragment.getContext(), mode);</b>
+<b class="nc"><i>796</i>&nbsp;            pageFragment.onActionModeShown(mode);</b>
+<i>797</i>&nbsp;        }
+<i>798</i>&nbsp;    }
+<i>799</i>&nbsp;
+<i>800</i>&nbsp;    @Override
+<i>801</i>&nbsp;    public void onActionModeFinished(android.view.ActionMode mode) {
+<b class="nc"><i>802</i>&nbsp;        super.onActionModeFinished(mode);</b>
+<b class="nc"><i>803</i>&nbsp;        currentActionMode = null;</b>
+<b class="nc"><i>804</i>&nbsp;        toolbarHideHandler.onScrolled(pageFragment.getWebView().getScrollY(),</b>
+<b class="nc"><i>805</i>&nbsp;                pageFragment.getWebView().getScrollY());</b>
+<i>806</i>&nbsp;    }
+<i>807</i>&nbsp;
+<i>808</i>&nbsp;    protected void clearActionBarTitle() {
+<b class="nc"><i>809</i>&nbsp;        getSupportActionBar().setTitle(&quot;&quot;);</b>
+<i>810</i>&nbsp;    }
+<i>811</i>&nbsp;
+<i>812</i>&nbsp;    private void registerBus() {
+<b class="nc"><i>813</i>&nbsp;        bus = app.getBus();</b>
+<b class="nc"><i>814</i>&nbsp;        bus.register(busMethods);</b>
+<b class="nc"><i>815</i>&nbsp;        L.d(&quot;Registered bus.&quot;);</b>
+<i>816</i>&nbsp;    }
+<i>817</i>&nbsp;
+<i>818</i>&nbsp;    private void unregisterBus() {
+<b class="nc"><i>819</i>&nbsp;        if (bus != null) {</b>
+<b class="nc"><i>820</i>&nbsp;            bus.unregister(busMethods);</b>
+<i>821</i>&nbsp;        }
+<b class="nc"><i>822</i>&nbsp;        bus = null;</b>
+<b class="nc"><i>823</i>&nbsp;        L.d(&quot;Unregistered bus.&quot;);</b>
+<i>824</i>&nbsp;    }
+<i>825</i>&nbsp;
+<i>826</i>&nbsp;    private void handleSettingsActivityResult(int resultCode) {
+<b class="nc"><i>827</i>&nbsp;        if (languageChanged(resultCode)) {</b>
+<b class="nc"><i>828</i>&nbsp;            loadNewLanguageMainPage();</b>
+<i>829</i>&nbsp;        }
+<i>830</i>&nbsp;    }
+<i>831</i>&nbsp;
+<i>832</i>&nbsp;    private boolean settingsActivityRequested(int requestCode) {
+<b class="nc"><i>833</i>&nbsp;        return requestCode == SettingsActivity.ACTIVITY_REQUEST_SHOW_SETTINGS;</b>
+<i>834</i>&nbsp;    }
+<i>835</i>&nbsp;
+<i>836</i>&nbsp;    private boolean newArticleLanguageSelected(int requestCode, int resultCode) {
+<b class="nc"><i>837</i>&nbsp;        return requestCode == Constants.ACTIVITY_REQUEST_LANGLINKS &amp;&amp; resultCode == LangLinksActivity.ACTIVITY_RESULT_LANGLINK_SELECT;</b>
+<i>838</i>&nbsp;    }
+<i>839</i>&nbsp;
+<i>840</i>&nbsp;    private boolean galleryPageSelected(int requestCode, int resultCode) {
+<b class="nc"><i>841</i>&nbsp;        return requestCode == Constants.ACTIVITY_REQUEST_GALLERY &amp;&amp; resultCode == GalleryActivity.ACTIVITY_RESULT_PAGE_SELECTED;</b>
+<i>842</i>&nbsp;    }
+<i>843</i>&nbsp;
+<i>844</i>&nbsp;    private boolean languageChanged(int resultCode) {
+<b class="nc"><i>845</i>&nbsp;        return resultCode == SettingsActivity.ACTIVITY_RESULT_LANGUAGE_CHANGED;</b>
+<i>846</i>&nbsp;    }
+<i>847</i>&nbsp;
+<i>848</i>&nbsp;    /**
+<i>849</i>&nbsp;     * Reload the main page in the new language, after delaying for one second in order to:
+<i>850</i>&nbsp;     * (1) Make sure that onStart in MainActivity gets called, thus registering the activity for the bus.
+<i>851</i>&nbsp;     * (2) Ensure a smooth transition, which is very jarring without a delay.
+<i>852</i>&nbsp;     */
+<i>853</i>&nbsp;    private void loadNewLanguageMainPage() {
+<b class="nc"><i>854</i>&nbsp;        Handler uiThread = new Handler(Looper.getMainLooper());</b>
+<b class="nc"><i>855</i>&nbsp;        uiThread.postDelayed(() -&gt; {</b>
+<b class="nc"><i>856</i>&nbsp;            loadMainPageInForegroundTab();</b>
+<b class="nc"><i>857</i>&nbsp;            updateFeaturedPageWidget();</b>
+<i>858</i>&nbsp;        }, DateUtils.SECOND_IN_MILLIS);
+<i>859</i>&nbsp;    }
+<i>860</i>&nbsp;
+<i>861</i>&nbsp;    /**
+<i>862</i>&nbsp;     * Update any instances of our Featured Page widget, since it will change with the currently selected language.
+<i>863</i>&nbsp;     */
+<i>864</i>&nbsp;    private void updateFeaturedPageWidget() {
+<b class="nc"><i>865</i>&nbsp;        Intent widgetIntent = new Intent(this, WidgetProviderFeaturedPage.class);</b>
+<b class="nc"><i>866</i>&nbsp;        widgetIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);</b>
+<b class="nc"><i>867</i>&nbsp;        int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(</b>
+<i>868</i>&nbsp;                new ComponentName(this, WidgetProviderFeaturedPage.class));
+<b class="nc"><i>869</i>&nbsp;        widgetIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);</b>
+<b class="nc"><i>870</i>&nbsp;        sendBroadcast(widgetIntent);</b>
+<i>871</i>&nbsp;    }
+<i>872</i>&nbsp;
+<i>873</i>&nbsp;    private void showDescriptionEditRevertDialog(@NonNull String qNumber) {
+<b class="nc"><i>874</i>&nbsp;        new AlertDialog.Builder(this)</b>
+<b class="nc"><i>875</i>&nbsp;                .setTitle(R.string.notification_reverted_title)</b>
+<b class="nc"><i>876</i>&nbsp;                .setView(new DescriptionEditRevertHelpView(this, qNumber))</b>
+<b class="nc"><i>877</i>&nbsp;                .setPositiveButton(android.R.string.ok, null)</b>
+<b class="nc"><i>878</i>&nbsp;                .create()</b>
+<b class="nc"><i>879</i>&nbsp;                .show();</b>
+<i>880</i>&nbsp;    }
+<i>881</i>&nbsp;
+<i>882</i>&nbsp;    @SuppressLint(&quot;CommitTransaction&quot;)
+<i>883</i>&nbsp;    private void openSearchFragment(@NonNull SearchInvokeSource source, @Nullable String query) {
+<b class="nc"><i>884</i>&nbsp;        Fragment fragment = searchFragment();</b>
+<b class="nc"><i>885</i>&nbsp;        if (fragment == null) {</b>
+<b class="nc"><i>886</i>&nbsp;            fragment = SearchFragment.newInstance(source, StringUtils.trim(query));</b>
+<b class="nc"><i>887</i>&nbsp;            getSupportFragmentManager()</b>
+<b class="nc"><i>888</i>&nbsp;                    .beginTransaction()</b>
+<b class="nc"><i>889</i>&nbsp;                    .add(R.id.activity_page_container, fragment)</b>
+<b class="nc"><i>890</i>&nbsp;                    .commitNowAllowingStateLoss();</b>
+<i>891</i>&nbsp;        }
+<i>892</i>&nbsp;    }
+<i>893</i>&nbsp;
+<i>894</i>&nbsp;    private void updateMenuPageInfo(@NonNull Menu menu) {
+<b class="nc"><i>895</i>&nbsp;        MenuItem contentIssues = menu.findItem(R.id.menu_page_content_issues);</b>
+<b class="nc"><i>896</i>&nbsp;        MenuItem similarTitles = menu.findItem(R.id.menu_page_similar_titles);</b>
+<b class="nc"><i>897</i>&nbsp;        PageInfo pageInfo = pageFragment.getPageInfo();</b>
+<b class="nc"><i>898</i>&nbsp;        contentIssues.setVisible(pageInfo != null &amp;&amp; pageInfo.hasContentIssues());</b>
+<b class="nc"><i>899</i>&nbsp;        contentIssues.setEnabled(true);</b>
+<b class="nc"><i>900</i>&nbsp;        similarTitles.setVisible(pageInfo != null &amp;&amp; pageInfo.hasSimilarTitles());</b>
+<b class="nc"><i>901</i>&nbsp;        similarTitles.setEnabled(true);</b>
+<i>902</i>&nbsp;    }
+<i>903</i>&nbsp;
+<i>904</i>&nbsp;    @SuppressLint(&quot;CommitTransaction&quot;)
+<i>905</i>&nbsp;    private void closeSearchFragment(@NonNull SearchFragment fragment) {
+<b class="nc"><i>906</i>&nbsp;        getSupportFragmentManager().beginTransaction().remove(fragment).commitNowAllowingStateLoss();</b>
+<i>907</i>&nbsp;    }
+<i>908</i>&nbsp;
+<i>909</i>&nbsp;    @Nullable private SearchFragment searchFragment() {
+<b class="nc"><i>910</i>&nbsp;        return (SearchFragment) getSupportFragmentManager()</b>
+<b class="nc"><i>911</i>&nbsp;                .findFragmentById(R.id.activity_page_container);</b>
+<i>912</i>&nbsp;    }
+<i>913</i>&nbsp;
+<i>914</i>&nbsp;    @NonNull public TabLayout getTabLayout() {
+<b class="nc"><i>915</i>&nbsp;        return pageFragment.getTabLayout();</b>
+<i>916</i>&nbsp;    }
+<i>917</i>&nbsp;
+<b class="nc"><i>918</i>&nbsp;    private class EventBusMethods {</b>
+<i>919</i>&nbsp;        @Subscribe public void on(ChangeTextSizeEvent event) {
+<b class="nc"><i>920</i>&nbsp;            if (pageFragment != null &amp;&amp; pageFragment.getWebView() != null) {</b>
+<b class="nc"><i>921</i>&nbsp;                pageFragment.updateFontSize();</b>
+<i>922</i>&nbsp;            }
+<i>923</i>&nbsp;        }
+<i>924</i>&nbsp;
+<i>925</i>&nbsp;        @Subscribe public void on(@NonNull ArticleSavedOrDeletedEvent event) {
+<b class="nc"><i>926</i>&nbsp;            if (pageFragment == null || !pageFragment.isAdded()) {</b>
+<i>927</i>&nbsp;                return;
+<i>928</i>&nbsp;            }
+<b class="nc"><i>929</i>&nbsp;            for (ReadingListPage page : event.getPages()) {</b>
+<b class="nc"><i>930</i>&nbsp;                if (page.title().equals(pageFragment.getTitleOriginal().getDisplayText())) {</b>
+<b class="nc"><i>931</i>&nbsp;                    pageFragment.updateBookmarkAndMenuOptionsFromDao();</b>
+<i>932</i>&nbsp;                }
+<i>933</i>&nbsp;            }
+<i>934</i>&nbsp;        }
+<i>935</i>&nbsp;    }
+<i>936</i>&nbsp;
+<i>937</i>&nbsp;    @Override
+<i>938</i>&nbsp;    public boolean onKeyDown(int keyCode, KeyEvent event) {
+<b class="nc"><i>939</i>&nbsp;        if ((event.isCtrlPressed() &amp;&amp; keyCode == KeyEvent.KEYCODE_F)</b>
+<b class="nc"><i>940</i>&nbsp;                || (!event.isCtrlPressed() &amp;&amp; keyCode == KeyEvent.KEYCODE_F3)) {</b>
+<b class="nc"><i>941</i>&nbsp;            pageFragment.showFindInPage();</b>
+<b class="nc"><i>942</i>&nbsp;            return true;</b>
+<i>943</i>&nbsp;        }
+<b class="nc"><i>944</i>&nbsp;        return super.onKeyDown(keyCode, event);</b>
+<i>945</i>&nbsp;    }
+<i>946</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

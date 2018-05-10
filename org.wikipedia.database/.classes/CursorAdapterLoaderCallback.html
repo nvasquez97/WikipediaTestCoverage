@@ -1,0 +1,115 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CursorAdapterLoaderCallback</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.database</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CursorAdapterLoaderCallback (org.wikipedia.database)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CursorAdapterLoaderCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.database;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.database.Cursor;
+<i>5</i>&nbsp;import android.support.annotation.NonNull;
+<i>6</i>&nbsp;import android.support.v4.app.LoaderManager;
+<i>7</i>&nbsp;import android.support.v4.content.Loader;
+<i>8</i>&nbsp;import android.support.v4.widget.CursorAdapter;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;public abstract class CursorAdapterLoaderCallback implements LoaderManager.LoaderCallbacks&lt;Cursor&gt; {
+<i>11</i>&nbsp;    @NonNull private final Context context;
+<i>12</i>&nbsp;    @NonNull private final CursorAdapter adapter;
+<i>13</i>&nbsp;
+<b class="nc"><i>14</i>&nbsp;    public CursorAdapterLoaderCallback(@NonNull Context context, @NonNull CursorAdapter adapter) {</b>
+<b class="nc"><i>15</i>&nbsp;        this.context = context.getApplicationContext();</b>
+<b class="nc"><i>16</i>&nbsp;        this.adapter = adapter;</b>
+<i>17</i>&nbsp;    }
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    @Override
+<i>20</i>&nbsp;    public void onLoadFinished(Loader&lt;Cursor&gt; loader, Cursor cursor) {
+<b class="nc"><i>21</i>&nbsp;        adapter.swapCursor(cursor);</b>
+<i>22</i>&nbsp;    }
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    @Override
+<i>25</i>&nbsp;    public void onLoaderReset(Loader&lt;Cursor&gt; loader) {
+<b class="nc"><i>26</i>&nbsp;        adapter.changeCursor(null);</b>
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    @NonNull protected Context context() {
+<b class="nc"><i>30</i>&nbsp;        return context;</b>
+<i>31</i>&nbsp;    }
+<i>32</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

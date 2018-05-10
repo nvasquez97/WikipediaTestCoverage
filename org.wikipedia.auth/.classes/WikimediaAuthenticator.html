@@ -1,0 +1,213 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: WikimediaAuthenticator</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.auth</a> ]
+</div>
+
+<h1>Coverage Summary for Class: WikimediaAuthenticator (org.wikipedia.auth)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">WikimediaAuthenticator</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 32)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.auth;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.accounts.AbstractAccountAuthenticator;
+<i>4</i>&nbsp;import android.accounts.Account;
+<i>5</i>&nbsp;import android.accounts.AccountAuthenticatorResponse;
+<i>6</i>&nbsp;import android.accounts.AccountManager;
+<i>7</i>&nbsp;import android.accounts.NetworkErrorException;
+<i>8</i>&nbsp;import android.content.ContentResolver;
+<i>9</i>&nbsp;import android.content.Context;
+<i>10</i>&nbsp;import android.content.Intent;
+<i>11</i>&nbsp;import android.os.Bundle;
+<i>12</i>&nbsp;import android.support.annotation.NonNull;
+<i>13</i>&nbsp;import android.support.annotation.Nullable;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import org.wikipedia.BuildConfig;
+<i>16</i>&nbsp;import org.wikipedia.R;
+<i>17</i>&nbsp;import org.wikipedia.analytics.LoginFunnel;
+<i>18</i>&nbsp;import org.wikipedia.login.LoginActivity;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;public class WikimediaAuthenticator extends AbstractAccountAuthenticator {
+<b class="nc"><i>21</i>&nbsp;    private static final String[] SYNC_AUTHORITIES = {BuildConfig.READING_LISTS_AUTHORITY};</b>
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    @NonNull private final Context context;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    public WikimediaAuthenticator(@NonNull Context context) {
+<b class="nc"><i>26</i>&nbsp;        super(context);</b>
+<b class="nc"><i>27</i>&nbsp;        this.context = context;</b>
+<i>28</i>&nbsp;    }
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    @Override
+<i>31</i>&nbsp;    public Bundle editProperties(AccountAuthenticatorResponse response, String accountType) {
+<b class="nc"><i>32</i>&nbsp;        return unsupportedOperation();</b>
+<i>33</i>&nbsp;    }
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    @Override
+<i>36</i>&nbsp;    public Bundle addAccount(@NonNull AccountAuthenticatorResponse response,
+<i>37</i>&nbsp;                             @NonNull String accountType, @Nullable String authTokenType,
+<i>38</i>&nbsp;                             @Nullable String[] requiredFeatures, @Nullable Bundle options)
+<i>39</i>&nbsp;            throws NetworkErrorException {
+<i>40</i>&nbsp;
+<b class="nc"><i>41</i>&nbsp;        if (!supportedAccountType(accountType) || AccountUtil.account() != null) {</b>
+<b class="nc"><i>42</i>&nbsp;            return unsupportedOperation();</b>
+<i>43</i>&nbsp;        }
+<i>44</i>&nbsp;
+<b class="nc"><i>45</i>&nbsp;        return addAccount(response);</b>
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    @Override
+<i>49</i>&nbsp;    public Bundle confirmCredentials(@NonNull AccountAuthenticatorResponse response,
+<i>50</i>&nbsp;                                     @NonNull Account account, @Nullable Bundle options)
+<i>51</i>&nbsp;            throws NetworkErrorException {
+<b class="nc"><i>52</i>&nbsp;        return unsupportedOperation();</b>
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    @Override
+<i>56</i>&nbsp;    public Bundle getAuthToken(@NonNull AccountAuthenticatorResponse response,
+<i>57</i>&nbsp;                               @NonNull Account account, @NonNull String authTokenType,
+<i>58</i>&nbsp;                               @Nullable Bundle options)
+<i>59</i>&nbsp;            throws NetworkErrorException {
+<b class="nc"><i>60</i>&nbsp;        return unsupportedOperation();</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    @Nullable
+<i>64</i>&nbsp;    @Override
+<i>65</i>&nbsp;    public String getAuthTokenLabel(@NonNull String authTokenType) {
+<b class="nc"><i>66</i>&nbsp;        return supportedAccountType(authTokenType) ? context.getString(R.string.wikimedia) : null;</b>
+<i>67</i>&nbsp;    }
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;    @Nullable
+<i>70</i>&nbsp;    @Override
+<i>71</i>&nbsp;    public Bundle updateCredentials(@NonNull AccountAuthenticatorResponse response,
+<i>72</i>&nbsp;                                    @NonNull Account account, @Nullable String authTokenType,
+<i>73</i>&nbsp;                                    @Nullable Bundle options)
+<i>74</i>&nbsp;            throws NetworkErrorException {
+<b class="nc"><i>75</i>&nbsp;        return unsupportedOperation();</b>
+<i>76</i>&nbsp;    }
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;    @Nullable
+<i>79</i>&nbsp;    @Override
+<i>80</i>&nbsp;    public Bundle hasFeatures(@NonNull AccountAuthenticatorResponse response,
+<i>81</i>&nbsp;                              @NonNull Account account, @NonNull String[] features)
+<i>82</i>&nbsp;            throws NetworkErrorException {
+<b class="nc"><i>83</i>&nbsp;        Bundle bundle = new Bundle();</b>
+<b class="nc"><i>84</i>&nbsp;        bundle.putBoolean(AccountManager.KEY_BOOLEAN_RESULT, false);</b>
+<b class="nc"><i>85</i>&nbsp;        return bundle;</b>
+<i>86</i>&nbsp;    }
+<i>87</i>&nbsp;
+<i>88</i>&nbsp;    private boolean supportedAccountType(@Nullable String type) {
+<b class="nc"><i>89</i>&nbsp;        return AccountUtil.accountType().equals(type);</b>
+<i>90</i>&nbsp;    }
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;    private Bundle addAccount(AccountAuthenticatorResponse response) {
+<b class="nc"><i>93</i>&nbsp;        Intent intent = LoginActivity.newIntent(context, LoginFunnel.SOURCE_SYSTEM);</b>
+<b class="nc"><i>94</i>&nbsp;        intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);</b>
+<i>95</i>&nbsp;
+<b class="nc"><i>96</i>&nbsp;        Bundle bundle = new Bundle();</b>
+<b class="nc"><i>97</i>&nbsp;        bundle.putParcelable(AccountManager.KEY_INTENT, intent);</b>
+<i>98</i>&nbsp;
+<b class="nc"><i>99</i>&nbsp;        return bundle;</b>
+<i>100</i>&nbsp;    }
+<i>101</i>&nbsp;
+<i>102</i>&nbsp;    private Bundle unsupportedOperation() {
+<b class="nc"><i>103</i>&nbsp;        Bundle bundle = new Bundle();</b>
+<b class="nc"><i>104</i>&nbsp;        bundle.putInt(AccountManager.KEY_ERROR_CODE, AccountManager.ERROR_CODE_UNSUPPORTED_OPERATION);</b>
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;        // HACK: the docs indicate that this is a required key bit it&#39;s not displayed to the user.
+<b class="nc"><i>107</i>&nbsp;        bundle.putString(AccountManager.KEY_ERROR_MESSAGE, &quot;&quot;);</b>
+<i>108</i>&nbsp;
+<b class="nc"><i>109</i>&nbsp;        return bundle;</b>
+<i>110</i>&nbsp;    }
+<i>111</i>&nbsp;
+<i>112</i>&nbsp;    @Override
+<i>113</i>&nbsp;    public Bundle getAccountRemovalAllowed(AccountAuthenticatorResponse response,
+<i>114</i>&nbsp;                                           Account account) throws NetworkErrorException {
+<b class="nc"><i>115</i>&nbsp;        Bundle result = super.getAccountRemovalAllowed(response, account);</b>
+<i>116</i>&nbsp;
+<b class="nc"><i>117</i>&nbsp;        if (result.containsKey(AccountManager.KEY_BOOLEAN_RESULT)</b>
+<b class="nc"><i>118</i>&nbsp;                &amp;&amp; !result.containsKey(AccountManager.KEY_INTENT)) {</b>
+<b class="nc"><i>119</i>&nbsp;            boolean allowed = result.getBoolean(AccountManager.KEY_BOOLEAN_RESULT);</b>
+<i>120</i>&nbsp;
+<b class="nc"><i>121</i>&nbsp;            if (allowed) {</b>
+<b class="nc"><i>122</i>&nbsp;                for (String auth : SYNC_AUTHORITIES) {</b>
+<b class="nc"><i>123</i>&nbsp;                    ContentResolver.cancelSync(account, auth);</b>
+<i>124</i>&nbsp;                }
+<i>125</i>&nbsp;            }
+<i>126</i>&nbsp;        }
+<i>127</i>&nbsp;
+<b class="nc"><i>128</i>&nbsp;        return result;</b>
+<i>129</i>&nbsp;    }
+<i>130</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

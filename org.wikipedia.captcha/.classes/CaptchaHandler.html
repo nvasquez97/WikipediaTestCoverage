@@ -1,0 +1,310 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CaptchaHandler</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.captcha</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CaptchaHandler (org.wikipedia.captcha)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CaptchaHandler</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 52)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CaptchaHandler$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">CaptchaHandler$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 70)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.captcha;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.app.Activity;
+<i>4</i>&nbsp;import android.app.ProgressDialog;
+<i>5</i>&nbsp;import android.graphics.ColorMatrixColorFilter;
+<i>6</i>&nbsp;import android.graphics.drawable.Animatable;
+<i>7</i>&nbsp;import android.os.Bundle;
+<i>8</i>&nbsp;import android.support.annotation.NonNull;
+<i>9</i>&nbsp;import android.support.annotation.Nullable;
+<i>10</i>&nbsp;import android.support.design.widget.TextInputLayout;
+<i>11</i>&nbsp;import android.support.v7.app.AppCompatActivity;
+<i>12</i>&nbsp;import android.view.View;
+<i>13</i>&nbsp;import android.widget.EditText;
+<i>14</i>&nbsp;import android.widget.TextView;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;import com.facebook.drawee.backends.pipeline.Fresco;
+<i>17</i>&nbsp;import com.facebook.drawee.controller.BaseControllerListener;
+<i>18</i>&nbsp;import com.facebook.drawee.view.SimpleDraweeView;
+<i>19</i>&nbsp;import com.facebook.imagepipeline.image.ImageInfo;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;import org.wikipedia.R;
+<i>22</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>23</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>24</i>&nbsp;import org.wikipedia.util.DeviceUtil;
+<i>25</i>&nbsp;import org.wikipedia.util.FeedbackUtil;
+<i>26</i>&nbsp;import org.wikipedia.views.ViewAnimations;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;import retrofit2.Call;
+<i>29</i>&nbsp;
+<b class="nc"><i>30</i>&nbsp;public class CaptchaHandler {</b>
+<i>31</i>&nbsp;    private final Activity activity;
+<i>32</i>&nbsp;    private final View captchaContainer;
+<i>33</i>&nbsp;    private final View captchaProgress;
+<i>34</i>&nbsp;    private final SimpleDraweeView captchaImage;
+<i>35</i>&nbsp;    private final EditText captchaText;
+<i>36</i>&nbsp;    private final WikiSite wiki;
+<i>37</i>&nbsp;    private final View primaryView;
+<i>38</i>&nbsp;    private final String prevTitle;
+<i>39</i>&nbsp;    private ProgressDialog progressDialog;
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    @Nullable private String token;
+<i>42</i>&nbsp;    @Nullable private CaptchaResult captchaResult;
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    public CaptchaHandler(final Activity activity, final WikiSite wiki, final ProgressDialog progressDialog,
+<b class="nc"><i>45</i>&nbsp;                          final View primaryView, final String prevTitle, final String submitButtonText) {</b>
+<b class="nc"><i>46</i>&nbsp;        this.activity = activity;</b>
+<b class="nc"><i>47</i>&nbsp;        this.wiki = wiki;</b>
+<b class="nc"><i>48</i>&nbsp;        this.progressDialog = progressDialog;</b>
+<b class="nc"><i>49</i>&nbsp;        this.primaryView = primaryView;</b>
+<b class="nc"><i>50</i>&nbsp;        this.prevTitle = prevTitle;</b>
+<i>51</i>&nbsp;
+<b class="nc"><i>52</i>&nbsp;        captchaContainer = activity.findViewById(R.id.captcha_container);</b>
+<b class="nc"><i>53</i>&nbsp;        captchaImage = activity.findViewById(R.id.captcha_image);</b>
+<b class="nc"><i>54</i>&nbsp;        captchaText = ((TextInputLayout) activity.findViewById(R.id.captcha_text)).getEditText();</b>
+<b class="nc"><i>55</i>&nbsp;        captchaProgress = activity.findViewById(R.id.captcha_image_progress);</b>
+<b class="nc"><i>56</i>&nbsp;        TextView submitButton = activity.findViewById(R.id.captcha_submit_button);</b>
+<i>57</i>&nbsp;
+<b class="nc"><i>58</i>&nbsp;        if (submitButtonText != null) {</b>
+<b class="nc"><i>59</i>&nbsp;            submitButton.setText(submitButtonText);</b>
+<b class="nc"><i>60</i>&nbsp;            submitButton.setVisibility(View.VISIBLE);</b>
+<i>61</i>&nbsp;        }
+<i>62</i>&nbsp;
+<b class="nc"><i>63</i>&nbsp;        captchaImage.setOnClickListener((v) -&gt; {</b>
+<b class="nc"><i>64</i>&nbsp;            captchaProgress.setVisibility(View.VISIBLE);</b>
+<i>65</i>&nbsp;
+<b class="nc"><i>66</i>&nbsp;            new CaptchaClient().request(wiki, new CaptchaClient.Callback() {</b>
+<i>67</i>&nbsp;                @Override
+<i>68</i>&nbsp;                public void success(@NonNull Call&lt;Captcha&gt; call, @NonNull CaptchaResult result) {
+<b class="nc"><i>69</i>&nbsp;                    captchaResult = result;</b>
+<b class="nc"><i>70</i>&nbsp;                    captchaProgress.setVisibility(View.GONE);</b>
+<b class="nc"><i>71</i>&nbsp;                    handleCaptcha(true);</b>
+<i>72</i>&nbsp;                }
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;                @Override
+<i>75</i>&nbsp;                public void failure(@NonNull Call&lt;Captcha&gt; call, @NonNull Throwable caught) {
+<b class="nc"><i>76</i>&nbsp;                    cancelCaptcha();</b>
+<b class="nc"><i>77</i>&nbsp;                    captchaProgress.setVisibility(View.GONE);</b>
+<b class="nc"><i>78</i>&nbsp;                    FeedbackUtil.showError(activity, caught);</b>
+<i>79</i>&nbsp;                }
+<i>80</i>&nbsp;            });
+<i>81</i>&nbsp;        });
+<i>82</i>&nbsp;    }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;    @Nullable
+<i>85</i>&nbsp;    public String token() {
+<b class="nc"><i>86</i>&nbsp;        return token;</b>
+<i>87</i>&nbsp;    }
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;    @Nullable
+<i>90</i>&nbsp;    public String captchaId() {
+<b class="nc"><i>91</i>&nbsp;        if (captchaResult != null) {</b>
+<b class="nc"><i>92</i>&nbsp;            return captchaResult.getCaptchaId();</b>
+<i>93</i>&nbsp;        }
+<b class="nc"><i>94</i>&nbsp;        return null;</b>
+<i>95</i>&nbsp;    }
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;    @Nullable
+<i>98</i>&nbsp;    public String captchaWord() {
+<b class="nc"><i>99</i>&nbsp;        if (captchaText != null) {</b>
+<b class="nc"><i>100</i>&nbsp;            return captchaText.getText().toString();</b>
+<i>101</i>&nbsp;        }
+<b class="nc"><i>102</i>&nbsp;        return null;</b>
+<i>103</i>&nbsp;    }
+<i>104</i>&nbsp;
+<i>105</i>&nbsp;    public void restoreState(Bundle savedInstanceState) {
+<b class="nc"><i>106</i>&nbsp;        if (savedInstanceState != null</b>
+<b class="nc"><i>107</i>&nbsp;                &amp;&amp; savedInstanceState.containsKey(&quot;token&quot;)</b>
+<b class="nc"><i>108</i>&nbsp;                &amp;&amp; savedInstanceState.containsKey(&quot;captcha&quot;)) {</b>
+<b class="nc"><i>109</i>&nbsp;            handleCaptcha(savedInstanceState.getString(&quot;token&quot;), savedInstanceState.getParcelable(&quot;captcha&quot;));</b>
+<i>110</i>&nbsp;        }
+<i>111</i>&nbsp;    }
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;    public void saveState(Bundle outState) {
+<b class="nc"><i>114</i>&nbsp;        outState.putString(&quot;token&quot;, token);</b>
+<b class="nc"><i>115</i>&nbsp;        outState.putParcelable(&quot;captcha&quot;, captchaResult);</b>
+<i>116</i>&nbsp;    }
+<i>117</i>&nbsp;
+<i>118</i>&nbsp;    public boolean isActive() {
+<b class="nc"><i>119</i>&nbsp;        return captchaResult != null;</b>
+<i>120</i>&nbsp;    }
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;    public void handleCaptcha(@Nullable String token, @NonNull CaptchaResult captchaResult) {
+<b class="nc"><i>123</i>&nbsp;        this.token = token;</b>
+<b class="nc"><i>124</i>&nbsp;        this.captchaResult = captchaResult;</b>
+<b class="nc"><i>125</i>&nbsp;        handleCaptcha(false);</b>
+<i>126</i>&nbsp;    }
+<i>127</i>&nbsp;
+<i>128</i>&nbsp;    private void handleCaptcha(boolean isReload) {
+<b class="nc"><i>129</i>&nbsp;        if (captchaResult == null) {</b>
+<i>130</i>&nbsp;            return;
+<i>131</i>&nbsp;        }
+<b class="nc"><i>132</i>&nbsp;        DeviceUtil.hideSoftKeyboard(activity);</b>
+<b class="nc"><i>133</i>&nbsp;        if (!isReload) {</b>
+<b class="nc"><i>134</i>&nbsp;            ViewAnimations.crossFade(primaryView, captchaContainer);</b>
+<i>135</i>&nbsp;        }
+<b class="nc"><i>136</i>&nbsp;        captchaImage.setController(Fresco.newDraweeControllerBuilder()</b>
+<b class="nc"><i>137</i>&nbsp;                .setUri(captchaResult.getCaptchaUrl(wiki))</b>
+<b class="nc"><i>138</i>&nbsp;                .setAutoPlayAnimations(true)</b>
+<b class="nc"><i>139</i>&nbsp;                .setControllerListener(new BaseControllerListener&lt;ImageInfo&gt;() {</b>
+<i>140</i>&nbsp;                    @Override
+<i>141</i>&nbsp;                    public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+<b class="nc"><i>142</i>&nbsp;                        ((AppCompatActivity)activity).getSupportActionBar().setTitle(R.string.title_captcha);</b>
+<b class="nc"><i>143</i>&nbsp;                        if (progressDialog.isShowing()) {</b>
+<b class="nc"><i>144</i>&nbsp;                            progressDialog.hide();</b>
+<i>145</i>&nbsp;                        }
+<i>146</i>&nbsp;
+<i>147</i>&nbsp;                        // for our Dark theme, show a &quot;negative image&quot; of the captcha!
+<b class="nc"><i>148</i>&nbsp;                        final int maxColorVal = 255;</b>
+<b class="nc"><i>149</i>&nbsp;                        if (WikipediaApp.getInstance().getCurrentTheme().isDark()) {</b>
+<b class="nc"><i>150</i>&nbsp;                            float[] colorMatrixNegative = {</b>
+<i>151</i>&nbsp;                                    -1.0f, 0, 0, 0, maxColorVal, //red
+<i>152</i>&nbsp;                                    0, -1.0f, 0, 0, maxColorVal, //green
+<i>153</i>&nbsp;                                    0, 0, -1.0f, 0, maxColorVal, //blue
+<i>154</i>&nbsp;                                    0, 0, 0, 1.0f, 0 //alpha
+<i>155</i>&nbsp;                            };
+<b class="nc"><i>156</i>&nbsp;                            captchaImage.getDrawable().setColorFilter(new ColorMatrixColorFilter(colorMatrixNegative));</b>
+<b class="nc"><i>157</i>&nbsp;                        } else {</b>
+<b class="nc"><i>158</i>&nbsp;                            captchaImage.getDrawable().clearColorFilter();</b>
+<i>159</i>&nbsp;                        }
+<i>160</i>&nbsp;
+<i>161</i>&nbsp;                        // In case there was a captcha attempt before
+<b class="nc"><i>162</i>&nbsp;                        captchaText.setText(&quot;&quot;);</b>
+<i>163</i>&nbsp;                    }
+<i>164</i>&nbsp;                })
+<b class="nc"><i>165</i>&nbsp;                .build());</b>
+<i>166</i>&nbsp;    }
+<i>167</i>&nbsp;
+<i>168</i>&nbsp;    public void hideCaptcha() {
+<b class="nc"><i>169</i>&nbsp;        ((AppCompatActivity) activity).getSupportActionBar().setTitle(prevTitle);</b>
+<b class="nc"><i>170</i>&nbsp;        ViewAnimations.crossFade(captchaContainer, primaryView);</b>
+<i>171</i>&nbsp;    }
+<i>172</i>&nbsp;
+<i>173</i>&nbsp;    public boolean cancelCaptcha() {
+<b class="nc"><i>174</i>&nbsp;        if (captchaResult == null) {</b>
+<b class="nc"><i>175</i>&nbsp;            return false;</b>
+<i>176</i>&nbsp;        }
+<b class="nc"><i>177</i>&nbsp;        captchaResult = null;</b>
+<b class="nc"><i>178</i>&nbsp;        captchaText.setText(&quot;&quot;);</b>
+<b class="nc"><i>179</i>&nbsp;        hideCaptcha();</b>
+<b class="nc"><i>180</i>&nbsp;        return true;</b>
+<i>181</i>&nbsp;    }
+<i>182</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

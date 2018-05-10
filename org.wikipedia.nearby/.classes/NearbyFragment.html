@@ -1,0 +1,631 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: NearbyFragment</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.nearby</a> ]
+</div>
+
+<h1>Coverage Summary for Class: NearbyFragment (org.wikipedia.nearby)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NearbyFragment</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 38)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 163)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NearbyFragment$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NearbyFragment$1$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NearbyFragment$LocationChangeListener</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 45)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 183)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.nearby;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.Manifest;
+<i>4</i>&nbsp;import android.content.Intent;
+<i>5</i>&nbsp;import android.content.pm.PackageManager;
+<i>6</i>&nbsp;import android.graphics.PointF;
+<i>7</i>&nbsp;import android.location.Location;
+<i>8</i>&nbsp;import android.os.Bundle;
+<i>9</i>&nbsp;import android.provider.Settings;
+<i>10</i>&nbsp;import android.support.annotation.NonNull;
+<i>11</i>&nbsp;import android.support.annotation.Nullable;
+<i>12</i>&nbsp;import android.support.design.widget.Snackbar;
+<i>13</i>&nbsp;import android.support.v4.app.Fragment;
+<i>14</i>&nbsp;import android.support.v4.content.ContextCompat;
+<i>15</i>&nbsp;import android.text.method.LinkMovementMethod;
+<i>16</i>&nbsp;import android.view.LayoutInflater;
+<i>17</i>&nbsp;import android.view.View;
+<i>18</i>&nbsp;import android.view.ViewGroup;
+<i>19</i>&nbsp;import android.widget.TextView;
+<i>20</i>&nbsp;import android.widget.Toast;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;import com.mapbox.mapboxsdk.Mapbox;
+<i>23</i>&nbsp;import com.mapbox.mapboxsdk.annotations.Icon;
+<i>24</i>&nbsp;import com.mapbox.mapboxsdk.annotations.IconFactory;
+<i>25</i>&nbsp;import com.mapbox.mapboxsdk.annotations.Marker;
+<i>26</i>&nbsp;import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+<i>27</i>&nbsp;import com.mapbox.mapboxsdk.camera.CameraPosition;
+<i>28</i>&nbsp;import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
+<i>29</i>&nbsp;import com.mapbox.mapboxsdk.constants.MyLocationTracking;
+<i>30</i>&nbsp;import com.mapbox.mapboxsdk.geometry.LatLng;
+<i>31</i>&nbsp;import com.mapbox.mapboxsdk.maps.MapView;
+<i>32</i>&nbsp;import com.mapbox.mapboxsdk.maps.MapboxMap;
+<i>33</i>&nbsp;import com.mapbox.mapboxsdk.maps.Projection;
+<i>34</i>&nbsp;import com.mapbox.services.android.telemetry.MapboxTelemetry;
+<i>35</i>&nbsp;import com.mapbox.services.android.telemetry.location.LocationEngine;
+<i>36</i>&nbsp;import com.mapbox.services.android.telemetry.location.LocationEngineListener;
+<i>37</i>&nbsp;import com.mapbox.services.android.telemetry.location.LocationEngineProvider;
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;import org.wikipedia.R;
+<i>40</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>41</i>&nbsp;import org.wikipedia.activity.FragmentUtil;
+<i>42</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>43</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwQueryResponse;
+<i>44</i>&nbsp;import org.wikipedia.history.HistoryEntry;
+<i>45</i>&nbsp;import org.wikipedia.json.GsonMarshaller;
+<i>46</i>&nbsp;import org.wikipedia.json.GsonUnmarshaller;
+<i>47</i>&nbsp;import org.wikipedia.page.PageTitle;
+<i>48</i>&nbsp;import org.wikipedia.richtext.RichTextUtil;
+<i>49</i>&nbsp;import org.wikipedia.util.DeviceUtil;
+<i>50</i>&nbsp;import org.wikipedia.util.FeedbackUtil;
+<i>51</i>&nbsp;import org.wikipedia.util.PermissionUtil;
+<i>52</i>&nbsp;import org.wikipedia.util.ResourceUtil;
+<i>53</i>&nbsp;import org.wikipedia.util.StringUtil;
+<i>54</i>&nbsp;import org.wikipedia.util.ThrowableUtil;
+<i>55</i>&nbsp;import org.wikipedia.util.log.L;
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;import java.util.ArrayList;
+<i>58</i>&nbsp;import java.util.List;
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;import butterknife.BindView;
+<i>61</i>&nbsp;import butterknife.ButterKnife;
+<i>62</i>&nbsp;import butterknife.OnClick;
+<i>63</i>&nbsp;import butterknife.Unbinder;
+<i>64</i>&nbsp;import retrofit2.Call;
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;/**
+<i>67</i>&nbsp; * Displays a list of nearby pages.
+<i>68</i>&nbsp; */
+<b class="nc"><i>69</i>&nbsp;public class NearbyFragment extends Fragment {</b>
+<i>70</i>&nbsp;    public interface Callback {
+<i>71</i>&nbsp;        void onLoading();
+<i>72</i>&nbsp;        void onLoaded();
+<i>73</i>&nbsp;        void onLoadPage(PageTitle title, int entrySource, @Nullable Location location);
+<i>74</i>&nbsp;    }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    private static final String NEARBY_LAST_RESULT = &quot;lastRes&quot;;
+<i>77</i>&nbsp;    private static final String NEARBY_LAST_CAMERA_POS = &quot;lastCameraPos&quot;;
+<i>78</i>&nbsp;    private static final String NEARBY_FIRST_LOCATION_LOCK = &quot;firstLocationLock&quot;;
+<i>79</i>&nbsp;    private static final int GO_TO_LOCATION_PERMISSION_REQUEST = 50;
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    @BindView(R.id.mapview) MapView mapView;
+<i>82</i>&nbsp;    @BindView(R.id.osm_license) TextView osmLicenseTextView;
+<i>83</i>&nbsp;    private Unbinder unbinder;
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    @Nullable private MapboxMap mapboxMap;
+<i>86</i>&nbsp;    private Icon markerIconPassive;
+<i>87</i>&nbsp;    private LocationEngine locationEngine;
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;    private NearbyClient client;
+<i>90</i>&nbsp;    private NearbyResult lastResult;
+<i>91</i>&nbsp;
+<b class="nc"><i>92</i>&nbsp;    private LocationChangeListener locationChangeListener = new LocationChangeListener();</b>
+<i>93</i>&nbsp;    @Nullable private CameraPosition lastCameraPos;
+<i>94</i>&nbsp;    private boolean firstLocationLock;
+<i>95</i>&nbsp;
+<i>96</i>&nbsp;    @NonNull public static NearbyFragment newInstance() {
+<b class="nc"><i>97</i>&nbsp;        return new NearbyFragment();</b>
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    @Override
+<i>101</i>&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>102</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>103</i>&nbsp;        client = new NearbyClient();</b>
+<i>104</i>&nbsp;
+<b class="nc"><i>105</i>&nbsp;        Mapbox.getInstance(requireContext().getApplicationContext(),</b>
+<b class="nc"><i>106</i>&nbsp;                getString(R.string.mapbox_public_token));</b>
+<b class="nc"><i>107</i>&nbsp;        MapboxTelemetry.getInstance().setTelemetryEnabled(false);</b>
+<i>108</i>&nbsp;    }
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;    @Override
+<i>111</i>&nbsp;    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+<b class="nc"><i>112</i>&nbsp;        View view = inflater.inflate(R.layout.fragment_nearby, container, false);</b>
+<b class="nc"><i>113</i>&nbsp;        unbinder = ButterKnife.bind(this, view);</b>
+<i>114</i>&nbsp;
+<b class="nc"><i>115</i>&nbsp;        markerIconPassive = IconFactory.getInstance(requireContext())</b>
+<b class="nc"><i>116</i>&nbsp;                .fromBitmap(ResourceUtil.bitmapFromVectorDrawable(requireContext(),</b>
+<i>117</i>&nbsp;                        R.drawable.ic_map_marker));
+<i>118</i>&nbsp;
+<b class="nc"><i>119</i>&nbsp;        osmLicenseTextView.setText(StringUtil.fromHtml(getString(R.string.nearby_osm_license)));</b>
+<b class="nc"><i>120</i>&nbsp;        osmLicenseTextView.setMovementMethod(LinkMovementMethod.getInstance());</b>
+<b class="nc"><i>121</i>&nbsp;        RichTextUtil.removeUnderlinesFromLinks(osmLicenseTextView);</b>
+<i>122</i>&nbsp;
+<b class="nc"><i>123</i>&nbsp;        mapView.onCreate(savedInstanceState);</b>
+<i>124</i>&nbsp;
+<b class="nc"><i>125</i>&nbsp;        setHasOptionsMenu(true);</b>
+<i>126</i>&nbsp;
+<b class="nc"><i>127</i>&nbsp;        if (savedInstanceState != null) {</b>
+<b class="nc"><i>128</i>&nbsp;            lastCameraPos = savedInstanceState.getParcelable(NEARBY_LAST_CAMERA_POS);</b>
+<b class="nc"><i>129</i>&nbsp;            firstLocationLock = savedInstanceState.getBoolean(NEARBY_FIRST_LOCATION_LOCK);</b>
+<b class="nc"><i>130</i>&nbsp;            if (savedInstanceState.containsKey(NEARBY_LAST_RESULT)) {</b>
+<b class="nc"><i>131</i>&nbsp;                lastResult = GsonUnmarshaller.unmarshal(NearbyResult.class, savedInstanceState.getString(NEARBY_LAST_RESULT));</b>
+<i>132</i>&nbsp;            }
+<i>133</i>&nbsp;        }
+<i>134</i>&nbsp;
+<b class="nc"><i>135</i>&nbsp;        locationEngine = new LocationEngineProvider(getContext()).obtainBestLocationEngineAvailable();</b>
+<b class="nc"><i>136</i>&nbsp;        locationEngine.addLocationEngineListener(locationChangeListener);</b>
+<i>137</i>&nbsp;
+<b class="nc"><i>138</i>&nbsp;        onLoading();</b>
+<b class="nc"><i>139</i>&nbsp;        initializeMap();</b>
+<b class="nc"><i>140</i>&nbsp;        return view;</b>
+<i>141</i>&nbsp;    }
+<i>142</i>&nbsp;
+<i>143</i>&nbsp;    @Override
+<i>144</i>&nbsp;    public void onStart() {
+<b class="nc"><i>145</i>&nbsp;        mapView.onStart();</b>
+<b class="nc"><i>146</i>&nbsp;        super.onStart();</b>
+<i>147</i>&nbsp;    }
+<i>148</i>&nbsp;
+<i>149</i>&nbsp;    @Override
+<i>150</i>&nbsp;    public void onPause() {
+<b class="nc"><i>151</i>&nbsp;        if (mapboxMap != null) {</b>
+<b class="nc"><i>152</i>&nbsp;            lastCameraPos = mapboxMap.getCameraPosition();</b>
+<i>153</i>&nbsp;        }
+<b class="nc"><i>154</i>&nbsp;        mapView.onPause();</b>
+<b class="nc"><i>155</i>&nbsp;        super.onPause();</b>
+<i>156</i>&nbsp;    }
+<i>157</i>&nbsp;
+<i>158</i>&nbsp;    @Override
+<i>159</i>&nbsp;    public void onResume() {
+<b class="nc"><i>160</i>&nbsp;        mapView.onResume();</b>
+<b class="nc"><i>161</i>&nbsp;        super.onResume();</b>
+<i>162</i>&nbsp;    }
+<i>163</i>&nbsp;
+<i>164</i>&nbsp;    @Override
+<i>165</i>&nbsp;    public void onStop() {
+<b class="nc"><i>166</i>&nbsp;        mapView.onStop();</b>
+<b class="nc"><i>167</i>&nbsp;        super.onStop();</b>
+<i>168</i>&nbsp;    }
+<i>169</i>&nbsp;
+<i>170</i>&nbsp;    @Override
+<i>171</i>&nbsp;    public void onDestroyView() {
+<b class="nc"><i>172</i>&nbsp;        locationEngine.removeLocationEngineListener(locationChangeListener);</b>
+<b class="nc"><i>173</i>&nbsp;        mapView.onDestroy();</b>
+<b class="nc"><i>174</i>&nbsp;        mapboxMap = null;</b>
+<b class="nc"><i>175</i>&nbsp;        unbinder.unbind();</b>
+<b class="nc"><i>176</i>&nbsp;        unbinder = null;</b>
+<b class="nc"><i>177</i>&nbsp;        super.onDestroyView();</b>
+<i>178</i>&nbsp;    }
+<i>179</i>&nbsp;
+<i>180</i>&nbsp;    @Override
+<i>181</i>&nbsp;    public void onDestroy() {
+<b class="nc"><i>182</i>&nbsp;        super.onDestroy();</b>
+<b class="nc"><i>183</i>&nbsp;        WikipediaApp.getInstance().getRefWatcher().watch(this);</b>
+<i>184</i>&nbsp;    }
+<i>185</i>&nbsp;
+<i>186</i>&nbsp;    @Override
+<i>187</i>&nbsp;    public void onSaveInstanceState(@NonNull Bundle outState) {
+<b class="nc"><i>188</i>&nbsp;        super.onSaveInstanceState(outState);</b>
+<b class="nc"><i>189</i>&nbsp;        if (mapView != null) {</b>
+<b class="nc"><i>190</i>&nbsp;            mapView.onSaveInstanceState(outState);</b>
+<i>191</i>&nbsp;        }
+<b class="nc"><i>192</i>&nbsp;        outState.putBoolean(NEARBY_FIRST_LOCATION_LOCK, firstLocationLock);</b>
+<b class="nc"><i>193</i>&nbsp;        if (mapboxMap != null) {</b>
+<b class="nc"><i>194</i>&nbsp;            outState.putParcelable(NEARBY_LAST_CAMERA_POS, mapboxMap.getCameraPosition());</b>
+<i>195</i>&nbsp;        }
+<b class="nc"><i>196</i>&nbsp;        if (lastResult != null) {</b>
+<b class="nc"><i>197</i>&nbsp;            outState.putString(NEARBY_LAST_RESULT, GsonMarshaller.marshal(lastResult));</b>
+<i>198</i>&nbsp;        }
+<i>199</i>&nbsp;    }
+<i>200</i>&nbsp;
+<i>201</i>&nbsp;    @Override public void setUserVisibleHint(boolean isVisibleToUser) {
+<b class="nc"><i>202</i>&nbsp;        super.setUserVisibleHint(isVisibleToUser);</b>
+<i>203</i>&nbsp;
+<b class="nc"><i>204</i>&nbsp;        if (mapView == null || mapboxMap == null) {</b>
+<i>205</i>&nbsp;            return;
+<i>206</i>&nbsp;        }
+<i>207</i>&nbsp;
+<b class="nc"><i>208</i>&nbsp;        if (isVisibleToUser &amp;&amp; !firstLocationLock) {</b>
+<b class="nc"><i>209</i>&nbsp;            goToUserLocationOrPromptPermissions();</b>
+<i>210</i>&nbsp;        }
+<i>211</i>&nbsp;    }
+<i>212</i>&nbsp;
+<i>213</i>&nbsp;    @Override
+<i>214</i>&nbsp;    public void onLowMemory() {
+<b class="nc"><i>215</i>&nbsp;        super.onLowMemory();</b>
+<b class="nc"><i>216</i>&nbsp;        if (mapView != null) {</b>
+<b class="nc"><i>217</i>&nbsp;            mapView.onLowMemory();</b>
+<i>218</i>&nbsp;        }
+<i>219</i>&nbsp;    }
+<i>220</i>&nbsp;
+<i>221</i>&nbsp;    @OnClick(R.id.user_location_button) void onClick() {
+<b class="nc"><i>222</i>&nbsp;        if (!locationPermitted()) {</b>
+<b class="nc"><i>223</i>&nbsp;            requestLocationRuntimePermissions(GO_TO_LOCATION_PERMISSION_REQUEST);</b>
+<b class="nc"><i>224</i>&nbsp;        } else if (mapboxMap != null) {</b>
+<b class="nc"><i>225</i>&nbsp;            goToUserLocation();</b>
+<i>226</i>&nbsp;        }
+<i>227</i>&nbsp;    }
+<i>228</i>&nbsp;
+<i>229</i>&nbsp;    private void initializeMap() {
+<b class="nc"><i>230</i>&nbsp;        mapView.getMapAsync((@NonNull MapboxMap mapboxMap) -&gt; {</b>
+<b class="nc"><i>231</i>&nbsp;            if (!isAdded()) {</b>
+<i>232</i>&nbsp;                return;
+<i>233</i>&nbsp;            }
+<b class="nc"><i>234</i>&nbsp;            NearbyFragment.this.mapboxMap = mapboxMap;</b>
+<i>235</i>&nbsp;
+<b class="nc"><i>236</i>&nbsp;            enableUserLocationMarker();</b>
+<b class="nc"><i>237</i>&nbsp;            mapboxMap.getTrackingSettings().setMyLocationTrackingMode(MyLocationTracking.TRACKING_NONE);</b>
+<i>238</i>&nbsp;
+<b class="nc"><i>239</i>&nbsp;            mapboxMap.setOnScrollListener(this::fetchNearbyPages);</b>
+<b class="nc"><i>240</i>&nbsp;            mapboxMap.setOnMarkerClickListener((@NonNull Marker marker) -&gt; {</b>
+<b class="nc"><i>241</i>&nbsp;                NearbyPage page = findNearbyPageFromMarker(marker);</b>
+<b class="nc"><i>242</i>&nbsp;                if (page != null) {</b>
+<b class="nc"><i>243</i>&nbsp;                    PageTitle title = new PageTitle(page.getTitle(), lastResult.getWiki(), page.getThumbUrl());</b>
+<b class="nc"><i>244</i>&nbsp;                    onLoadPage(title, HistoryEntry.SOURCE_NEARBY, page.getLocation());</b>
+<b class="nc"><i>245</i>&nbsp;                    return true;</b>
+<i>246</i>&nbsp;                } else {
+<b class="nc"><i>247</i>&nbsp;                    return false;</b>
+<i>248</i>&nbsp;                }
+<i>249</i>&nbsp;            });
+<i>250</i>&nbsp;
+<b class="nc"><i>251</i>&nbsp;            if (lastCameraPos != null) {</b>
+<b class="nc"><i>252</i>&nbsp;                mapboxMap.setCameraPosition(lastCameraPos);</b>
+<i>253</i>&nbsp;            } else {
+<b class="nc"><i>254</i>&nbsp;                goToUserLocationOrPromptPermissions();</b>
+<i>255</i>&nbsp;            }
+<b class="nc"><i>256</i>&nbsp;            if (lastResult != null) {</b>
+<b class="nc"><i>257</i>&nbsp;                showNearbyPages(lastResult);</b>
+<i>258</i>&nbsp;            }
+<i>259</i>&nbsp;        });
+<i>260</i>&nbsp;    }
+<i>261</i>&nbsp;
+<i>262</i>&nbsp;    @Nullable
+<i>263</i>&nbsp;    private NearbyPage findNearbyPageFromMarker(Marker marker) {
+<b class="nc"><i>264</i>&nbsp;        for (NearbyPage page : lastResult.getList()) {</b>
+<b class="nc"><i>265</i>&nbsp;            if (page.getTitle().equals(marker.getTitle())) {</b>
+<b class="nc"><i>266</i>&nbsp;                return page;</b>
+<i>267</i>&nbsp;            }
+<b class="nc"><i>268</i>&nbsp;        }</b>
+<b class="nc"><i>269</i>&nbsp;        return null;</b>
+<i>270</i>&nbsp;    }
+<i>271</i>&nbsp;
+<i>272</i>&nbsp;    private boolean locationPermitted() {
+<b class="nc"><i>273</i>&nbsp;        return ContextCompat.checkSelfPermission(WikipediaApp.getInstance(),</b>
+<i>274</i>&nbsp;                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+<i>275</i>&nbsp;    }
+<i>276</i>&nbsp;
+<i>277</i>&nbsp;    private void requestLocationRuntimePermissions(int requestCode) {
+<b class="nc"><i>278</i>&nbsp;        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestCode);</b>
+<i>279</i>&nbsp;        // once permission is granted/denied it will continue with onRequestPermissionsResult
+<i>280</i>&nbsp;    }
+<i>281</i>&nbsp;
+<i>282</i>&nbsp;    @Override
+<i>283</i>&nbsp;    public void onRequestPermissionsResult(int requestCode,
+<i>284</i>&nbsp;                                           @NonNull String[] permissions,
+<i>285</i>&nbsp;                                           @NonNull int[] grantResults) {
+<b class="nc"><i>286</i>&nbsp;        switch (requestCode) {</b>
+<i>287</i>&nbsp;            case GO_TO_LOCATION_PERMISSION_REQUEST:
+<b class="nc"><i>288</i>&nbsp;                if (PermissionUtil.isPermitted(grantResults) &amp;&amp; mapboxMap != null) {</b>
+<b class="nc"><i>289</i>&nbsp;                    goToUserLocation();</b>
+<i>290</i>&nbsp;                } else {
+<b class="nc"><i>291</i>&nbsp;                    onLoaded();</b>
+<b class="nc"><i>292</i>&nbsp;                    FeedbackUtil.showMessage(getActivity(), R.string.nearby_zoom_to_location);</b>
+<i>293</i>&nbsp;                }
+<b class="nc"><i>294</i>&nbsp;                break;</b>
+<i>295</i>&nbsp;            default:
+<b class="nc"><i>296</i>&nbsp;                throw new RuntimeException(&quot;unexpected permission request code &quot; + requestCode);</b>
+<i>297</i>&nbsp;        }
+<i>298</i>&nbsp;    }
+<i>299</i>&nbsp;
+<i>300</i>&nbsp;    private void enableUserLocationMarker() {
+<b class="nc"><i>301</i>&nbsp;        if (mapboxMap != null &amp;&amp; locationPermitted()) {</b>
+<b class="nc"><i>302</i>&nbsp;            mapboxMap.setMyLocationEnabled(true);</b>
+<i>303</i>&nbsp;        }
+<i>304</i>&nbsp;    }
+<i>305</i>&nbsp;
+<i>306</i>&nbsp;    private void goToUserLocation() {
+<b class="nc"><i>307</i>&nbsp;        if (mapboxMap == null || !getUserVisibleHint()) {</b>
+<i>308</i>&nbsp;            return;
+<i>309</i>&nbsp;        }
+<b class="nc"><i>310</i>&nbsp;        if (!DeviceUtil.isLocationServiceEnabled(requireContext().getApplicationContext())) {</b>
+<b class="nc"><i>311</i>&nbsp;            showLocationDisabledSnackbar();</b>
+<i>312</i>&nbsp;            return;
+<i>313</i>&nbsp;        }
+<i>314</i>&nbsp;
+<b class="nc"><i>315</i>&nbsp;        enableUserLocationMarker();</b>
+<b class="nc"><i>316</i>&nbsp;        Location location = mapboxMap.getMyLocation();</b>
+<b class="nc"><i>317</i>&nbsp;        if (location != null) {</b>
+<b class="nc"><i>318</i>&nbsp;            goToLocation(location);</b>
+<i>319</i>&nbsp;        }
+<b class="nc"><i>320</i>&nbsp;        fetchNearbyPages();</b>
+<i>321</i>&nbsp;    }
+<i>322</i>&nbsp;
+<i>323</i>&nbsp;    private void goToLocation(@NonNull Location location) {
+<b class="nc"><i>324</i>&nbsp;        if (mapboxMap == null) {</b>
+<i>325</i>&nbsp;            return;
+<i>326</i>&nbsp;        }
+<b class="nc"><i>327</i>&nbsp;        CameraPosition pos = new CameraPosition.Builder()</b>
+<b class="nc"><i>328</i>&nbsp;                .target(new LatLng(location))</b>
+<b class="nc"><i>329</i>&nbsp;                .zoom(getResources().getInteger(R.integer.map_default_zoom))</b>
+<b class="nc"><i>330</i>&nbsp;                .build();</b>
+<b class="nc"><i>331</i>&nbsp;        mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(pos));</b>
+<i>332</i>&nbsp;    }
+<i>333</i>&nbsp;
+<i>334</i>&nbsp;    private void goToUserLocationOrPromptPermissions() {
+<b class="nc"><i>335</i>&nbsp;        if (locationPermitted()) {</b>
+<b class="nc"><i>336</i>&nbsp;            goToUserLocation();</b>
+<b class="nc"><i>337</i>&nbsp;        } else if (getUserVisibleHint()) {</b>
+<b class="nc"><i>338</i>&nbsp;            showLocationPermissionSnackbar();</b>
+<i>339</i>&nbsp;        }
+<i>340</i>&nbsp;    }
+<i>341</i>&nbsp;
+<i>342</i>&nbsp;    private void showLocationDisabledSnackbar() {
+<b class="nc"><i>343</i>&nbsp;        Snackbar snackbar = FeedbackUtil.makeSnackbar(getActivity(),</b>
+<b class="nc"><i>344</i>&nbsp;                getString(R.string.location_service_disabled),</b>
+<i>345</i>&nbsp;                FeedbackUtil.LENGTH_DEFAULT);
+<b class="nc"><i>346</i>&nbsp;        snackbar.setAction(R.string.enable_location_service, (v) -&gt; {</b>
+<b class="nc"><i>347</i>&nbsp;                Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);</b>
+<b class="nc"><i>348</i>&nbsp;                requireContext().startActivity(settingsIntent);</b>
+<i>349</i>&nbsp;        });
+<b class="nc"><i>350</i>&nbsp;        snackbar.show();</b>
+<i>351</i>&nbsp;    }
+<i>352</i>&nbsp;
+<i>353</i>&nbsp;    private void showLocationPermissionSnackbar() {
+<b class="nc"><i>354</i>&nbsp;        Snackbar snackbar = FeedbackUtil.makeSnackbar(getActivity(),</b>
+<b class="nc"><i>355</i>&nbsp;                getString(R.string.location_permissions_enable_prompt),</b>
+<i>356</i>&nbsp;                FeedbackUtil.LENGTH_DEFAULT);
+<b class="nc"><i>357</i>&nbsp;        snackbar.setAction(R.string.location_permissions_enable_action, (v) -&gt; requestLocationRuntimePermissions(GO_TO_LOCATION_PERMISSION_REQUEST));</b>
+<b class="nc"><i>358</i>&nbsp;        snackbar.show();</b>
+<i>359</i>&nbsp;    }
+<i>360</i>&nbsp;
+<i>361</i>&nbsp;    private void fetchNearbyPages() {
+<b class="nc"><i>362</i>&nbsp;        final int fetchTaskDelayMillis = 500;</b>
+<b class="nc"><i>363</i>&nbsp;        mapView.removeCallbacks(fetchTaskRunnable);</b>
+<b class="nc"><i>364</i>&nbsp;        mapView.postDelayed(fetchTaskRunnable, fetchTaskDelayMillis);</b>
+<i>365</i>&nbsp;    }
+<i>366</i>&nbsp;
+<b class="nc"><i>367</i>&nbsp;    private Runnable fetchTaskRunnable = new Runnable() {</b>
+<i>368</i>&nbsp;        @Override
+<i>369</i>&nbsp;        public void run() {
+<b class="nc"><i>370</i>&nbsp;            if (!isResumed() || mapboxMap == null) {</b>
+<i>371</i>&nbsp;                return;
+<i>372</i>&nbsp;            }
+<i>373</i>&nbsp;
+<b class="nc"><i>374</i>&nbsp;            onLoading();</b>
+<i>375</i>&nbsp;
+<b class="nc"><i>376</i>&nbsp;            WikiSite wiki = WikipediaApp.getInstance().getWikiSite();</b>
+<b class="nc"><i>377</i>&nbsp;            client.request(wiki, mapboxMap.getCameraPosition().target.getLatitude(),</b>
+<b class="nc"><i>378</i>&nbsp;                    mapboxMap.getCameraPosition().target.getLongitude(), getMapRadius(),</b>
+<b class="nc"><i>379</i>&nbsp;                    new NearbyClient.Callback() {</b>
+<i>380</i>&nbsp;                        @Override public void success(@NonNull Call&lt;MwQueryResponse&gt; call,
+<i>381</i>&nbsp;                                                      @NonNull NearbyResult result) {
+<b class="nc"><i>382</i>&nbsp;                            if (!isResumed()) {</b>
+<i>383</i>&nbsp;                                return;
+<i>384</i>&nbsp;                            }
+<b class="nc"><i>385</i>&nbsp;                            lastResult = result;</b>
+<b class="nc"><i>386</i>&nbsp;                            showNearbyPages(result);</b>
+<b class="nc"><i>387</i>&nbsp;                            onLoaded();</b>
+<i>388</i>&nbsp;                        }
+<i>389</i>&nbsp;
+<i>390</i>&nbsp;                        @Override public void failure(@NonNull Call&lt;MwQueryResponse&gt; call,
+<i>391</i>&nbsp;                                                      @NonNull Throwable caught) {
+<b class="nc"><i>392</i>&nbsp;                            if (!isResumed()) {</b>
+<i>393</i>&nbsp;                                return;
+<i>394</i>&nbsp;                            }
+<b class="nc"><i>395</i>&nbsp;                            ThrowableUtil.AppError error = ThrowableUtil.getAppError(requireActivity(), caught);</b>
+<b class="nc"><i>396</i>&nbsp;                            Toast.makeText(getActivity(), error.getError(), Toast.LENGTH_SHORT).show();</b>
+<b class="nc"><i>397</i>&nbsp;                            L.e(caught);</b>
+<b class="nc"><i>398</i>&nbsp;                            onLoaded();</b>
+<i>399</i>&nbsp;                        }
+<i>400</i>&nbsp;                    });
+<i>401</i>&nbsp;        }
+<i>402</i>&nbsp;    };
+<i>403</i>&nbsp;
+<i>404</i>&nbsp;    private double getMapRadius() {
+<b class="nc"><i>405</i>&nbsp;        if (mapboxMap == null) {</b>
+<b class="nc"><i>406</i>&nbsp;            return 0;</b>
+<i>407</i>&nbsp;        }
+<i>408</i>&nbsp;
+<b class="nc"><i>409</i>&nbsp;        Projection proj = mapboxMap.getProjection();</b>
+<b class="nc"><i>410</i>&nbsp;        LatLng leftTop = proj.fromScreenLocation(new PointF(0.0f, 0.0f));</b>
+<b class="nc"><i>411</i>&nbsp;        LatLng rightTop = proj.fromScreenLocation(new PointF(mapView.getWidth(), 0.0f));</b>
+<b class="nc"><i>412</i>&nbsp;        LatLng leftBottom = proj.fromScreenLocation(new PointF(0.0f, mapView.getHeight()));</b>
+<b class="nc"><i>413</i>&nbsp;        double width = leftTop.distanceTo(rightTop);</b>
+<b class="nc"><i>414</i>&nbsp;        double height = leftTop.distanceTo(leftBottom);</b>
+<b class="nc"><i>415</i>&nbsp;        return Math.max(width, height) / 2;</b>
+<i>416</i>&nbsp;    }
+<i>417</i>&nbsp;
+<i>418</i>&nbsp;    private void showNearbyPages(NearbyResult result) {
+<b class="nc"><i>419</i>&nbsp;        if (mapboxMap == null || getActivity() == null) {</b>
+<i>420</i>&nbsp;            return;
+<i>421</i>&nbsp;        }
+<i>422</i>&nbsp;
+<b class="nc"><i>423</i>&nbsp;        getActivity().invalidateOptionsMenu();</b>
+<i>424</i>&nbsp;        // Since Marker is a descendant of Annotation, this will remove all Markers.
+<b class="nc"><i>425</i>&nbsp;        mapboxMap.removeAnnotations();</b>
+<i>426</i>&nbsp;
+<b class="nc"><i>427</i>&nbsp;        List&lt;MarkerOptions&gt; optionsList = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>428</i>&nbsp;        for (NearbyPage item : result.getList()) {</b>
+<b class="nc"><i>429</i>&nbsp;            if (item.getLocation() != null) {</b>
+<b class="nc"><i>430</i>&nbsp;                optionsList.add(createMarkerOptions(item));</b>
+<i>431</i>&nbsp;            }
+<b class="nc"><i>432</i>&nbsp;        }</b>
+<b class="nc"><i>433</i>&nbsp;        mapboxMap.addMarkers(optionsList);</b>
+<i>434</i>&nbsp;    }
+<i>435</i>&nbsp;
+<i>436</i>&nbsp;    @NonNull
+<i>437</i>&nbsp;    private MarkerOptions createMarkerOptions(NearbyPage page) {
+<b class="nc"><i>438</i>&nbsp;        Location location = page.getLocation();</b>
+<b class="nc"><i>439</i>&nbsp;        return new MarkerOptions()</b>
+<b class="nc"><i>440</i>&nbsp;                .position(new LatLng(location.getLatitude(), location.getLongitude()))</b>
+<b class="nc"><i>441</i>&nbsp;                .title(page.getTitle())</b>
+<b class="nc"><i>442</i>&nbsp;                .icon(markerIconPassive);</b>
+<i>443</i>&nbsp;    }
+<i>444</i>&nbsp;
+<i>445</i>&nbsp;    private void onLoading() {
+<b class="nc"><i>446</i>&nbsp;        Callback callback = callback();</b>
+<b class="nc"><i>447</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>448</i>&nbsp;            callback.onLoading();</b>
+<i>449</i>&nbsp;        }
+<i>450</i>&nbsp;    }
+<i>451</i>&nbsp;
+<i>452</i>&nbsp;    private void onLoaded() {
+<b class="nc"><i>453</i>&nbsp;        Callback callback = callback();</b>
+<b class="nc"><i>454</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>455</i>&nbsp;            callback.onLoaded();</b>
+<i>456</i>&nbsp;        }
+<i>457</i>&nbsp;    }
+<i>458</i>&nbsp;
+<i>459</i>&nbsp;    private void onLoadPage(@NonNull PageTitle title, int entrySource, @Nullable Location location) {
+<b class="nc"><i>460</i>&nbsp;        Callback callback = callback();</b>
+<b class="nc"><i>461</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>462</i>&nbsp;            callback.onLoadPage(title, entrySource, location);</b>
+<i>463</i>&nbsp;        }
+<i>464</i>&nbsp;    }
+<i>465</i>&nbsp;
+<b class="nc"><i>466</i>&nbsp;    private class LocationChangeListener implements LocationEngineListener {</b>
+<i>467</i>&nbsp;        @Override
+<i>468</i>&nbsp;        public void onConnected() {
+<i>469</i>&nbsp;        }
+<i>470</i>&nbsp;
+<i>471</i>&nbsp;        @Override
+<i>472</i>&nbsp;        public void onLocationChanged(Location location) {
+<b class="nc"><i>473</i>&nbsp;            if (!firstLocationLock) {</b>
+<b class="nc"><i>474</i>&nbsp;                goToUserLocation();</b>
+<b class="nc"><i>475</i>&nbsp;                firstLocationLock = true;</b>
+<i>476</i>&nbsp;            }
+<i>477</i>&nbsp;        }
+<i>478</i>&nbsp;    }
+<i>479</i>&nbsp;
+<i>480</i>&nbsp;    @Nullable
+<i>481</i>&nbsp;    private Callback callback() {
+<b class="nc"><i>482</i>&nbsp;        return FragmentUtil.getCallback(this, Callback.class);</b>
+<i>483</i>&nbsp;    }
+<i>484</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

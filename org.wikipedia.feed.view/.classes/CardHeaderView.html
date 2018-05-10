@@ -1,0 +1,242 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CardHeaderView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.view</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CardHeaderView (org.wikipedia.feed.view)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CardHeaderView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 31)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CardHeaderView$CardHeaderMenuClickListener</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 40)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.feed.view;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.content.res.ColorStateList;
+<i>5</i>&nbsp;import android.support.annotation.ColorRes;
+<i>6</i>&nbsp;import android.support.annotation.DrawableRes;
+<i>7</i>&nbsp;import android.support.annotation.NonNull;
+<i>8</i>&nbsp;import android.support.annotation.Nullable;
+<i>9</i>&nbsp;import android.support.annotation.StringRes;
+<i>10</i>&nbsp;import android.support.annotation.VisibleForTesting;
+<i>11</i>&nbsp;import android.support.constraint.ConstraintLayout;
+<i>12</i>&nbsp;import android.support.v4.content.ContextCompat;
+<i>13</i>&nbsp;import android.support.v4.view.ViewCompat;
+<i>14</i>&nbsp;import android.support.v7.widget.AppCompatImageView;
+<i>15</i>&nbsp;import android.support.v7.widget.PopupMenu;
+<i>16</i>&nbsp;import android.util.AttributeSet;
+<i>17</i>&nbsp;import android.view.MenuItem;
+<i>18</i>&nbsp;import android.view.View;
+<i>19</i>&nbsp;import android.widget.TextView;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;import org.wikipedia.R;
+<i>22</i>&nbsp;import org.wikipedia.feed.model.Card;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;import butterknife.BindView;
+<i>25</i>&nbsp;import butterknife.ButterKnife;
+<i>26</i>&nbsp;import butterknife.OnClick;
+<i>27</i>&nbsp;
+<b class="nc"><i>28</i>&nbsp;public class CardHeaderView extends ConstraintLayout {</b>
+<i>29</i>&nbsp;    public interface Callback {
+<i>30</i>&nbsp;        boolean onRequestDismissCard(@NonNull Card card);
+<i>31</i>&nbsp;        void onRequestCustomize(@NonNull Card card);
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    @BindView(R.id.view_card_header_image) AppCompatImageView imageView;
+<i>35</i>&nbsp;    @BindView(R.id.view_card_header_title) TextView titleView;
+<i>36</i>&nbsp;    @BindView(R.id.view_card_header_subtitle) TextView subtitleView;
+<i>37</i>&nbsp;    @Nullable private Card card;
+<i>38</i>&nbsp;    @Nullable private Callback callback;
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    public CardHeaderView(Context context) {
+<b class="nc"><i>41</i>&nbsp;        super(context);</b>
+<b class="nc"><i>42</i>&nbsp;        init();</b>
+<i>43</i>&nbsp;    }
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    public CardHeaderView(Context context, AttributeSet attrs) {
+<b class="nc"><i>46</i>&nbsp;        super(context, attrs);</b>
+<b class="nc"><i>47</i>&nbsp;        init();</b>
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    public CardHeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
+<b class="nc"><i>51</i>&nbsp;        super(context, attrs, defStyleAttr);</b>
+<b class="nc"><i>52</i>&nbsp;        init();</b>
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    private void init() {
+<b class="nc"><i>56</i>&nbsp;        inflate(getContext(), R.layout.view_card_header, this);</b>
+<b class="nc"><i>57</i>&nbsp;        ButterKnife.bind(this);</b>
+<i>58</i>&nbsp;    }
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    @NonNull public CardHeaderView setCard(@NonNull Card card) {
+<b class="nc"><i>61</i>&nbsp;        this.card = card;</b>
+<b class="nc"><i>62</i>&nbsp;        return this;</b>
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    @NonNull public CardHeaderView setCallback(@Nullable Callback callback) {
+<b class="nc"><i>66</i>&nbsp;        this.callback = callback;</b>
+<b class="nc"><i>67</i>&nbsp;        return this;</b>
+<i>68</i>&nbsp;    }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;    @NonNull public CardHeaderView setImage(@DrawableRes int resId) {
+<b class="nc"><i>71</i>&nbsp;        imageView.setImageResource(resId);</b>
+<b class="nc"><i>72</i>&nbsp;        return this;</b>
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    @NonNull public CardHeaderView setImageCircleColor(@ColorRes int color) {
+<b class="nc"><i>76</i>&nbsp;        ColorStateList colorStateList = new ColorStateList(</b>
+<i>77</i>&nbsp;                new int[][]{new int[]{}},
+<b class="nc"><i>78</i>&nbsp;                new int[]{ContextCompat.getColor(getContext(), color)}</b>
+<i>79</i>&nbsp;        );
+<b class="nc"><i>80</i>&nbsp;        ViewCompat.setBackgroundTintList(imageView, colorStateList);</b>
+<b class="nc"><i>81</i>&nbsp;        return this;</b>
+<i>82</i>&nbsp;    }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;    @NonNull public CardHeaderView setTitle(@Nullable CharSequence title) {
+<b class="nc"><i>85</i>&nbsp;        titleView.setText(title);</b>
+<b class="nc"><i>86</i>&nbsp;        return this;</b>
+<i>87</i>&nbsp;    }
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;    @NonNull public CardHeaderView setTitle(@StringRes int id) {
+<b class="nc"><i>90</i>&nbsp;        titleView.setText(id);</b>
+<b class="nc"><i>91</i>&nbsp;        return this;</b>
+<i>92</i>&nbsp;    }
+<i>93</i>&nbsp;
+<i>94</i>&nbsp;    @NonNull public CardHeaderView setSubtitle(@Nullable CharSequence subtitle) {
+<b class="nc"><i>95</i>&nbsp;        subtitleView.setText(subtitle);</b>
+<b class="nc"><i>96</i>&nbsp;        return this;</b>
+<i>97</i>&nbsp;    }
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;    @VisibleForTesting @Nullable Card getCard() {
+<b class="nc"><i>100</i>&nbsp;        return card;</b>
+<i>101</i>&nbsp;    }
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;    @OnClick(R.id.view_list_card_header_menu) void onMenuClick(View v) {
+<b class="nc"><i>104</i>&nbsp;        showOverflowMenu(v);</b>
+<i>105</i>&nbsp;    }
+<i>106</i>&nbsp;
+<i>107</i>&nbsp;    private void showOverflowMenu(View anchorView) {
+<b class="nc"><i>108</i>&nbsp;        PopupMenu menu = new PopupMenu(anchorView.getContext(), anchorView);</b>
+<b class="nc"><i>109</i>&nbsp;        menu.getMenuInflater().inflate(R.menu.menu_feed_card_header, menu.getMenu());</b>
+<b class="nc"><i>110</i>&nbsp;        menu.setOnMenuItemClickListener(new CardHeaderMenuClickListener());</b>
+<b class="nc"><i>111</i>&nbsp;        menu.show();</b>
+<i>112</i>&nbsp;    }
+<i>113</i>&nbsp;
+<b class="nc"><i>114</i>&nbsp;    private class CardHeaderMenuClickListener implements PopupMenu.OnMenuItemClickListener {</b>
+<i>115</i>&nbsp;        @Override
+<i>116</i>&nbsp;        public boolean onMenuItemClick(MenuItem item) {
+<b class="nc"><i>117</i>&nbsp;            switch (item.getItemId()) {</b>
+<i>118</i>&nbsp;                case R.id.menu_feed_card_dismiss:
+<b class="nc"><i>119</i>&nbsp;                    if (callback != null &amp; card != null) {</b>
+<b class="nc"><i>120</i>&nbsp;                        return callback.onRequestDismissCard(card);</b>
+<i>121</i>&nbsp;                    }
+<b class="nc"><i>122</i>&nbsp;                    return false;</b>
+<i>123</i>&nbsp;                case R.id.menu_feed_card_customize:
+<b class="nc"><i>124</i>&nbsp;                    if (callback != null &amp; card != null) {</b>
+<b class="nc"><i>125</i>&nbsp;                        callback.onRequestCustomize(card);</b>
+<i>126</i>&nbsp;                    }
+<b class="nc"><i>127</i>&nbsp;                    return true;</b>
+<i>128</i>&nbsp;                default:
+<b class="nc"><i>129</i>&nbsp;                    return false;</b>
+<i>130</i>&nbsp;            }
+<i>131</i>&nbsp;        }
+<i>132</i>&nbsp;    }
+<i>133</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

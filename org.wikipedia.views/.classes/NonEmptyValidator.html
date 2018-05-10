@@ -1,0 +1,163 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: NonEmptyValidator</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.views</a> ]
+</div>
+
+<h1>Coverage Summary for Class: NonEmptyValidator (org.wikipedia.views)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NonEmptyValidator</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 14)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NonEmptyValidator$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 16)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.views;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.design.widget.TextInputLayout;
+<i>4</i>&nbsp;import android.text.Editable;
+<i>5</i>&nbsp;import android.text.TextWatcher;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;/**
+<i>8</i>&nbsp; * Triggers events when one or more EditTexts are empty or not
+<i>9</i>&nbsp; */
+<b class="nc"><i>10</i>&nbsp;public class NonEmptyValidator {</b>
+<i>11</i>&nbsp;    private final TextInputLayout[] textInputs;
+<i>12</i>&nbsp;    private final ValidationChangedCallback validationChanged;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    public interface ValidationChangedCallback {
+<i>15</i>&nbsp;        void onValidationChanged(boolean isValid);
+<i>16</i>&nbsp;    }
+<i>17</i>&nbsp;
+<b class="nc"><i>18</i>&nbsp;    public NonEmptyValidator(ValidationChangedCallback validationChanged, TextInputLayout... textInputs) {</b>
+<b class="nc"><i>19</i>&nbsp;        this.textInputs = textInputs;</b>
+<b class="nc"><i>20</i>&nbsp;        this.validationChanged = validationChanged;</b>
+<i>21</i>&nbsp;
+<b class="nc"><i>22</i>&nbsp;        TextWatcher triggerWatcher = new TextWatcher() {</b>
+<i>23</i>&nbsp;            @Override
+<i>24</i>&nbsp;            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+<i>25</i>&nbsp;            }
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;            @Override
+<i>28</i>&nbsp;            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+<i>29</i>&nbsp;            }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;            @Override
+<i>32</i>&nbsp;            public void afterTextChanged(Editable editable) {
+<b class="nc"><i>33</i>&nbsp;                revalidate();</b>
+<i>34</i>&nbsp;            }
+<i>35</i>&nbsp;        };
+<i>36</i>&nbsp;
+<b class="nc"><i>37</i>&nbsp;        for (TextInputLayout t : textInputs) {</b>
+<b class="nc"><i>38</i>&nbsp;            t.getEditText().addTextChangedListener(triggerWatcher);</b>
+<i>39</i>&nbsp;        }
+<i>40</i>&nbsp;    }
+<i>41</i>&nbsp;
+<b class="nc"><i>42</i>&nbsp;    private boolean lastIsValidValue = false;</b>
+<i>43</i>&nbsp;    private void revalidate() {
+<b class="nc"><i>44</i>&nbsp;        boolean isValid = true;</b>
+<b class="nc"><i>45</i>&nbsp;        for (TextInputLayout t : textInputs) {</b>
+<b class="nc"><i>46</i>&nbsp;            isValid = isValid &amp;&amp; t.getEditText().getText().length() != 0;</b>
+<i>47</i>&nbsp;        }
+<i>48</i>&nbsp;
+<b class="nc"><i>49</i>&nbsp;        if (isValid != lastIsValidValue) {</b>
+<b class="nc"><i>50</i>&nbsp;            lastIsValidValue = isValid;</b>
+<b class="nc"><i>51</i>&nbsp;            validationChanged.onValidationChanged(isValid);</b>
+<i>52</i>&nbsp;        }
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

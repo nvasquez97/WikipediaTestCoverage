@@ -1,0 +1,246 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: HistoryEntry</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.history</a> ]
+</div>
+
+<h1>Coverage Summary for Class: HistoryEntry (org.wikipedia.history)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HistoryEntry</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 36)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">HistoryEntry$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 39)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.history;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.os.Parcel;
+<i>4</i>&nbsp;import android.os.Parcelable;
+<i>5</i>&nbsp;import android.support.annotation.NonNull;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.wikipedia.page.PageTitle;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import java.util.Date;
+<i>10</i>&nbsp;
+<b class="nc"><i>11</i>&nbsp;public class HistoryEntry implements Parcelable {</b>
+<b class="nc"><i>12</i>&nbsp;    public static final HistoryEntryDatabaseTable DATABASE_TABLE = new HistoryEntryDatabaseTable();</b>
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    public static final int SOURCE_SEARCH = 1;
+<i>15</i>&nbsp;    public static final int SOURCE_INTERNAL_LINK = 2;
+<i>16</i>&nbsp;    public static final int SOURCE_EXTERNAL_LINK = 3;
+<i>17</i>&nbsp;    public static final int SOURCE_HISTORY = 4;
+<i>18</i>&nbsp;    public static final int SOURCE_LANGUAGE_LINK = 6;
+<i>19</i>&nbsp;    public static final int SOURCE_RANDOM = 7;
+<i>20</i>&nbsp;    public static final int SOURCE_MAIN_PAGE = 8;
+<i>21</i>&nbsp;    public static final int SOURCE_NEARBY = 9;
+<i>22</i>&nbsp;    public static final int SOURCE_DISAMBIG = 10;
+<i>23</i>&nbsp;    public static final int SOURCE_READING_LIST = 11;
+<i>24</i>&nbsp;    public static final int SOURCE_FEED_CONTINUE_READING = 12;
+<i>25</i>&nbsp;    public static final int SOURCE_FEED_BECAUSE_YOU_READ = 13;
+<i>26</i>&nbsp;    public static final int SOURCE_FEED_MOST_READ = 14;
+<i>27</i>&nbsp;    public static final int SOURCE_FEED_FEATURED = 15;
+<i>28</i>&nbsp;    public static final int SOURCE_NEWS = 16;
+<i>29</i>&nbsp;    public static final int SOURCE_FEED_MAIN_PAGE = 17;
+<i>30</i>&nbsp;    public static final int SOURCE_FEED_RANDOM = 18;
+<i>31</i>&nbsp;    public static final int SOURCE_GALLERY = 19; // Or should we just use SOURCE_INTERNAL_LINK as before?  Some of these things seem not like the others.
+<i>32</i>&nbsp;    public static final int SOURCE_APP_SHORTCUT_RANDOM = 20;
+<i>33</i>&nbsp;    public static final int SOURCE_APP_SHORTCUT_CONTINUE_READING = 21;
+<i>34</i>&nbsp;    public static final int SOURCE_FEED_MOST_READ_ACTIVITY = 22;
+<i>35</i>&nbsp;    public static final int SOURCE_ON_THIS_DAY_CARD = 23;
+<i>36</i>&nbsp;    public static final int SOURCE_ON_THIS_DAY_ACTIVITY = 24;
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    @NonNull private final PageTitle title;
+<i>39</i>&nbsp;    @NonNull private final Date timestamp;
+<i>40</i>&nbsp;    private final int source;
+<i>41</i>&nbsp;    private final int timeSpentSec;
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    public HistoryEntry(@NonNull PageTitle title, @NonNull Date timestamp, int source,
+<b class="nc"><i>44</i>&nbsp;                        int timeSpentSec) {</b>
+<b class="nc"><i>45</i>&nbsp;        this.title = title;</b>
+<b class="nc"><i>46</i>&nbsp;        this.timestamp = timestamp;</b>
+<b class="nc"><i>47</i>&nbsp;        this.source = source;</b>
+<b class="nc"><i>48</i>&nbsp;        this.timeSpentSec = timeSpentSec;</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    public HistoryEntry(@NonNull PageTitle title, @NonNull Date timestamp, int source) {
+<b class="nc"><i>52</i>&nbsp;        this(title, timestamp, source, 0);</b>
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    public HistoryEntry(@NonNull PageTitle title, int source) {
+<b class="nc"><i>56</i>&nbsp;        this(title, new Date(), source);</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    @NonNull public PageTitle getTitle() {
+<b class="nc"><i>60</i>&nbsp;        return title;</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    @NonNull public Date getTimestamp() {
+<b class="nc"><i>64</i>&nbsp;        return timestamp;</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    public int getSource() {
+<b class="nc"><i>68</i>&nbsp;        return source;</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    public int getTimeSpentSec() {
+<b class="nc"><i>72</i>&nbsp;        return timeSpentSec;</b>
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    @Override
+<i>76</i>&nbsp;    public boolean equals(Object o) {
+<b class="nc"><i>77</i>&nbsp;        if (!(o instanceof HistoryEntry)) {</b>
+<b class="nc"><i>78</i>&nbsp;            return false;</b>
+<i>79</i>&nbsp;        }
+<b class="nc"><i>80</i>&nbsp;        HistoryEntry other = (HistoryEntry) o;</b>
+<b class="nc"><i>81</i>&nbsp;        return title.equals(other.title)</b>
+<b class="nc"><i>82</i>&nbsp;                &amp;&amp; timestamp.equals(other.timestamp)</b>
+<i>83</i>&nbsp;                &amp;&amp; source == other.source;
+<i>84</i>&nbsp;    }
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;    @Override
+<i>87</i>&nbsp;    public int hashCode() {
+<b class="nc"><i>88</i>&nbsp;        int result = title.hashCode();</b>
+<b class="nc"><i>89</i>&nbsp;        result = 31 * result + source;</b>
+<b class="nc"><i>90</i>&nbsp;        result = 31 * result + timestamp.hashCode();</b>
+<b class="nc"><i>91</i>&nbsp;        result = 31 * result + timeSpentSec;</b>
+<b class="nc"><i>92</i>&nbsp;        return result;</b>
+<i>93</i>&nbsp;    }
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;    @Override
+<i>96</i>&nbsp;    public String toString() {
+<b class="nc"><i>97</i>&nbsp;        return &quot;HistoryEntry{&quot;</b>
+<i>98</i>&nbsp;                + &quot;title=&quot; + title
+<i>99</i>&nbsp;                + &quot;, source=&quot; + source
+<b class="nc"><i>100</i>&nbsp;                + &quot;, timestamp=&quot; + timestamp.getTime()</b>
+<i>101</i>&nbsp;                + &quot;, timeSpentSec=&quot; + timeSpentSec
+<i>102</i>&nbsp;                + &#39;}&#39;;
+<i>103</i>&nbsp;    }
+<i>104</i>&nbsp;
+<i>105</i>&nbsp;    @Override
+<i>106</i>&nbsp;    public int describeContents() {
+<b class="nc"><i>107</i>&nbsp;        return 0;</b>
+<i>108</i>&nbsp;    }
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;    @Override
+<i>111</i>&nbsp;    public void writeToParcel(Parcel dest, int flags) {
+<b class="nc"><i>112</i>&nbsp;        dest.writeParcelable(getTitle(), flags);</b>
+<b class="nc"><i>113</i>&nbsp;        dest.writeLong(getTimestamp().getTime());</b>
+<b class="nc"><i>114</i>&nbsp;        dest.writeInt(getSource());</b>
+<b class="nc"><i>115</i>&nbsp;        dest.writeInt(getTimeSpentSec());</b>
+<i>116</i>&nbsp;    }
+<i>117</i>&nbsp;
+<b class="nc"><i>118</i>&nbsp;    private HistoryEntry(Parcel in) {</b>
+<b class="nc"><i>119</i>&nbsp;        this.title = in.readParcelable(PageTitle.class.getClassLoader());</b>
+<b class="nc"><i>120</i>&nbsp;        this.timestamp = new Date(in.readLong());</b>
+<b class="nc"><i>121</i>&nbsp;        this.source = in.readInt();</b>
+<b class="nc"><i>122</i>&nbsp;        this.timeSpentSec = in.readInt();</b>
+<i>123</i>&nbsp;    }
+<i>124</i>&nbsp;
+<b class="nc"><i>125</i>&nbsp;    public static final Parcelable.Creator&lt;HistoryEntry&gt; CREATOR</b>
+<b class="nc"><i>126</i>&nbsp;            = new Parcelable.Creator&lt;HistoryEntry&gt;() {</b>
+<i>127</i>&nbsp;        @Override
+<i>128</i>&nbsp;        public HistoryEntry createFromParcel(Parcel in) {
+<b class="nc"><i>129</i>&nbsp;            return new HistoryEntry(in);</b>
+<i>130</i>&nbsp;        }
+<i>131</i>&nbsp;
+<i>132</i>&nbsp;        @Override
+<i>133</i>&nbsp;        public HistoryEntry[] newArray(int size) {
+<b class="nc"><i>134</i>&nbsp;            return new HistoryEntry[size];</b>
+<i>135</i>&nbsp;        }
+<i>136</i>&nbsp;    };
+<i>137</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

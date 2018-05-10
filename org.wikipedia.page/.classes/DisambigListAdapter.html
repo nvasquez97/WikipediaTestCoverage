@@ -1,0 +1,288 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DisambigListAdapter</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.page</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DisambigListAdapter (org.wikipedia.page)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DisambigListAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 32)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DisambigListAdapter$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">DisambigListAdapter$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">DisambigListAdapter$ViewHolder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 51)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.page;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;import android.support.v4.util.LruCache;
+<i>6</i>&nbsp;import android.view.LayoutInflater;
+<i>7</i>&nbsp;import android.view.View;
+<i>8</i>&nbsp;import android.view.ViewGroup;
+<i>9</i>&nbsp;import android.widget.ArrayAdapter;
+<i>10</i>&nbsp;import android.widget.TextView;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import com.facebook.drawee.view.SimpleDraweeView;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import org.apache.commons.lang3.StringUtils;
+<i>15</i>&nbsp;import org.wikipedia.R;
+<i>16</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>17</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>18</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwQueryPage;
+<i>19</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwQueryResponse;
+<i>20</i>&nbsp;import org.wikipedia.pageimages.PageImage;
+<i>21</i>&nbsp;import org.wikipedia.pageimages.PageImagesClient;
+<i>22</i>&nbsp;import org.wikipedia.views.GoneIfEmptyTextView;
+<i>23</i>&nbsp;import org.wikipedia.views.ViewUtil;
+<i>24</i>&nbsp;import org.wikipedia.wikidata.DescriptionClient;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;import java.util.ArrayList;
+<i>27</i>&nbsp;import java.util.List;
+<i>28</i>&nbsp;import java.util.Map;
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;import retrofit2.Call;
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;/**
+<i>33</i>&nbsp; * ListAdapter for disambiguation items.
+<i>34</i>&nbsp; */
+<b class="nc"><i>35</i>&nbsp;class DisambigListAdapter extends ArrayAdapter&lt;DisambigResult&gt; {</b>
+<i>36</i>&nbsp;    private static final int MAX_CACHE_SIZE_IMAGES = 24;
+<b class="nc"><i>37</i>&nbsp;    @NonNull private final LruCache&lt;String, String&gt; pageImagesCache = new LruCache&lt;&gt;(MAX_CACHE_SIZE_IMAGES);</b>
+<i>38</i>&nbsp;    private final DisambigResult[] items;
+<b class="nc"><i>39</i>&nbsp;    private final WikiSite wiki = WikipediaApp.getInstance().getWikiSite();</b>
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    DisambigListAdapter(@NonNull Context context, @NonNull DisambigResult[] items) {
+<b class="nc"><i>42</i>&nbsp;        super(context, 0, items);</b>
+<b class="nc"><i>43</i>&nbsp;        this.items = items;</b>
+<b class="nc"><i>44</i>&nbsp;        requestPageImages();</b>
+<b class="nc"><i>45</i>&nbsp;        fetchDescriptions();</b>
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    private void requestPageImages() {
+<b class="nc"><i>49</i>&nbsp;        List&lt;PageTitle&gt; titleList = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>50</i>&nbsp;        for (DisambigResult r : items) {</b>
+<b class="nc"><i>51</i>&nbsp;            if (pageImagesCache.get(r.getTitle().getPrefixedText()) == null) {</b>
+<i>52</i>&nbsp;                // not in our cache yet
+<b class="nc"><i>53</i>&nbsp;                titleList.add(r.getTitle());</b>
+<i>54</i>&nbsp;            }
+<i>55</i>&nbsp;        }
+<b class="nc"><i>56</i>&nbsp;        if (titleList.isEmpty()) {</b>
+<i>57</i>&nbsp;            return;
+<i>58</i>&nbsp;        }
+<i>59</i>&nbsp;
+<b class="nc"><i>60</i>&nbsp;        new PageImagesClient().request(wiki, titleList,</b>
+<b class="nc"><i>61</i>&nbsp;                new PageImagesClient.Callback() {</b>
+<i>62</i>&nbsp;                    @Override public void success(@NonNull Call&lt;MwQueryResponse&gt; call,
+<i>63</i>&nbsp;                                                  @NonNull Map&lt;PageTitle, PageImage&gt; results) {
+<b class="nc"><i>64</i>&nbsp;                        for (Map.Entry&lt;PageTitle, PageImage&gt; entry : results.entrySet()) {</b>
+<b class="nc"><i>65</i>&nbsp;                            if (entry.getValue() == null || entry.getValue().getImageName() == null) {</b>
+<b class="nc"><i>66</i>&nbsp;                                continue;</b>
+<i>67</i>&nbsp;                            }
+<b class="nc"><i>68</i>&nbsp;                            pageImagesCache.put(entry.getKey().getPrefixedText(), entry.getValue().getImageName());</b>
+<b class="nc"><i>69</i>&nbsp;                        }</b>
+<b class="nc"><i>70</i>&nbsp;                        notifyDataSetInvalidated();</b>
+<i>71</i>&nbsp;                    }
+<i>72</i>&nbsp;                    @Override public void failure(@NonNull Call&lt;MwQueryResponse&gt; call,
+<i>73</i>&nbsp;                                                  @NonNull Throwable caught) {
+<i>74</i>&nbsp;                        // Don&#39;t actually do anything.
+<i>75</i>&nbsp;                        // Thumbnails are expendable
+<i>76</i>&nbsp;                    }
+<i>77</i>&nbsp;                });
+<i>78</i>&nbsp;    }
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;    /**
+<i>81</i>&nbsp;     * Start getting Wikidata descriptions (directly from the current Wikipedia wiki).
+<i>82</i>&nbsp;     */
+<i>83</i>&nbsp;    private void fetchDescriptions() {
+<b class="nc"><i>84</i>&nbsp;        final List&lt;PageTitle&gt; titleList = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>85</i>&nbsp;        for (DisambigResult r : items) {</b>
+<b class="nc"><i>86</i>&nbsp;            titleList.add(r.getTitle());</b>
+<i>87</i>&nbsp;        }
+<b class="nc"><i>88</i>&nbsp;        if (titleList.isEmpty()) {</b>
+<i>89</i>&nbsp;            return;
+<i>90</i>&nbsp;        }
+<i>91</i>&nbsp;
+<b class="nc"><i>92</i>&nbsp;        new DescriptionClient().request(wiki, titleList, new DescriptionClient.Callback() {</b>
+<i>93</i>&nbsp;            @Override public void success(@NonNull Call&lt;MwQueryResponse&gt; call,
+<i>94</i>&nbsp;                                          @NonNull List&lt;MwQueryPage&gt; results) {
+<b class="nc"><i>95</i>&nbsp;                for (MwQueryPage page : results) {</b>
+<b class="nc"><i>96</i>&nbsp;                    PageTitle pageTitle = new PageTitle(null, page.title(), wiki);</b>
+<b class="nc"><i>97</i>&nbsp;                    for (PageTitle title : titleList) {</b>
+<b class="nc"><i>98</i>&nbsp;                        if (title.getPrefixedText().equals(pageTitle.getPrefixedText())</b>
+<b class="nc"><i>99</i>&nbsp;                                || title.getDisplayText().equals(pageTitle.getDisplayText())) {</b>
+<b class="nc"><i>100</i>&nbsp;                            title.setDescription(page.description());</b>
+<b class="nc"><i>101</i>&nbsp;                            break;</b>
+<i>102</i>&nbsp;                        }
+<b class="nc"><i>103</i>&nbsp;                    }</b>
+<b class="nc"><i>104</i>&nbsp;                }</b>
+<b class="nc"><i>105</i>&nbsp;                notifyDataSetChanged();</b>
+<i>106</i>&nbsp;            }
+<i>107</i>&nbsp;            @Override public void failure(@NonNull Call&lt;MwQueryResponse&gt; call, @NonNull Throwable caught) {
+<i>108</i>&nbsp;                // descriptions are expendable
+<i>109</i>&nbsp;            }
+<i>110</i>&nbsp;        });
+<i>111</i>&nbsp;    }
+<i>112</i>&nbsp;
+<b class="nc"><i>113</i>&nbsp;    class ViewHolder {</b>
+<i>114</i>&nbsp;        private SimpleDraweeView icon;
+<i>115</i>&nbsp;        private TextView title;
+<i>116</i>&nbsp;        private TextView description;
+<i>117</i>&nbsp;    }
+<i>118</i>&nbsp;
+<i>119</i>&nbsp;    @Override @NonNull public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+<b class="nc"><i>120</i>&nbsp;        LayoutInflater inflater = LayoutInflater.from(parent.getContext());</b>
+<i>121</i>&nbsp;        ViewHolder holder;
+<b class="nc"><i>122</i>&nbsp;        if (convertView == null) {</b>
+<b class="nc"><i>123</i>&nbsp;            convertView = inflater.inflate(R.layout.item_page_list_entry, parent, false);</b>
+<b class="nc"><i>124</i>&nbsp;            holder = new ViewHolder();</b>
+<b class="nc"><i>125</i>&nbsp;            holder.icon = convertView.findViewById(R.id.page_list_item_image);</b>
+<b class="nc"><i>126</i>&nbsp;            holder.title = convertView.findViewById(R.id.page_list_item_title);</b>
+<b class="nc"><i>127</i>&nbsp;            holder.description = (GoneIfEmptyTextView) convertView.findViewById(R.id.page_list_item_description);</b>
+<b class="nc"><i>128</i>&nbsp;            convertView.setTag(holder);</b>
+<i>129</i>&nbsp;        } else {
+<i>130</i>&nbsp;            // view already defined, retrieve view holder
+<b class="nc"><i>131</i>&nbsp;            holder = (ViewHolder) convertView.getTag();</b>
+<i>132</i>&nbsp;        }
+<i>133</i>&nbsp;
+<b class="nc"><i>134</i>&nbsp;        final DisambigResult item = items[position];</b>
+<b class="nc"><i>135</i>&nbsp;        holder.title.setText(item.getTitle().getDisplayText());</b>
+<b class="nc"><i>136</i>&nbsp;        holder.description.setText(StringUtils.capitalize(item.getTitle().getDescription()));</b>
+<i>137</i>&nbsp;
+<b class="nc"><i>138</i>&nbsp;        ViewUtil.loadImageUrlInto(holder.icon, pageImagesCache.get(item.getTitle().getPrefixedText()));</b>
+<b class="nc"><i>139</i>&nbsp;        return convertView;</b>
+<i>140</i>&nbsp;    }
+<i>141</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

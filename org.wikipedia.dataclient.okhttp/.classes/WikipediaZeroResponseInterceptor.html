@@ -1,0 +1,110 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: WikipediaZeroResponseInterceptor</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.dataclient.okhttp</a> ]
+</div>
+
+<h1>Coverage Summary for Class: WikipediaZeroResponseInterceptor (org.wikipedia.dataclient.okhttp)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">WikipediaZeroResponseInterceptor</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.dataclient.okhttp;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import org.wikipedia.zero.WikipediaZeroHandler;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.io.IOException;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import okhttp3.Interceptor;
+<i>10</i>&nbsp;import okhttp3.Response;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;public class WikipediaZeroResponseInterceptor implements Interceptor {
+<i>13</i>&nbsp;    @NonNull private final WikipediaZeroHandler cb;
+<i>14</i>&nbsp;
+<b class="nc"><i>15</i>&nbsp;    public WikipediaZeroResponseInterceptor(@NonNull WikipediaZeroHandler cb) {</b>
+<b class="nc"><i>16</i>&nbsp;        this.cb = cb;</b>
+<i>17</i>&nbsp;    }
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    @Override public Response intercept(Chain chain) throws IOException {
+<b class="nc"><i>20</i>&nbsp;        Response rsp = chain.proceed(chain.request());</b>
+<b class="nc"><i>21</i>&nbsp;        boolean zeroConfigRequest = &quot;zeroconfig&quot;.equals(chain.request().url().queryParameter(&quot;action&quot;));</b>
+<b class="nc"><i>22</i>&nbsp;        if (rsp.networkResponse() != null &amp;&amp; !zeroConfigRequest) {</b>
+<b class="nc"><i>23</i>&nbsp;            cb.onHeaderCheck(rsp.headers());</b>
+<i>24</i>&nbsp;        }
+<b class="nc"><i>25</i>&nbsp;        return rsp;</b>
+<i>26</i>&nbsp;    }
+<i>27</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

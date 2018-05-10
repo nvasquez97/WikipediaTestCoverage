@@ -1,0 +1,201 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: InstallReceiver</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.analytics</a> ]
+</div>
+
+<h1>Coverage Summary for Class: InstallReceiver (org.wikipedia.analytics)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">InstallReceiver</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 40)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.analytics;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.BroadcastReceiver;
+<i>4</i>&nbsp;import android.content.Context;
+<i>5</i>&nbsp;import android.content.Intent;
+<i>6</i>&nbsp;import android.net.Uri;
+<i>7</i>&nbsp;import android.support.annotation.NonNull;
+<i>8</i>&nbsp;import android.text.TextUtils;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>11</i>&nbsp;import org.wikipedia.page.PageActivity;
+<i>12</i>&nbsp;import org.wikipedia.settings.Prefs;
+<i>13</i>&nbsp;import org.wikipedia.util.ReleaseUtil;
+<i>14</i>&nbsp;import org.wikipedia.util.ShareUtil;
+<i>15</i>&nbsp;import org.wikipedia.util.log.L;
+<i>16</i>&nbsp;
+<b class="nc"><i>17</i>&nbsp;public final class InstallReceiver extends BroadcastReceiver {</b>
+<i>18</i>&nbsp;    private static final String INSTALL_ACTION = &quot;com.android.vending.INSTALL_REFERRER&quot;;
+<i>19</i>&nbsp;    private static final String REFERRER_KEY = &quot;referrer&quot;;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    @Override
+<i>22</i>&nbsp;    public void onReceive(Context ctx, Intent intent) {
+<b class="nc"><i>23</i>&nbsp;        String action = intent.getAction();</b>
+<b class="nc"><i>24</i>&nbsp;        switch (action) {</b>
+<i>25</i>&nbsp;            case INSTALL_ACTION:
+<i>26</i>&nbsp;                // for play store devices only:
+<i>27</i>&nbsp;                // * invoke the receiver and open the page:
+<i>28</i>&nbsp;                //     `adb shell am broadcast -a com.android.vending.INSTALL_REFERRER -n org.wikipedia.dev/org.wikipedia.analytics.InstallReceiver --es &quot;referrer&quot; &quot;referrer_url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FWombat&amp;campaign_id=foo&amp;install_id=bar&quot;`
+<i>29</i>&nbsp;                // * invoke the receiver but don&#39;t open the app (bad url):
+<i>30</i>&nbsp;                //     `adb shell am broadcast -a com.android.vending.INSTALL_REFERRER -n org.wikipedia.dev/org.wikipedia.analytics.InstallReceiver --es &quot;referrer&quot; &quot;referrer_url=gibberish&amp;campaign_id=foo&amp;install_id=bar&quot;`
+<b class="nc"><i>31</i>&nbsp;                installReferrer(ctx, intent);</b>
+<b class="nc"><i>32</i>&nbsp;                break;</b>
+<i>33</i>&nbsp;            case Intent.ACTION_BOOT_COMPLETED:
+<i>34</i>&nbsp;                // `adb shell am broadcast -a android.intent.action.BOOT_COMPLETED`
+<b class="nc"><i>35</i>&nbsp;                recordChannelId(ctx);</b>
+<b class="nc"><i>36</i>&nbsp;                break;</b>
+<i>37</i>&nbsp;            default:
+<b class="nc"><i>38</i>&nbsp;                L.d(&quot;action=&quot; + action);</b>
+<i>39</i>&nbsp;                break;
+<i>40</i>&nbsp;        }
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    /**
+<i>44</i>&nbsp;     * Receives an Intent from the Play Store app upon first launch after the app has been
+<i>45</i>&nbsp;     * installed. If the original link that led the user to the Play Store for installing
+<i>46</i>&nbsp;     * the app contained a &quot;referrer&quot; query parameter, then the contents of this parameter
+<i>47</i>&nbsp;     * will be passed to this receiver.
+<i>48</i>&nbsp;     *
+<i>49</i>&nbsp;     * The structure for the &quot;referrer&quot; parameter shall be as follows:
+<i>50</i>&nbsp;     *
+<i>51</i>&nbsp;     *      referrer_url=foo&amp;utm_medium=bar&amp;utm_campaign=baz&amp;utm_source=baz
+<i>52</i>&nbsp;     *
+<i>53</i>&nbsp;     * referrer_url: the original url from which the link was clicked.
+<i>54</i>&nbsp;     * utm_medium: the &quot;medium&quot; from which this install came, e.g. &quot;sitenotice&quot;
+<i>55</i>&nbsp;     * utm_campaign: name of the campaign from which this install came, e.g. &quot;fundraising2017&quot;
+<i>56</i>&nbsp;     * utm_source: name of the specific source in the campaign from which this install came, e.g. &quot;popup1&quot;
+<i>57</i>&nbsp;     *
+<i>58</i>&nbsp;     * The string containing all of the above parameters is then Urlencoded and passed as the
+<i>59</i>&nbsp;     * &quot;referrer&quot; parameter in the real URL that leads to the Play Store, which then gets passed
+<i>60</i>&nbsp;     * down to the app when it&#39;s installed.
+<i>61</i>&nbsp;     *
+<i>62</i>&nbsp;     * @param ctx Context in which this intent is received.
+<i>63</i>&nbsp;     * @param intent Intent that contains referrer data from the Play Store.
+<i>64</i>&nbsp;     */
+<i>65</i>&nbsp;    private void installReferrer(@NonNull Context ctx, @NonNull Intent intent) {
+<b class="nc"><i>66</i>&nbsp;        String referrerStr = intent.getStringExtra(REFERRER_KEY);</b>
+<b class="nc"><i>67</i>&nbsp;        L.d(&quot;Received install referrer: &quot; + referrerStr);</b>
+<b class="nc"><i>68</i>&nbsp;        if (TextUtils.isEmpty(referrerStr)) {</b>
+<i>69</i>&nbsp;            return;
+<i>70</i>&nbsp;        }
+<b class="nc"><i>71</i>&nbsp;        if (WikipediaApp.getInstance() == null) {</b>
+<b class="nc"><i>72</i>&nbsp;            L.e(&quot;Received install event before WikipediaApp was initialized.&quot;);</b>
+<i>73</i>&nbsp;            return;
+<i>74</i>&nbsp;        }
+<i>75</i>&nbsp;
+<b class="nc"><i>76</i>&nbsp;        String refUrl = null;</b>
+<b class="nc"><i>77</i>&nbsp;        String refUtmMedium = null;</b>
+<b class="nc"><i>78</i>&nbsp;        String refUtmCampaign = null;</b>
+<b class="nc"><i>79</i>&nbsp;        String refUtmSource = null;</b>
+<b class="nc"><i>80</i>&nbsp;        String refChannel = null;</b>
+<i>81</i>&nbsp;        try {
+<i>82</i>&nbsp;            // build a proper dummy URI with the referrer appended to it, so that we can parse it.
+<b class="nc"><i>83</i>&nbsp;            Uri uri = Uri.parse(&quot;/?&quot; + referrerStr);</b>
+<b class="nc"><i>84</i>&nbsp;            refUrl = uri.getQueryParameter(InstallReferrerFunnel.PARAM_REFERRER_URL);</b>
+<b class="nc"><i>85</i>&nbsp;            refUtmMedium = uri.getQueryParameter(InstallReferrerFunnel.PARAM_UTM_MEDIUM);</b>
+<b class="nc"><i>86</i>&nbsp;            refUtmCampaign = uri.getQueryParameter(InstallReferrerFunnel.PARAM_UTM_CAMPAIGN);</b>
+<b class="nc"><i>87</i>&nbsp;            refUtmSource = uri.getQueryParameter(InstallReferrerFunnel.PARAM_UTM_SOURCE);</b>
+<b class="nc"><i>88</i>&nbsp;            refChannel = uri.getQueryParameter(InstallReferrerFunnel.PARAM_CHANNEL);</b>
+<b class="nc"><i>89</i>&nbsp;        } catch (UnsupportedOperationException e) {</b>
+<i>90</i>&nbsp;            // Can be thrown by getQueryParameter() if the referrer is malformed.
+<i>91</i>&nbsp;            // Don&#39;t worry about it.
+<b class="nc"><i>92</i>&nbsp;        }</b>
+<i>93</i>&nbsp;        // log the event only if at least one of the parameters is nonempty
+<b class="nc"><i>94</i>&nbsp;        if (!TextUtils.isEmpty(refUrl) || !TextUtils.isEmpty(refUtmMedium)</b>
+<b class="nc"><i>95</i>&nbsp;                || !TextUtils.isEmpty(refUtmCampaign) || !TextUtils.isEmpty(refUtmSource)) {</b>
+<b class="nc"><i>96</i>&nbsp;            InstallReferrerFunnel funnel = new InstallReferrerFunnel(WikipediaApp.getInstance());</b>
+<b class="nc"><i>97</i>&nbsp;            funnel.logInstall(refUrl, refUtmMedium, refUtmCampaign, refUtmSource);</b>
+<i>98</i>&nbsp;        }
+<b class="nc"><i>99</i>&nbsp;        if (!TextUtils.isEmpty(refUrl) &amp;&amp; ShareUtil.canOpenUrlInApp(ctx, refUrl)) {</b>
+<b class="nc"><i>100</i>&nbsp;            openPageFromUrl(ctx, refUrl);</b>
+<i>101</i>&nbsp;        }
+<b class="nc"><i>102</i>&nbsp;        if (!TextUtils.isEmpty(refChannel)) {</b>
+<b class="nc"><i>103</i>&nbsp;            Prefs.setAppChannel(refChannel);</b>
+<i>104</i>&nbsp;        }
+<i>105</i>&nbsp;    }
+<i>106</i>&nbsp;
+<i>107</i>&nbsp;    private void recordChannelId(@NonNull Context ctx) {
+<b class="nc"><i>108</i>&nbsp;        String channel = ReleaseUtil.getChannel(ctx);</b>
+<b class="nc"><i>109</i>&nbsp;        L.v(&quot;channel=&quot; + channel);</b>
+<i>110</i>&nbsp;    }
+<i>111</i>&nbsp;
+<i>112</i>&nbsp;    private void openPageFromUrl(Context context, String url) {
+<b class="nc"><i>113</i>&nbsp;        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));</b>
+<b class="nc"><i>114</i>&nbsp;        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</b>
+<b class="nc"><i>115</i>&nbsp;        intent.setClass(context, PageActivity.class);</b>
+<b class="nc"><i>116</i>&nbsp;        context.startActivity(intent);</b>
+<i>117</i>&nbsp;    }
+<i>118</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:15</div>
+</div>
+</body>
+</html>

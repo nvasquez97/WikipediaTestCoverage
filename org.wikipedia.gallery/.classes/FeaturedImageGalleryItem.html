@@ -1,0 +1,116 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: FeaturedImageGalleryItem</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.gallery</a> ]
+</div>
+
+<h1>Coverage Summary for Class: FeaturedImageGalleryItem (org.wikipedia.gallery)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FeaturedImageGalleryItem</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.gallery;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import org.wikipedia.feed.image.FeaturedImage;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;class FeaturedImageGalleryItem extends GalleryItem {
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;    private int age;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    FeaturedImageGalleryItem(@NonNull FeaturedImage featuredImage, int age) {
+<b class="nc"><i>12</i>&nbsp;        super(featuredImage.title());</b>
+<b class="nc"><i>13</i>&nbsp;        this.age = age;</b>
+<b class="nc"><i>14</i>&nbsp;        setUrl(featuredImage.image().source().toString());</b>
+<b class="nc"><i>15</i>&nbsp;        setWidth(featuredImage.image().width());</b>
+<b class="nc"><i>16</i>&nbsp;        setHeight(featuredImage.image().height());</b>
+<b class="nc"><i>17</i>&nbsp;        setThumbUrl(featuredImage.thumbnail().source().toString());</b>
+<b class="nc"><i>18</i>&nbsp;        setWildcardMimeType();</b>
+<b class="nc"><i>19</i>&nbsp;        setPlaceHolderLicense();</b>
+<i>20</i>&nbsp;    }
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    public int getAge() {
+<b class="nc"><i>23</i>&nbsp;        return age;</b>
+<i>24</i>&nbsp;    }
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    private void setWildcardMimeType() {
+<b class="nc"><i>27</i>&nbsp;        setMimeType(&quot;*/*&quot;);</b>
+<i>28</i>&nbsp;    }
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    private void setPlaceHolderLicense() {
+<b class="nc"><i>31</i>&nbsp;        setLicense(new ImageLicense());</b>
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

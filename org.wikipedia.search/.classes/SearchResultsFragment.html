@@ -1,0 +1,805 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SearchResultsFragment</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.search</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SearchResultsFragment (org.wikipedia.search)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SearchResultsFragment</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 32)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 140)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SearchResultsFragment$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SearchResultsFragment$FullTextSearchCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 19)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SearchResultsFragment$SearchHandlerCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SearchResultsFragment$SearchResultAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 41)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SearchResultsFragment$SearchResultsFragmentLongPressHandler</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 18)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 54)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 239)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.search;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.os.Bundle;
+<i>4</i>&nbsp;import android.os.Handler;
+<i>5</i>&nbsp;import android.os.Message;
+<i>6</i>&nbsp;import android.support.annotation.NonNull;
+<i>7</i>&nbsp;import android.support.annotation.Nullable;
+<i>8</i>&nbsp;import android.support.v4.app.Fragment;
+<i>9</i>&nbsp;import android.support.v4.util.LruCache;
+<i>10</i>&nbsp;import android.text.TextUtils;
+<i>11</i>&nbsp;import android.view.LayoutInflater;
+<i>12</i>&nbsp;import android.view.View;
+<i>13</i>&nbsp;import android.view.ViewGroup;
+<i>14</i>&nbsp;import android.widget.BaseAdapter;
+<i>15</i>&nbsp;import android.widget.ListView;
+<i>16</i>&nbsp;import android.widget.TextView;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;import com.facebook.drawee.view.SimpleDraweeView;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;import org.apache.commons.lang3.StringUtils;
+<i>21</i>&nbsp;import org.wikipedia.LongPressHandler;
+<i>22</i>&nbsp;import org.wikipedia.R;
+<i>23</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>24</i>&nbsp;import org.wikipedia.activity.FragmentUtil;
+<i>25</i>&nbsp;import org.wikipedia.analytics.SearchFunnel;
+<i>26</i>&nbsp;import org.wikipedia.dataclient.mwapi.MwQueryResponse;
+<i>27</i>&nbsp;import org.wikipedia.history.HistoryEntry;
+<i>28</i>&nbsp;import org.wikipedia.offline.OfflineManager;
+<i>29</i>&nbsp;import org.wikipedia.page.PageTitle;
+<i>30</i>&nbsp;import org.wikipedia.readinglist.AddToReadingListDialog;
+<i>31</i>&nbsp;import org.wikipedia.util.DeviceUtil;
+<i>32</i>&nbsp;import org.wikipedia.util.StringUtil;
+<i>33</i>&nbsp;import org.wikipedia.util.log.L;
+<i>34</i>&nbsp;import org.wikipedia.views.GoneIfEmptyTextView;
+<i>35</i>&nbsp;import org.wikipedia.views.ViewUtil;
+<i>36</i>&nbsp;import org.wikipedia.views.WikiErrorView;
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;import java.io.IOException;
+<i>39</i>&nbsp;import java.text.Collator;
+<i>40</i>&nbsp;import java.util.ArrayList;
+<i>41</i>&nbsp;import java.util.List;
+<i>42</i>&nbsp;import java.util.Map;
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;import butterknife.BindView;
+<i>45</i>&nbsp;import butterknife.ButterKnife;
+<i>46</i>&nbsp;import butterknife.OnClick;
+<i>47</i>&nbsp;import butterknife.OnItemClick;
+<i>48</i>&nbsp;import butterknife.Unbinder;
+<i>49</i>&nbsp;import retrofit2.Call;
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;import static org.apache.commons.lang3.StringUtils.isBlank;
+<i>52</i>&nbsp;
+<b class="nc"><i>53</i>&nbsp;public class SearchResultsFragment extends Fragment {</b>
+<i>54</i>&nbsp;    public interface Callback {
+<i>55</i>&nbsp;        void onSearchResultCopyLink(@NonNull PageTitle title);
+<i>56</i>&nbsp;        void onSearchResultAddToList(@NonNull PageTitle title,
+<i>57</i>&nbsp;                                     @NonNull AddToReadingListDialog.InvokeSource source);
+<i>58</i>&nbsp;        void onSearchResultShareLink(@NonNull PageTitle title);
+<i>59</i>&nbsp;        void onSearchProgressBar(boolean enabled);
+<i>60</i>&nbsp;        void navigateToTitle(@NonNull PageTitle item, boolean inNewTab, int position);
+<i>61</i>&nbsp;        void setSearchText(@NonNull CharSequence text);
+<i>62</i>&nbsp;        @NonNull SearchFunnel getFunnel();
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    private static final int BATCH_SIZE = 20;
+<i>66</i>&nbsp;    private static final int DELAY_MILLIS = 300;
+<i>67</i>&nbsp;    private static final int MESSAGE_SEARCH = 1;
+<i>68</i>&nbsp;    private static final int MAX_CACHE_SIZE_SEARCH_RESULTS = 4;
+<i>69</i>&nbsp;    /**
+<i>70</i>&nbsp;     * Constant to ease in the conversion of timestamps from nanoseconds to milliseconds.
+<i>71</i>&nbsp;     */
+<i>72</i>&nbsp;    private static final int NANO_TO_MILLI = 1_000_000;
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;    @BindView(R.id.search_results_display) View searchResultsDisplay;
+<i>75</i>&nbsp;    @BindView(R.id.search_results_container) View searchResultsContainer;
+<i>76</i>&nbsp;    @BindView(R.id.search_results_list) ListView searchResultsList;
+<i>77</i>&nbsp;    @BindView(R.id.search_error_view) WikiErrorView searchErrorView;
+<i>78</i>&nbsp;    @BindView(R.id.search_empty_view) View searchEmptyView;
+<i>79</i>&nbsp;    @BindView(R.id.search_suggestion) TextView searchSuggestion;
+<i>80</i>&nbsp;    private Unbinder unbinder;
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    private WikipediaApp app;
+<b class="nc"><i>83</i>&nbsp;    private final LruCache&lt;String, List&lt;SearchResult&gt;&gt; searchResultsCache = new LruCache&lt;&gt;(MAX_CACHE_SIZE_SEARCH_RESULTS);</b>
+<i>84</i>&nbsp;    private Handler searchHandler;
+<b class="nc"><i>85</i>&nbsp;    private String currentSearchTerm = &quot;&quot;;</b>
+<i>86</i>&nbsp;    @Nullable private SearchResults lastFullTextResults;
+<b class="nc"><i>87</i>&nbsp;    @NonNull private final List&lt;SearchResult&gt; totalResults = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>88</i>&nbsp;    private PrefixSearchClient prefixSearchClient = new PrefixSearchClient();</b>
+<b class="nc"><i>89</i>&nbsp;    private FullTextSearchClient fullTextSearchClient = new FullTextSearchClient();</b>
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;    @Override
+<i>92</i>&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>93</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>94</i>&nbsp;        app = WikipediaApp.getInstance();</b>
+<i>95</i>&nbsp;    }
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;    @Override
+<i>98</i>&nbsp;    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+<b class="nc"><i>99</i>&nbsp;        View view = inflater.inflate(R.layout.fragment_search_results, container, false);</b>
+<b class="nc"><i>100</i>&nbsp;        unbinder = ButterKnife.bind(this, view);</b>
+<i>101</i>&nbsp;
+<b class="nc"><i>102</i>&nbsp;        SearchResultAdapter adapter = new SearchResultAdapter(inflater);</b>
+<b class="nc"><i>103</i>&nbsp;        searchResultsList.setAdapter(adapter);</b>
+<i>104</i>&nbsp;
+<b class="nc"><i>105</i>&nbsp;        searchErrorView.setRetryClickListener((v) -&gt; {</b>
+<b class="nc"><i>106</i>&nbsp;            searchErrorView.setVisibility(View.GONE);</b>
+<b class="nc"><i>107</i>&nbsp;            startSearch(currentSearchTerm, true);</b>
+<i>108</i>&nbsp;        });
+<i>109</i>&nbsp;
+<b class="nc"><i>110</i>&nbsp;        searchHandler = new Handler(new SearchHandlerCallback());</b>
+<i>111</i>&nbsp;
+<b class="nc"><i>112</i>&nbsp;        return view;</b>
+<i>113</i>&nbsp;    }
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;    @Override
+<i>116</i>&nbsp;    public void onActivityCreated(Bundle savedInstanceState) {
+<b class="nc"><i>117</i>&nbsp;        super.onActivityCreated(savedInstanceState);</b>
+<b class="nc"><i>118</i>&nbsp;        new LongPressHandler(searchResultsList, HistoryEntry.SOURCE_SEARCH,</b>
+<i>119</i>&nbsp;                new SearchResultsFragmentLongPressHandler());
+<i>120</i>&nbsp;    }
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;    @Override
+<i>123</i>&nbsp;    public void onDestroyView() {
+<b class="nc"><i>124</i>&nbsp;        searchErrorView.setRetryClickListener(null);</b>
+<b class="nc"><i>125</i>&nbsp;        unbinder.unbind();</b>
+<b class="nc"><i>126</i>&nbsp;        unbinder = null;</b>
+<b class="nc"><i>127</i>&nbsp;        super.onDestroyView();</b>
+<i>128</i>&nbsp;    }
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;    @OnItemClick(R.id.search_results_list) void onItemClick(ListView view, int position) {
+<b class="nc"><i>131</i>&nbsp;        Callback callback = callback();</b>
+<b class="nc"><i>132</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>133</i>&nbsp;            PageTitle item = ((SearchResult) getAdapter().getItem(position)).getPageTitle();</b>
+<b class="nc"><i>134</i>&nbsp;            callback.navigateToTitle(item, false, position);</b>
+<i>135</i>&nbsp;        }
+<i>136</i>&nbsp;    }
+<i>137</i>&nbsp;
+<i>138</i>&nbsp;    @OnClick(R.id.search_suggestion) void onSuggestionClick(View view) {
+<b class="nc"><i>139</i>&nbsp;        Callback callback = callback();</b>
+<b class="nc"><i>140</i>&nbsp;        String suggestion = (String) searchSuggestion.getTag();</b>
+<b class="nc"><i>141</i>&nbsp;        if (callback != null &amp;&amp; suggestion != null) {</b>
+<b class="nc"><i>142</i>&nbsp;            callback.getFunnel().searchDidYouMean();</b>
+<b class="nc"><i>143</i>&nbsp;            callback.setSearchText(suggestion);</b>
+<b class="nc"><i>144</i>&nbsp;            startSearch(suggestion, true);</b>
+<i>145</i>&nbsp;        }
+<i>146</i>&nbsp;    }
+<i>147</i>&nbsp;
+<i>148</i>&nbsp;    public void show() {
+<b class="nc"><i>149</i>&nbsp;        searchResultsDisplay.setVisibility(View.VISIBLE);</b>
+<i>150</i>&nbsp;    }
+<i>151</i>&nbsp;
+<i>152</i>&nbsp;    public void hide() {
+<b class="nc"><i>153</i>&nbsp;        searchResultsDisplay.setVisibility(View.GONE);</b>
+<i>154</i>&nbsp;    }
+<i>155</i>&nbsp;
+<i>156</i>&nbsp;    public boolean isShowing() {
+<b class="nc"><i>157</i>&nbsp;        return searchResultsDisplay.getVisibility() == View.VISIBLE;</b>
+<i>158</i>&nbsp;    }
+<i>159</i>&nbsp;
+<i>160</i>&nbsp;    /**
+<i>161</i>&nbsp;     * Kick off a search, based on a given search term.
+<i>162</i>&nbsp;     * @param term Phrase to search for.
+<i>163</i>&nbsp;     * @param force Whether to &quot;force&quot; starting this search. If the search is not forced, the
+<i>164</i>&nbsp;     *              search may be delayed by a small time, so that network requests are not sent
+<i>165</i>&nbsp;     *              too often.  If the search is forced, the network request is sent immediately.
+<i>166</i>&nbsp;     */
+<i>167</i>&nbsp;    public void startSearch(@Nullable String term, boolean force) {
+<b class="nc"><i>168</i>&nbsp;        if (!force &amp;&amp; currentSearchTerm.equals(term)) {</b>
+<i>169</i>&nbsp;            return;
+<i>170</i>&nbsp;        }
+<i>171</i>&nbsp;
+<b class="nc"><i>172</i>&nbsp;        cancelSearchTask();</b>
+<b class="nc"><i>173</i>&nbsp;        currentSearchTerm = term;</b>
+<i>174</i>&nbsp;
+<b class="nc"><i>175</i>&nbsp;        if (isBlank(term)) {</b>
+<b class="nc"><i>176</i>&nbsp;            clearResults();</b>
+<i>177</i>&nbsp;            return;
+<i>178</i>&nbsp;        }
+<i>179</i>&nbsp;
+<b class="nc"><i>180</i>&nbsp;        List&lt;SearchResult&gt; cacheResult = searchResultsCache.get(app.getAppOrSystemLanguageCode() + &quot;-&quot; + term);</b>
+<b class="nc"><i>181</i>&nbsp;        if (cacheResult != null &amp;&amp; !cacheResult.isEmpty()) {</b>
+<b class="nc"><i>182</i>&nbsp;            clearResults();</b>
+<b class="nc"><i>183</i>&nbsp;            displayResults(cacheResult);</b>
+<i>184</i>&nbsp;            return;
+<i>185</i>&nbsp;        }
+<i>186</i>&nbsp;
+<b class="nc"><i>187</i>&nbsp;        Message searchMessage = Message.obtain();</b>
+<b class="nc"><i>188</i>&nbsp;        searchMessage.what = MESSAGE_SEARCH;</b>
+<b class="nc"><i>189</i>&nbsp;        searchMessage.obj = term;</b>
+<i>190</i>&nbsp;
+<b class="nc"><i>191</i>&nbsp;        if (force) {</b>
+<b class="nc"><i>192</i>&nbsp;            searchHandler.sendMessage(searchMessage);</b>
+<i>193</i>&nbsp;        } else {
+<b class="nc"><i>194</i>&nbsp;            searchHandler.sendMessageDelayed(searchMessage, DELAY_MILLIS);</b>
+<i>195</i>&nbsp;        }
+<i>196</i>&nbsp;    }
+<i>197</i>&nbsp;
+<b class="nc"><i>198</i>&nbsp;    private class SearchHandlerCallback implements Handler.Callback {</b>
+<i>199</i>&nbsp;        @Override
+<i>200</i>&nbsp;        public boolean handleMessage(Message msg) {
+<b class="nc"><i>201</i>&nbsp;            if (!isAdded()) {</b>
+<b class="nc"><i>202</i>&nbsp;                return true;</b>
+<i>203</i>&nbsp;            }
+<b class="nc"><i>204</i>&nbsp;            final String mySearchTerm = (String) msg.obj;</b>
+<b class="nc"><i>205</i>&nbsp;            if (OfflineManager.hasCompilation() &amp;&amp; !DeviceUtil.isOnline()) {</b>
+<b class="nc"><i>206</i>&nbsp;                doOfflineSearch(mySearchTerm);</b>
+<i>207</i>&nbsp;            } else {
+<b class="nc"><i>208</i>&nbsp;                doTitlePrefixSearch(mySearchTerm);</b>
+<i>209</i>&nbsp;            }
+<b class="nc"><i>210</i>&nbsp;            return true;</b>
+<i>211</i>&nbsp;        }
+<i>212</i>&nbsp;    }
+<i>213</i>&nbsp;
+<i>214</i>&nbsp;    private void doOfflineSearch(final String searchTerm) {
+<b class="nc"><i>215</i>&nbsp;        searchSuggestion.setVisibility(View.GONE);</b>
+<b class="nc"><i>216</i>&nbsp;        searchErrorView.setVisibility(View.GONE);</b>
+<b class="nc"><i>217</i>&nbsp;        updateProgressBar(false);</b>
+<i>218</i>&nbsp;
+<b class="nc"><i>219</i>&nbsp;        List&lt;SearchResult&gt; resultList = new ArrayList&lt;&gt;();</b>
+<i>220</i>&nbsp;        try {
+<b class="nc"><i>221</i>&nbsp;            List&lt;String&gt; results = OfflineManager.instance().searchByPrefix(searchTerm, BATCH_SIZE);</b>
+<b class="nc"><i>222</i>&nbsp;            for (String title : results) {</b>
+<b class="nc"><i>223</i>&nbsp;                resultList.add(new SearchResult(new PageTitle(title, app.getWikiSite())));</b>
+<b class="nc"><i>224</i>&nbsp;            }</b>
+<b class="nc"><i>225</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>226</i>&nbsp;            L.d(e);</b>
+<b class="nc"><i>227</i>&nbsp;        }</b>
+<i>228</i>&nbsp;
+<b class="nc"><i>229</i>&nbsp;        clearResults();</b>
+<b class="nc"><i>230</i>&nbsp;        displayResults(resultList);</b>
+<i>231</i>&nbsp;    }
+<i>232</i>&nbsp;
+<i>233</i>&nbsp;    private void doTitlePrefixSearch(final String searchTerm) {
+<b class="nc"><i>234</i>&nbsp;        cancelSearchTask();</b>
+<b class="nc"><i>235</i>&nbsp;        final long startTime = System.nanoTime();</b>
+<b class="nc"><i>236</i>&nbsp;        updateProgressBar(true);</b>
+<i>237</i>&nbsp;
+<b class="nc"><i>238</i>&nbsp;        prefixSearchClient.request(app.getWikiSite(), searchTerm, new PrefixSearchClient.Callback() {</b>
+<i>239</i>&nbsp;            @Override
+<i>240</i>&nbsp;            public void success(@NonNull Call&lt;PrefixSearchResponse&gt; call, @NonNull SearchResults results) {
+<b class="nc"><i>241</i>&nbsp;                if (!isAdded()) {</b>
+<i>242</i>&nbsp;                    return;
+<i>243</i>&nbsp;                }
+<b class="nc"><i>244</i>&nbsp;                updateProgressBar(false);</b>
+<b class="nc"><i>245</i>&nbsp;                searchErrorView.setVisibility(View.GONE);</b>
+<b class="nc"><i>246</i>&nbsp;                handleResults(results, searchTerm, startTime);</b>
+<i>247</i>&nbsp;            }
+<i>248</i>&nbsp;
+<i>249</i>&nbsp;            @Override
+<i>250</i>&nbsp;            public void failure(@NonNull Call&lt;PrefixSearchResponse&gt; call, @NonNull Throwable caught) {
+<b class="nc"><i>251</i>&nbsp;                if (callCanceledIoException(caught)) {</b>
+<i>252</i>&nbsp;                    return;
+<i>253</i>&nbsp;                }
+<b class="nc"><i>254</i>&nbsp;                if (isAdded()) {</b>
+<b class="nc"><i>255</i>&nbsp;                    updateProgressBar(false);</b>
+<b class="nc"><i>256</i>&nbsp;                    searchEmptyView.setVisibility(View.GONE);</b>
+<b class="nc"><i>257</i>&nbsp;                    searchErrorView.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>258</i>&nbsp;                    searchErrorView.setError(caught);</b>
+<b class="nc"><i>259</i>&nbsp;                    searchResultsContainer.setVisibility(View.GONE);</b>
+<i>260</i>&nbsp;                }
+<b class="nc"><i>261</i>&nbsp;                logError(false, startTime);</b>
+<i>262</i>&nbsp;            }
+<i>263</i>&nbsp;        });
+<i>264</i>&nbsp;    }
+<i>265</i>&nbsp;
+<i>266</i>&nbsp;    /* Catch and discard exceptions thrown when our Retrofit calls are (intentionally) canceled. */
+<i>267</i>&nbsp;    private boolean callCanceledIoException(@NonNull Throwable caught) {
+<b class="nc"><i>268</i>&nbsp;        return caught instanceof IOException &amp;&amp; &quot;Canceled&quot;.equals(caught.getMessage());</b>
+<i>269</i>&nbsp;    }
+<i>270</i>&nbsp;
+<i>271</i>&nbsp;    private void handleResults(@NonNull SearchResults results, @NonNull String searchTerm, long startTime) {
+<b class="nc"><i>272</i>&nbsp;        List&lt;SearchResult&gt; resultList = results.getResults();</b>
+<i>273</i>&nbsp;        // To ease data analysis and better make the funnel track with user behaviour,
+<i>274</i>&nbsp;        // only transmit search results events if there are a nonzero number of results
+<b class="nc"><i>275</i>&nbsp;        if (!resultList.isEmpty()) {</b>
+<b class="nc"><i>276</i>&nbsp;            clearResults();</b>
+<b class="nc"><i>277</i>&nbsp;            displayResults(resultList);</b>
+<b class="nc"><i>278</i>&nbsp;            log(resultList, startTime);</b>
+<i>279</i>&nbsp;        }
+<i>280</i>&nbsp;
+<b class="nc"><i>281</i>&nbsp;        handleSuggestion(results.getSuggestion());</b>
+<i>282</i>&nbsp;
+<i>283</i>&nbsp;        // add titles to cache...
+<b class="nc"><i>284</i>&nbsp;        searchResultsCache.put(app.getAppOrSystemLanguageCode() + &quot;-&quot; + searchTerm, resultList);</b>
+<i>285</i>&nbsp;
+<i>286</i>&nbsp;        // scroll to top, but post it to the message queue, because it should be done
+<i>287</i>&nbsp;        // after the data set is updated.
+<b class="nc"><i>288</i>&nbsp;        searchResultsList.post(() -&gt; {</b>
+<b class="nc"><i>289</i>&nbsp;            if (!isAdded()) {</b>
+<i>290</i>&nbsp;                return;
+<i>291</i>&nbsp;            }
+<b class="nc"><i>292</i>&nbsp;            searchResultsList.setSelectionAfterHeaderView();</b>
+<i>293</i>&nbsp;        });
+<i>294</i>&nbsp;
+<b class="nc"><i>295</i>&nbsp;        if (resultList.isEmpty()) {</b>
+<i>296</i>&nbsp;            // kick off full text search if we get no results
+<b class="nc"><i>297</i>&nbsp;            doFullTextSearch(currentSearchTerm, null, true);</b>
+<i>298</i>&nbsp;        }
+<i>299</i>&nbsp;    }
+<i>300</i>&nbsp;
+<i>301</i>&nbsp;    private void handleSuggestion(@Nullable String suggestion) {
+<b class="nc"><i>302</i>&nbsp;        if (suggestion != null) {</b>
+<b class="nc"><i>303</i>&nbsp;            searchSuggestion.setText(StringUtil.fromHtml(&quot;&lt;u&gt;&quot;</b>
+<b class="nc"><i>304</i>&nbsp;                    + String.format(getString(R.string.search_did_you_mean), suggestion)</b>
+<i>305</i>&nbsp;                    + &quot;&lt;/u&gt;&quot;));
+<b class="nc"><i>306</i>&nbsp;            searchSuggestion.setTag(suggestion);</b>
+<b class="nc"><i>307</i>&nbsp;            searchSuggestion.setVisibility(View.VISIBLE);</b>
+<i>308</i>&nbsp;        } else {
+<b class="nc"><i>309</i>&nbsp;            searchSuggestion.setVisibility(View.GONE);</b>
+<i>310</i>&nbsp;        }
+<i>311</i>&nbsp;    }
+<i>312</i>&nbsp;
+<i>313</i>&nbsp;    private void cancelSearchTask() {
+<b class="nc"><i>314</i>&nbsp;        updateProgressBar(false);</b>
+<b class="nc"><i>315</i>&nbsp;        searchHandler.removeMessages(MESSAGE_SEARCH);</b>
+<b class="nc"><i>316</i>&nbsp;        prefixSearchClient.cancel();</b>
+<b class="nc"><i>317</i>&nbsp;        fullTextSearchClient.cancel();</b>
+<i>318</i>&nbsp;    }
+<i>319</i>&nbsp;
+<i>320</i>&nbsp;    private void doFullTextSearch(final String searchTerm,
+<i>321</i>&nbsp;                                  final Map&lt;String, String&gt; continueOffset,
+<i>322</i>&nbsp;                                  final boolean clearOnSuccess) {
+<b class="nc"><i>323</i>&nbsp;        final long startTime = System.nanoTime();</b>
+<b class="nc"><i>324</i>&nbsp;        updateProgressBar(true);</b>
+<i>325</i>&nbsp;
+<b class="nc"><i>326</i>&nbsp;        fullTextSearchClient.request(</b>
+<b class="nc"><i>327</i>&nbsp;                app.getWikiSite(),</b>
+<i>328</i>&nbsp;                searchTerm,
+<b class="nc"><i>329</i>&nbsp;                continueOffset != null ? continueOffset.get(&quot;continue&quot;) : null,</b>
+<b class="nc"><i>330</i>&nbsp;                continueOffset != null ? continueOffset.get(&quot;gsroffset&quot;) : null,</b>
+<i>331</i>&nbsp;                BATCH_SIZE,
+<i>332</i>&nbsp;                new FullTextSearchCallback(searchTerm, startTime, clearOnSuccess));
+<i>333</i>&nbsp;    }
+<i>334</i>&nbsp;
+<i>335</i>&nbsp;    @Nullable
+<i>336</i>&nbsp;    public PageTitle getFirstResult() {
+<b class="nc"><i>337</i>&nbsp;        if (!totalResults.isEmpty()) {</b>
+<b class="nc"><i>338</i>&nbsp;            return totalResults.get(0).getPageTitle();</b>
+<i>339</i>&nbsp;        } else {
+<b class="nc"><i>340</i>&nbsp;            return null;</b>
+<i>341</i>&nbsp;        }
+<i>342</i>&nbsp;    }
+<i>343</i>&nbsp;
+<i>344</i>&nbsp;    private void clearResults() {
+<b class="nc"><i>345</i>&nbsp;        clearResults(true);</b>
+<i>346</i>&nbsp;    }
+<i>347</i>&nbsp;
+<i>348</i>&nbsp;    private void updateProgressBar(boolean enabled) {
+<b class="nc"><i>349</i>&nbsp;        Callback callback = callback();</b>
+<b class="nc"><i>350</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>351</i>&nbsp;            callback.onSearchProgressBar(enabled);</b>
+<i>352</i>&nbsp;        }
+<i>353</i>&nbsp;    }
+<i>354</i>&nbsp;
+<i>355</i>&nbsp;    private void clearResults(boolean clearSuggestion) {
+<b class="nc"><i>356</i>&nbsp;        searchResultsContainer.setVisibility(View.GONE);</b>
+<b class="nc"><i>357</i>&nbsp;        searchEmptyView.setVisibility(View.GONE);</b>
+<b class="nc"><i>358</i>&nbsp;        searchErrorView.setVisibility(View.GONE);</b>
+<b class="nc"><i>359</i>&nbsp;        if (clearSuggestion) {</b>
+<b class="nc"><i>360</i>&nbsp;            searchSuggestion.setVisibility(View.GONE);</b>
+<i>361</i>&nbsp;        }
+<i>362</i>&nbsp;
+<b class="nc"><i>363</i>&nbsp;        lastFullTextResults = null;</b>
+<i>364</i>&nbsp;
+<b class="nc"><i>365</i>&nbsp;        totalResults.clear();</b>
+<i>366</i>&nbsp;
+<b class="nc"><i>367</i>&nbsp;        getAdapter().notifyDataSetChanged();</b>
+<i>368</i>&nbsp;    }
+<i>369</i>&nbsp;
+<i>370</i>&nbsp;    private BaseAdapter getAdapter() {
+<b class="nc"><i>371</i>&nbsp;        return (BaseAdapter) searchResultsList.getAdapter();</b>
+<i>372</i>&nbsp;    }
+<i>373</i>&nbsp;
+<i>374</i>&nbsp;    /**
+<i>375</i>&nbsp;     * Displays results passed to it as search suggestions.
+<i>376</i>&nbsp;     *
+<i>377</i>&nbsp;     * @param results List of results to display. If null, clears the list of suggestions &amp; hides it.
+<i>378</i>&nbsp;     */
+<i>379</i>&nbsp;    private void displayResults(List&lt;SearchResult&gt; results) {
+<b class="nc"><i>380</i>&nbsp;        for (SearchResult newResult : results) {</b>
+<b class="nc"><i>381</i>&nbsp;            boolean contains = false;</b>
+<b class="nc"><i>382</i>&nbsp;            for (SearchResult result : totalResults) {</b>
+<b class="nc"><i>383</i>&nbsp;                if (newResult.getPageTitle().equals(result.getPageTitle())) {</b>
+<b class="nc"><i>384</i>&nbsp;                    contains = true;</b>
+<b class="nc"><i>385</i>&nbsp;                    break;</b>
+<i>386</i>&nbsp;                }
+<b class="nc"><i>387</i>&nbsp;            }</b>
+<b class="nc"><i>388</i>&nbsp;            if (!contains) {</b>
+<b class="nc"><i>389</i>&nbsp;                totalResults.add(newResult);</b>
+<i>390</i>&nbsp;            }
+<b class="nc"><i>391</i>&nbsp;        }</b>
+<i>392</i>&nbsp;
+<b class="nc"><i>393</i>&nbsp;        if (totalResults.isEmpty()) {</b>
+<b class="nc"><i>394</i>&nbsp;            searchEmptyView.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>395</i>&nbsp;            searchResultsContainer.setVisibility(View.GONE);</b>
+<i>396</i>&nbsp;        } else {
+<b class="nc"><i>397</i>&nbsp;            searchEmptyView.setVisibility(View.GONE);</b>
+<b class="nc"><i>398</i>&nbsp;            searchResultsContainer.setVisibility(View.VISIBLE);</b>
+<i>399</i>&nbsp;        }
+<i>400</i>&nbsp;
+<b class="nc"><i>401</i>&nbsp;        getAdapter().notifyDataSetChanged();</b>
+<i>402</i>&nbsp;    }
+<i>403</i>&nbsp;
+<b class="nc"><i>404</i>&nbsp;    private class SearchResultsFragmentLongPressHandler</b>
+<i>405</i>&nbsp;            implements org.wikipedia.LongPressHandler.ListViewContextMenuListener {
+<i>406</i>&nbsp;        private int lastPositionRequested;
+<i>407</i>&nbsp;
+<i>408</i>&nbsp;        @Override
+<i>409</i>&nbsp;        public PageTitle getTitleForListPosition(int position) {
+<b class="nc"><i>410</i>&nbsp;            lastPositionRequested = position;</b>
+<b class="nc"><i>411</i>&nbsp;            return ((SearchResult) getAdapter().getItem(position)).getPageTitle();</b>
+<i>412</i>&nbsp;        }
+<i>413</i>&nbsp;
+<i>414</i>&nbsp;        @Override
+<i>415</i>&nbsp;        public void onOpenLink(PageTitle title, HistoryEntry entry) {
+<b class="nc"><i>416</i>&nbsp;            Callback callback = callback();</b>
+<b class="nc"><i>417</i>&nbsp;            if (callback != null) {</b>
+<b class="nc"><i>418</i>&nbsp;                callback.navigateToTitle(title, false, lastPositionRequested);</b>
+<i>419</i>&nbsp;            }
+<i>420</i>&nbsp;        }
+<i>421</i>&nbsp;
+<i>422</i>&nbsp;        @Override
+<i>423</i>&nbsp;        public void onOpenInNewTab(PageTitle title, HistoryEntry entry) {
+<b class="nc"><i>424</i>&nbsp;            Callback callback = callback();</b>
+<b class="nc"><i>425</i>&nbsp;            if (callback != null) {</b>
+<b class="nc"><i>426</i>&nbsp;                callback.navigateToTitle(title, true, lastPositionRequested);</b>
+<i>427</i>&nbsp;            }
+<i>428</i>&nbsp;        }
+<i>429</i>&nbsp;
+<i>430</i>&nbsp;        @Override
+<i>431</i>&nbsp;        public void onCopyLink(PageTitle title) {
+<b class="nc"><i>432</i>&nbsp;            Callback callback = callback();</b>
+<b class="nc"><i>433</i>&nbsp;            if (callback != null) {</b>
+<b class="nc"><i>434</i>&nbsp;                callback.onSearchResultCopyLink(title);</b>
+<i>435</i>&nbsp;            }
+<i>436</i>&nbsp;        }
+<i>437</i>&nbsp;
+<i>438</i>&nbsp;        @Override
+<i>439</i>&nbsp;        public void onShareLink(PageTitle title) {
+<b class="nc"><i>440</i>&nbsp;            Callback callback = callback();</b>
+<b class="nc"><i>441</i>&nbsp;            if (callback != null) {</b>
+<b class="nc"><i>442</i>&nbsp;                callback.onSearchResultShareLink(title);</b>
+<i>443</i>&nbsp;            }
+<i>444</i>&nbsp;        }
+<i>445</i>&nbsp;
+<i>446</i>&nbsp;        @Override
+<i>447</i>&nbsp;        public void onAddToList(@NonNull PageTitle title,
+<i>448</i>&nbsp;                                @NonNull AddToReadingListDialog.InvokeSource source) {
+<b class="nc"><i>449</i>&nbsp;            Callback callback = callback();</b>
+<b class="nc"><i>450</i>&nbsp;            if (callback != null) {</b>
+<b class="nc"><i>451</i>&nbsp;                callback.onSearchResultAddToList(title, source);</b>
+<i>452</i>&nbsp;            }
+<i>453</i>&nbsp;        }
+<i>454</i>&nbsp;    }
+<i>455</i>&nbsp;
+<i>456</i>&nbsp;    private final class SearchResultAdapter extends BaseAdapter {
+<i>457</i>&nbsp;        private final LayoutInflater inflater;
+<i>458</i>&nbsp;
+<b class="nc"><i>459</i>&nbsp;        SearchResultAdapter(LayoutInflater inflater) {</b>
+<b class="nc"><i>460</i>&nbsp;            this.inflater = inflater;</b>
+<i>461</i>&nbsp;        }
+<i>462</i>&nbsp;
+<i>463</i>&nbsp;        @Override
+<i>464</i>&nbsp;        public int getCount() {
+<b class="nc"><i>465</i>&nbsp;            return totalResults.size();</b>
+<i>466</i>&nbsp;        }
+<i>467</i>&nbsp;
+<i>468</i>&nbsp;        @Override
+<i>469</i>&nbsp;        public Object getItem(int position) {
+<b class="nc"><i>470</i>&nbsp;            return totalResults.get(position);</b>
+<i>471</i>&nbsp;        }
+<i>472</i>&nbsp;
+<i>473</i>&nbsp;        @Override
+<i>474</i>&nbsp;        public long getItemId(int position) {
+<b class="nc"><i>475</i>&nbsp;            return position;</b>
+<i>476</i>&nbsp;        }
+<i>477</i>&nbsp;
+<i>478</i>&nbsp;        @Override
+<i>479</i>&nbsp;        public View getView(int position, View convertView, ViewGroup parent) {
+<b class="nc"><i>480</i>&nbsp;            if (convertView == null) {</b>
+<b class="nc"><i>481</i>&nbsp;                convertView = inflater.inflate(R.layout.item_search_result, parent, false);</b>
+<i>482</i>&nbsp;            }
+<b class="nc"><i>483</i>&nbsp;            TextView pageTitleText = convertView.findViewById(R.id.page_list_item_title);</b>
+<b class="nc"><i>484</i>&nbsp;            SearchResult result = (SearchResult) getItem(position);</b>
+<i>485</i>&nbsp;
+<b class="nc"><i>486</i>&nbsp;            GoneIfEmptyTextView descriptionText = convertView.findViewById(R.id.page_list_item_description);</b>
+<b class="nc"><i>487</i>&nbsp;            View redirectContainer = convertView.findViewById(R.id.page_list_item_redirect_container);</b>
+<b class="nc"><i>488</i>&nbsp;            if (TextUtils.isEmpty(result.getRedirectFrom())) {</b>
+<b class="nc"><i>489</i>&nbsp;                redirectContainer.setVisibility(View.GONE);</b>
+<b class="nc"><i>490</i>&nbsp;                descriptionText.setText(StringUtils.capitalize(result.getPageTitle().getDescription()));</b>
+<i>491</i>&nbsp;            } else {
+<b class="nc"><i>492</i>&nbsp;                redirectContainer.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>493</i>&nbsp;                descriptionText.setVisibility(View.GONE);</b>
+<b class="nc"><i>494</i>&nbsp;                TextView redirectText = convertView.findViewById(R.id.page_list_item_redirect);</b>
+<b class="nc"><i>495</i>&nbsp;                redirectText.setText(String.format(getString(R.string.search_redirect_from), result.getRedirectFrom()));</b>
+<i>496</i>&nbsp;            }
+<i>497</i>&nbsp;
+<i>498</i>&nbsp;            // highlight search term within the text
+<b class="nc"><i>499</i>&nbsp;            String displayText = result.getPageTitle().getDisplayText();</b>
+<b class="nc"><i>500</i>&nbsp;            int startIndex = indexOf(displayText, currentSearchTerm);</b>
+<b class="nc"><i>501</i>&nbsp;            if (startIndex &gt;= 0) {</b>
+<b class="nc"><i>502</i>&nbsp;                displayText = displayText.substring(0, startIndex)</b>
+<i>503</i>&nbsp;                      + &quot;&lt;strong&gt;&quot;
+<b class="nc"><i>504</i>&nbsp;                      + displayText.substring(startIndex, startIndex + currentSearchTerm.length())</b>
+<i>505</i>&nbsp;                      + &quot;&lt;/strong&gt;&quot;
+<b class="nc"><i>506</i>&nbsp;                      + displayText.substring(startIndex + currentSearchTerm.length(),</b>
+<b class="nc"><i>507</i>&nbsp;                                              displayText.length());</b>
+<b class="nc"><i>508</i>&nbsp;                pageTitleText.setText(StringUtil.fromHtml(displayText));</b>
+<i>509</i>&nbsp;            } else {
+<b class="nc"><i>510</i>&nbsp;                pageTitleText.setText(displayText);</b>
+<i>511</i>&nbsp;            }
+<i>512</i>&nbsp;
+<b class="nc"><i>513</i>&nbsp;            ViewUtil.loadImageUrlInto((SimpleDraweeView) convertView.findViewById(R.id.page_list_item_image),</b>
+<b class="nc"><i>514</i>&nbsp;                    result.getPageTitle().getThumbUrl());</b>
+<i>515</i>&nbsp;
+<i>516</i>&nbsp;            // ...and lastly, if we&#39;ve scrolled to the last item in the list, then
+<i>517</i>&nbsp;            // continue searching!
+<b class="nc"><i>518</i>&nbsp;            if (position == (totalResults.size() - 1) &amp;&amp; DeviceUtil.isOnline()) {</b>
+<b class="nc"><i>519</i>&nbsp;                if (lastFullTextResults == null) {</b>
+<i>520</i>&nbsp;                    // the first full text search
+<b class="nc"><i>521</i>&nbsp;                    doFullTextSearch(currentSearchTerm, null, false);</b>
+<b class="nc"><i>522</i>&nbsp;                } else if (lastFullTextResults.getContinuation() != null) {</b>
+<i>523</i>&nbsp;                    // subsequent full text searches
+<b class="nc"><i>524</i>&nbsp;                    doFullTextSearch(currentSearchTerm, lastFullTextResults.getContinuation(), false);</b>
+<i>525</i>&nbsp;                }
+<i>526</i>&nbsp;            }
+<i>527</i>&nbsp;
+<b class="nc"><i>528</i>&nbsp;            return convertView;</b>
+<i>529</i>&nbsp;        }
+<i>530</i>&nbsp;
+<i>531</i>&nbsp;        // case insensitive indexOf, also more lenient with similar chars, like chars with accents
+<i>532</i>&nbsp;        private int indexOf(String original, String search) {
+<b class="nc"><i>533</i>&nbsp;            Collator collator = Collator.getInstance();</b>
+<b class="nc"><i>534</i>&nbsp;            collator.setStrength(Collator.PRIMARY);</b>
+<b class="nc"><i>535</i>&nbsp;            for (int i = 0; i &lt;= original.length() - search.length(); i++) {</b>
+<b class="nc"><i>536</i>&nbsp;                if (collator.equals(search, original.substring(i, i + search.length()))) {</b>
+<b class="nc"><i>537</i>&nbsp;                    return i;</b>
+<i>538</i>&nbsp;                }
+<i>539</i>&nbsp;            }
+<b class="nc"><i>540</i>&nbsp;            return -1;</b>
+<i>541</i>&nbsp;        }
+<i>542</i>&nbsp;    }
+<i>543</i>&nbsp;
+<i>544</i>&nbsp;    private void cache(@NonNull List&lt;SearchResult&gt; resultList, @NonNull String searchTerm) {
+<b class="nc"><i>545</i>&nbsp;        String cacheKey = app.getAppOrSystemLanguageCode() + &quot;-&quot; + searchTerm;</b>
+<b class="nc"><i>546</i>&nbsp;        List&lt;SearchResult&gt; cachedTitles = searchResultsCache.get(cacheKey);</b>
+<b class="nc"><i>547</i>&nbsp;        if (cachedTitles != null) {</b>
+<b class="nc"><i>548</i>&nbsp;            cachedTitles.addAll(resultList);</b>
+<b class="nc"><i>549</i>&nbsp;            searchResultsCache.put(cacheKey, cachedTitles);</b>
+<i>550</i>&nbsp;        }
+<i>551</i>&nbsp;    }
+<i>552</i>&nbsp;
+<i>553</i>&nbsp;    private void log(@NonNull List&lt;SearchResult&gt; resultList, long startTime) {
+<i>554</i>&nbsp;        // To ease data analysis and better make the funnel track with user behaviour,
+<i>555</i>&nbsp;        // only transmit search results events if there are a nonzero number of results
+<b class="nc"><i>556</i>&nbsp;        if (callback() != null &amp;&amp; !resultList.isEmpty()) {</b>
+<i>557</i>&nbsp;            // noinspection ConstantConditions
+<b class="nc"><i>558</i>&nbsp;            callback().getFunnel().searchResults(true, resultList.size(), displayTime(startTime));</b>
+<i>559</i>&nbsp;        }
+<i>560</i>&nbsp;    }
+<i>561</i>&nbsp;
+<i>562</i>&nbsp;    private void logError(boolean fullText, long startTime) {
+<b class="nc"><i>563</i>&nbsp;        if (callback() != null) {</b>
+<i>564</i>&nbsp;            // noinspection ConstantConditions
+<b class="nc"><i>565</i>&nbsp;            callback().getFunnel().searchError(fullText, displayTime(startTime));</b>
+<i>566</i>&nbsp;        }
+<i>567</i>&nbsp;    }
+<i>568</i>&nbsp;
+<i>569</i>&nbsp;    private int displayTime(long startTime) {
+<b class="nc"><i>570</i>&nbsp;        return (int) ((System.nanoTime() - startTime) / NANO_TO_MILLI);</b>
+<i>571</i>&nbsp;    }
+<i>572</i>&nbsp;
+<b class="nc"><i>573</i>&nbsp;    private final class FullTextSearchCallback implements FullTextSearchClient.Callback {</b>
+<b class="nc"><i>574</i>&nbsp;        @NonNull private String searchTerm = &quot;&quot;;</b>
+<i>575</i>&nbsp;        private long startTime;
+<i>576</i>&nbsp;        private boolean clearOnSuccess;
+<i>577</i>&nbsp;
+<b class="nc"><i>578</i>&nbsp;        private FullTextSearchCallback(@NonNull String searchTerm, long startTime, boolean clearOnSuccess) {</b>
+<b class="nc"><i>579</i>&nbsp;            this.searchTerm = searchTerm;</b>
+<b class="nc"><i>580</i>&nbsp;            this.startTime = startTime;</b>
+<b class="nc"><i>581</i>&nbsp;            this.clearOnSuccess = clearOnSuccess;</b>
+<i>582</i>&nbsp;        }
+<i>583</i>&nbsp;
+<i>584</i>&nbsp;        @Override public void success(@NonNull Call&lt;MwQueryResponse&gt; call,
+<i>585</i>&nbsp;                                      @NonNull SearchResults results) {
+<b class="nc"><i>586</i>&nbsp;            List&lt;SearchResult&gt; resultList = results.getResults();</b>
+<b class="nc"><i>587</i>&nbsp;            cache(resultList, searchTerm);</b>
+<b class="nc"><i>588</i>&nbsp;            log(resultList, startTime);</b>
+<i>589</i>&nbsp;
+<b class="nc"><i>590</i>&nbsp;            if (!isAdded()) {</b>
+<i>591</i>&nbsp;                return;
+<i>592</i>&nbsp;            }
+<b class="nc"><i>593</i>&nbsp;            if (clearOnSuccess) {</b>
+<b class="nc"><i>594</i>&nbsp;                clearResults(false);</b>
+<i>595</i>&nbsp;            }
+<b class="nc"><i>596</i>&nbsp;            updateProgressBar(false);</b>
+<b class="nc"><i>597</i>&nbsp;            searchErrorView.setVisibility(View.GONE);</b>
+<i>598</i>&nbsp;
+<i>599</i>&nbsp;            // full text special:
+<b class="nc"><i>600</i>&nbsp;            SearchResultsFragment.this.lastFullTextResults = results;</b>
+<i>601</i>&nbsp;
+<b class="nc"><i>602</i>&nbsp;            displayResults(resultList);</b>
+<i>603</i>&nbsp;        }
+<i>604</i>&nbsp;
+<i>605</i>&nbsp;        @Override public void failure(@NonNull Call&lt;MwQueryResponse&gt; call,
+<i>606</i>&nbsp;                                      @NonNull Throwable caught) {
+<i>607</i>&nbsp;            // If there&#39;s an error, just log it and let the existing prefix search results be.
+<b class="nc"><i>608</i>&nbsp;            logError(true, startTime);</b>
+<b class="nc"><i>609</i>&nbsp;            if (isAdded()) {</b>
+<b class="nc"><i>610</i>&nbsp;                updateProgressBar(false);</b>
+<i>611</i>&nbsp;            }
+<i>612</i>&nbsp;        }
+<i>613</i>&nbsp;    }
+<i>614</i>&nbsp;
+<i>615</i>&nbsp;    @Nullable
+<i>616</i>&nbsp;    private Callback callback() {
+<b class="nc"><i>617</i>&nbsp;        return FragmentUtil.getCallback(this, Callback.class);</b>
+<i>618</i>&nbsp;    }
+<i>619</i>&nbsp;}
+<i>620</i>&nbsp;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

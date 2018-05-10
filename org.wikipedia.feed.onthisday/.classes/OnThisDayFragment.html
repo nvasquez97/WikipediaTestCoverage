@@ -1,0 +1,591 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: OnThisDayFragment</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.feed.onthisday</a> ]
+</div>
+
+<h1>Coverage Summary for Class: OnThisDayFragment (org.wikipedia.feed.onthisday)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">OnThisDayFragment</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 21)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 94)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">OnThisDayFragment$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 14)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">OnThisDayFragment$EventsViewHolder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 36)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">OnThisDayFragment$FooterViewHolder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">OnThisDayFragment$ItemCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">OnThisDayFragment$RecyclerAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 17)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 38)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 170)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.feed.onthisday;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.animation.ArgbEvaluator;
+<i>4</i>&nbsp;import android.animation.ValueAnimator;
+<i>5</i>&nbsp;import android.graphics.Color;
+<i>6</i>&nbsp;import android.os.Build;
+<i>7</i>&nbsp;import android.os.Bundle;
+<i>8</i>&nbsp;import android.support.annotation.NonNull;
+<i>9</i>&nbsp;import android.support.annotation.Nullable;
+<i>10</i>&nbsp;import android.support.design.widget.AppBarLayout;
+<i>11</i>&nbsp;import android.support.design.widget.CollapsingToolbarLayout;
+<i>12</i>&nbsp;import android.support.v4.app.Fragment;
+<i>13</i>&nbsp;import android.support.v7.app.AppCompatActivity;
+<i>14</i>&nbsp;import android.support.v7.widget.LinearLayoutManager;
+<i>15</i>&nbsp;import android.support.v7.widget.RecyclerView;
+<i>16</i>&nbsp;import android.support.v7.widget.Toolbar;
+<i>17</i>&nbsp;import android.view.LayoutInflater;
+<i>18</i>&nbsp;import android.view.View;
+<i>19</i>&nbsp;import android.view.ViewGroup;
+<i>20</i>&nbsp;import android.widget.FrameLayout;
+<i>21</i>&nbsp;import android.widget.ImageView;
+<i>22</i>&nbsp;import android.widget.LinearLayout;
+<i>23</i>&nbsp;import android.widget.ProgressBar;
+<i>24</i>&nbsp;import android.widget.TextView;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;import org.wikipedia.R;
+<i>27</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>28</i>&nbsp;import org.wikipedia.analytics.OnThisDayFunnel;
+<i>29</i>&nbsp;import org.wikipedia.dataclient.WikiSite;
+<i>30</i>&nbsp;import org.wikipedia.history.HistoryEntry;
+<i>31</i>&nbsp;import org.wikipedia.page.ExclusiveBottomSheetPresenter;
+<i>32</i>&nbsp;import org.wikipedia.readinglist.AddToReadingListDialog;
+<i>33</i>&nbsp;import org.wikipedia.util.DateUtil;
+<i>34</i>&nbsp;import org.wikipedia.util.DimenUtil;
+<i>35</i>&nbsp;import org.wikipedia.util.ResourceUtil;
+<i>36</i>&nbsp;import org.wikipedia.util.ShareUtil;
+<i>37</i>&nbsp;import org.wikipedia.util.log.L;
+<i>38</i>&nbsp;import org.wikipedia.views.CustomDatePicker;
+<i>39</i>&nbsp;import org.wikipedia.views.DontInterceptTouchListener;
+<i>40</i>&nbsp;import org.wikipedia.views.HeaderMarginItemDecoration;
+<i>41</i>&nbsp;import org.wikipedia.views.MarginItemDecoration;
+<i>42</i>&nbsp;import org.wikipedia.views.WikiErrorView;
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;import java.util.Calendar;
+<i>45</i>&nbsp;import java.util.List;
+<i>46</i>&nbsp;import java.util.Locale;
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;import butterknife.BindView;
+<i>49</i>&nbsp;import butterknife.ButterKnife;
+<i>50</i>&nbsp;import butterknife.OnClick;
+<i>51</i>&nbsp;import butterknife.Unbinder;
+<i>52</i>&nbsp;import retrofit2.Call;
+<i>53</i>&nbsp;import retrofit2.Callback;
+<i>54</i>&nbsp;import retrofit2.Response;
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;import static org.wikipedia.feed.onthisday.OnThisDayActivity.AGE;
+<i>57</i>&nbsp;
+<b class="nc"><i>58</i>&nbsp;public class OnThisDayFragment extends Fragment implements CustomDatePicker.Callback, OnThisDayActionsDialog.Callback{</b>
+<i>59</i>&nbsp;    @BindView(R.id.day) TextView dayText;
+<i>60</i>&nbsp;    @BindView(R.id.collapsing_toolbar_layout) CollapsingToolbarLayout collapsingToolbarLayout;
+<i>61</i>&nbsp;    @BindView(R.id.day_info_text_view) TextView dayInfoTextView;
+<i>62</i>&nbsp;    @BindView(R.id.events_recycler) RecyclerView eventsRecycler;
+<i>63</i>&nbsp;    @BindView(R.id.on_this_day_progress) ProgressBar progressBar;
+<i>64</i>&nbsp;    @BindView(R.id.toolbar) Toolbar toolbar;
+<i>65</i>&nbsp;    @BindView(R.id.app_bar) AppBarLayout appBarLayout;
+<i>66</i>&nbsp;    @BindView(R.id.linear_layout) LinearLayout linearLayout;
+<i>67</i>&nbsp;    @BindView(R.id.on_this_day_error_view) WikiErrorView errorView;
+<i>68</i>&nbsp;    @BindView(R.id.indicator_date) TextView indicatorDate;
+<i>69</i>&nbsp;    @BindView(R.id.indicator_layout) FrameLayout indicatorLayout;
+<i>70</i>&nbsp;    @BindView(R.id.toolbar_day) TextView toolbarDay;
+<i>71</i>&nbsp;    @BindView(R.id.drop_down_toolbar)
+<i>72</i>&nbsp;    ImageView toolbarDropDown;
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;    @Nullable private OnThisDay onThisDay;
+<i>75</i>&nbsp;    private Calendar date;
+<i>76</i>&nbsp;    private Unbinder unbinder;
+<i>77</i>&nbsp;    @Nullable private OnThisDayFunnel funnel;
+<i>78</i>&nbsp;    public static final int PADDING1 = 21, PADDING2 = 38, PADDING3 = 21;
+<i>79</i>&nbsp;    public static final float HALF_ALPHA = 0.5f;
+<b class="nc"><i>80</i>&nbsp;    private ExclusiveBottomSheetPresenter bottomSheetPresenter = new ExclusiveBottomSheetPresenter();</b>
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    @NonNull
+<i>83</i>&nbsp;    public static OnThisDayFragment newInstance(int age) {
+<b class="nc"><i>84</i>&nbsp;        OnThisDayFragment instance = new OnThisDayFragment();</b>
+<b class="nc"><i>85</i>&nbsp;        Bundle args = new Bundle();</b>
+<b class="nc"><i>86</i>&nbsp;        args.putInt(AGE, age);</b>
+<b class="nc"><i>87</i>&nbsp;        instance.setArguments(args);</b>
+<b class="nc"><i>88</i>&nbsp;        return instance;</b>
+<i>89</i>&nbsp;    }
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;    @Override
+<i>92</i>&nbsp;    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+<i>93</i>&nbsp;                             Bundle savedInstanceState) {
+<b class="nc"><i>94</i>&nbsp;        View view = inflater.inflate(R.layout.fragment_on_this_day, container, false);</b>
+<b class="nc"><i>95</i>&nbsp;        unbinder = ButterKnife.bind(this, view);</b>
+<b class="nc"><i>96</i>&nbsp;        int age = getActivity().getIntent().getIntExtra(AGE, 0);</b>
+<b class="nc"><i>97</i>&nbsp;        date = DateUtil.getDefaultDateFor(age);</b>
+<b class="nc"><i>98</i>&nbsp;        setUpToolbar();</b>
+<b class="nc"><i>99</i>&nbsp;        eventsRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));</b>
+<i>100</i>&nbsp;
+<b class="nc"><i>101</i>&nbsp;        final int topDecorationDp = 24;</b>
+<b class="nc"><i>102</i>&nbsp;        eventsRecycler.addItemDecoration(new HeaderMarginItemDecoration(topDecorationDp, 0));</b>
+<b class="nc"><i>103</i>&nbsp;        setUpRecycler(eventsRecycler);</b>
+<i>104</i>&nbsp;
+<b class="nc"><i>105</i>&nbsp;        errorView.setBackClickListener(v -&gt; getActivity().finish());</b>
+<i>106</i>&nbsp;
+<b class="nc"><i>107</i>&nbsp;        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP</b>
+<b class="nc"><i>108</i>&nbsp;                &amp;&amp; getActivity().getWindow().getSharedElementEnterTransition() != null</b>
+<i>109</i>&nbsp;                &amp;&amp; savedInstanceState == null) {
+<b class="nc"><i>110</i>&nbsp;            final int animDelay = 500;</b>
+<b class="nc"><i>111</i>&nbsp;            dayText.postDelayed(() -&gt; {</b>
+<b class="nc"><i>112</i>&nbsp;                if (!isAdded() || dayText == null) {</b>
+<i>113</i>&nbsp;                    return;
+<i>114</i>&nbsp;                }
+<b class="nc"><i>115</i>&nbsp;                updateContents(age);</b>
+<b class="nc"><i>116</i>&nbsp;                ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), dayText.getCurrentTextColor(), Color.WHITE);</b>
+<b class="nc"><i>117</i>&nbsp;                colorAnimation.addUpdateListener(animator -&gt; {</b>
+<b class="nc"><i>118</i>&nbsp;                    if (dayText != null) {</b>
+<b class="nc"><i>119</i>&nbsp;                        dayText.setTextColor((Integer) animator.getAnimatedValue());</b>
+<i>120</i>&nbsp;                    }
+<i>121</i>&nbsp;                });
+<b class="nc"><i>122</i>&nbsp;                colorAnimation.start();</b>
+<i>123</i>&nbsp;            }, animDelay);
+<b class="nc"><i>124</i>&nbsp;        } else {</b>
+<b class="nc"><i>125</i>&nbsp;            dayText.setTextColor(Color.WHITE);</b>
+<b class="nc"><i>126</i>&nbsp;            updateContents(age);</b>
+<i>127</i>&nbsp;        }
+<i>128</i>&nbsp;
+<b class="nc"><i>129</i>&nbsp;        eventsRecycler.setVisibility(View.GONE);</b>
+<b class="nc"><i>130</i>&nbsp;        errorView.setVisibility(View.GONE);</b>
+<b class="nc"><i>131</i>&nbsp;        return view;</b>
+<i>132</i>&nbsp;    }
+<i>133</i>&nbsp;
+<i>134</i>&nbsp;    public void onBackPressed() {
+<b class="nc"><i>135</i>&nbsp;        dayText.setTextColor(ResourceUtil.getThemedColor(getContext(), R.attr.primary_text_color));</b>
+<i>136</i>&nbsp;    }
+<i>137</i>&nbsp;
+<i>138</i>&nbsp;    private void updateContents(int age) {
+<b class="nc"><i>139</i>&nbsp;        Calendar today = DateUtil.getDefaultDateFor(age);</b>
+<b class="nc"><i>140</i>&nbsp;        requestEvents(today.get(Calendar.MONTH), today.get(Calendar.DATE));</b>
+<b class="nc"><i>141</i>&nbsp;        funnel = new OnThisDayFunnel(WikipediaApp.getInstance(), WikipediaApp.getInstance().getWikiSite(),</b>
+<b class="nc"><i>142</i>&nbsp;                getActivity().getIntent().getIntExtra(OnThisDayActivity.INVOKE_SOURCE_EXTRA, 0));</b>
+<i>143</i>&nbsp;    }
+<i>144</i>&nbsp;
+<i>145</i>&nbsp;    private void requestEvents(int month, int date) {
+<b class="nc"><i>146</i>&nbsp;        progressBar.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>147</i>&nbsp;        eventsRecycler.setVisibility(View.GONE);</b>
+<b class="nc"><i>148</i>&nbsp;        errorView.setVisibility(View.GONE);</b>
+<i>149</i>&nbsp;
+<b class="nc"><i>150</i>&nbsp;        new OnThisDayFullListClient().request(month + 1, date).enqueue(new Callback&lt;OnThisDay&gt;() {</b>
+<i>151</i>&nbsp;            @Override
+<i>152</i>&nbsp;            public void onResponse(@NonNull Call&lt;OnThisDay&gt; call, @NonNull Response&lt;OnThisDay&gt; response) {
+<b class="nc"><i>153</i>&nbsp;                if (!isAdded()) {</b>
+<i>154</i>&nbsp;                    return;
+<i>155</i>&nbsp;                }
+<b class="nc"><i>156</i>&nbsp;                onThisDay = response.body();</b>
+<b class="nc"><i>157</i>&nbsp;                if (onThisDay == null || onThisDay.events().isEmpty()) {</b>
+<b class="nc"><i>158</i>&nbsp;                    setErrorState(new RuntimeException(&quot;Incorrect response format.&quot;));</b>
+<i>159</i>&nbsp;                    return;
+<i>160</i>&nbsp;                }
+<b class="nc"><i>161</i>&nbsp;                progressBar.setVisibility(View.GONE);</b>
+<b class="nc"><i>162</i>&nbsp;                eventsRecycler.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>163</i>&nbsp;                eventsRecycler.setAdapter(new RecyclerAdapter(onThisDay.events(), WikipediaApp.getInstance().getWikiSite()));</b>
+<b class="nc"><i>164</i>&nbsp;                List&lt;OnThisDay.Event&gt; events = onThisDay.events();</b>
+<b class="nc"><i>165</i>&nbsp;                int beginningYear = events.get(events.size() - 1).year();</b>
+<b class="nc"><i>166</i>&nbsp;                dayInfoTextView.setText(String.format(getString(R.string.events_count_text), Integer.toString(events.size()),</b>
+<b class="nc"><i>167</i>&nbsp;                        DateUtil.yearToStringWithEra(beginningYear), events.get(0).year()));</b>
+<i>168</i>&nbsp;            }
+<i>169</i>&nbsp;
+<i>170</i>&nbsp;            @Override
+<i>171</i>&nbsp;            public void onFailure(@NonNull Call&lt;OnThisDay&gt; call, @NonNull Throwable t) {
+<b class="nc"><i>172</i>&nbsp;                if (!isAdded()) {</b>
+<i>173</i>&nbsp;                    return;
+<i>174</i>&nbsp;                }
+<b class="nc"><i>175</i>&nbsp;                setErrorState(t);</b>
+<i>176</i>&nbsp;            }
+<i>177</i>&nbsp;        });
+<i>178</i>&nbsp;    }
+<i>179</i>&nbsp;
+<i>180</i>&nbsp;    private void setErrorState(@NonNull Throwable t) {
+<b class="nc"><i>181</i>&nbsp;        L.e(t);</b>
+<b class="nc"><i>182</i>&nbsp;        errorView.setError(t);</b>
+<b class="nc"><i>183</i>&nbsp;        errorView.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>184</i>&nbsp;        progressBar.setVisibility(View.GONE);</b>
+<b class="nc"><i>185</i>&nbsp;        eventsRecycler.setVisibility(View.GONE);</b>
+<i>186</i>&nbsp;    }
+<i>187</i>&nbsp;
+<i>188</i>&nbsp;    private void setUpToolbar() {
+<b class="nc"><i>189</i>&nbsp;        getAppCompatActivity().setSupportActionBar(toolbar);</b>
+<b class="nc"><i>190</i>&nbsp;        getAppCompatActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);</b>
+<b class="nc"><i>191</i>&nbsp;        getAppCompatActivity().getSupportActionBar().setTitle(&quot;&quot;);</b>
+<b class="nc"><i>192</i>&nbsp;        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);</b>
+<b class="nc"><i>193</i>&nbsp;        dayText.setText(DateUtil.getMonthOnlyDateString(date.getTime()));</b>
+<b class="nc"><i>194</i>&nbsp;        indicatorLayout.setAlpha((date.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH) &amp;&amp; date.get(Calendar.DATE) == Calendar.getInstance().get(Calendar.DATE)) ? HALF_ALPHA : 1.0f);</b>
+<b class="nc"><i>195</i>&nbsp;        indicatorDate.setText(String.format(Locale.getDefault(), &quot;%d&quot;, Calendar.getInstance().get(Calendar.DATE)));</b>
+<b class="nc"><i>196</i>&nbsp;        appBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -&gt; {</b>
+<b class="nc"><i>197</i>&nbsp;            if (verticalOffset &gt; -appBarLayout.getTotalScrollRange()) {</b>
+<b class="nc"><i>198</i>&nbsp;                toolbarDay.setText(&quot;&quot;);</b>
+<b class="nc"><i>199</i>&nbsp;                toolbarDropDown.setVisibility(View.GONE);</b>
+<b class="nc"><i>200</i>&nbsp;            } else if (verticalOffset &lt;= -appBarLayout.getTotalScrollRange()) {</b>
+<b class="nc"><i>201</i>&nbsp;                toolbarDay.setText(DateUtil.getMonthOnlyDateString(date.getTime()));</b>
+<b class="nc"><i>202</i>&nbsp;                toolbarDropDown.setVisibility(View.VISIBLE);</b>
+<i>203</i>&nbsp;            }
+<i>204</i>&nbsp;        });
+<i>205</i>&nbsp;    }
+<i>206</i>&nbsp;
+<i>207</i>&nbsp;    private AppCompatActivity getAppCompatActivity() {
+<b class="nc"><i>208</i>&nbsp;        return (AppCompatActivity) getActivity();</b>
+<i>209</i>&nbsp;    }
+<i>210</i>&nbsp;
+<i>211</i>&nbsp;    @Override
+<i>212</i>&nbsp;    public void onDestroyView() {
+<b class="nc"><i>213</i>&nbsp;        if (funnel != null &amp;&amp; eventsRecycler.getAdapter() != null) {</b>
+<b class="nc"><i>214</i>&nbsp;            funnel.done(eventsRecycler.getAdapter().getItemCount());</b>
+<b class="nc"><i>215</i>&nbsp;            funnel = null;</b>
+<i>216</i>&nbsp;        }
+<b class="nc"><i>217</i>&nbsp;        unbinder.unbind();</b>
+<b class="nc"><i>218</i>&nbsp;        unbinder = null;</b>
+<b class="nc"><i>219</i>&nbsp;        super.onDestroyView();</b>
+<i>220</i>&nbsp;    }
+<i>221</i>&nbsp;
+<i>222</i>&nbsp;    private void setUpRecycler(RecyclerView recycler) {
+<b class="nc"><i>223</i>&nbsp;        recycler.addItemDecoration(new MarginItemDecoration(getContext(),</b>
+<i>224</i>&nbsp;                R.dimen.view_horizontal_scrolling_list_card_item_margin_horizontal,
+<i>225</i>&nbsp;                R.dimen.view_horizontal_scrolling_list_card_item_margin_vertical,
+<i>226</i>&nbsp;                R.dimen.view_horizontal_scrolling_list_card_item_margin_horizontal,
+<i>227</i>&nbsp;                R.dimen.view_horizontal_scrolling_list_card_item_margin_vertical));
+<b class="nc"><i>228</i>&nbsp;        recycler.addOnItemTouchListener(new DontInterceptTouchListener());</b>
+<b class="nc"><i>229</i>&nbsp;        recycler.setNestedScrollingEnabled(true);</b>
+<b class="nc"><i>230</i>&nbsp;        recycler.setClipToPadding(false);</b>
+<i>231</i>&nbsp;    }
+<i>232</i>&nbsp;
+<i>233</i>&nbsp;    @Override
+<i>234</i>&nbsp;    public void onDatePicked(int month, int day) {
+<b class="nc"><i>235</i>&nbsp;        eventsRecycler.setVisibility(View.GONE);</b>
+<b class="nc"><i>236</i>&nbsp;        progressBar.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>237</i>&nbsp;        if (Calendar.getInstance().get(Calendar.MONTH) != month || Calendar.getInstance().get(Calendar.DATE) != day) {</b>
+<b class="nc"><i>238</i>&nbsp;            indicatorLayout.setAlpha(1.0f);</b>
+<b class="nc"><i>239</i>&nbsp;            indicatorLayout.setClickable(true);</b>
+<i>240</i>&nbsp;        } else {
+<b class="nc"><i>241</i>&nbsp;            indicatorLayout.setAlpha(HALF_ALPHA);</b>
+<b class="nc"><i>242</i>&nbsp;            indicatorLayout.setClickable(false);</b>
+<i>243</i>&nbsp;        }
+<b class="nc"><i>244</i>&nbsp;        date.set(CustomDatePicker.LEAP_YEAR, month, day, 0, 0);</b>
+<b class="nc"><i>245</i>&nbsp;        dayText.setText(DateUtil.getMonthOnlyDateString(date.getTime()));</b>
+<b class="nc"><i>246</i>&nbsp;        appBarLayout.setExpanded(true);</b>
+<b class="nc"><i>247</i>&nbsp;        requestEvents(month, day);</b>
+<i>248</i>&nbsp;    }
+<i>249</i>&nbsp;
+<i>250</i>&nbsp;    @OnClick({R.id.drop_down, R.id.day, R.id.toolbar_day, R.id.drop_down_toolbar})
+<i>251</i>&nbsp;    public void onCalendarClicked() {
+<b class="nc"><i>252</i>&nbsp;        CustomDatePicker newFragment = new CustomDatePicker();</b>
+<b class="nc"><i>253</i>&nbsp;        newFragment.setSelectedDay(date.get(Calendar.MONTH), date.get(Calendar.DATE));</b>
+<b class="nc"><i>254</i>&nbsp;        newFragment.setCallback(OnThisDayFragment.this);</b>
+<b class="nc"><i>255</i>&nbsp;        newFragment.show(getFragmentManager(), &quot;date picker&quot;);</b>
+<i>256</i>&nbsp;    }
+<i>257</i>&nbsp;
+<i>258</i>&nbsp;    @OnClick(R.id.indicator_layout)
+<i>259</i>&nbsp;    public void onIndicatorLayoutClicked() {
+<b class="nc"><i>260</i>&nbsp;        onDatePicked(Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DATE));</b>
+<b class="nc"><i>261</i>&nbsp;        indicatorLayout.setAlpha(HALF_ALPHA);</b>
+<b class="nc"><i>262</i>&nbsp;        indicatorLayout.setClickable(false);</b>
+<i>263</i>&nbsp;    }
+<i>264</i>&nbsp;
+<i>265</i>&nbsp;    @Override
+<i>266</i>&nbsp;    public void onAddPageToList(@NonNull HistoryEntry entry) {
+<b class="nc"><i>267</i>&nbsp;        bottomSheetPresenter.show(getChildFragmentManager(),</b>
+<b class="nc"><i>268</i>&nbsp;                AddToReadingListDialog.newInstance(entry.getTitle(),</b>
+<i>269</i>&nbsp;                        AddToReadingListDialog.InvokeSource.ON_THIS_DAY_ACTIVITY));
+<i>270</i>&nbsp;    }
+<i>271</i>&nbsp;
+<i>272</i>&nbsp;    @Override
+<i>273</i>&nbsp;    public void onSharePage(@NonNull HistoryEntry entry) {
+<b class="nc"><i>274</i>&nbsp;        ShareUtil.shareText(getActivity(), entry.getTitle());</b>
+<i>275</i>&nbsp;    }
+<i>276</i>&nbsp;
+<i>277</i>&nbsp;    private class RecyclerAdapter extends RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt; {
+<i>278</i>&nbsp;        private static final int VIEW_TYPE_ITEM = 0;
+<i>279</i>&nbsp;        private static final int VIEW_TYPE_FOOTER = 1;
+<i>280</i>&nbsp;        private List&lt;OnThisDay.Event&gt; events;
+<i>281</i>&nbsp;        private WikiSite wiki;
+<i>282</i>&nbsp;
+<b class="nc"><i>283</i>&nbsp;        RecyclerAdapter(List&lt;OnThisDay.Event&gt; events, WikiSite wiki) {</b>
+<b class="nc"><i>284</i>&nbsp;            this.wiki = wiki;</b>
+<b class="nc"><i>285</i>&nbsp;            this.events = events;</b>
+<i>286</i>&nbsp;        }
+<i>287</i>&nbsp;
+<i>288</i>&nbsp;        @Override
+<i>289</i>&nbsp;        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+<b class="nc"><i>290</i>&nbsp;            if (viewType == VIEW_TYPE_FOOTER) {</b>
+<b class="nc"><i>291</i>&nbsp;                View itemView = LayoutInflater.from(viewGroup.getContext()).</b>
+<b class="nc"><i>292</i>&nbsp;                        inflate(R.layout.view_on_this_day_footer, viewGroup, false);</b>
+<b class="nc"><i>293</i>&nbsp;                return new FooterViewHolder(itemView);</b>
+<i>294</i>&nbsp;            } else {
+<b class="nc"><i>295</i>&nbsp;                View itemView = LayoutInflater.from(viewGroup.getContext()).</b>
+<b class="nc"><i>296</i>&nbsp;                        inflate(R.layout.view_events_layout, viewGroup, false);</b>
+<b class="nc"><i>297</i>&nbsp;                return new EventsViewHolder(itemView, wiki);</b>
+<i>298</i>&nbsp;            }
+<i>299</i>&nbsp;        }
+<i>300</i>&nbsp;
+<i>301</i>&nbsp;        @Override
+<i>302</i>&nbsp;        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+<b class="nc"><i>303</i>&nbsp;            if (holder instanceof EventsViewHolder) {</b>
+<b class="nc"><i>304</i>&nbsp;                ((EventsViewHolder) holder).setFields(events.get(position),</b>
+<b class="nc"><i>305</i>&nbsp;                        position &gt; 0 ? events.get(position - 1) : null);</b>
+<b class="nc"><i>306</i>&nbsp;                if (funnel != null) {</b>
+<b class="nc"><i>307</i>&nbsp;                    funnel.scrolledToPosition(position);</b>
+<i>308</i>&nbsp;                }
+<i>309</i>&nbsp;            }
+<i>310</i>&nbsp;        }
+<i>311</i>&nbsp;
+<i>312</i>&nbsp;        @Override
+<i>313</i>&nbsp;        public int getItemCount() {
+<b class="nc"><i>314</i>&nbsp;            return events.size() + 1;</b>
+<i>315</i>&nbsp;        }
+<i>316</i>&nbsp;
+<i>317</i>&nbsp;        @Override
+<i>318</i>&nbsp;        public int getItemViewType(int position) {
+<b class="nc"><i>319</i>&nbsp;            return position &lt; events.size() ? VIEW_TYPE_ITEM : VIEW_TYPE_FOOTER;</b>
+<i>320</i>&nbsp;        }
+<i>321</i>&nbsp;    }
+<i>322</i>&nbsp;
+<i>323</i>&nbsp;    private class EventsViewHolder extends RecyclerView.ViewHolder {
+<i>324</i>&nbsp;        private TextView descTextView;
+<i>325</i>&nbsp;        private TextView yearTextView;
+<i>326</i>&nbsp;        private TextView yearsInfoTextView;
+<i>327</i>&nbsp;        private RecyclerView pagesRecycler;
+<i>328</i>&nbsp;        private View yearContainer;
+<i>329</i>&nbsp;        private View yearSpace;
+<i>330</i>&nbsp;        private WikiSite wiki;
+<i>331</i>&nbsp;
+<b class="nc"><i>332</i>&nbsp;        EventsViewHolder(View v, WikiSite wiki) {</b>
+<b class="nc"><i>333</i>&nbsp;            super(v);</b>
+<b class="nc"><i>334</i>&nbsp;            descTextView = v.findViewById(R.id.text);</b>
+<b class="nc"><i>335</i>&nbsp;            descTextView.setTextIsSelectable(true);</b>
+<b class="nc"><i>336</i>&nbsp;            yearTextView = v.findViewById(R.id.year);</b>
+<b class="nc"><i>337</i>&nbsp;            yearsInfoTextView = v.findViewById(R.id.years_text);</b>
+<b class="nc"><i>338</i>&nbsp;            pagesRecycler = v.findViewById(R.id.pages_recycler);</b>
+<b class="nc"><i>339</i>&nbsp;            yearContainer = v.findViewById(R.id.years_text_container);</b>
+<b class="nc"><i>340</i>&nbsp;            yearSpace = v.findViewById(R.id.years_text_space);</b>
+<b class="nc"><i>341</i>&nbsp;            this.wiki = wiki;</b>
+<b class="nc"><i>342</i>&nbsp;            setRecycler();</b>
+<i>343</i>&nbsp;        }
+<i>344</i>&nbsp;
+<i>345</i>&nbsp;        private void setRecycler() {
+<b class="nc"><i>346</i>&nbsp;            if (pagesRecycler != null) {</b>
+<b class="nc"><i>347</i>&nbsp;                pagesRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));</b>
+<b class="nc"><i>348</i>&nbsp;                setUpRecycler(pagesRecycler);</b>
+<i>349</i>&nbsp;            }
+<i>350</i>&nbsp;        }
+<i>351</i>&nbsp;
+<i>352</i>&nbsp;        public void setFields(@NonNull final OnThisDay.Event event, @Nullable OnThisDay.Event prevEvent) {
+<b class="nc"><i>353</i>&nbsp;            setPagesRecycler(event);</b>
+<b class="nc"><i>354</i>&nbsp;            setPads();</b>
+<b class="nc"><i>355</i>&nbsp;            descTextView.setText(event.text());</b>
+<b class="nc"><i>356</i>&nbsp;            yearTextView.setText(DateUtil.yearToStringWithEra(event.year()));</b>
+<b class="nc"><i>357</i>&nbsp;            yearsInfoTextView.setText(DateUtil.getYearDifferenceString(event.year()));</b>
+<b class="nc"><i>358</i>&nbsp;            if (prevEvent != null &amp;&amp; prevEvent.year() == event.year()) {</b>
+<b class="nc"><i>359</i>&nbsp;                yearContainer.setVisibility(View.GONE);</b>
+<b class="nc"><i>360</i>&nbsp;                yearSpace.setVisibility(View.GONE);</b>
+<i>361</i>&nbsp;            } else {
+<b class="nc"><i>362</i>&nbsp;                yearContainer.setVisibility(View.VISIBLE);</b>
+<b class="nc"><i>363</i>&nbsp;                yearSpace.setVisibility(prevEvent == null ? View.GONE : View.VISIBLE);</b>
+<i>364</i>&nbsp;            }
+<i>365</i>&nbsp;        }
+<i>366</i>&nbsp;
+<i>367</i>&nbsp;        private void setPads() {
+<b class="nc"><i>368</i>&nbsp;            int pad1 = (int) DimenUtil.dpToPx(PADDING1);</b>
+<b class="nc"><i>369</i>&nbsp;            int pad2 = (int) DimenUtil.dpToPx(PADDING2);</b>
+<b class="nc"><i>370</i>&nbsp;            int pad3 = (int) DimenUtil.dpToPx(PADDING3);</b>
+<i>371</i>&nbsp;
+<b class="nc"><i>372</i>&nbsp;            descTextView.setPaddingRelative(pad1, 0, 0, 0);</b>
+<b class="nc"><i>373</i>&nbsp;            pagesRecycler.setPaddingRelative(pad2, 0, 0, 0);</b>
+<b class="nc"><i>374</i>&nbsp;            yearTextView.setPaddingRelative(pad3, 0, 0, 0);</b>
+<i>375</i>&nbsp;        }
+<i>376</i>&nbsp;
+<i>377</i>&nbsp;        private void setPagesRecycler(OnThisDay.Event event) {
+<b class="nc"><i>378</i>&nbsp;            if (event.pages() != null) {</b>
+<b class="nc"><i>379</i>&nbsp;                OnThisDayCardView.RecyclerAdapter recyclerAdapter = new OnThisDayCardView.RecyclerAdapter(event.pages(), wiki, false);</b>
+<b class="nc"><i>380</i>&nbsp;                recyclerAdapter.setCallback(new ItemCallback());</b>
+<b class="nc"><i>381</i>&nbsp;                pagesRecycler.setAdapter(recyclerAdapter);</b>
+<b class="nc"><i>382</i>&nbsp;            } else {</b>
+<b class="nc"><i>383</i>&nbsp;                pagesRecycler.setVisibility(View.GONE);</b>
+<i>384</i>&nbsp;            }
+<i>385</i>&nbsp;        }
+<i>386</i>&nbsp;    }
+<i>387</i>&nbsp;
+<i>388</i>&nbsp;    private class FooterViewHolder extends RecyclerView.ViewHolder {
+<b class="nc"><i>389</i>&nbsp;        FooterViewHolder(View v) {</b>
+<b class="nc"><i>390</i>&nbsp;            super(v);</b>
+<b class="nc"><i>391</i>&nbsp;            View backToTopView = v.findViewById(R.id.back_to_top_view);</b>
+<b class="nc"><i>392</i>&nbsp;            backToTopView.setOnClickListener(v1 -&gt; {</b>
+<b class="nc"><i>393</i>&nbsp;                appBarLayout.setExpanded(true);</b>
+<b class="nc"><i>394</i>&nbsp;                eventsRecycler.scrollToPosition(0);</b>
+<i>395</i>&nbsp;            });
+<i>396</i>&nbsp;        }
+<i>397</i>&nbsp;    }
+<i>398</i>&nbsp;
+<b class="nc"><i>399</i>&nbsp;    class ItemCallback implements OnThisDayPagesViewHolder.ItemCallBack {</b>
+<i>400</i>&nbsp;        @Override
+<i>401</i>&nbsp;        public void onActionLongClick(@NonNull HistoryEntry entry) {
+<b class="nc"><i>402</i>&nbsp;            bottomSheetPresenter.show(getChildFragmentManager(),</b>
+<b class="nc"><i>403</i>&nbsp;                    OnThisDayActionsDialog.newInstance(entry));</b>
+<i>404</i>&nbsp;        }
+<i>405</i>&nbsp;    }
+<i>406</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

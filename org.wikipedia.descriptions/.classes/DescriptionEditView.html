@@ -1,0 +1,262 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DescriptionEditView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.descriptions</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DescriptionEditView (org.wikipedia.descriptions)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DescriptionEditView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 20)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 51)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.descriptions;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.annotation.TargetApi;
+<i>4</i>&nbsp;import android.content.Context;
+<i>5</i>&nbsp;import android.os.Build;
+<i>6</i>&nbsp;import android.support.annotation.NonNull;
+<i>7</i>&nbsp;import android.support.annotation.Nullable;
+<i>8</i>&nbsp;import android.support.annotation.VisibleForTesting;
+<i>9</i>&nbsp;import android.support.design.widget.TextInputLayout;
+<i>10</i>&nbsp;import android.text.TextUtils;
+<i>11</i>&nbsp;import android.text.method.LinkMovementMethod;
+<i>12</i>&nbsp;import android.util.AttributeSet;
+<i>13</i>&nbsp;import android.view.View;
+<i>14</i>&nbsp;import android.view.inputmethod.EditorInfo;
+<i>15</i>&nbsp;import android.widget.EditText;
+<i>16</i>&nbsp;import android.widget.LinearLayout;
+<i>17</i>&nbsp;import android.widget.ProgressBar;
+<i>18</i>&nbsp;import android.widget.TextView;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;import org.apache.commons.lang3.StringUtils;
+<i>21</i>&nbsp;import org.wikipedia.R;
+<i>22</i>&nbsp;import org.wikipedia.page.PageTitle;
+<i>23</i>&nbsp;import org.wikipedia.util.FeedbackUtil;
+<i>24</i>&nbsp;import org.wikipedia.util.StringUtil;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;import butterknife.BindView;
+<i>27</i>&nbsp;import butterknife.ButterKnife;
+<i>28</i>&nbsp;import butterknife.OnClick;
+<i>29</i>&nbsp;import butterknife.OnEditorAction;
+<i>30</i>&nbsp;import butterknife.OnTextChanged;
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;public class DescriptionEditView extends LinearLayout {
+<i>33</i>&nbsp;    @BindView(R.id.view_description_edit_header) TextView headerText;
+<i>34</i>&nbsp;    @BindView(R.id.view_description_edit_page_title) TextView pageTitleText;
+<i>35</i>&nbsp;    @BindView(R.id.view_description_edit_license_text) TextView licenseText;
+<i>36</i>&nbsp;    @BindView(R.id.view_description_edit_save_button) View saveButton;
+<i>37</i>&nbsp;    @BindView(R.id.view_description_edit_cancel_button) View cancelButton;
+<i>38</i>&nbsp;    @BindView(R.id.view_description_edit_help_button) View helpButton;
+<i>39</i>&nbsp;    @BindView(R.id.view_description_edit_text) EditText pageDescriptionText;
+<i>40</i>&nbsp;    @BindView(R.id.view_description_edit_text_layout) TextInputLayout pageDescriptionLayout;
+<i>41</i>&nbsp;    @BindView(R.id.view_description_edit_progress_bar) ProgressBar progressBar;
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    @Nullable private String originalDescription;
+<i>44</i>&nbsp;    @Nullable private Callback callback;
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    public interface Callback {
+<i>47</i>&nbsp;        void onSaveClick();
+<i>48</i>&nbsp;        void onHelpClick();
+<i>49</i>&nbsp;        void onCancelClick();
+<i>50</i>&nbsp;    }
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    public DescriptionEditView(Context context) {
+<b class="nc"><i>53</i>&nbsp;        super(context);</b>
+<b class="nc"><i>54</i>&nbsp;        init();</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    public DescriptionEditView(Context context, AttributeSet attrs) {
+<b class="nc"><i>58</i>&nbsp;        super(context, attrs);</b>
+<b class="nc"><i>59</i>&nbsp;        init();</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    public DescriptionEditView(Context context, AttributeSet attrs, int defStyleAttr) {
+<b class="nc"><i>63</i>&nbsp;        super(context, attrs, defStyleAttr);</b>
+<b class="nc"><i>64</i>&nbsp;        init();</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+<i>68</i>&nbsp;    public DescriptionEditView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+<b class="nc"><i>69</i>&nbsp;        super(context, attrs, defStyleAttr, defStyleRes);</b>
+<b class="nc"><i>70</i>&nbsp;        init();</b>
+<i>71</i>&nbsp;    }
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;    public void setCallback(@Nullable Callback callback) {
+<b class="nc"><i>74</i>&nbsp;        this.callback = callback;</b>
+<i>75</i>&nbsp;    }
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    public void setPageTitle(@NonNull PageTitle pageTitle) {
+<b class="nc"><i>78</i>&nbsp;        setTitle(pageTitle.getDisplayText());</b>
+<b class="nc"><i>79</i>&nbsp;        originalDescription = pageTitle.getDescription();</b>
+<b class="nc"><i>80</i>&nbsp;        setDescription(originalDescription);</b>
+<i>81</i>&nbsp;
+<b class="nc"><i>82</i>&nbsp;        headerText.setText(getContext().getString(TextUtils.isEmpty(originalDescription)</b>
+<i>83</i>&nbsp;                ? R.string.description_edit_add_description
+<i>84</i>&nbsp;                : R.string.description_edit_edit_description));
+<i>85</i>&nbsp;    }
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;    public void setSaveState(boolean saving) {
+<b class="nc"><i>88</i>&nbsp;        showProgressBar(saving);</b>
+<b class="nc"><i>89</i>&nbsp;        if (saving) {</b>
+<b class="nc"><i>90</i>&nbsp;            enableSaveButton(false);</b>
+<i>91</i>&nbsp;        } else {
+<b class="nc"><i>92</i>&nbsp;            updateSaveButtonEnabled();</b>
+<i>93</i>&nbsp;        }
+<i>94</i>&nbsp;    }
+<i>95</i>&nbsp;
+<i>96</i>&nbsp;    @NonNull public String getDescription() {
+<b class="nc"><i>97</i>&nbsp;        return pageDescriptionText.getText().toString();</b>
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    public void setError(@Nullable CharSequence text) {
+<b class="nc"><i>101</i>&nbsp;        pageDescriptionLayout.setError(text);</b>
+<i>102</i>&nbsp;    }
+<i>103</i>&nbsp;
+<i>104</i>&nbsp;    @OnClick(R.id.view_description_edit_save_button) void onSaveClick() {
+<b class="nc"><i>105</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>106</i>&nbsp;            callback.onSaveClick();</b>
+<i>107</i>&nbsp;        }
+<i>108</i>&nbsp;    }
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;    @OnClick(R.id.view_description_edit_help_button) void onHelpClick() {
+<b class="nc"><i>111</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>112</i>&nbsp;            callback.onHelpClick();</b>
+<i>113</i>&nbsp;        }
+<i>114</i>&nbsp;    }
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;    @OnClick(R.id.view_description_edit_cancel_button) void onCancelClick() {
+<b class="nc"><i>117</i>&nbsp;        if (callback != null) {</b>
+<b class="nc"><i>118</i>&nbsp;            callback.onCancelClick();</b>
+<i>119</i>&nbsp;        }
+<i>120</i>&nbsp;    }
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;    @OnTextChanged(value = R.id.view_description_edit_text,
+<i>123</i>&nbsp;            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+<i>124</i>&nbsp;    void pageDescriptionTextChanged() {
+<b class="nc"><i>125</i>&nbsp;        updateSaveButtonEnabled();</b>
+<b class="nc"><i>126</i>&nbsp;        setError(null);</b>
+<i>127</i>&nbsp;    }
+<i>128</i>&nbsp;
+<i>129</i>&nbsp;    @OnEditorAction(R.id.view_description_edit_text)
+<i>130</i>&nbsp;    protected boolean descriptionTextEditorAction(int id) {
+<b class="nc"><i>131</i>&nbsp;        if (id == EditorInfo.IME_ACTION_DONE) {</b>
+<b class="nc"><i>132</i>&nbsp;            if (saveButton.isEnabled() &amp;&amp; callback != null) {</b>
+<b class="nc"><i>133</i>&nbsp;                callback.onSaveClick();</b>
+<i>134</i>&nbsp;            }
+<b class="nc"><i>135</i>&nbsp;            return true;</b>
+<i>136</i>&nbsp;        }
+<b class="nc"><i>137</i>&nbsp;        return false;</b>
+<i>138</i>&nbsp;    }
+<i>139</i>&nbsp;
+<i>140</i>&nbsp;    @VisibleForTesting void setTitle(@Nullable CharSequence text) {
+<b class="nc"><i>141</i>&nbsp;        pageTitleText.setText(text);</b>
+<i>142</i>&nbsp;    }
+<i>143</i>&nbsp;
+<i>144</i>&nbsp;    @VisibleForTesting void setDescription(@Nullable String text) {
+<b class="nc"><i>145</i>&nbsp;        pageDescriptionText.setText(text);</b>
+<i>146</i>&nbsp;    }
+<i>147</i>&nbsp;
+<i>148</i>&nbsp;    private void init() {
+<b class="nc"><i>149</i>&nbsp;        inflate(getContext(), R.layout.view_description_edit, this);</b>
+<b class="nc"><i>150</i>&nbsp;        ButterKnife.bind(this);</b>
+<i>151</i>&nbsp;
+<b class="nc"><i>152</i>&nbsp;        licenseText.setText(StringUtil.fromHtml(String</b>
+<b class="nc"><i>153</i>&nbsp;                .format(getContext().getString(R.string.description_edit_license_notice),</b>
+<b class="nc"><i>154</i>&nbsp;                        getContext().getString(R.string.terms_of_use_url),</b>
+<b class="nc"><i>155</i>&nbsp;                        getContext().getString(R.string.cc_0_url))));</b>
+<b class="nc"><i>156</i>&nbsp;        licenseText.setMovementMethod(new LinkMovementMethod());</b>
+<b class="nc"><i>157</i>&nbsp;        FeedbackUtil.setToolbarButtonLongPressToast(saveButton, cancelButton, helpButton);</b>
+<b class="nc"><i>158</i>&nbsp;        setOrientation(VERTICAL);</b>
+<i>159</i>&nbsp;    }
+<i>160</i>&nbsp;
+<i>161</i>&nbsp;    private void updateSaveButtonEnabled() {
+<b class="nc"><i>162</i>&nbsp;        if (!TextUtils.isEmpty(pageDescriptionText.getText())</b>
+<b class="nc"><i>163</i>&nbsp;                &amp;&amp; !StringUtils.equals(originalDescription, pageDescriptionText.getText())) {</b>
+<b class="nc"><i>164</i>&nbsp;            enableSaveButton(true);</b>
+<i>165</i>&nbsp;        } else {
+<b class="nc"><i>166</i>&nbsp;            enableSaveButton(false);</b>
+<i>167</i>&nbsp;        }
+<i>168</i>&nbsp;    }
+<i>169</i>&nbsp;
+<i>170</i>&nbsp;    private void enableSaveButton(boolean enabled) {
+<b class="nc"><i>171</i>&nbsp;        final float disabledAlpha = 0.5f;</b>
+<b class="nc"><i>172</i>&nbsp;        saveButton.setEnabled(enabled);</b>
+<b class="nc"><i>173</i>&nbsp;        saveButton.setAlpha(enabled ? 1f : disabledAlpha);</b>
+<i>174</i>&nbsp;    }
+<i>175</i>&nbsp;
+<i>176</i>&nbsp;    private void showProgressBar(boolean show) {
+<b class="nc"><i>177</i>&nbsp;        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);</b>
+<i>178</i>&nbsp;    }
+<i>179</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>

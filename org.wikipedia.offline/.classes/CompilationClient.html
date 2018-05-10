@@ -1,0 +1,245 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CompilationClient</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.wikipedia.offline</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CompilationClient (org.wikipedia.offline)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CompilationClient</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 20)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CompilationClient$Callback</td>
+  </tr>
+  <tr>
+    <td class="name">CompilationClient$CallbackAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">CompilationClient$CallbackAdapter$CompilationResponse</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 28)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.wikipedia.offline;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.support.annotation.NonNull;
+<i>4</i>&nbsp;import android.support.annotation.Nullable;
+<i>5</i>&nbsp;import android.support.annotation.VisibleForTesting;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.apache.commons.io.IOUtils;
+<i>8</i>&nbsp;import org.apache.commons.io.LineIterator;
+<i>9</i>&nbsp;import org.wikipedia.WikipediaApp;
+<i>10</i>&nbsp;import org.wikipedia.json.annotations.Required;
+<i>11</i>&nbsp;import org.wikipedia.util.log.L;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import java.io.IOException;
+<i>14</i>&nbsp;import java.io.InputStream;
+<i>15</i>&nbsp;import java.util.ArrayList;
+<i>16</i>&nbsp;import java.util.List;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;import retrofit2.Call;
+<i>19</i>&nbsp;import retrofit2.Response;
+<i>20</i>&nbsp;import retrofit2.http.GET;
+<i>21</i>&nbsp;import retrofit2.http.Headers;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;import static org.wikipedia.Constants.ACCEPT_HEADER_PREFIX;
+<i>24</i>&nbsp;
+<b class="nc"><i>25</i>&nbsp;class CompilationClient {</b>
+<i>26</i>&nbsp;    interface Callback {
+<i>27</i>&nbsp;        void success(@NonNull List&lt;Compilation&gt; compilations);
+<i>28</i>&nbsp;        void error(@NonNull Throwable caught);
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    @Nullable private Call&lt;CallbackAdapter.CompilationResponse&gt; call;
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    // TODO: replace static file with dataclient when service is set up
+<i>34</i>&nbsp;    public void request(@NonNull Callback cb) {
+<i>35</i>&nbsp;        try {
+<b class="nc"><i>36</i>&nbsp;            cb.success(getRemoteZimInfo());</b>
+<b class="nc"><i>37</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>38</i>&nbsp;            cb.error(e);</b>
+<b class="nc"><i>39</i>&nbsp;            L.e(e);</b>
+<b class="nc"><i>40</i>&nbsp;        }</b>
+<b class="nc"><i>41</i>&nbsp;    }</b>
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    public void cancel() {
+<b class="nc"><i>44</i>&nbsp;        if (call == null) {</b>
+<b class="nc"><i>45</i>&nbsp;            return;</b>
+<i>46</i>&nbsp;        }
+<b class="nc"><i>47</i>&nbsp;        call.cancel();</b>
+<b class="nc"><i>48</i>&nbsp;        call = null;</b>
+<b class="nc"><i>49</i>&nbsp;    }</b>
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    @VisibleForTesting @NonNull
+<i>52</i>&nbsp;    Call&lt;CallbackAdapter.CompilationResponse&gt; request(@NonNull Service service) {
+<b class="nc"><i>53</i>&nbsp;        return service.get();</b>
+<i>54</i>&nbsp;    }
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    @VisibleForTesting
+<i>57</i>&nbsp;    static class CallbackAdapter implements retrofit2.Callback&lt;CallbackAdapter.CompilationResponse&gt; {
+<i>58</i>&nbsp;        private Callback cb;
+<i>59</i>&nbsp;
+<b class="nc"><i>60</i>&nbsp;        CallbackAdapter(Callback cb) {</b>
+<b class="nc"><i>61</i>&nbsp;            this.cb = cb;</b>
+<i>62</i>&nbsp;        }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;        @Override
+<i>65</i>&nbsp;        public void onResponse(@NonNull Call&lt;CompilationResponse&gt; call,
+<i>66</i>&nbsp;                               @NonNull Response&lt;CompilationResponse&gt; response) {
+<i>67</i>&nbsp;            // noinspection ConstantConditions
+<b class="nc"><i>68</i>&nbsp;            if (response.body() != null &amp;&amp; response.body().compilations() != null) {</b>
+<i>69</i>&nbsp;                // noinspection ConstantConditions
+<b class="nc"><i>70</i>&nbsp;                cb.success(response.body().compilations());</b>
+<i>71</i>&nbsp;            } else {
+<b class="nc"><i>72</i>&nbsp;                cb.error(new IOException(&quot;An unknown error occurred.&quot;));</b>
+<i>73</i>&nbsp;            }
+<i>74</i>&nbsp;        }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;        @Override
+<i>77</i>&nbsp;        public void onFailure(@NonNull Call&lt;CompilationResponse&gt; call, @NonNull Throwable t) {
+<b class="nc"><i>78</i>&nbsp;            cb.error(t);</b>
+<i>79</i>&nbsp;        }
+<i>80</i>&nbsp;
+<b class="nc"><i>81</i>&nbsp;        static class CompilationResponse {</b>
+<i>82</i>&nbsp;            @SuppressWarnings(&quot;unused,NullableProblems&quot;) @NonNull @Required
+<i>83</i>&nbsp;            private List&lt;Compilation&gt; compilations;
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;            @Nullable
+<i>86</i>&nbsp;            List&lt;Compilation&gt; compilations() {
+<b class="nc"><i>87</i>&nbsp;                return compilations;</b>
+<i>88</i>&nbsp;            }
+<i>89</i>&nbsp;        }
+<i>90</i>&nbsp;    }
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;    // todo: update endpoint path when finalized
+<i>93</i>&nbsp;    @VisibleForTesting
+<i>94</i>&nbsp;    interface Service {
+<i>95</i>&nbsp;        @NonNull @Headers(ACCEPT_HEADER_PREFIX + &quot;compilations/0.1.0\&quot;&quot;) @GET(&quot;/compilations&quot;)
+<i>96</i>&nbsp;        Call&lt;CallbackAdapter.CompilationResponse&gt; get();
+<i>97</i>&nbsp;    }
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;    @NonNull
+<i>100</i>&nbsp;    private List&lt;Compilation&gt; getRemoteZimInfo() throws IOException {
+<b class="nc"><i>101</i>&nbsp;        List&lt;Compilation&gt; result = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>102</i>&nbsp;        LineIterator i = IOUtils.lineIterator(openAssetFile(&quot;zims.tsv&quot;), &quot;UTF-8&quot;);</b>
+<b class="nc"><i>103</i>&nbsp;        while (i.hasNext()) {</b>
+<b class="nc"><i>104</i>&nbsp;            result.add(new Compilation(i.nextLine().split(&quot;\t&quot;)));</b>
+<i>105</i>&nbsp;        }
+<b class="nc"><i>106</i>&nbsp;        i.close();</b>
+<b class="nc"><i>107</i>&nbsp;        return result;</b>
+<i>108</i>&nbsp;    }
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;    @NonNull
+<i>111</i>&nbsp;    private static InputStream openAssetFile(String path) throws IOException {
+<b class="nc"><i>112</i>&nbsp;        return WikipediaApp.getInstance().getAssets().open(path);</b>
+<i>113</i>&nbsp;    }
+<i>114</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-09 20:16</div>
+</div>
+</body>
+</html>
